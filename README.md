@@ -1,0 +1,2 @@
+# covid19-contact-tracer
+Covid 19 has become a global pandemic since late 2019. Matter of fact Sri Lanka became a severe victim of the pandemic due to aggressively spreading different variants. Prevention is the only option remaining for Sri Lankans as the country exceeds all the healthcare thresholds by now. Currently the main challenge faced by both the healthcare officials and the citizens is to trace the positive patients and convey the locations they visited in the last two weeks with other potential contacts.
