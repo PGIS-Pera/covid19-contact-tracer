@@ -1,3 +1,4 @@
+
 # Covid19 Contact Tracer
 
 Covid 19 has become a global pandemic since late 2019. Matter of fact Sri Lanka became a severe victim of the pandemic
@@ -16,6 +17,15 @@ proper legal procedure. It has completely become the accountability of every cit
 about individuals' health and safety while taking the responsibility to prevent spreading the deadly virus in the
 society.
 
-The main intention behind the proposed “Covid19 Contact Tracer” is to assist people to keep track of their own routing
+The main intention behind the proposed **“Covid19 Contact Tracer”** is to assist people to keep track of their own routing
 history and help healthcare officials to manage the positive cases and notify their close-contacts more effectively,
 efficiently and reliably. 
+
+
+
+![propose system](https://user-images.githubusercontent.com/27762514/130312874-bb5dd9cd-662e-411f-ae0d-017509afc21b.png)
+
+## Reference 
+[1. World Health Organization (WHO)](https://www.who.int/news-room/feature-stories/detail/tracking-covid-19-contact-tracing-in-the-digital-age)
+
+[2. Covid19 Contact Tracer](https://docs.google.com/presentation/d/1ir2dkd0MD-AlDnSmntAHxzru9Z7n7aIlsR8-ZSid_7k/edit?usp=sharing)
