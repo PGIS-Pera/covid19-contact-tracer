@@ -9,7 +9,7 @@
           <entry name="$PROJECT_DIR$/../../../../Gradle/gradle-7.1.1/bin/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.20/18bcea7d5df4d49227b4a0743a536208ce4825bb/lombok-1.18.20.jar" />
           <entry name="$PROJECT_DIR$/../../../../Gradle/gradle-7.1.1/bin/caches/modules-2/files-2.1/org.mapstruct/mapstruct-processor/1.4.2.Final/e55bd90d51cddd638c07d5bd89fc7535d4e3d069/mapstruct-processor-1.4.2.Final.jar" />
         </processorPath>
-        <module name="contact-tracer.main" />
+        <module name="contact_tracer.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11" />
