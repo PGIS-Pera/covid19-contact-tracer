@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<div class="container-fluid" >
+  <div class="row text-center" >
+    <div class="col" >
+      <a class="btn btn-primary" data-th-href="${'/home'}" >
+        <i class="fa fa-home" style="font-size: 20px" ></i > &nbsp; Home
+      </a >
+    </div >
+    <div class="col" >
+      <h4 class="text-center" >
+        <strong >
+          <span id="formHeader" data-th-text="${addStatus==true?'New Role ':'Update Role'}" ></span >
+        </strong >
+      </h4 >
+    </div >
+    <div class="col" >
+      <a class="btn btn-primary" data-th-href="${'/role'}" >
+        <i class="fa fa-list" ></i >&nbsp; View List
+      </a >
+    </div >
+  </div >
+</div >
+<div class="container-fluid" >
+  <div class="col-sm-12 flex-column " >
+    <form id="form" class="form-horizontal" method="POST" data-th-action="${addStatus==true?'/role/add':'/role/update'}"
+          data-th-object="${role}" >
+      <div class="form-group col-md-12 col-sm-12 text-center flex-column" >
+        <div class="col-sm-6 col-md-6 offset-2" >
+          <div id="idHide" data-th-if="${addStatus==false}" class="form-row text-right" >
+            <div class="col-md-4" >
+              <label class="control-label" for="id" >ID :</label >
+            </div >
+            <div class="col-md-8" >
+              <input class="form-control" data-th-field="*{id}" id="id" type="text" readonly />
+            </div >
+          </div >
+          <div class="form-row text-right" >
+            <div class="col-md-4" >
+              <label class="control-label" for="roleName" >Name :</label >
+            </div >
+            <div class="col-md-8" >
+              <input id="roleName" data-th-field="*{roleName}" class="form-control" type="text" required />
+              <span id="roleNameError" data-th-errors="*{roleName}" data-th-if="${#fields.hasErrors('roleName')}"
+                    class="error" >Error Role Name</span >
+            </div >
+          </div >
+        </div >
+      </div >
+      <div class="form-group col-md-12 col-sm-12 text-center flex-column" >
+        <button class="btn btn-success" type="submit" >
+          <i class="fa fa-save" style="font-size: 20px" ></i >&nbsp; &nbsp;<span
+              id="submit" data-th-text="${addStatus==true?'Save': 'Update'}" >                        </span >
+        </button >
+      </div >
+      <!--Error-->
+      <div class="form-row" >
+        <label id="errorLabel" data-th-if="${#fields.hasErrors('*')}" data-th-text="'Errors: '" >Errors: </label >
+        <ul >
+          <li id="errorDisplay" data-th-each="err: ${#fields.errors('*')}" data-th-utext="${err}" class="error" ></li >
+        </ul >
+      </div >
+    </form >
+  </div >
+</div >
+<!--footer include-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+
+</body >
+</html >

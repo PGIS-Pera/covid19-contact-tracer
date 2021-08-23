@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+<div class="container-fluid" >
+  <div class="row text-center" >
+    <div class="col" >
+      <a class="btn btn-info" data-th-href="${'/home'}" >
+        Back To Home
+      </a >
+    </div >
+    <div class="col" >
+      <span class="font-weight-bold h2" data-th-text="${districtDetail.province.province}" ></span >
+    </div >
+    <div class="col" >
+      <a class="btn btn-success" data-th-href="${'/district'}" >
+        District List </a >
+    </div >
+  </div >
+</div >
+<div class="container-fluid text-center" >
+  <div class="col-6 offset-md-3" data-th-fragment="districtDetail" >
+    <!--Province-->
+    <div class="form-row text-center" >
+      <div class="col-md-4" >
+        <label class="form-label " data-th-for="${'province'}" > Province :</label >
+      </div >
+      <div class="col-md-8" >
+        <p class="display_detail"
+           data-th-text="${districtDetail.province.province}" ></p >
+      </div >
+    </div >
+    <!--District name-->
+    <div class="form-row text-center" >
+      <div class="col-md-4" >
+        <label class="form-label " > Name :</label >
+      </div >
+      <div class="col-md-8" >
+        <p class="display_detail" data-th-text="${districtDetail.name}" ></p >
+      </div >
+    </div >
+    <!--Button-->
+    <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
+      <!--Back Button-->
+      <a class="btn btn-dark" data-th-href="${'/district'}" tabindex="10" >
+        <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
+      </a >
+    </div >
+  </div >
+</div >
+<!--footer include-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+</body >
+</html >

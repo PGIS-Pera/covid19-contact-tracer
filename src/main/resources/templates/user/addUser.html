@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<!--Page header -->
+<div class="container-fluid" >
+  <div class="row text-center" >
+    <div class="col" >
+      <a class="btn btn-primary" data-th-href="${'/home'}" >
+        <i class="fa fa-home" style="font-size: 20px" ></i > &nbsp; Home
+      </a >
+    </div >
+    <div class="col" >
+      <h4 class="text-center" >
+        <strong >
+          <span id="formHeader" data-th-text="${addStatus==true?'New User':'Update User'}" ></span >
+        </strong >
+      </h4 >
+    </div >
+    <div class="col" >
+      <a data-th-href="${'/user'}" class="btn btn-primary" >
+        <i class="fa fa-list" ></i >&nbsp; View List
+      </a >
+    </div >
+  </div >
+</div >
+<!--Employee find-->
+<div class="container-fluid" id="employeeFindForm" data-th-if="${employeeDetailShow==false}" >
+  <div class="col-sm-12 flex-column " >
+    <form id="form" method="POST" data-th-action="${'/user/workingPlace'}" data-th-object="${userDetails}"
+          enctype="multipart/form-data" >
+      <div class="form-row" >
+        <div class="col-5 flex-column" >
+          <div class="form-group" >
+            <div class="col-4" >
+              <label class="control-label" for="selectParameter" >Parameter :</label >
+            </div >
+            <div class="col-8" >
+              <select id="selectParameter" class="form-control" tabindex="1" required >
+                <option value="" >Please select</option >
+                <option value="nic" >NIC Number</option >
+                <option value="number" >Register Number</option >
+                <option value="name" >Name</option >
+              </select >
+            </div >
+          </div >
+        </div >
+        <div class="col-4 flex-column" >
+          <div class="form-group" >
+            <div class="col-5" >
+              <label class="control-label" for="valueEmployee" >Value :</label >
+            </div >
+            <div class="col-7" >
+              <input id="valueEmployee" tabindex="2" class="form-control" type="text" minlength="3"
+                     required
+                     autofocus />
+            </div >
+          </div >
+        </div >
+        <div class="col-3 flex-column" >
+          <div class="form-group" >
+            <div class="" >
+              <div class="col-2" >
+                <label class="control-label" ></label >
+              </div >
+              <div class="col-10 text-left" id="btnSearchEmployee" >
+                <button class="btn btn-success" tabindex="3" type="submit" >
+                  <i class="fa fa-search " style="font-size: 20px" ></i >&nbsp; &nbsp;Search
+                </button >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </form >
+  </div >
+</div >
+<!--Employee not fount message-->
+<div id="employeeNotFoundShow" data-th-if="${employeeNotFoundShow==true}"
+     class="alert alert-warning alert-dismissible fade show text-center" role="alert" >
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
+    <span aria-hidden="true" >&times;</span >
+  </button >
+  <strong ><span id="employeeNotFound" data-th-text="${employeeNotFound}" ></span ></strong >
+
+</div >
+
+<!--User add from-->
+<div class="container-fluid" data-th-if="${employeeDetailShow==true}" >
+  <form data-th-action="${addStatus==true?'/user/add':'/user/update'}" data-th-object="${user}"
+        method="POST" >
+    <input data-th-field="*{id}" type="hidden" readonly data-th-if="${addStatus==false}" />
+    <div class="row" >
+      <!--Left Side-->
+      <div class="form-group col-md-5 col-sm-7 text-left flex-column" >
+        <!--Employee details Display-->
+        <div class="form-row" >
+          <div class="col-md-4" >
+            <label class="control-label" for="userDetails" >Employee :</label >
+          </div >
+          <div class="col-md-8" >
+            <select class="form-control" data-th-field="*{userDetails}" data-th-each="e : ${userDetailses}"
+                    name="userDetails"
+                    id="userDetails" required >
+              <option id="employeeList"
+                      data-th-text="${e.title.title} + ${' '} + ${e.name} +${' - '} + ${e.nic}"
+                      data-th-value="${e.id}"
+                      data-th-field="*{userDetails}" value="" >Please select
+              </option >
+            </select >
+            <div id="employeeNameBox" data-th-if="${addStatus==false}" >
+              <strong >
+                                <span id="employeeName"
+                                      data-th-text="${user.userDetails.title.title} + ${' '} + ${user.userDetails.name} +${' - '} + ${user.userDetails.nic}" ></span >
+                <input type="hidden" id="employeeSelected" data-th-field="*{userDetails}" >
+              </strong >
+            </div >
+          </div >
+        </div >
+        <!--User name-->
+        <div class="form-row" >
+          <label class="control-label col-md-4" for="username" >User Name :</label >
+          <div class="col-md-8" >
+            <input class="form-control" data-th-field="*{username}" id="username"
+                   placeholder="Enter User Name Here" required type="text"
+                   data-th-readonly="${addStatus==false}" />
+          </div >
+        </div >
+        <!--Active or not-->
+        <div class="form-row" data-th-if="${addStatus==false}" >
+          <label class="control-label col-md-4" for="username" >Active or Disable :</label >
+          <div class="col-md-8" >
+            <div class="custom-control custom-checkbox custom-control-inline " >
+              <input id="true" class="custom-control-input" data-th-name="${'enabled'}" value="true" type="radio"
+                     data-th-selected="${user.enabled == true}" required />
+              <label for="true" class="custom-control-label" > Enable </label >
+            </div >
+            <div class="custom-control custom-checkbox custom-control-inline " >
+              <input id="false" class="custom-control-input " data-th-name="${'enabled'}" value="false" type="radio"
+                     data-th-selected="${user.enabled == false}" />
+              <label for="false" class="custom-control-label" > Disable </label >
+            </div >
+          </div >
+        </div >
+        <!--Password-->
+        <div class="form-row" >
+          <label class="control-label col-md-4" for="password" >Password :</label >
+          <div class="col-md-8" >
+            <input class="form-control pwd" id="password" data-th-field="*{password}"
+                   placeholder="Enter Password Here" required type="password" min="6"
+            />
+            <div class="text-right" >
+              <span id="result" ></span >
+            </div >
+          </div >
+        </div >
+      </div >
+      <!--Right Side-->
+      <div class="form-group col-md-5 col-sm-7 text-left flex-column" >
+        <!--  roles-->
+        <div class="form-check" data-th-each="role : ${roles}" >
+          <label class="form-check-label" >
+            <input type="checkbox" class="form-check-input"
+                   data-th-text="${#strings.toUpperCase(role.roleName.substring(0, 1))+#strings.toLowerCase(role.roleName.substring(1))}"
+                   data-th-value="${role.id}"
+                   data-th-field="*{roles}" >
+          </label >
+        </div >
+      </div >
+
+      <!--Button-->
+      <div class="form-group col-md-12 col-sm-12 text-center flex-column" >
+        <button class="btn btn-success" type="submit" >
+          <i class="fa fa-save" style="font-size: 20px" ></i >&nbsp; &nbsp;
+          <span data-th-text="${addStatus==true?'Save': 'Update'}" >                        </span >
+        </button >
+      </div >
+    </div >
+    <!--Error-->
+    <div class="form-row" >
+      <label id="errorLabel" data-th-if="${#fields.hasErrors('*')}" data-th-text="'Errors: '" >Errors: </label >
+      <ul >
+        <li id="errorDisplay" class="error" data-th-each="err: ${#fields.errors('*')}"
+            data-th-text="${err}" ></li >
+      </ul >
+    </div >
+  </form >
+
+
+</div >
+
+<!--footer include-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+
+<script >
+    $(".alert").alert();
+</script >
+</body >
+</html >

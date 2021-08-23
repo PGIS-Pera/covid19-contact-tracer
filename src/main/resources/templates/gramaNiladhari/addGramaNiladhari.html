@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<div class="container-fluid" >
+  <div class="row text-center" >
+    <div class="col" >
+      <a class="btn btn-info" data-th-href="${'/home'}" >
+        Back To Home
+      </a >
+    </div >
+    <div class="col" >
+      <h2 class="text-center" >
+        <strong >
+          <span data-th-text="${addStatus==true?'Update Gramaniladari Details':'New Gramaniladari Details'}" ></span >
+        </strong >
+      </h2 >
+    </div >
+    <div class="col" >
+      <a class="btn btn-success" data-th-href="${'/gramaniladari'}" >
+        Gramaniladari List </a >
+    </div >
+  </div >
+</div >
+
+<div class="container-fluid text-center" >
+  <div class="col" >
+    <form data-th-action="${addStatus==false?'/gramaNiladhari/save' :'/gramaNiladhari/update'}"
+          method="post" data-th-object="${gramaNiladhari}" >
+      <input class="form-control col-md-9" id="id" readonly data-th-field="*{id}"
+             type="text" data-th-if="${addStatus==true}" />
+      <!--Province-->
+      <div class=" form-row  p-3" >
+        <label class="form-label  col-md-3" data-th-for="province" > Province </label >
+
+        <select class="form-control col-md-9" id="province"
+                data-th-field="${gramaNiladhari.policeStation.MOH.district.province}" >
+          <option value="" >Please Select</option >
+          <option data-th-each="province : ${provinces}"
+                  data-th-text="${province.province}"
+                  data-th-value="${province}"
+          ></option >
+        </select >
+      </div >
+      <!--District-->
+      <div class=" form-row p-3" >
+        <label class="form-label col-md-3 " for="district" >
+          District </label >
+        <select class="form-control col-md-9" id="district"
+                data-th-field="${gramaNiladhari.policeStation.MOH.district}" >
+          <option value="" >Please Select</option >
+          <option data-th-each="district : ${districts}"
+                  data-th-text="${district.name}"
+                  data-th-value="${district.id}"
+          ></option >
+        </select >
+      </div >
+      <!--AgOffice-->
+      <div class=" form-row p-3" >
+        <label class="form-label col-md-3 " data-th-for="${'MOH'}" > Ag
+                                                                     Office </label >
+
+        <select class="form-control col-md-9" id="MOH"
+                data-th-field="${gramaNiladhari.policeStation.MOH}" >
+          <option value="" >Please Select</option >
+          <option data-th-each="MOH : ${MOHS}"
+                  data-th-text="${MOH.name}"
+                  data-th-value="${MOH.id}"
+          ></option >
+        </select >
+      </div >
+      <!--Police-->
+      <div class=" form-row p-3" >
+        <label class="col-md-3 form-label" > Police Station </label >
+        <select class="col-md-9 form-control" id="policeStation"
+                data-th-field="*{policeStation}" required >
+          <option value="" >Please Select</option >
+          <option data-th-each="policeStation : ${policeStations}"
+                  data-th-text="${policeStation.name}"
+                  data-th-value="${policeStation.id}"
+          ></option >
+        </select >
+      </div >
+      <!--GramaNiladhari-->
+      <div class="form-row p-3" >
+
+        <label class="control-label col-md-3" for="gramaniladhari" >Grama
+                                                                    Niladhari Division</label >
+
+        <input class="form-control col-md-9 " id="gramaniladhari"
+               required
+               tabindex="16" data-th-field="*{name}"
+               type="text" />
+        <span class="error" id="gramaniladharidivisionError"
+              data-th-errors="*{name}"
+              data-th-if="${#fields.hasErrors('name')}" >Grama Niladhari Error Email</span >
+
+      </div >
+      <div align="right" >
+        <br >
+        <button class="btn btn-warning mr-5 darkmode--activated" tabindex="65" type="reset" >
+          Clear
+        </button >
+        <button class="btn btn-primary" type="submit" >
+          <i data-th-class="${addStatus==false?'fa fa-save mr-1':'fa fa-thumbs-up mr-1'}" ></i >
+          <span
+                data-th-text="${addStatus==false?'Save' : 'Update'}" ></span >
+        </button >
+      </div >
+    </form >
+
+  </div >
+</div >
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<script >
+    $(document).ready(function () {
+
+        $('#province').bind("change", function () {
+            provinceChange($(this).val());
+        });
+        $('#district').bind("change", function () {
+            districtChange($(this).val());
+        });
+        $('#MOH').bind("change", function () {
+            agOfficeChange($(this).val());
+        });
+
+        let optionFieldAdd = (url, id) => {
+            let html = "<option value=''>Please select</option>";
+            $.get(url, function (data) {
+                data.forEach((item) => {
+                        html += `<option value="${item.id}">${item.name} </option>`
+                    }
+                )
+                $(`#${id}`).html(html);
+            });
+        };
+
+        function provinceChange(id) {
+            let url = "[[${districtURL}]]" + id;
+            optionFieldAdd(url, "district");
+            $('#district').html(`<option value="">Please Select </option>`);
+            $('#MOH').html(`<option value="">Please Select </option>`);
+            $('#policeStation').html(`<option value="">Please Select </option>`);
+        }
+
+        function districtChange(id) {
+            let url = "[[${agOfficeURL}]]" + id;
+            optionFieldAdd(url, "MOH");
+            $('#MOH').html(`<option value="">Please Select </option>`);
+            $('#policeStation').html(`<option value="">Please Select </option>`);
+        }
+
+        function agOfficeChange(id) {
+            let url = "[[${policeStationURL}]]" + id;
+            optionFieldAdd(url, "policeStation");
+            $('#policeStation').html(`<option value="">Please Select </option>`);
+        }
+
+    });
+</script >
+</body >
+</html >

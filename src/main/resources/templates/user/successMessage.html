@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<div class="container-fluid" >
+  <div class="row" >
+    <div class="col-md-4 bg-transparent offset-md-4" >
+      <div class="alert alert-success" role="alert" >
+        <h3 class="font-italic font-weight-bolder" data-th-text="${successMessage}" ></h3 >
+        <button class="btn btn-primary btn-lg mt-2" data-th-href="${'/home'}" >
+          Login
+          <i class="fas fa-sign-in-alt" aria-hidden="true" ></i >
+        </button >
+      </div >
+    </div >
+  </div >
+</div >
+<!--footer include-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+
+</body >
+</html >

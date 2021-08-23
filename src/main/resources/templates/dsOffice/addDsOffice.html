@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<div class="container-fluid" >
+  <div class="row text-center" >
+    <div class="col" >
+      <a class="btn btn-info" data-th-href="${'/home'}" >
+        Back To Home
+      </a >
+    </div >
+    <div class="col" >
+      <h2 class="text-center" >
+        <strong >
+          <span data-th-text="${addStatus==true?'Update District Details':'New District Details'}" ></span >
+        </strong >
+      </h2 >
+    </div >
+    <div class="col" >
+      <a class="btn btn-success" data-th-href="${'/district'}" >
+        Ag Office List </a >
+    </div >
+  </div >
+</div >
+
+<div class="container-fluid text-center" >
+  <div class="col" >
+    <form data-th-action="${addStatus==false?'/MOH/save' :'/MOH/update'}"
+          method="post" data-th-object="${MOH}" >
+      <input type="hidden" class="form-control" data-th-field="*{id}" id="id"
+             readonly data-th-if="${addStatus==true}" >
+      <!--Province-->
+      <div class=" form-row p-3" >
+        <label class="form-label col-md-3 " data-th-for="${'province'}" >
+          Province </label >
+
+        <select class="form-control col-md-9" data-th-field="*{province}" >
+          <option data-th-each="province : ${provinces}"
+                  data-th-text="${province.province}"
+                  data-th-value="${province}" ></option >
+        </select >
+        <p class="text-danger" data-th-errors="*{province}"
+           data-th-if="${#fields.hasErrors('province')}" >Error Name</p >
+
+      </div >
+      <!--Disctric-->
+      <div class=" form-row p-3" >
+        <select class="form-control  col-md-9" data-th-field="*{district}" >
+          <option value="" >Please Select</option >
+          <option data-th-each="district : ${districts}"
+                  data-th-text="${district.name}"
+                  data-th-value="${district.id}"
+          ></option >
+        </select >
+        <p class="text-danger" data-th-if="${#fields.hasErrors('district')}"
+           data-th-errors="*{district}" >Error Name</p >
+      </div >
+      <!--AgOffice name-->
+      <div class=" form-row p-3" >
+        <label data-th-for="${'name'}" class="form-label col-md-3" > Name </label >
+
+        <input type="text" class="form-control  col-md-9" data-th-field="*{name}" >
+        <p class="text-danger" data-th-if="${#fields.hasErrors('name')}"
+           data-th-errors="*{name}" >Error Name</p >
+      </div >
+      <!--Land Number-->
+      <div class=" form-row p-3" >
+
+        <label class="control-label col-md-3 " for="land" >Land No :</label >
+
+        <input id="land" data-th-field="*{land}" class="form-control  col-md-9 land"
+               type="text"
+               maxlength="10"
+               min="9" />
+        <span class="error" data-th-errors="*{land}"
+              data-th-if="${#fields.hasErrors('land')}" id="landError" >Error Land Number</span >
+      </div >
+      <!--Email-->
+      <div class=" form-row p-3" >
+        <label class="control-label col-md-3 " for="email" >Email :</label >
+        <input id="email" data-th-field="*{email}" class="form-control  col-md-9"
+               type="email"
+               required />
+        <span class="error" data-th-errors="*{email}"
+              data-th-if="${#fields.hasErrors('email')}"
+              id="emailError" >Error Email</span >
+      </div >
+      <!--Address-->
+      <div class="form-row p-3" >
+
+        <label class="control-label col-md-3 " for="address" >Address :</label >
+
+        <textarea id="address" data-th-field="*{address}"
+                  class="form-control  col-md-9"
+                  required ></textarea >
+        <span class="error" data-th-errors="*{address}"
+              data-th-if="${#fields.hasErrors('address')}" id="addressError" >Error Address</span >
+
+      </div >
+      <div align="right" >
+        <button class="btn btn-warning mr-5 darkmode--activated" type="reset" >
+          Clear
+        </button >
+        <button type="submit" class="btn btn-primary" >
+          <i data-th-class="${addStatus==false?'fa fa-save mr-1':'fa fa-thumbs-up mr-1'}" ></i >
+          <span
+                data-th-text="${addStatus==false?'Save' : 'Update'}" ></span >
+        </button >
+      </div >
+    </form >
+  </div >
+</div >
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<script >
+    $('#province').bind("change", function () {
+        optionFieldAdd(this.value);
+    });
+
+    let optionFieldAdd = (value) => {
+        let url = "[[${districtURL}]]" + value;
+        let html = "";
+        $.get(url, function (data) {
+            data.forEach((item) => {
+                    html += `<option value="${item.id}">${item.name} </option>`
+                }
+            )
+            $("#district").html(html);
+        });
+    }
+
+</script >
+</body >
+</html >

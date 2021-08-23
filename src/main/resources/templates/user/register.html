@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<div class="container-fluid" >
+  <form class="card rounded col-md-4 offset-md-4 mt-md-5" data-th-action="${'/register'}" method="post" >
+    <input type="text" name="newOrOld" th:value="${newOrOld}" hidden required >
+    <fieldset >
+      <legend class="text-center h3" >
+        Password Reset
+      </legend >
+      <div class="form-label-group" >
+        <input id="email" class="form-control" type="email" name="email"
+               data-th-placeholder="${newOrOld=='new'?'Type your Email Here':'Registered username '}"
+               required >
+        <label for="email" >User name </label >
+      </div >
+
+      <div class="row container" data-th-if="${message!=null}" >
+        <div class="alert alert-warning" role="alert" >
+          <strong ><span data-th-text="${message}" ></span ></strong >
+        </div >
+      </div >
+      <div class="form-group " >
+        <div class="row" >
+          <div class="col text-left" >
+            <a data-th-href="${'/login'}" class="btn btn-info" type="button" >
+              <i class="fas fa-sign-in-alt" aria-hidden="true" ></i >
+              Sign Up
+            </a >
+          </div >
+          <div class="col text-right" >
+            <button class="btn btn-success text-right" type="submit" >
+              <i class="fab fa-searchengin" ></i >
+              Send
+            </button >
+          </div >
+        </div >
+      </div >
+    </fieldset >
+  </form >
+</div >
+<!--footer include-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+
+</body >
+</html >

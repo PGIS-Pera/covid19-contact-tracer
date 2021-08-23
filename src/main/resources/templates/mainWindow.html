@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<link rel="stylesheet" data-th-href="@{/css/mainWindow.css}" >
+<div data-th-replace="~{fragments/navBar :: navBarFragment}" ></div >
+<div class="container-fluid mb-3" >
+  <div class="row" >
+    <div class="col-xl-3 col-sm-6 col-12 mb-1"
+         data-sec-authorize="hasAnyAuthority('ROLE_GUARD')" >
+      <div class="card" >
+        <div class="card-content" >
+          <div class="card-body" >
+            <div class="media d-flex" >
+              <div class="align-self-center" >
+                <i class="icon-pencil primary font-large-2 float-left" ></i >
+              </div >
+              <div class="media-body" >
+                <a data-sec-authorize="hasAnyAuthority('ROLE_GUARD')"
+                   class="h3" href="/category" ><h3 >Category Management</h3 ></a >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+    <div class="col-xl-3 col-sm-6 col-12 mb-1"
+         data-sec-authorize="hasAnyAuthority('ROLE_ADMIN', 'ROLE_ASSISTANT_SUPERINTENDENT')" >
+      <div class="card" >
+        <div class="card-content" >
+          <div class="card-body" >
+            <div class="media d-flex" >
+              <div class="align-self-center" >
+                <i class="icon-speech warning font-large-2 float-left" ></i >
+              </div >
+              <div class="media-body" >
+                <a data-sec-authorize="hasAnyAuthority('ROLE_ADMIN', 'ROLE_ASSISTANT_SUPERINTENDENT')"
+                   class="h3" href="/chandler" >Chandler Management</a >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+    <div class="col-xl-3 col-sm-6 col-12 mb-1"
+         data-sec-authorize="hasAnyAuthority('ROLE_ASSISTANT_SUPERINTENDENT')" >
+      <div class="card" >
+        <div class="card-content" >
+          <div class="card-body" >
+            <div class="media d-flex" >
+              <div class="align-self-center" >
+                <i class="icon-graph success font-large-2 float-left" ></i >
+              </div >
+              <div class="media-body" >
+                <a data-sec-authorize="hasAnyAuthority('ROLE_ASSISTANT_SUPERINTENDENT')"
+                   class="h3" href="/chandlerLicense" >Chandler License Management</a >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+    <div class="col-xl-3 col-sm-6 col-12 mb-1"
+         data-sec-authorize="hasAnyAuthority('ROLE_GUARD')" >
+      <div class="card" >
+        <div class="card-content" >
+          <div class="card-body" >
+            <div class="media d-flex" >
+              <div class="align-self-center" >
+                <i class="icon-pointer danger font-large-2 float-left" ></i >
+              </div >
+              <div class="media-body" >
+                <a data-sec-authorize="hasAnyAuthority('ROLE_GUARD')" class="h3"
+                   href="/item" >Item
+                  <br >
+                                 Management</a >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+    <div class="col-xl-3 col-sm-6 col-12 mb-1"
+         data-sec-authorize="hasAnyAuthority('ROLE_SHIP_AGENT', 'ROLE_SUPERINTENDENT', 'ROLE_CHANDLER')" >
+      <div class="card" >
+        <div class="card-content" >
+          <div class="card-body" >
+            <div class="media d-flex" >
+              <div class="align-self-center" >
+                <i class="icon-pencil primary font-large-2 float-left" ></i >
+              </div >
+              <div class="media-body" >
+                <a data-sec-authorize="hasAnyAuthority('ROLE_SHIP_AGENT', 'ROLE_SUPERINTENDENT', 'ROLE_CHANDLER')"
+                   class="h3" href="/payment" >Payment Details</a >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+    <div class="col-xl-3 col-sm-6 col-12 mb-1"
+         data-sec-authorize="hasAnyAuthority('ROLE_ADMIN')" >
+      <div class="card" >
+        <div class="card-content" >
+          <div class="card-body" >
+            <div class="media d-flex" >
+              <div class="align-self-center" >
+                <i class="icon-speech warning font-large-2 float-left" ></i >
+              </div >
+              <div class="media-body" >
+                <a data-sec-authorize="hasAnyAuthority('ROLE_ADMIN')"
+                   class="h3" href="/user" >User
+                  <br >
+                                            Management</a >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+    <div class="col-xl-3 col-sm-6 col-12 mb-1"
+         data-sec-authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_SUPERINTENDENT')" >
+      <div class="card" >
+        <div class="card-content" >
+          <div class="card-body" >
+            <div class="media d-flex" >
+              <div class="align-self-center" >
+                <i class="icon-graph success font-large-2 float-left" ></i >
+              </div >
+              <div class="media-body" >
+                <a data-sec-authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_SUPERINTENDENT')"
+                   class="h3" href="/userDetails" >User Details Management</a >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+    <div class="col-xl-3 col-sm-6 col-12 mb-1"
+         data-sec-authorize="hasAnyAuthority('ROLE_INSPECTOR')" >
+      <div class="card" >
+        <div class="card-content" >
+          <div class="card-body" >
+            <div class="media d-flex" >
+              <div class="align-self-center" >
+                <i class="icon-pointer danger font-large-2 float-left" ></i >
+              </div >
+              <div class="media-body" >
+                <a data-sec-authorize="hasAnyAuthority('ROLE_INSPECTOR')"
+                   class="h3" href="/vessel" >Vessel
+                  <br >Management</a >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+    <div class="col-xl-3 col-sm-6 col-12 mb-1"
+         data-sec-authorize="hasAnyAuthority('ROLE_SHIP_AGENT','ROLE_SUPERINTENDENT')" >
+      <div class="card" >
+        <div class="card-content" >
+          <div class="card-body" >
+            <div class="media d-flex" >
+              <div class="align-self-center" >
+                <i class="icon-pointer danger font-large-2 float-left" ></i >
+              </div >
+              <div class="media-body" >
+                <a data-sec-authorize="hasAnyAuthority('ROLE_SHIP_AGENT','ROLE_SUPERINTENDENT')"
+                   class="h3" href="/vesselOrder" >Vessel Order Management</a >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+
+    <div class="col-xl-3 col-sm-6 col-12 mb-1"
+         data-sec-authorize="hasAnyAuthority('ROLE_SUPERINTENDENT')" >
+      <div class="card" >
+        <div class="card-content" >
+          <div class="card-body" >
+            <div class="media d-flex" >
+              <div class="align-self-center" >
+                <i class="icon-pointer danger font-large-2 float-left" ></i >
+              </div >
+              <div class="media-body" >
+                <a data-sec-authorize="hasAnyAuthority('ROLE_SUPERINTENDENT')"
+                   class="h3" href="/vesselOrder" >Vessel Order Approval Management</a >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+    <div class="col-xl-3 col-sm-6 col-12 mb-1"
+         data-sec-authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT_SUPERINTENDENT')" >
+      <div class="card" >
+        <div class="card-content" >
+          <div class="card-body" >
+            <div class="media d-flex" >
+              <div class="align-self-center" >
+                <i class="icon-pointer danger font-large-2 float-left" ></i >
+              </div >
+              <div class="media-body" >
+                <a data-sec-authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT_SUPERINTENDENT')"
+                   class="h3" href="/chandler/add" >Add
+                  <br >Chandler </a >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+    <div class="col-xl-3 col-sm-6 col-12 mb-1"
+         data-sec-authorize="hasAnyAuthority('ROLE_ASSISTANT_SUPERINTENDENT')" >
+      <div class="card" >
+        <div class="card-content" >
+          <div class="card-body" >
+            <div class="media d-flex" >
+              <div class="align-self-center" >
+                <i class="icon-pointer danger font-large-2 float-left" ></i >
+              </div >
+              <div class="media-body" >
+                <a data-sec-authorize="hasAnyAuthority('ROLE_ASSISTANT_SUPERINTENDENT')"
+                   class="h3" href="/chandlerLicense" >Chandler License Management </a >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+
+    <div class="col-xl-3 col-sm-6 col-12 mb-1"
+         data-sec-authorize="hasAnyAuthority('ROLE_INSPECTOR')" >
+      <div class="card" >
+        <div class="card-content" >
+          <div class="card-body" >
+            <div class="media d-flex" >
+              <div class="align-self-center" >
+                <i class="icon-pointer danger font-large-2 float-left" ></i >
+              </div >
+              <div class="media-body" >
+                <a data-sec-authorize="hasAnyAuthority('ROLE_INSPECTOR')"
+                   class="h3" href="/vesselArrivalHistory/arrival" > Vessel Arrival History Management </a >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+    <div class="col-xl-3 col-sm-6 col-12 mb-1"
+         data-sec-authorize="hasAnyAuthority('ROLE_SUPERINTENDENT')" >
+      <div class="card" >
+        <div class="card-content" >
+          <div class="card-body" >
+            <div class="media d-flex" >
+              <div class="align-self-center" >
+                <i class="icon-pointer danger font-large-2 float-left" ></i >
+              </div >
+              <div class="media-body" >
+                <a data-sec-authorize="hasAnyAuthority('ROLE_SUPERINTENDENT')" class="h3"
+                   href="/vesselOrderItemApproval" >Vessel Order Approval</a >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+    <div class="col-xl-3 col-sm-6 col-12 mb-1" data-sec-authorize="hasAnyAuthority('ROLE_CHANDLER')" >
+      <div class="card" >
+        <div class="card-content" >
+          <div class="card-body" >
+            <div class="media d-flex" >
+              <div class="align-self-center" >
+                <i class="icon-pointer danger font-large-2 float-left" ></i >
+              </div >
+              <div class="media-body" >
+                <a data-sec-authorize="hasAnyAuthority('ROLE_CHANDLER')" class="h3"
+                   href="/vesselOrderItemBid" > Bids for Vessel Orders</a >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+  </div >
+  <div class="col-xl-3 col-sm-6 col-12 mb-1"
+       data-sec-authorize="hasAnyAuthority('ROLE_GUARD', 'ROLE_CHANDLER')" >
+    <div class="card" >
+      <div class="card-content" >
+        <div class="card-body" >
+          <div class="media d-flex" >
+            <div class="align-self-center" >
+              <i class="icon-speech warning font-large-2 float-left" ></i >
+            </div >
+            <div class="media-body" >
+              <a data-sec-authorize="hasAnyAuthority('ROLE_GUARD', 'ROLE_CHANDLER')"
+                 class="h3" href="/vesselOrderItemBidReceived" >Approved Vessel Order Management</a >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+  </div >
+  <div class="col-xl-3 col-sm-6 col-12 mb-1"
+       data-sec-authorize="hasAnyAuthority('ROLE_SHIP_AGENT')" >
+    <div class="card" >
+      <div class="card-content" >
+        <div class="card-body" >
+          <div class="media d-flex" >
+            <div class="align-self-center" >
+              <i class="icon-speech warning font-large-2 float-left" ></i >
+            </div >
+            <div class="media-body" >
+              <a data-sec-authorize="hasAnyAuthority('ROLE_SHIP_AGENT')"
+                 class="h3" href="/shipAgentPayment" >Payments by ShipAgent</a >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+  </div >
+
+
+</div >
+
+<!--footer include-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+
+</body >
+</html >
+

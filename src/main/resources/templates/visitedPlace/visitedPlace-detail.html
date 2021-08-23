@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+<div class="container-fluid" >
+  <div class="row text-center" >
+    <div class="col" >
+      <a class="btn btn-info" data-th-href="${'/home'}" >
+        Back To Home
+      </a >
+    </div >
+    <div class="col" >
+      <span class="font-weight-bold h2" data-th-text="${districtDetail.province.province}" ></span >
+    </div >
+    <div class="col" >
+      <a class="btn btn-success" data-th-href="${'/district'}" >
+        District List </a >
+    </div >
+  </div >
+</div >
+<div class="container-fluid text-center" >
+  <div class="container-fluid" data-th-fragment="districtDetail" >
+    <!--Province-->
+    <div class=" form-row  p-3" >
+      <label class="form-label  col-md-3" > Province </label >
+      <p class="display_detail"
+         data-th-text="${gramaNiladhariDetail.policeStation.MOH.district.province.province}" ></p >
+    </div >
+    <!--District-->
+    <div class=" form-row p-3" >
+      <label class="form-label col-md-3 " >
+        District </label >
+      <p class="display_detail"
+         data-th-text="${gramaNiladhariDetail.policeStation.MOH.district.name}" ></p >
+    </div >
+    <!--AgOffice-->
+    <div class=" form-row p-3" >
+      <label class="form-label col-md-3 " > Ag
+                                            Office </label >
+      <p class="display_detail"
+         data-th-text="${gramaNiladhariDetail.policeStation.MOH.name}" ></p >
+    </div >
+    <!--Police-->
+    <div class=" form-row p-3" >
+      <label class="col-md-3 form-label" > Police Station </label >
+      <p class="display_detail"
+         data-th-text="${gramaNiladhariDetail.policeStation.name}" ></p >
+    </div >
+    <!--GramaNiladhariDivision-->
+    <div class="form-row p-3" >
+      <label class="control-label col-md-3" >Grama
+                                             Niladhari Division</label >
+      <p class="display_detail"
+         data-th-text="${gramaNiladhariDetail.name}" ></p >
+    </div >
+  </div >
+</div >
+<!--footer include-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+</body >
+</html >

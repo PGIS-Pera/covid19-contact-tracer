@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+<div class="container-fluid" >
+  <div class="row text-center" >
+    <div class="col" >
+      <a class="btn btn-info" data-th-href="${'/home'}" >
+        Back To Home
+      </a >
+    </div >
+    <div class="col" >
+      <span class="font-weight-bold h2" data-th-text="${districtDetail.province.province}" ></span >
+    </div >
+    <div class="col" >
+      <a class="btn btn-success" data-th-href="${'/district'}" >
+        District List </a >
+    </div >
+  </div >
+</div >
+<div class="container-fluid text-center" >
+  <div class="col-6 offset-md-3" data-th-fragment="agOfficeDetail" >
+
+    <!--Province-->
+    <div class="form-group " >
+      <label class="form-label " > Province </label >
+      <p class="display_detail"
+         data-th-text="${agOfficeDetail.district.province}" ></p >
+    </div >
+    <!--District-->
+    <div class="form-group " >
+      <label class="form-label " > District </label >
+      <p class="display_detail" data-th-text="${agOfficeDetail.district.name}" ></p >
+    </div >
+    <!--AgOffice name-->
+    <div class="form-group " >
+      <label class="form-label " > Name </label >
+      <p class="display_detail" data-th-text="${agOfficeDetail.name}" ></p >
+    </div >
+
+    <!--Land Number-->
+    <div class="form-group" >
+      <label class="control-label" >Land No :</label >
+      <p class="display_detail" data-th-text="${agOfficeDetail.land}" ></p >
+    </div >
+    <!--Email-->
+    <div class="form-group" >
+      <label class="control-label" >Email :</label >
+      <p class="display_detail" data-th-text="${agOfficeDetail.email}" ></p >
+    </div >
+    <!--Address-->
+    <div class="form-group" >
+      <label class="control-label" >Address :</label >
+      <p class="display_detail" data-th-text="${agOfficeDetail.address}" ></p >
+    </div >
+  </div >
+</div >
+<!--footer include-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+</body >
+</html >

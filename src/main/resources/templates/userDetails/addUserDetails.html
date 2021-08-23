@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<div class="container-fluid" >
+  <div class="row text-center" >
+    <div class="col" >
+      <a class="btn btn-info" data-th-href="${'/home'}" >
+        Back To Home
+      </a >
+    </div >
+    <div class="col" >
+      <h4 class="text-center" >
+        <strong >
+          <span data-th-text="${addStatus==true?'New User Details':'Update User Details Details'}" ></span >
+        </strong >
+      </h4 >
+    </div >
+    <div class="col text-center" >
+      <a data-th-href="${'/userDetails'}" class="btn btn-primary" >
+        View User Details
+      </a >
+    </div >
+  </div >
+</div >
+<!--Form Content - start -->
+<div class="container-fluid " >
+  <form data-th-action="${addStatus==true?'/userDetails/save':'/userDetails/update'}"
+        data-th-object="${userDetails}" enctype="multipart/form-data" method="POST" >
+    <input data-th-field="*{id}" readonly type="hidden" />
+    <input data-th-field="*{liveDead}" readonly type="hidden" />
+    <div class="row" >
+      <!--Left Side-->
+      <div class="col-md-6" >
+        <!--number-->
+        <div class="form-row text-md-right text-sm-left" data-th-if="${addStatus==false}" >
+          <div class="col-md-4" >
+            <label class="control-label" for="number" >User Number :</label >
+          </div >
+          <div class="col-md-8" >
+            <input class="form-control" data-th-field="*{number}" id="number" readonly
+                   required tabindex="4" type="text" />
+
+          </div >
+        </div >
+        <!--Tittle -->
+        <div class="form-row text-md-right text-sm-left" >
+          <div class="col-md-4" >
+            <label class="control-label" for="title" >Title :</label >
+          </div >
+          <div class="col-md-8" >
+            <select class="form-control" data-th-field="*{title}" id="title" required tabindex="3" >
+              <option value="" >Please select</option >
+              <option data-th-each="titles : ${title}"
+                      data-th-text="${titles.title}"
+                      data-th-value="${titles}" ></option >
+            </select >
+          </div >
+        </div >
+        <!--Name-->
+        <div class="form-row text-md-right text-sm-left" >
+          <div class="col-md-4" >
+            <label class="control-label" for="name" >Name :</label >
+          </div >
+          <div class="col-md-8" >
+            <input class="form-control" data-th-field="*{name}" id="name" minlength="3" required
+                   tabindex="4"
+                   type="text" />
+            <span class="error" data-th-errors="*{name}"
+                  data-th-if="${#fields.hasErrors('name')}" id="nameError" >Error Name</span >
+          </div >
+        </div >
+        <!--Calling Name-->
+        <div class="form-row text-md-right text-sm-left" >
+          <div class="col-md-4" >
+            <label class="control-label" for="callingName" >Calling Name :</label >
+          </div >
+          <div class="col-md-8" >
+            <input class="form-control" data-th-field="*{callingName}" id="callingName" minlength="5"
+                   tabindex="5" type="text" />
+            <span class="error" data-th-errors="*{callingName}"
+                  data-th-if="${#fields.hasErrors('callingName')}"
+                  id="callingNameError" >Error Calling Name</span >
+          </div >
+        </div >
+        <!--Nic-->
+        <div class="form-row text-md-right text-sm-left" >
+          <div class="col-md-4" >
+            <label class="control-label" for="nic" >NIC No :</label >
+          </div >
+          <div class="col-md-8" >
+            <input class="form-control" data-th-field="*{nic}" id="nic" maxlength="12" minlength="10"
+                   required
+                   tabindex="6" type="text" />
+            <span class="error" data-th-errors="*{nic}" data-th-if="${#fields.hasErrors('nic')}"
+                  id="nicError" >Error NIC Number</span >
+          </div >
+        </div >
+        <!--Gender-->
+        <div class="form-row text-md-right text-sm-left" >
+          <div class="col-md-4" >
+            <label class="control-label" >Gender :</label >
+          </div >
+          <div class="col-md-8" >
+            <div class="custom-control custom-checkbox custom-control-inline "
+                 data-th-each="genders,index : ${gender}" >
+              <input class="custom-control-input gender" data-th-checked="${genders==gender}"
+                     data-th-id="${index.index}+${genders}"
+                     data-th-name="${'gender'}"
+                     data-th-value="${genders}" required
+                     type="radio" />
+              <label class="custom-control-label"
+                     data-th-for="${index.index}+${genders}"
+                     data-th-text="${genders.gender}" > radio
+              </label >
+            </div >
+          </div >
+        </div >
+        <!--Date of birth-->
+        <div class="form-row text-md-right text-sm-left" >
+          <div class="col-md-4" >
+            <label class="control-label" for="dateOfBirth" >Birth date :</label >
+          </div >
+          <div class="col-md-8" >
+            <input class="form-control" data-th-field="*{dateOfBirth}" id="dateOfBirth"
+                   placeholder="Ex: 1990 - 01 - 20"
+                   readonly
+                   required tabindex="8" type="date" />
+            <span class="error" data-th-errors="*{dateOfBirth}"
+                  data-th-if="${#fields.hasErrors('dateOfBirth')}"
+                  id="dateOfBirthError" >Error Birthday</span >
+          </div >
+        </div >
+        <!--Image-->
+        <div class="form-row text-md-right text-sm-left" >
+          <div class="col-md-4" >
+            <label class="control-label" >Image :</label >
+          </div >
+          <div class="col-md-3" >
+            <input accept="image/png, image/jpeg" id="imgUpload" name="file"
+                   type="file" />
+          </div >
+          <div class="col-md-4" >
+            <!--photo details-->
+            <div class="ml-5" >
+              <img alt="" class="text-md-right text-sm-left"
+                   data-th-if="${addStatus==false}"
+                   data-th-src="${file != null ? file.url :''}" id="image"
+                   style="height: 100px; width: 100%;" />
+              <img alt="" class="text-md-right text-sm-left" data-th-if="${addStatus==true}" id="image"
+                   src=""
+                   style="height: 100px; width: 100%" /></div >
+          </div >
+        </div >
+      </div >
+      <!--Right Side-->
+      <div class="col-md-6 col-sm-6" >
+        <!--Address-->
+        <div class="form-row text-md-right text-sm-left" >
+          <div class="col-md-4" >
+            <label class="control-label" for="address" >Address :</label >
+          </div >
+          <div class="col-md-8" >
+                            <textarea id="address" data-th-field="*{address}" class="form-control" tabindex="12"
+                                      required ></textarea >
+            <span class="error" data-th-errors="*{address}"
+                  data-th-if="${#fields.hasErrors('address')}" id="addressError" >Error Address</span >
+          </div >
+        </div >
+        <!--Mobile Number One-->
+        <div class="form-row text-md-right text-sm-left" >
+          <div class="col-md-4" >
+            <label class="control-label" for="mobileOne" >Mobile One No :</label >
+          </div >
+          <div class="col-md-8" >
+            <input class="form-control mobile" data-th-field="*{mobileOne}" id="mobileOne" maxlength="10"
+                   min="9"
+                   required tabindex="13"
+                   type="tel" />
+            <span class="error" data-th-errors="*{mobileOne}"
+                  data-th-if="${#fields.hasErrors('mobileOne')}"
+                  id="mobileOneError" >Error Mobile Number</span >
+          </div >
+        </div >
+        <!--Mobile Number Two-->
+        <div class="form-row text-md-right text-sm-left" >
+          <div class="col-md-4" >
+            <label class="control-label" for="mobileTwo" >Mobile Two No :</label >
+          </div >
+          <div class="col-md-8" >
+            <input class="form-control mobile" data-th-field="*{mobileTwo}" id="mobileTwo" maxlength="10"
+                   min="9"
+                   tabindex="14" type="tel" />
+            <span class="error" data-th-errors="*{mobileTwo}"
+                  data-th-if="${#fields.hasErrors('mobileTwo')}"
+                  id="mobileTwoError" >Error Mobile  Number</span >
+          </div >
+        </div >
+        <!--Land Number-->
+        <div class="form-row text-md-right text-sm-left" >
+          <div class="col-md-4" >
+            <label class="control-label" for="land" >Land No :</label >
+          </div >
+          <div class="col-md-8" >
+            <input class="form-control land" data-th-field="*{land}" id="land" maxlength="10" min="9"
+                   tabindex="15"
+                   type="tel" />
+            <span class="error" data-th-errors="*{land}"
+                  data-th-if="${#fields.hasErrors('land')}" id="landError" >Error Land Number</span >
+          </div >
+        </div >
+        <!--Email-->
+        <div class="form-row text-md-right text-sm-left" >
+          <div class="col-md-4" >
+            <label class="control-label" for="email" >Email :</label >
+          </div >
+          <div class="col-md-8" >
+            <input class="form-control" data-th-field="*{email}" id="email" required tabindex="16"
+                   type="email" />
+            <span class="error" data-th-errors="*{email}"
+                  data-th-if="${#fields.hasErrors('email')}" id="emailError" >Error Email</span >
+          </div >
+        </div >
+        <!--Office email-->
+        <div class="form-row text-md-right text-sm-left" >
+          <div class="col-md-4" >
+            <label class="control-label" for="officeEmail" >Office Email :</label >
+          </div >
+          <div class="col-md-8" >
+            <input class="form-control" data-th-field="*{officeEmail}" id="officeEmail" tabindex="17"
+                   type="email" />
+            <span class="error" data-th-errors="*{officeEmail}"
+                  data-th-if="${#fields.hasErrors('officeEmail')}"
+                  id="officeEmailError" >Error Office Email</span >
+          </div >
+        </div >
+        <!--Created by and created at-->
+        <div class="form-row text-md-right text-sm-left" data-th-if="${addStatus==false}" >
+          <div class="col-md-4" >
+            <label class="control-label" for="createdBy" >Created By :</label >
+          </div >
+          <div class="col-md-8" >
+            <input class="form-control" data-th-field="*{createdBy}" id="createdBy" readonly
+                   type="text" />
+          </div >
+        </div >
+        <div class="form-row text-md-right text-sm-left" data-th-if="${addStatus==false}" >
+          <div class="col-md-4" >
+            <label class="control-label" for="createdAt" >Created At :</label >
+          </div >
+          <div class="col-md-8" >
+            <input class="form-control" data-th-field="*{createdAt}" id="createdAt" readonly
+                   type="text" />
+          </div >
+        </div >
+      </div >
+      <!--Button-->
+      <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
+        <!--Back Button-->
+        <a class="btn btn-dark" href="/userDetails" tabindex="10" >
+          <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
+        </a >
+        <!--Save Button-->
+        <button class="btn btn-success ml-md-5" tabindex="8" type="submit" >
+          <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;<span
+              data-th-text="${addStatus==true?'Save': 'Update'}"
+              id="submit" ></span >
+        </button >
+        <!--Cancel Button-->
+        <button class="btn btn-warning ml-md-5" tabindex="9" type="reset" >
+          <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
+        </button >
+      </div >
+
+      <div class="form-row" >
+        <label data-th-if="${#fields.hasErrors('*')}" data-th-text="'Errors: '"
+               id="errorLabel" >Errors: </label >
+        <ul >
+          <li class="error" data-th-each="err : ${#fields.errors('*')}" data-th-text="${err}"
+              id="error" ></li >
+        </ul >
+      </div >
+    </div >
+  </form >
+</div >
+<!--footer include-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<script >
+    $(document).ready(function () {
+        imageSrcAttributeCheck();
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                $('#image').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+    //display selected image
+    $("#imgUpload").change(function () {
+        $("#image").toggle('show');
+        readURL(this);
+    });
+
+    //image is not -> showing area hide
+    function imageSrcAttributeCheck() {
+        let attribute = $("#image").attr("src");
+        if (attribute === '') {
+            $("#image").toggle('hide');
+        }
+    }
+
+</script >
+</body >
+</html >

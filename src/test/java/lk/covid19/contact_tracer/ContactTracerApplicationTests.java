@@ -1,4 +1,4 @@
-package lk.covid19.contacttracer;
+package lk.covid19.contact_tracer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

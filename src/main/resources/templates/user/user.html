@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<div class="container-fluid" >
+  <div class="row text-center" >
+    <div class="col" >
+      <a class="btn btn-success" id="newUser" data-th-href="${'/user/add'}" >
+        <i class="fa fa-user-plus" ></i > &nbsp; Add User </a >
+    </div >
+    <div class="col" >
+      <h4 class="text-center" >
+        <strong >
+          User Management
+        </strong >
+      </h4 >
+    </div >
+    <div class="col" ></div >
+  </div >
+</div >
+<div class="container-fluid" >
+  <div class="row" data-th-if="${not #lists.isEmpty(users)}" >
+    <div class="container" >
+      <table class="table table-hover table-responsive-sm table-striped" id="myTable" >
+        <thead class="thead-inverse" >
+        <tr >
+          <th >Index</th >
+          <th >User Name</th >
+          <th >User Status</th >
+          <th >Created Date</th >
+          <th >Modify</th >
+        </tr >
+        </thead >
+        <tbody >
+        <tr data-th-each="user, rowCount : ${users}" >
+          <th data-th-text="${rowCount.count}" ></th >
+          <th data-th-text="${user.username}" ></th >
+          <th data-th-text="${user.enabled==true?'Active':'Blocked'}" ></th >
+          <th data-th-text="${{user.createdAt}}" ></th >
+          <th ><a class="btn btn-success btn-sm" data-th-href="${'/user/' + user.id}" ><i
+                class="fa fa-folder-open" ></i >&nbsp;View</a >
+            <a class="btn btn-primary btn-sm" id="userEdit"
+               data-th-href="${'/user/edit/' + user.id}" ><i
+                  class="fa fa-edit" ></i >&nbsp;Edit</a >
+            <a class="btn btn-danger btn-sm" id="userRemove"
+               data-th-href="${'/user/remove/' + user.id}"
+               data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+            ><i
+                  aria-hidden="true" class="fa fa-trash" ></i >
+              Delete</a >
+          </th >
+        </tr >
+        </tbody >
+      </table >
+    </div >
+  </div >
+  <div class="row" data-th-if="${ #lists.isEmpty(users)}" >
+    <div class="col-sm-12" >
+      <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
+          <span aria-hidden="true" >&times;</span >
+        </button >
+        <h3 class="text-center text-danger" >
+          <strong >There is no user upto know please add user to the system
+                   using add user button.
+          </strong >
+        </h3 >
+      </div >
+    </div >
+  </div >
+</div >
+
+<!--footer include-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+
+<script >
+    /*active boostrap alert - start*/
+    $(".alert").alert();
+    /*active boostrap alert - end*/
+</script >
+</body >
+</html >

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<link data-th-href="@{/css/combo-box-search.css}" media="all" rel="stylesheet" type="text/css" />
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<div class="container-fluid   " >
+  <div class="row text-md-center" >
+    <div class="col" >
+      <a class="btn btn-info" data-th-href="${'/home'}" >
+        <i class="fa fa-home" style="font-size: 20px" ></i > &nbsp; Home
+      </a >
+    </div >
+    <div class="col" >
+            <span class="h4 font-weight-bold text-center"
+                  data-th-text="${addStatus==true?'New Patient Add':'Update Patient Details'}" ></span >
+    </div >
+    <div class="col" >
+      <a class="btn btn-success" data-th-href="${'/patient'}" >
+        <i class="fa fa-list" ></i >&nbsp; View List
+      </a >
+    </div >
+  </div >
+</div >
+<!--Form Content - start -->
+<div class="container-fluid" >
+  <div class="col" >
+    <form data-th-action="${addStatus==true?'/patient/save':'/patient/update'}" data-th-object="${patient}"
+          method="POST" >
+      <input class="form-control" data-th-field="*{id}" data-th-if="${addStatus==false}" id="id" readonly
+             type="hidden" />
+      <div class="form-row" >
+        <!--Left Side-->
+        <div class="col-md-6 col-sm-6 " >
+          <!--code-->
+          <div class="form-row text-md-right text-sm-left" data-th-if="${addStatus==false}" >
+            <div class="col-md-4" >
+              <label class="control-label" for="code" >Code:</label >
+            </div >
+            <div class="col-md-8" >
+              <input class="form-control" data-th-field="*{code}" id="code" readonly type="text" />
+            </div >
+          </div >
+          <!--Nic-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="nic" >NIC No :</label >
+            </div >
+            <div class="col-md-8" >
+              <input class="form-control" data-th-field="*{nic}" data-th-readonly="${addStatus==false}"
+                     id="nic" maxlength="12"
+                     minlength="10" type="text" />
+              <span class="error" data-th-errors="*{nic}"
+                    data-th-if="${#fields.hasErrors('nic')}" >Error NIC Number</span >
+            </div >
+          </div >
+          <!--Name-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="name" >Name :</label >
+            </div >
+            <div class="col-md-8" >
+              <input class="form-control" data-th-field="*{name}" id="name" required type="text" />
+              <span class="error" data-th-errors="*{name}"
+                    data-th-if="${#fields.hasErrors('name')}" id="nameError" >Error Name</span >
+            </div >
+          </div >
+          <!--Gender-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" >Gender :</label >
+            </div >
+            <div class="col-md-8" >
+              <div class="custom-control custom-checkbox custom-control-inline "
+                   data-th-each="genders,index : ${gender}" >
+                <input class="custom-control-input gender" data-th-checked="${genders==gender}"
+                       data-th-id="${index.index}+${genders}"
+                       data-th-name="${'gender'}"
+                       data-th-value="${genders}" required
+                       type="radio" />
+                <label class="custom-control-label"
+                       data-th-for="${index.index}+${genders}"
+                       data-th-text="${genders.gender}" > radio
+                </label >
+              </div >
+            </div >
+          </div >
+          <!--Age-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="age" >Age :</label >
+            </div >
+            <div class="col-md-8" >
+              <input class="form-control" data-th-field="*{age}" id="age"
+                     min="0" required
+                     type="number" />
+              <span class="error" data-th-errors="*{age}"
+                    data-th-if="${#fields.hasErrors('age')}"
+                    id="dateOfBirthError" >Error Birthday</span >
+            </div >
+          </div >
+          <!--Dead-->
+          <div class="form-row text-md-right text-sm-left" data-th-if="${addStatus==false}" >
+            <div class="col-md-4" >
+              <label class="control-label" >Live Or Dead :</label >
+            </div >
+            <div class="col-md-8" >
+              <div class="custom-control custom-checkbox custom-control-inline "
+                   data-th-each="deadLive,index : ${deadLives}" >
+                <input class="custom-control-input" data-th-checked="${deadLive==deadLive}"
+                       data-th-id="${index.index}+${deadLive}"
+                       data-th-name="${'deadLive'}"
+                       data-th-value="${deadLive}" required
+                       type="radio" />
+                <label class="custom-control-label"
+                       data-th-for="${index.index}+${deadLive}"
+                       data-th-text="${deadLive.deadLive}" > radio
+                </label >
+              </div >
+            </div >
+          </div >
+          <!--Date of birth-->
+          <!--               <div class="form-row text-md-right text-sm-left">
+                             <div class="col-md-4">
+                                 <label class="control-label" for="dateOfBirth">Birth date :</label>
+                             </div>
+                             <div class="col-md-8">
+                                 <input class="form-control" data-th-field="*{dateOfBirth}" id="dateOfBirth"
+                                        placeholder="Ex: 1990 - 01 - 20"
+                                        required
+                                        type="date"/>
+                                 <span class="error" data-th-errors="*{dateOfBirth}"
+                                       data-th-if="${#fields.hasErrors('dateOfBirth')}"
+                                       id="dateOfBirthError">Error Birthday</span>
+                             </div>
+                         </div>-->
+          <!--Police Station -->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="policeStation" >Police Station :</label >
+            </div >
+            <div class="col-md-8" >
+              <select class="form-control" data-th-field="*{policeStation}" id="policeStation" required >
+                <option value="" >Please select</option >
+                <option data-th-each="policeStation : ${policeStations}"
+                        data-th-text="${policeStation.name}"
+                        data-th-value="${policeStation.id}" ></option >
+              </select >
+            </div >
+          </div >
+        </div >
+        <!--Right Side-->
+        <div class="col-md-6 col-sm-6 " >
+          <!--Address-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="address" >Address :</label >
+            </div >
+            <div class="col-md-8" >
+                            <textarea class="form-control" data-th-field="*{address}" id="address" required rows="4"
+                            ></textarea >
+              <span class="error" data-th-errors="*{address}"
+                    data-th-if="${#fields.hasErrors('address')}" id="addressError" >Error Address</span >
+            </div >
+          </div >
+          <!--Mobile Number One-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="mobileOne" >Mobile :</label >
+            </div >
+            <div class="col-md-8" >
+              <input class="form-control mobile" data-th-field="*{mobile}" id="mobileOne"
+                     maxlength="10" min="9" type="text" />
+              <span class="error" data-th-errors="*{mobile}"
+                    data-th-if="${#fields.hasErrors('mobile')}"
+                    id="mobileOneError" >Error Mobile Number</span >
+            </div >
+          </div >
+          <!--Identified Date-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="identifiedDate" >Identified Date :</label >
+            </div >
+            <div class="col-md-8" >
+              <input class="form-control" data-th-field="*{identifiedDate}" id="identifiedDate"
+                     placeholder="Ex: 1990 - 01 - 20" data-th-required="${addStatus==true}" type="date" />
+              <span class="error" data-th-errors="*{identifiedDate}"
+                    data-th-if="${#fields.hasErrors('identifiedDate')}" >Error Birthday</span >
+            </div >
+          </div >
+
+          <!--Created by and created at-->
+          <div data-th-if="${addStatus==false}" id="updateStatus" >
+            <div class="form-row text-md-right text-sm-left" >
+              <div class="col-md-4" >
+                <label class="control-label" for="createdAt" >Created At :</label >
+              </div >
+              <div class="col-md-8" >
+                <input class="form-control" data-th-value="${{patient.createdAt}}" id="createdAt"
+                       readonly
+                       type="text" />
+              </div >
+            </div >
+            <div class="form-row text-md-right text-sm-left" >
+              <div class="col-md-4" >
+                <label class="control-label" for="createdBy" >Created By :</label >
+              </div >
+              <div class="col-md-8" >
+                <input class="form-control" data-th-field="*{createdBy}" id="createdBy" readonly
+                       type="text" />
+              </div >
+            </div >
+          </div >
+        </div >
+        <!-- previous diagnosed list-->
+        <div class="form-group offset-md-3 col-md-6 col-sm-12 text-center flex-column "
+             data-th-if="${addStatus==false}" >
+          <span class="h4 text-center" >Previous Diagnosed Attempts  </span >
+          <ul class="list-group" >
+            <li class="list-group-item " data-th-each="attempt , index : ${patient.attempts}" >
+              <span class="mr-2" data-th-text="${index.count}" ></span >:
+              <span data-th-text="${{attempt.identifiedDate}}" ></span >
+            </li >
+          </ul >
+        </div >
+        <!-- button area-->
+        <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
+          <!--Back Button-->
+          <a class="btn btn-dark" data-th-href="${'/patient'}" tabindex="10" >
+            <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
+          </a >
+          <!--Save Button-->
+          <button class="btn btn-success ml-md-5" tabindex="8" type="submit" >
+            <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;
+            <span data-th-text="${addStatus==true?'Save': 'Update'}" id="submit" ></span >
+          </button >
+          <!--Cancel Button-->
+          <button class="btn btn-warning ml-md-5" tabindex="9" type="reset" >
+            <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
+          </button >
+        </div >
+        <div class="form-row" >
+          <label data-th-if="${#fields.hasErrors('*')}" data-th-text="'Errors: '" >Errors: </label >
+          <ul >
+            <li class="error" data-th-each="err: ${#fields.errors('*')}" data-th-text="${err}" ></li >
+          </ul >
+        </div >
+      </div >
+    </form >
+  </div >
+</div >
+
+<input data-th-value="${patientNic}" hidden id="patientNic" type="text" >
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<script data-th-src="@{/js/combo-box-search.js}" ></script >
+<script >
+    $(document).ready(function () {
+        $("#policeStation").select2({
+            data: $(this).val()
+        }).addClass("form-control");
+
+        let today = new Date().toISOString().split('T')[0];
+        document.getElementById("identifiedDate").setAttribute('max', today);
+    });
+
+    $("#nic").keyup(function () {
+        let nic = $(this).val();
+        if (nicRegex.test(nic)) {
+            $.ajax({
+                type: 'GET',
+                url: $('#patientNic').val() + nic,
+                success: function (resp) {
+                    popUpDataSet(resp);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+    });
+
+    function popUpDataSet(resp) {
+        if (resp) {
+            swal("Write something here:", {
+                title: "Are you sure with this nic \n" + $("#nic").val() + " ?",
+                text: "This patient is already on the system, automatically redirect you to add new attempt page!",
+                icon: "warning",
+                dangerMode: true,
+                buttons: true,
+                //  timer: 6000,
+                content: {
+                    element: "input",
+                    attributes: {
+                        id: "patient_id",
+                        type: "text",
+                        value: resp.id,
+                        hidden: "hidden",
+                    },
+                }
+            }).then(() => {
+                self.location = location.protocol + "//" + location.host + "/patient/edit/" + $("#patient_id").val();
+            });
+        }
+    }
+</script >
+</body >
+</html >
