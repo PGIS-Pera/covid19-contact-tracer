@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<div class="container-fluid" >
+  <div class="row text-center " >
+    <div class="col" >
+      <a class="btn btn-success" data-th-href="${'/person/add'}" >
+        <i class="fa fa-user-plus" ></i > &nbsp; Add Patient </a >
+    </div >
+    <div class="col" >
+      <a class="btn btn-success" data-th-href="${'/person/excel'}" >
+        <i class="fa fa-users" ></i > &nbsp; Add Patients &nbsp;
+        <i class="far fa-file-excel" ></i >
+      </a >
+    </div >
+    <div class="col" >
+      <a data-th-href="${'/person'}" class="btn btn-primary" >
+        <i class="fa fa-user " style="font-size: 20px" ></i >&nbsp;Show List&nbsp;
+        <i class="fas fa-store-alt" style="font-size: 20px" ></i >
+                                                             &nbsp;
+      </a >
+    </div >
+  </div >
+  <div class="row text-center " >
+    <div class="col" >
+      <h4 class="text-center" >
+        <strong >
+          Patient Management
+        </strong >
+      </h4 >
+    </div >
+  </div >
+</div >
+<!--Patients excel add form-->
+<div class="container-fluid" >
+  <form data-th-action="${'/excelAdd'}" method="post" enctype="multipart/form-data" >
+    <label > Please Select Patient List File :
+      <input type="file" name="multipartFile"
+             accept=".csv, .xls, .xlsx, text/csv, application/csv,text/comma-separated-values, application/csv, application/excel,application/vnd.msexcel, text/anytext, application/vnd. ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+             required />
+      <small class="form-text" >Please verify that selected file's detail format as bellow image</small >
+    </label >
+    <button type="submit" class="btn btn-primary" >Add Patients</button >
+    <button type="reset" class="btn btn-warning" >Clear</button >
+  </form >
+  <div class="container-fluid" >
+    <img src="" data-th-src="@{'/img/excel_sample.png'}" class="img-fluid rounded-top" alt="excel sheet format" >
+  </div >
+</div >
+<!--person list-->
+<div class="container-fluid text-center" >
+  <div class="col" >
+    <div class="col" data-th-if="${not #lists.isEmpty(people)}" >
+      <table class="table table-hover table-striped" id="myTable" >
+        <thead >
+        <tr >
+          <th > Index</th >
+          <th > Code</th >
+          <th > Name</th >
+          <th > Mobile</th >
+          <th > Nic</th >
+          <th > Address</th >
+          <th > Modify</th >
+        </tr >
+        </thead >
+        <tbody >
+        <tr data-th-each="person, rowCount : ${people}" data-th-if="" >
+          <th data-th-text="${rowCount.count}" ></th >
+          <th data-th-text="${person.code}" ></th >
+          <th data-th-text="${person.name}" ></th >
+          <th data-th-text="${person.mobileOne}" ></th >
+          <th data-th-text="${person.nic}" ></th >
+          <th data-th-utext="${person.address}" ></th >
+          <th >
+            <a class="btn btn-success btn-sm" data-th-href="${'/person/' + person.id}" id="patientView" ><i
+                  class="fa fa-folder-open" ></i >&nbsp;View</a >
+            <a class="btn btn-primary btn-sm" data-th-href="${'/person/edit/' + person.id}"
+               id="patientEdit" ><i class="fa fa-edit" ></i >&nbsp;Edit</a >
+            <a class="btn btn-danger btn-sm" data-th-href="${'/person/remove/' + person.id}"
+               data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" id="patientRemove" ><i
+                  class="fa fa-trash" ></i >
+              Delete</a >
+          </th >
+        </tr >
+        </tbody >
+      </table >
+    </div >
+  </div >
+  <div class="row" data-th-if="${ #lists.isEmpty(people)}" >
+    <div class="col-sm-12" >
+      <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+        <button aria-label="Close" class="close" data-dismiss="alert" type="button" >
+          <span aria-hidden="true" >&times;</span >
+        </button >
+        <h3 class="text-center text-danger" >
+          <strong >There is no person upto now please add person to the system
+                   using add user button.
+          </strong >
+        </h3 >
+      </div >
+    </div >
+  </div >
+</div >
+<!--footer include-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+
+<script >
+    /*active boostrap alert - start*/
+    $(".alert").alert();
+    /*active boostrap alert - end*/
+</script >
+</body >
+</html >

@@ -3,8 +3,8 @@ package lk.covid19.contact_tracer.asset.grama_niladhari.entity;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import lk.covid19.contact_tracer.asset.ds_office.entity.DsOffice;
-import lk.covid19.contact_tracer.asset.patient.entity.Patient;
-import lk.covid19.contact_tracer.asset.visited_place.entity.VisitedPlace;
+import lk.covid19.contact_tracer.asset.person.entity.Person;
+import lk.covid19.contact_tracer.asset.location_interact.entity.LocationInteract;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,9 +32,9 @@ public class GramaNiladhari {
   private DsOffice dsOffice;
 
   @OneToMany( mappedBy = "gramaNiladhari" )
-  private List< Patient > patients;
+  private List< Person > people;
 
   @OneToMany( mappedBy = "gramaNiladhari" )
-  private List< VisitedPlace > visitedPlaces;
+  private List< LocationInteract > locationInteracts;
 
 }

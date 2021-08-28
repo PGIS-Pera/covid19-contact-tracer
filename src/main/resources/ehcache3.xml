@@ -28,8 +28,8 @@
         <heap unit="entries">400</heap>
         <jsr107:mbeans enable-statistics="true"/>
     </cache>
-    <!--4. patient-->
-    <cache alias="patient">
+    <!--4. person-->
+    <cache alias="person">
         <expiry>
             <ttl unit="seconds">60000</ttl>
         </expiry>

@@ -3,7 +3,7 @@ package lk.covid19.contact_tracer.asset.attempt.service.impl;
 import lk.covid19.contact_tracer.asset.attempt.dao.AttemptDao;
 import lk.covid19.contact_tracer.asset.attempt.entity.Attempt;
 import lk.covid19.contact_tracer.asset.attempt.service.AttemptService;
-import lk.covid19.contact_tracer.asset.patient.entity.Patient;
+import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.Example;
@@ -52,8 +52,8 @@ public class AttemptServiceImpl implements AttemptService {
   }
 
   @Cacheable
-  public Attempt findByPatientAndIdentifiedDate(Patient patient, LocalDate identifiedDate) {
-    return attemptDao.findByPatientAndIdentifiedDate(patient, identifiedDate);
+  public Attempt findByPatientAndIdentifiedDate(Person person, LocalDate identifiedDate) {
+    return attemptDao.findByPatientAndIdentifiedDate(person, identifiedDate);
   }
 
   @Cacheable
