@@ -87,7 +87,7 @@ public class PersonServiceImpl implements PersonService {
                         attemptDb = person.getAttempt();
                         attemptDb.setPerson(personDb);
                         attemptService.persist(attemptDb);
-                        personDb.setActiveInactive(PersonStatus.LIVE);
+                      personDb.setActiveInactive(PersonStatus.GENERAL);
                     }
                     if ( !personDb.getMobile().equals(person.getMobile()) ) {
                         personDb.setMobile(person.getMobile());
@@ -101,9 +101,9 @@ public class PersonServiceImpl implements PersonService {
                 patientPersist(person);
                 Person personDb = personDao.save(person);
                 attempt.setPerson(personDb);
-                attemptService.persist(attempt);
-                personDb.setActiveInactive(PersonStatus.LIVE);
-                personHashSet.add(personDb);
+              attemptService.persist(attempt);
+              personDb.setActiveInactive(PersonStatus.GENERAL);
+              personHashSet.add(personDb);
             } catch ( Exception e ) {
                 person.setActiveInactive(PersonStatus.DEAD);
                 person.setRemarks(e.getCause().getCause().getMessage());
@@ -114,7 +114,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     private void patientPersist(Person person) {
-        person.setPersonStatus(PersonStatus.LIVE);
+      person.setPersonStatus(PersonStatus.GENERAL);
         if ( personDao.findFirstByOrderByIdDesc() == null ) {
             person.setCode("LKCP" + commonService.numberAutoGen(null).toString());
         } else {

@@ -188,7 +188,7 @@ public class PersonController {
     return "person/patientAddByExcel";
   }
 
-  @PostMapping( "/excelAdd" )
+ /* @PostMapping( "/excelAdd" )
   public String saveExcelData(@ModelAttribute Person person, RedirectAttributes redirectAttributes) throws IOException {
     // Workbook workbook = commonService.getExcelWorkbook(person.getMultipartFile().getInputStream(), Objects
     // .requireNonNull(person.getMultipartFile().getOriginalFilename()));
@@ -269,8 +269,10 @@ public class PersonController {
             .name(commonService.stringCapitalize(row.getCell(name_column).getRichStringCellValue().toString()))
             .age(Integer.parseInt(row.getCell(age_column).getRichStringCellValue().toString()))
             .nic(commonService.stringCapitalize(row.getCell(nic_column).getRichStringCellValue().toString()))
-            .mobile(commonService.phoneNumberLengthValidator(commonService.stringCapitalize(row.getCell(mobile_column).getRichStringCellValue().toString())))
-            .policeStationName(commonService.stringCapitalize(row.getCell(policeArea_column).getRichStringCellValue().toString()))
+            .mobile(commonService.phoneNumberLengthValidator(commonService.stringCapitalize(row.getCell
+            (mobile_column).getRichStringCellValue().toString())))
+            .policeStationName(commonService.stringCapitalize(row.getCell(policeArea_column).getRichStringCellValue()
+            .toString()))
             .attempt(attempt)
             .build();
         people.add(personIncoming);
@@ -279,7 +281,7 @@ public class PersonController {
     redirectAttributes.addFlashAttribute("persons", personService.persistList(people));
     return "redirect:/person/excel";
   }
-
+*/
   private String message(Person person) {
     String message = "";
     try {
@@ -292,14 +294,14 @@ public class PersonController {
       if ( person.getCode() != null ) {
         message += " Register Number : " + person.getCode();
       }
-      if ( person.getAge() > 0 ) {
+/*      if ( person.getAge() > 0 ) {
         message += " Age : " + person.getAge();
-      }
+      }*/
       if ( person.getGender() != null ) {
         message += " Gender : " + person.getGender().getGender();
       }
       if ( person.getPersonStatus() != null ) {
-        message += " Live or Dead : " + person.getPersonStatus().getDeadLive();
+        message += " Live or Dead : " + person.getPersonStatus().getPersonStatus();
       }
       if ( person.getAddress() != null ) {
         message += " Address : " + person.getAddress();

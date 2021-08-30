@@ -63,7 +63,7 @@ public class Person extends AuditEntity {
 
 
   //@ContainedIn
-  @OneToMany( mappedBy = "person", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER )
+  @OneToMany( mappedBy = "person", cascade = {CascadeType.MERGE, CascadeType.PERSIST} )
   private List< Attempt > attempts;
 
   @Transient

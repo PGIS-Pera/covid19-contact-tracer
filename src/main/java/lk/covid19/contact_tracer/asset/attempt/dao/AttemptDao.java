@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface AttemptDao extends JpaRepository< Attempt, Integer > {
-  Attempt findByPatientAndIdentifiedDate(Person personDb, LocalDate identifiedDate);
+  Attempt findByPersonAndIdentifiedDate(Person personDb, LocalDate identifiedDate);
 
   List< Attempt > findByIdentifiedDateIsBetween(LocalDate from, LocalDate to);
 }

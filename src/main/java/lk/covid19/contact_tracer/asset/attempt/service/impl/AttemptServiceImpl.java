@@ -53,7 +53,7 @@ public class AttemptServiceImpl implements AttemptService {
 
   @Cacheable
   public Attempt findByPatientAndIdentifiedDate(Person person, LocalDate identifiedDate) {
-    return attemptDao.findByPatientAndIdentifiedDate(person, identifiedDate);
+    return attemptDao.findByPersonAndIdentifiedDate(person, identifiedDate);
   }
 
   @Cacheable

@@ -1,6 +1,7 @@
 package lk.covid19.contact_tracer.asset.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.role.entity.Role;
 import lk.covid19.contact_tracer.asset.user_details.entity.UserDetails;
 import lk.covid19.contact_tracer.configuration.sec_user_detail_service.entity.UserSessionLog;
@@ -24,9 +25,6 @@ import java.util.List;
 @JsonIgnoreProperties( value = "createdDate", allowGetters = true )
 public class User extends AuditEntity {
 
-  @OneToOne
-  private UserDetails userDetails;
-
   @Column( nullable = false, unique = true )
   @Size( min = 5, message = "user name should include at least five characters" )
   private String username;
@@ -37,6 +35,13 @@ public class User extends AuditEntity {
 
   @Column( nullable = false )
   private boolean enabled;
+
+  @OneToOne
+  private UserDetails userDetails;
+
+  @ManyToOne
+  @JoinColumn( name = "person_id", nullable = false, foreignKey = @ForeignKey( name = "fk_user_vs_person" ) )
+  private Person person;
 
   @OneToMany( mappedBy = "user", fetch = FetchType.EAGER )
   private List< UserSessionLog > userSessionLogs;
