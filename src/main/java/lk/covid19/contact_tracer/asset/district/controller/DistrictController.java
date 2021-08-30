@@ -65,7 +65,7 @@ public class DistrictController {
       redirectAttributes.addFlashAttribute("districtDetail", districtService.persist(district));
     } catch ( Exception e ) {
       ObjectError error = new ObjectError("district",
-                                          "Please make sure that resolve following error \n. <br> System message -->" + e.getCause().getCause().getMessage());
+                                          "Please make sure that resolve following error \n. System message -->" + e.getCause().getCause().getMessage());
       bindingResult.addError(error);
       return commonThing(model, false, district);
     }
