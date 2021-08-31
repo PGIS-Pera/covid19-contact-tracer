@@ -23,7 +23,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping( "/agOffice" )
+@RequestMapping( "/dsOffice" )
 @RequiredArgsConstructor
 public class DsOfficeController {
 
@@ -34,18 +34,18 @@ public class DsOfficeController {
   private String commonThing(Model model, Boolean booleanValue, DsOffice dsOfficeObject) {
     model.addAttribute("provinces", Province.values());
     model.addAttribute("addStatus", booleanValue);
-    model.addAttribute("agOffice", dsOfficeObject);
+    model.addAttribute("dsOffice", dsOfficeObject);
     model.addAttribute("districtURL",
                        MvcUriComponentsBuilder
                            .fromMethodName(DistrictController.class, "getDistrictByProvince", "")
                            .toUriString());
-    return "agOffice/addAgOffice";
+    return "dsOffice/addDsOffice";
   }
 
   @GetMapping
   public String findAll(Model model) {
-    model.addAttribute("agOffices", dsOfficeService.findAll());
-    return "agOffice/agOffice";
+    model.addAttribute("dsOffices", dsOfficeService.findAll());
+    return "dsOffice/dsOffice";
   }
 
   @GetMapping( "/add" )
@@ -55,8 +55,8 @@ public class DsOfficeController {
 
   @GetMapping( "/{id}" )
   public String findById(@PathVariable Integer id, Model model) {
-    model.addAttribute("agOfficeDetail", dsOfficeService.findById(id));
-    return "agOffice/agOffice-detail";
+    model.addAttribute("dsOfficeDetail", dsOfficeService.findById(id));
+    return "dsOffice/dsOffice-detail";
   }
 
   @GetMapping( "/edit/{id}" )
@@ -71,14 +71,14 @@ public class DsOfficeController {
     if ( bindingResult.hasErrors() ) {
       return commonThing(model, false, dsOffice);
     }
-    redirectAttributes.addFlashAttribute("agOfficeDetail", dsOfficeService.persist(dsOffice));
-    return "redirect:/agOffice";
+    redirectAttributes.addFlashAttribute("dsOfficeDetail", dsOfficeService.persist(dsOffice));
+    return "redirect:/dsOffice";
   }
 
   @GetMapping( "/delete/{id}" )
   public String delete(@PathVariable Integer id, Model model) {
     dsOfficeService.delete(id);
-    return "redirect:/agOffice";
+    return "redirect:/dsOffice";
   }
 
   @GetMapping( value = "/getAgOffice/{id}" )

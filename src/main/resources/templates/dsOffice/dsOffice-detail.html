@@ -14,49 +14,78 @@
       </a >
     </div >
     <div class="col" >
-      <span class="font-weight-bold h2" data-th-text="${districtDetail.province.province}" ></span >
+      <span class="font-weight-bold h2" data-th-text="${dsOfficeDetail.name}" ></span >
     </div >
     <div class="col" >
-      <a class="btn btn-success" data-th-href="${'/district'}" >
-        District List </a >
+      <a class="btn btn-success" data-th-href="${'/dsOffice'}" >
+        Ds Office List </a >
     </div >
   </div >
 </div >
 <div class="container-fluid text-center" >
-  <div class="col-6 offset-md-3" data-th-fragment="agOfficeDetail" >
-
+  <div class="col-6 offset-md-3" data-th-fragment="dsOfficeDetail" >
     <!--Province-->
-    <div class="form-group " >
-      <label class="form-label " > Province </label >
-      <p class="display_detail"
-         data-th-text="${agOfficeDetail.district.province}" ></p >
+    <div class="form-row text-center" >
+      <div class="col-md-4" >
+        <label class="form-label " data-th-for="${'province'}" > Province :</label >
+      </div >
+      <div class="col-md-8" >
+        <p class="display_detail"
+           data-th-text="${dsOfficeDetail.district.province}" ></p >
+      </div >
     </div >
     <!--District-->
-    <div class="form-group " >
-      <label class="form-label " > District </label >
-      <p class="display_detail" data-th-text="${agOfficeDetail.district.name}" ></p >
+    <div class="form-row text-center" >
+      <div class="col-md-4" >
+        <label class="form-label " > District </label >
+      </div >
+      <div class="col-md-8" >
+        <p class="display_detail" data-th-text="${dsOfficeDetail.district.name}" ></p >
+      </div >
     </div >
     <!--AgOffice name-->
-    <div class="form-group " >
-      <label class="form-label " > Name </label >
-      <p class="display_detail" data-th-text="${agOfficeDetail.name}" ></p >
+    <div class="form-row text-center" >
+      <div class="col-md-4" >
+        <label class="form-label " > Name </label >
+      </div >
+      <div class="col-md-8" >
+        <p class="display_detail" data-th-text="${dsOfficeDetail.name}" ></p >
+      </div >
     </div >
-
     <!--Land Number-->
-    <div class="form-group" >
-      <label class="control-label" >Land No :</label >
-      <p class="display_detail" data-th-text="${agOfficeDetail.land}" ></p >
+    <div class="form-row text-center" >
+      <div class="col-md-4" >
+        <label class="control-label" >Land No :</label >
+      </div >
+      <div class="col-md-8" >
+        <p class="display_detail" data-th-text="${dsOfficeDetail.land}" ></p >
+      </div >
     </div >
     <!--Email-->
-    <div class="form-group" >
-      <label class="control-label" >Email :</label >
-      <p class="display_detail" data-th-text="${agOfficeDetail.email}" ></p >
+    <div class="form-row text-center" >
+      <div class="col-md-4" >
+        <label class="control-label" >Email :</label >
+      </div >
+      <div class="col-md-8" >
+        <p class="display_detail" data-th-text="${dsOfficeDetail.email}" ></p >
+      </div >
     </div >
     <!--Address-->
-    <div class="form-group" >
-      <label class="control-label" >Address :</label >
-      <p class="display_detail" data-th-text="${agOfficeDetail.address}" ></p >
+    <div class="form-row text-center" >
+      <div class="col-md-4" >
+        <label class="control-label" >Address :</label >
+      </div >
+      <div class="col-md-8" >
+        <p class="display_detail" data-th-text="${dsOfficeDetail.address}" ></p >
+      </div >
     </div >
+  </div >
+  <!--Button-->
+  <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
+    <!--Back Button-->
+    <a class="btn btn-dark" data-th-href="${'/dsOffice'}" tabindex="10" >
+      <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
+    </a >
   </div >
 </div >
 <!--footer include-->

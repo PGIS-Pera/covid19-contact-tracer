@@ -12,10 +12,10 @@
     <div class="col" >
       <a class="btn btn-success" data-th-href="${'/dsOffice/add'}" >
         <i class="far fa-building" ></i > &nbsp; Add
-                                          Ag Office </a >
+                                          DS Office </a >
     </div >
     <div class="col" >
-      <span class="font-weight-bold h2" >                    Ag Office Details </span >
+      <span class="font-weight-bold h2" >                    DS Office Details </span >
     </div >
     <div class="col" >
       <a class="btn btn-primary" data-th-href="${'/home'}" id="searchShow" tabindex="2" >
@@ -26,7 +26,7 @@
 </div >
 <!--if not empty list-->
 <div class="container-fluid" id="agOfficeListTable"
-     data-th-if="${not #lists.isEmpty(MOHS)}" >
+     data-th-if="${not #lists.isEmpty(dsOffices)}" >
   <table class="table table-hover table-striped" id="myTable" >
     <thead class="thead-inverse" >
     <tr >
@@ -38,20 +38,20 @@
     </tr >
     </thead >
     <tbody >
-    <tr data-th-each="MOH, rowCount : ${MOHS}" scope="row" >
+    <tr data-th-each="dsOffice, rowCount : ${dsOffices}" scope="row" >
       <th data-th-text="${rowCount.count}" ></th >
-      <th data-th-text="${MOH.name}" ></th >
-      <th data-th-text="${MOH.land}" ></th >
-      <th data-th-text="${MOH.district.name}" ></th >
+      <th data-th-text="${dsOffice.name}" ></th >
+      <th data-th-text="${dsOffice.land}" ></th >
+      <th data-th-text="${dsOffice.district.name}" ></th >
 
       <th ><a class="btn btn-success btn-sm"
-              data-th-href="${'/MOH/' + MOH.id}" id="agOfficeView" ><i
+              data-th-href="${'/dsOffice/' + dsOffice.id}" id="agOfficeView" ><i
             class="fa fa-folder-open" ></i >&nbsp;View</a >
         <a class="btn btn-primary btn-sm" id="agOfficeEdit"
-           data-th-href="${'/MOH/edit/' + MOH.id}" ><i
+           data-th-href="${'/dsOffice/edit/' + dsOffice.id}" ><i
               class="fa fa-edit" ></i >&nbsp;Edit</a >
         <a class="btn btn-danger btn-sm" id="agOfficeRemove"
-           data-th-href="${'/MOH/remove/' + MOH.id}"
+           data-th-href="${'/dsOffice/remove/' + dsOffice.id}"
            data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
            data-th-onclick="if(!(confirm('Are you want to delete this civilStatus ?'))) return false"
         ><i
@@ -64,8 +64,8 @@
   </table >
 </div >
 <!--if empty list-->
-<div class="row" id="agOfficeNotList" data-th-if="${ #lists.isEmpty(MOHS)}" >
-  <div class="col-sm-12" >
+<div class="row" id="agOfficeNotList" data-th-if="${ #lists.isEmpty(dsOffices)}" >
+  <div class="container" >
     <div class="alert alert-warning alert-dismissible fade show"
          role="alert" >
       <button type="button" class="close" data-dismiss="alert"
@@ -73,16 +73,16 @@
         <span aria-hidden="true" >&times;</span >
       </button >
       <h3 class="text-center text-danger" >
-        <strong >There is no MOH upto know please add MOH to
+        <strong >There is no divisional secretory office upto know please add dsOffice to
                  the system
-                 using add MOH button.
+                 using add divisional secretory office button.
         </strong >
       </h3 >
     </div >
   </div >
 </div >
-<!--Show saved MOH-->
-<div class="row" data-th-if="${agOfficeDetail!=null}" >
+<!--Show saved dsOffice-->
+<div class="row" data-th-if="${dsOfficeDetail!=null}" >
   <div class="col-sm-12" >
     <div class="alert alert-success alert-dismissible fade show"
          role="alert" >
@@ -91,7 +91,7 @@
         <span aria-hidden="true" >&times;</span >
       </button >
       <div class="container" >
-        <div data-th-replace="~{MOH/MOH-detail :: agOfficeDetail}" ></div >
+        <div data-th-replace="~{dsOffice/dsOffice-detail :: dsOfficeDetail}" ></div >
       </div >
     </div >
   </div >
