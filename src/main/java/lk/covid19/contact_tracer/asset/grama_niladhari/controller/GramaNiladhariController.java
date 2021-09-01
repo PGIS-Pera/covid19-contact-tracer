@@ -1,6 +1,9 @@
 package lk.covid19.contact_tracer.asset.grama_niladhari.controller;
 
 
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import lk.covid19.contact_tracer.asset.common_asset.model.Pager;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.Province;
 import lk.covid19.contact_tracer.asset.district.controller.DistrictController;
@@ -12,6 +15,7 @@ import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariSer
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +25,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -61,11 +66,13 @@ public class GramaNiladhariController {
     Page< GramaNiladhari > gramaNiladhari = gramaNiladhariService.findAllPageable(PageRequest.of(evalPage,
                                                                                                  evalPageSize));
     Pager pager = new Pager(gramaNiladhari.getTotalPages(), gramaNiladhari.getNumber(), BUTTONS_TO_SHOW);
-
     modelAndView.addObject("gramaNiladharis", gramaNiladhari);
     modelAndView.addObject("selectedPageSize", evalPageSize);
     modelAndView.addObject("pageSizes", PAGE_SIZES);
     modelAndView.addObject("pager", pager);
+    modelAndView.addObject("searchUrl", MvcUriComponentsBuilder
+        .fromMethodName(GramaNiladhariController.class, "search", new GramaNiladhari())
+        .toUriString());
     return modelAndView;
   }
 
@@ -103,34 +110,11 @@ public class GramaNiladhariController {
     return "redirect:/gramaNiladhari";
   }
 
-  //todo : need to add search methods
-   /*
-   @GetMapping(value = "/getGramaNiladhari/{id}")
-    @ResponseBody
-    public MappingJacksonValue getGramaNiladhariByPolice(@PathVariable int id) {
-        PoliceStation gramaNiladhari=new PoliceStation();
-        gramaNiladhari.setId(id);
-
-        //MappingJacksonValue
-        List<GramaNiladhari> gramaNiladharis = gramaNiladhariService.findByPoliceStation(gramaNiladhari);
-        //employeeService.findByWorkingPlace(workingPlaceService.findById(id));
-
-        //Create new mapping jackson value and set it to which was need to filter
-        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(gramaNiladharis);
-
-        //simpleBeanPropertyFilter :-  need to give any id to addFilter method and created filter which was mentioned
-        // what parameter's necessary to provide
-        SimpleBeanPropertyFilter simpleBeanPropertyFilter = SimpleBeanPropertyFilter
-                .filterOutAllExcept("id", "name");
-        //filters :-  set front end required value to before filter
-
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("GramaNiladhari", simpleBeanPropertyFilter);
-        //Employee :- need to annotate relevant class with JsonFilter  {@JsonFilter("Employee") }
-        mappingJacksonValue.setFilters(filters);
-
-        return mappingJacksonValue;
-    }
-    */
+  @PostMapping(value = "/search")
+  @ResponseBody
+  public List< GramaNiladhari > search( GramaNiladhari gramaNiladhari) {
+    System.out.println(gramaNiladhari.toString());
+    return gramaNiladhariService.search(gramaNiladhari);
+  }
 
 }

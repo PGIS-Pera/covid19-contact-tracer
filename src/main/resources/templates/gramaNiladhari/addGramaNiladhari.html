@@ -124,45 +124,11 @@
     </form >
   </div >
 </div >
+<input type="hidden" name="" id="districtURL" data-th-value="${districtURL}">
+<input type="hidden" name="" id="dsOfficeURL" data-th-value="${dsOfficeURL}">
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <!--script include-->
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
-<script >
-    $(document).ready(function () {
-
-        $('#province').bind("change", function () {
-            provinceChange($(this).val());
-        });
-
-        $('#district').bind("change", function () {
-            districtChange($(this).val());
-        });
-
-        let optionFieldAdd = (url, id) => {
-            let html = "<option value=''>Please select</option>";
-            $.get(url, function (data) {
-                data.forEach((item) => {
-                        html += `<option value="${item.id}">${item.name} </option>`
-                    }
-                )
-                $(`#${id}`).html(html);
-            });
-        };
-
-        function provinceChange(id) {
-            let url = "[[${districtURL}]]" + id;
-            optionFieldAdd(url, "district");
-            $('#district').html(`<option value="">Please Select </option>`);
-            $('#dsOffice').html(`<option value="">Please Select </option>`);
-        }
-
-        function districtChange(id) {
-            let url = "[[${dsOfficeURL}]]" + id;
-            optionFieldAdd(url, "dsOffice");
-            $('#dsOffice').html(`<option value="">Please Select </option>`);
-        }
-
-    });
-</script >
+<script data-th-src="@{/js/gramaNiladhari.js}" ></script >
 </body >
 </html >

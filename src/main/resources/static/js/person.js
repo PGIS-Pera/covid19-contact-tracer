@@ -4,7 +4,7 @@ $(document).ready(() => {
 
 changePageAndSize = () => {
     $('#pageSizeSelect').change(evt => {
-        window.location.replace(`/patient/?pageSize=${evt.target.value}&page=1`);
+        window.location.replace(`/person/?pageSize=${evt.target.value}&page=1`);
     });
 }
 

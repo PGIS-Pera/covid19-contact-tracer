@@ -23,31 +23,37 @@
     </div >
   </div >
 </div >
-
+<!--data table-->
 <div class="container-fluid " >
   <div class="col-sm-12 flex-column " >
-    <div class="row" data-th-if="${not #lists.isEmpty(gramaNiladharis)}" >
+    <div class="row" >
       <div class="container-fluid" >
         <div class="row" >
           <!--page per item select -->
-          <div class="col text-left" data-th-if="${gramaNiladharis.totalPages != 1}" >
-            <label for="pageSizeSelect" >Item Count Per Page : </label >
-            <select class="form-control pagination" id="pageSizeSelect" >
-              <option data-th-each="pageSize : ${pageSizes}" data-th-text="${pageSize}"
-                      data-th-value="${pageSize}"
-                      data-th-selected="${pageSize} == ${selectedPageSize}" ></option >
-            </select >
+          <div class="col text-left" data-th-if="${gramaNiladharis.totalPages}" >
+            <div class="form-row" >
+              <div class="col text-right" >
+                <label for="pageSizeSelect" >Item Count Per Page : </label >
+              </div >
+              <div class="col text-left" >
+                <select class="form-control pagination" id="pageSizeSelect" >
+                  <option data-th-each="pageSize : ${pageSizes}" data-th-text="${pageSize}"
+                          data-th-value="${pageSize}"
+                          data-th-selected="${pageSize} == ${selectedPageSize}" ></option >
+                </select >
+              </div >
+            </div >
           </div >
           <!--search model-->
           <div class="col text-right" >
-            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modelId" >
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modelId" >
               <i class="fa fa-search" aria-hidden="true" ></i >
               Search
             </button >
           </div >
         </div >
-        <!--data fill row-->
-        <div class="row" >
+        <!--data fill table-->
+        <div class="row" data-th-if="${ gramaNiladharis.getTotalElements() != 0}" >
           <div class="container-fluid" >
             <table class="table table-hover table-striped table-responsive-sm  mt-1" >
               <tr >
@@ -81,7 +87,7 @@
         </div >
         <!--pagination part -->
         <div class="row" >
-          <div data-th-if="${gramaNiladharis.totalPages != 1}" class="form-group col-md-11 pagination-centered" >
+          <div data-th-if="${gramaNiladharis.totalPages}" class="form-group col-md-11 pagination-centered" >
             <ul class="pagination" >
               <li data-th-class="${gramaNiladharis.number == 0} ? disabled : page-item" >
                 <a class="page-link"
@@ -112,83 +118,92 @@
     </div >
   </div >
 </div >
-<!-- Modal -->
-<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true" >
-  <div class="modal-dialog" role="document" >
+
+<!--if empty list-->
+<div class="row" data-th-if="${ gramaNiladharis.getTotalElements() == 0}" >
+  <div class="col-sm-12" >
+    <div class="alert alert-warning alert-dismissible fade show"
+         role="alert" >
+      <button aria-label="Close" class="close" data-dismiss="alert"
+              type="button" >
+        <span aria-hidden="true" >&times;</span >
+      </button >
+      <h3 class="text-center text-danger" >
+        <strong >There is no grama niladhari division upto know please add grama niladhari division to
+                 the system
+                 using add grama niladhari division button.
+        </strong >
+      </h3 >
+    </div >
+  </div >
+</div >
+
+<!--Show saved gramaniladhari-->
+<div class="row" data-th-if="${gramaNiladhariDetail!=null}" >
+  <div class="col-sm-12" >
+    <div class="alert alert-success alert-dismissible fade show"
+         role="alert" >
+      <button aria-label="Close" class="close" data-dismiss="alert"
+              type="button" >
+        <span aria-hidden="true" >&times;</span >
+      </button >
+      <div class="container" >
+        <div data-th-replace="~{gramaNiladhari/gramaNiladhari-detail :: gramaNiladhariDetail}" ></div >
+      </div >
+    </div >
+  </div >
+</div >
+<!--search Modal -->
+<div class="modal fade bd-example-modal-xl" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+     aria-hidden="true" >
+  <div class="modal-dialog modal-xl" role="document" >
     <div class="modal-content" >
       <div class="modal-header" >
-        <h5 class="modal-title" >Modal title</h5 >
+        <h5 class="modal-title" >Gamaniladari Division Search</h5 >
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
           <span aria-hidden="true" >&times;</span >
         </button >
       </div >
       <div class="modal-body" >
-        <div class="form-row" >
-          <div class="col-6" >
-            <label for="search" >Enter Search Input : </label >
-            <input type="search" id="search" >
+        <div class="container" >
+          <div class="row" >
+            <div class="col-6" >
+              <div class="col-4" >
+                <label class="control-label" for="selectParameter" >Parameter :</label >
+              </div >
+              <div class="col-8" >
+                <select id="selectParameter" class="form-control" tabindex="1" required >
+                  <option value="" disabled selected >Please select</option >
+                  <option value="name" >Name</option >
+                  <option value="number" >Number</option >
+                </select >
+              </div >
+            </div >
+            <div class="col-6" >
+              <label for="searchInput" >Enter Search Input : </label >
+              <input type="search" id="searchInput" class="form-control" >
+            </div >
           </div >
-          <div class="col-6" >
-            <p >Result Count: <span id="resultCount" ></span ></p >
-          <p class="bg-warning text-danger"> Result would be displayed after filter <span class=" ">less than 100</span >.</p>
-          </div >
-        </div >
-        <div class="form-row" >
-          <!--result content show-->
-          <div class="col-12" id="tableShow" >
+          <div class="form-row" >
+            <!--result content show-->
+            <div class="col-12" id="tableShow" >
+            </div >
           </div >
         </div >
       </div >
       <div class="modal-footer" >
         <button type="button" class="btn btn-secondary" data-dismiss="modal" >
-          <span aria-hidden="true" >&times;</span >
           Close
         </button >
       </div >
     </div >
   </div >
 </div >
-
+<input type="hidden" id="searchUrl" data-th-value="${searchUrl}" >
 <!--footer include-->
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <!--script include-->
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
-
-<script data-th-src="@{/js/app.js}" ></script >
-<script >
-  /*  <table class="table table-hover table-striped" id="myTable" >
-              <thead class="thead-inverse" >
-              <tr >
-                <th >Index</th >
-                <th >Name</th >
-                <th >Phone No</th >
-                <th >AgOffice</th >
-                <th >Modify</th >
-              </tr >
-              </thead >
-              <tbody >
-              <tr data-th-each="dsOffice, rowCount : ${dsOffices}" scope="row" >
-                <th data-th-text="${rowCount.count}" ></th >
-                <th data-th-text="${dsOffice.name}" ></th >
-                <th data-th-text="${dsOffice.land}" ></th >
-                <th data-th-text="${dsOffice.district.name}" ></th >
-                <th >
-                  <a class="btn btn-success btn-sm"
-                     data-th-href="${'/dsOffice/' + dsOffice.id}" id="agOfficeView" ><i
-                        class="fa fa-folder-open" ></i >&nbsp;View</a >
-                  <a class="btn btn-primary btn-sm" id="agOfficeEdit"
-                     data-th-href="${'/dsOffice/edit/' + dsOffice.id}" ><i
-                        class="fa fa-edit" ></i >&nbsp;Edit</a >
-                  <a class="btn btn-danger btn-sm" id="agOfficeRemove"
-                     data-th-href="${'/dsOffice/remove/' + dsOffice.id}"
-                     data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
-                     data-th-onclick="if(!(confirm('Are you want to delete this civilStatus ?'))) return false"
-                  ><i aria-hidden="true" class="fa fa-trash" ></i >
-                    Delete</a >
-                </th >
-              </tr >
-              </tbody >
-            </table >*/
-</script >
+<script data-th-src="@{/js/gramaNiladhari.js}" ></script >
 </body >
 </html >
