@@ -7,3 +7,4 @@ changePageAndSize = () => {
         window.location.replace(`/patient/?pageSize=${evt.target.value}&page=1`);
     });
 }
+

@@ -6,11 +6,15 @@ import lk.covid19.contact_tracer.asset.ds_office.entity.DsOffice;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.location_interact.entity.LocationInteract;
 import lombok.*;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Indexed
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,10 +24,13 @@ import java.util.List;
 public class GramaNiladhari {
   @Id
   @GeneratedValue( strategy = GenerationType.IDENTITY )
+  @Field
   private Integer id;
 
+  @Field
   private String name;
 
+  @Field(termVector = TermVector.YES)
   private String number;
 
   @ManyToOne
