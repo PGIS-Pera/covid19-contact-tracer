@@ -32,7 +32,7 @@ public class GramaNiladhari {
   private DsOffice dsOffice;
 
   @OneToMany( mappedBy = "gramaNiladhari" )
-  private List< Person > people;
+  private List< Person > persons;
 
   @OneToMany( mappedBy = "gramaNiladhari" )
   private List< LocationInteract > locationInteracts;

@@ -81,9 +81,9 @@ public class DsOfficeController {
     return "redirect:/dsOffice";
   }
 
-  @GetMapping( value = "/getAgOffice/{id}" )
+  @GetMapping( value = "/getDsOffice/{id}" )
   @ResponseBody
-  public MappingJacksonValue getAgOfficeByDistrict(@PathVariable Integer id) {
+  public MappingJacksonValue getDsOfficeByDistrict(@PathVariable Integer id) {
     District district = new District();
     district.setId(id);
 
@@ -100,7 +100,7 @@ public class DsOfficeController {
     //filters :-  set front end required value to before filter
 
     FilterProvider filters = new SimpleFilterProvider()
-        .addFilter("AgOffice", simpleBeanPropertyFilter);
+        .addFilter("DsOffice", simpleBeanPropertyFilter);
     //Employee :- need to annotate relevant class with JsonFilter  {@JsonFilter("Employee") }
     mappingJacksonValue.setFilters(filters);
 

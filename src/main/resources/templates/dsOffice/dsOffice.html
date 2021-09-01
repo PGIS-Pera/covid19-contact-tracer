@@ -43,10 +43,10 @@
       <th data-th-text="${dsOffice.name}" ></th >
       <th data-th-text="${dsOffice.land}" ></th >
       <th data-th-text="${dsOffice.district.name}" ></th >
-
-      <th ><a class="btn btn-success btn-sm"
-              data-th-href="${'/dsOffice/' + dsOffice.id}" id="agOfficeView" ><i
-            class="fa fa-folder-open" ></i >&nbsp;View</a >
+      <th >
+        <a class="btn btn-success btn-sm"
+           data-th-href="${'/dsOffice/' + dsOffice.id}" id="agOfficeView" ><i
+              class="fa fa-folder-open" ></i >&nbsp;View</a >
         <a class="btn btn-primary btn-sm" id="agOfficeEdit"
            data-th-href="${'/dsOffice/edit/' + dsOffice.id}" ><i
               class="fa fa-edit" ></i >&nbsp;Edit</a >
@@ -54,10 +54,8 @@
            data-th-href="${'/dsOffice/remove/' + dsOffice.id}"
            data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
            data-th-onclick="if(!(confirm('Are you want to delete this civilStatus ?'))) return false"
-        ><i
-              aria-hidden="true" class="fa fa-trash" ></i >
+        ><i aria-hidden="true" class="fa fa-trash" ></i >
           Delete</a >
-
       </th >
     </tr >
     </tbody >

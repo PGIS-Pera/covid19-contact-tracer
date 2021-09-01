@@ -17,7 +17,7 @@
     <div class="col" >
       <h2 class="text-center" >
         <strong >
-          <span data-th-text="${addStatus==true?'Update Gramaniladari Details':'New Gramaniladari Details'}" ></span >
+          <span data-th-text="${addStatus==true?'Update Gramaniladari ':'New Gramaniladari '}" ></span >
         </strong >
       </h2 >
     </div >
@@ -36,10 +36,10 @@
              type="text" data-th-if="${addStatus==true}" />
       <!--Province-->
       <div class=" form-row  p-3" >
-        <label class="form-label  col-md-3" data-th-for="province" > Province </label >
+        <label class="form-label  col-md-3" data-th-for="province" > Province :</label >
 
         <select class="form-control col-md-9" id="province"
-                data-th-field="${gramaNiladhari.policeStation.MOH.district.province}" >
+                data-th-field="${gramaNiladhari.dsOffice.district.province}" >
           <option value="" >Please Select</option >
           <option data-th-each="province : ${provinces}"
                   data-th-text="${province.province}"
@@ -47,12 +47,13 @@
           ></option >
         </select >
       </div >
+
       <!--District-->
       <div class=" form-row p-3" >
         <label class="form-label col-md-3 " for="district" >
-          District </label >
+          District :</label >
         <select class="form-control col-md-9" id="district"
-                data-th-field="${gramaNiladhari.policeStation.MOH.district}" >
+                data-th-field="${gramaNiladhari.dsOffice.district}" >
           <option value="" >Please Select</option >
           <option data-th-each="district : ${districts}"
                   data-th-text="${district.name}"
@@ -60,37 +61,32 @@
           ></option >
         </select >
       </div >
+
       <!--AgOffice-->
       <div class=" form-row p-3" >
-        <label class="form-label col-md-3 " data-th-for="${'MOH'}" > Ag
-                                                                     Office </label >
+        <label class="form-label col-md-3 " data-th-for="${'dsOffice'}" > Ds Office :</label >
+        <select class="form-control col-md-9" id="dsOffice"
+                data-th-field="${gramaNiladhari.dsOffice}" >
+          <option value="" >Please Select</option >
+          <option data-th-each="dsOffice : ${dsOffices}"
+                  data-th-text="${dsOffice.name}"
+                  data-th-value="${dsOffice.id}"
+          ></option >
+        </select >
+      </div >
 
-        <select class="form-control col-md-9" id="MOH"
-                data-th-field="${gramaNiladhari.policeStation.MOH}" >
-          <option value="" >Please Select</option >
-          <option data-th-each="MOH : ${MOHS}"
-                  data-th-text="${MOH.name}"
-                  data-th-value="${MOH.id}"
-          ></option >
-        </select >
-      </div >
-      <!--Police-->
+      <!--Number-->
       <div class=" form-row p-3" >
-        <label class="col-md-3 form-label" > Police Station </label >
-        <select class="col-md-9 form-control" id="policeStation"
-                data-th-field="*{policeStation}" required >
-          <option value="" >Please Select</option >
-          <option data-th-each="policeStation : ${policeStations}"
-                  data-th-text="${policeStation.name}"
-                  data-th-value="${policeStation.id}"
-          ></option >
-        </select >
+        <label data-th-for="${'number'}" class="form-label col-md-3" > Number :</label >
+        <input type="text" class="form-control  col-md-9" data-th-field="*{number}" >
+        <p class="text-danger" data-th-if="${#fields.hasErrors('number')}"
+           data-th-errors="*{number}" >Error Number</p >
       </div >
+
       <!--GramaNiladhari-->
       <div class="form-row p-3" >
-
         <label class="control-label col-md-3" for="gramaniladhari" >Grama
-                                                                    Niladhari Division</label >
+                                                                    Niladhari Division :</label >
 
         <input class="form-control col-md-9 " id="gramaniladhari"
                required
@@ -101,19 +97,31 @@
               data-th-if="${#fields.hasErrors('name')}" >Grama Niladhari Error Email</span >
 
       </div >
-      <div align="right" >
-        <br >
-        <button class="btn btn-warning mr-5 darkmode--activated" tabindex="65" type="reset" >
-          Clear
+
+      <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
+        <!--Back Button-->
+        <a class="btn btn-dark" tabindex="10" data-th-href="${'/district'}" >
+          <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
+        </a >
+        <!--Save Button-->
+        <button class="btn btn-success ml-md-5" type="submit" tabindex="8" >
+          <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;
+          <span data-th-text="${addStatus==false?'Save': 'Update'}" id="submit" ></span >
         </button >
-        <button class="btn btn-primary" type="submit" >
-          <i data-th-class="${addStatus==false?'fa fa-save mr-1':'fa fa-thumbs-up mr-1'}" ></i >
-          <span
-                data-th-text="${addStatus==false?'Save' : 'Update'}" ></span >
+        <!--Cancel Button-->
+        <button class="btn btn-warning ml-md-5" type="reset" tabindex="9" >
+          <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
         </button >
       </div >
+      <div class="form-row" >
+        <label id="errorLabel" data-th-if="${#fields.hasErrors('*')}"
+               data-th-text="'Errors: '" >Errors: </label >
+        <ul >
+          <li id="error" data-th-each="err : ${#fields.errors('*')}" data-th-text="${err}"
+              class="error" ></li >
+        </ul >
+      </div >
     </form >
-
   </div >
 </div >
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
@@ -125,11 +133,9 @@
         $('#province').bind("change", function () {
             provinceChange($(this).val());
         });
+
         $('#district').bind("change", function () {
             districtChange($(this).val());
-        });
-        $('#MOH').bind("change", function () {
-            agOfficeChange($(this).val());
         });
 
         let optionFieldAdd = (url, id) => {
@@ -147,21 +153,13 @@
             let url = "[[${districtURL}]]" + id;
             optionFieldAdd(url, "district");
             $('#district').html(`<option value="">Please Select </option>`);
-            $('#MOH').html(`<option value="">Please Select </option>`);
-            $('#policeStation').html(`<option value="">Please Select </option>`);
+            $('#dsOffice').html(`<option value="">Please Select </option>`);
         }
 
         function districtChange(id) {
-            let url = "[[${agOfficeURL}]]" + id;
-            optionFieldAdd(url, "MOH");
-            $('#MOH').html(`<option value="">Please Select </option>`);
-            $('#policeStation').html(`<option value="">Please Select </option>`);
-        }
-
-        function agOfficeChange(id) {
-            let url = "[[${policeStationURL}]]" + id;
-            optionFieldAdd(url, "policeStation");
-            $('#policeStation').html(`<option value="">Please Select </option>`);
+            let url = "[[${dsOfficeURL}]]" + id;
+            optionFieldAdd(url, "dsOffice");
+            $('#dsOffice').html(`<option value="">Please Select </option>`);
         }
 
     });

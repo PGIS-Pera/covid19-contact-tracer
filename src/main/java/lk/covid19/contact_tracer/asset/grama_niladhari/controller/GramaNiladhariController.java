@@ -44,9 +44,9 @@ public class GramaNiladhariController {
                        MvcUriComponentsBuilder
                            .fromMethodName(DistrictController.class, "getDistrictByProvince", "")
                            .toUriString());
-    model.addAttribute("agOfficeURL",
+    model.addAttribute("dsOfficeURL",
                        MvcUriComponentsBuilder
-                           .fromMethodName(DsOfficeController.class, "getAgOfficeByDistrict", "")
+                           .fromMethodName(DsOfficeController.class, "getDsOfficeByDistrict", "")
                            .toUriString());
     return "gramaNiladhari/addGramaNiladhari";
   }
@@ -102,6 +102,8 @@ public class GramaNiladhariController {
     gramaNiladhariService.delete(id);
     return "redirect:/gramaNiladhari";
   }
+
+  //todo : need to add search methods
    /*
    @GetMapping(value = "/getGramaNiladhari/{id}")
     @ResponseBody

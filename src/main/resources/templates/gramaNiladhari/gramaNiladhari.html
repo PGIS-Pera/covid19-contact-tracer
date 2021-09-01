@@ -9,33 +9,24 @@
 <div class="container-fluid" >
   <div class="row text-center" >
     <div class="col" >
-      <a class="btn btn-success" data-th-href="${'/policeStation/add'}" >
-        <i class="fa fa-user-plus" ></i > &nbsp; Add Police Station </a >
+      <a class="btn btn-success" data-th-href="${'/gramaNiladhari/add'}" >
+        <i class="far fa-building" ></i > &nbsp; Add
+                                          Gramaniladhari Division</a >
     </div >
     <div class="col" >
-      <a class="btn btn-success" data-th-href="${'/policeStation/excel'}" >
-        <i class="fa fa-users" ></i > &nbsp; Add Police Stations &nbsp;
-        <i class="far fa-file-excel" ></i >
+      <span class="font-weight-bold h2" >                    Gramaniladhari Division </span >
+    </div >
+    <div class="col" >
+      <a class="btn btn-primary" data-th-href="${'/home'}" id="searchShow" tabindex="2" >
+        <i class="fas fa-home" style="font-size: 20px" ></i >&nbsp;&nbsp;Home
       </a >
-    </div >
-    <div class="col" >
-      <a class="btn btn-success" data-th-href="${'/policeStation/search'}" >
-        <i class="fa fa-search" ></i > &nbsp; Search Police Station </a >
-    </div >
-  </div >
-  <div class="row text-center" >
-    <div class="col" >
-      <h4 class="text-center" >
-        <strong >
-          Police Station Management
-        </strong >
-      </h4 >
     </div >
   </div >
 </div >
+
 <div class="container-fluid " >
   <div class="col-sm-12 flex-column " >
-    <div class="row" data-th-if="${not #lists.isEmpty(policeStations)}" >
+    <div class="row" data-th-if="${not #lists.isEmpty(gramaNiladharis)}" >
       <div class="row" >
         <div class="col text-left" >
           <label for="pageSizeSelect" ></label >
@@ -49,51 +40,55 @@
       <table class="table table-hover table-striped table-responsive-sm  mt-1" >
         <tr >
           <th >Index</th >
-          <th >Re. Number</th >
+          <th >Number</th >
           <th >Name</th >
-          <th >NIC</th >
-          <th >Mobile</th >
-          <th >Status</th >
-          <th >Police Area</th >
+          <th >Division Secretory Office Name</th >
           <th >View</th >
         </tr >
-        <tr data-th-each="policeStation, index : ${policeStations}" >
+        <tr data-th-each="gramaNiladhari, index : ${gramaNiladharis}" >
           <td data-th-text="${index.count}" ></td >
-          <td data-th-text="${policeStation.number}" ></td >
-          <td data-th-text="${policeStation.name}" ></td >
-          <td data-th-text="${policeStation.nic}" ></td >
-          <td data-th-text="${policeStation.mobile}" ></td >
-          <td data-th-text="${policeStation.deadLive.deadLive}" ></td >
-          <td data-th-text="${policeStation.policeStation.name}" ></td >
+          <td data-th-text="${gramaNiladhari.number}" ></td >
+          <td data-th-text="${gramaNiladhari.name}" ></td >
+          <td data-th-text="${gramaNiladhari.dsOffice.name}" ></td >
           <td >
-            <a class="btn btn-success btn-sm" data-th-href="${'/policeStation/' + policeStation.id}" ><i
+            <a class="btn btn-success btn-sm" data-th-href="${'/gramaNiladhari/' + gramaNiladhari.id}" ><i
                   class="fa fa-folder-open" ></i >&nbsp;View</a >
+            <a class="btn btn-primary btn-sm" id="agOfficeEdit"
+               data-th-href="${'/gramaNiladhari/edit/' + gramaNiladhari.id}" ><i
+                  class="fa fa-edit" ></i >&nbsp;Edit</a >
+            <a class="btn btn-danger btn-sm" id="agOfficeRemove"
+               data-th-href="${'/gramaNiladhari/remove/' + gramaNiladhari.id}"
+               data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+               data-th-onclick="if(!(confirm('Are you want to delete this grama niladhari division ?'))) return false"
+            ><i aria-hidden="true" class="fa fa-trash" ></i >
+              Delete</a >
           </td >
         </tr >
       </table >
       <div class="row" >
-        <div data-th-if="${policeStations.totalPages != 1}" class="form-group col-md-11 pagination-centered" >
+        <div data-th-if="${gramaNiladharis.totalPages != 1}" class="form-group col-md-11 pagination-centered" >
           <ul class="pagination" >
-            <li data-th-class="${policeStations.number == 0} ? disabled : page-item" >
-              <a class="page-link" data-th-href="@{/policeStation/(pageSize=${selectedPageSize}, page=1)}" >&laquo;</a >
-            </li >
-            <li data-th-class="${policeStations.number == 0} ? disabled : page-item" >
+            <li data-th-class="${gramaNiladharis.number == 0} ? disabled : page-item" >
               <a class="page-link"
-                 data-th-href="@{/policeStation/(pageSize=${selectedPageSize}, page=${policeStations.number})}" >&larr;</a >
+                 data-th-href="@{/gramaNiladhari/(pageSize=${selectedPageSize}, page=1)}" >&laquo;</a >
             </li >
-            <li data-th-class="${policeStations.number == (page - 1)} ? 'active pointer-disabled' : page-item"
+            <li data-th-class="${gramaNiladharis.number == 0} ? disabled : page-item" >
+              <a class="page-link"
+                 data-th-href="@{/gramaNiladhari/(pageSize=${selectedPageSize}, page=${gramaNiladharis.number})}" >&larr;</a >
+            </li >
+            <li data-th-class="${gramaNiladharis.number == (page - 1)} ? 'active pointer-disabled' : page-item"
                 data-th-each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}" >
               <a class="page-link"
-                 data-th-href="@{/policeStation/(pageSize=${selectedPageSize}, page=${page})}"
+                 data-th-href="@{/gramaNiladhari/(pageSize=${selectedPageSize}, page=${page})}"
                  data-th-text="${page}" ></a >
             </li >
-            <li data-th-class="${policeStations.number + 1 == policeStations.totalPages} ? disabled : page-item" >
+            <li data-th-class="${gramaNiladharis.number + 1 == gramaNiladharis.totalPages} ? disabled : page-item" >
               <a class="page-link"
-                 data-th-href="@{/policeStation/(pageSize=${selectedPageSize}, page=${policeStations.number + 2})}" >&rarr;</a >
+                 data-th-href="@{/gramaNiladhari/(pageSize=${selectedPageSize}, page=${gramaNiladharis.number + 2})}" >&rarr;</a >
             </li >
-            <li data-th-class="${policeStations.number + 1 == policeStations.totalPages} ? disabled : page-item" >
+            <li data-th-class="${gramaNiladharis.number + 1 == gramaNiladharis.totalPages} ? disabled : page-item" >
               <a class="page-link"
-                 data-th-href="@{/policeStation/(pageSize=${selectedPageSize}, page=${policeStations.totalPages})}" >&raquo;</a >
+                 data-th-href="@{/gramaNiladhari/(pageSize=${selectedPageSize}, page=${gramaNiladharis.totalPages})}" >&raquo;</a >
             </li >
           </ul >
         </div >
