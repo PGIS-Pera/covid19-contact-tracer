@@ -57,7 +57,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
-	implementation 'org.aspectj:aspectjweaver'
+	implementation 'org.aspectj:aspectjweaver:1.9.7'
 
 
 	compileOnly 'org.projectlombok:lombok'
