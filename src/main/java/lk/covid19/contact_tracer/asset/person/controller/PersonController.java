@@ -140,7 +140,7 @@ public class PersonController {
   }
 
   @GetMapping( "/search" )
-  public String search(Model model) {
+  public String searchPage(Model model) {
     commonForAll(model);
     model.addAttribute("person", new Person());
     return "person/patientSearch";
