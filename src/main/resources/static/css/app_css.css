@@ -114,10 +114,6 @@ input:focus:invalid {
 }
 
 /*Nav bar*/
-.navbar {
-    background-color: #0A81AB;
-    color: aliceblue;
-}
 
 .dropdown:hover {
     color: white;
