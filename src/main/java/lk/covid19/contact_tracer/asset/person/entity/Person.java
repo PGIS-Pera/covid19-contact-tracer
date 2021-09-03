@@ -16,6 +16,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -52,6 +53,9 @@ public class Person extends AuditEntity {
 
   @Enumerated( EnumType.STRING )
   private Gender gender;
+
+  @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm" )
+  private LocalDate dateOfBirth;
 
   @ManyToOne
   @JoinColumn( name = "grama_niladhari_id", nullable = false, foreignKey = @ForeignKey( name =

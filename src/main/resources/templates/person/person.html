@@ -13,12 +13,6 @@
         <i class="fa fa-user-plus" ></i > &nbsp; Add Patient </a >
     </div >
     <div class="col" >
-      <a class="btn btn-success" data-th-href="${'/person/excel'}" >
-        <i class="fa fa-users" ></i > &nbsp; Add Patients &nbsp;
-        <i class="far fa-file-excel" ></i >
-      </a >
-    </div >
-    <div class="col" >
       <a class="btn btn-success" data-th-href="${'/person/search'}" >
         <i class="fa fa-search" ></i > &nbsp; Search Patient </a >
     </div >
@@ -74,6 +68,7 @@
                 <th >NIC</th >
                 <th >Mobile</th >
                 <th >Status</th >
+                <th >Gramaniladhari Division</th >
                 <th >View</th >
               </tr >
               <tr data-th-each="person, index : ${persons}" >
@@ -82,8 +77,8 @@
                 <td data-th-text="${person.name}" ></td >
                 <td data-th-text="${person.nic}" ></td >
                 <td data-th-text="${person.mobile}" ></td >
-                <td data-th-text="${person.deadLive.deadLive}" ></td >
-                <td data-th-text="${person.policeStation.name}" ></td >
+                <td data-th-text="${person.personStatus.personStatus}" ></td >
+                <td data-th-text="${person.gramaNiladhari.name}" ></td >
                 <td >
                   <a class="btn btn-success btn-sm" data-th-href="${'/person/' + person.id}" ><i
                         class="fa fa-folder-open" ></i >&nbsp;View</a >
@@ -136,9 +131,9 @@
         <span aria-hidden="true" >&times;</span >
       </button >
       <h3 class="text-center text-danger" >
-        <strong >There is no Person division upto know please add Person division to
+        <strong >There is no Person upto know please add Person to
                  the system
-                 using add Person division button.
+                 using add Person button.
         </strong >
       </h3 >
     </div >

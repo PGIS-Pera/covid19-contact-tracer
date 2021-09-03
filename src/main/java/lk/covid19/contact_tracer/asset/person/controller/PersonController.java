@@ -1,10 +1,14 @@
 package lk.covid19.contact_tracer.asset.person.controller;
 
 
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import lk.covid19.contact_tracer.asset.attempt.entity.Attempt;
 import lk.covid19.contact_tracer.asset.common_asset.model.Pager;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.Gender;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.TwoDate;
+import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.person.entity.enums.PersonStatus;
 import lk.covid19.contact_tracer.asset.person.service.PersonService;
@@ -16,6 +20,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -46,6 +51,7 @@ public class PersonController {
 
   private final PersonService personService;
   private final CommonService commonService;
+  private final GramaNiladhariService gramaNiladhariService;
 
   @GetMapping
   public ModelAndView showPersonsPage(@RequestParam( "pageSize" ) Optional< Integer > pageSize,
@@ -69,28 +75,29 @@ public class PersonController {
 
   private void commonForAll(Model model) {
     model.addAttribute("gender", Gender.values());
-    model.addAttribute("deadLives", PersonStatus.values());
+    model.addAttribute("personStatuses", PersonStatus.values());
+    model.addAttribute("gramaNiladharis", gramaNiladhariService.findAll());
   }
 
   private String commonThings(Model model) {
     commonForAll(model);
-    model.addAttribute("patientNic",
+    model.addAttribute("personNic",
                        MvcUriComponentsBuilder
                            .fromMethodName(PersonController.class, "findByNic", "")
                            .toUriString());
-    return "person/addPatient";
+    return "person/addPerson";
   }
 
   @GetMapping( "/{id}" )
-  public String patientView(@PathVariable( "id" ) Integer id, Model model) {
+  public String personView(@PathVariable( "id" ) Integer id, Model model) {
     Person person = personService.findById(id);
-    model.addAttribute("patientDetail", person);
+    model.addAttribute("personDetail", person);
     model.addAttribute("addStatus", false);
     return "person/person-detail";
   }
 
   @GetMapping( "/edit/{id}" )
-  public String editPatientForm(@PathVariable( "id" ) Integer id, Model model) {
+  public String editPersonForm(@PathVariable( "id" ) Integer id, Model model) {
     Person person = personService.findById(id);
     model.addAttribute("person", person);
     model.addAttribute("addStatus", false);
@@ -98,14 +105,14 @@ public class PersonController {
   }
 
   @GetMapping( "/add" )
-  public String patientAddForm(Model model) {
+  public String personAddForm(Model model) {
     model.addAttribute("addStatus", true);
     model.addAttribute("person", new Person());
     return commonThings(model);
   }
 
   @PostMapping( value = {"/save", "/update"} )
-  public String addPatient(@Valid @ModelAttribute Person person, BindingResult result, Model model) {
+  public String addPerson(@Valid @ModelAttribute Person person, BindingResult result, Model model) {
 
     if ( result.hasErrors() ) {
       model.addAttribute("addStatus", true);
@@ -123,27 +130,21 @@ public class PersonController {
       return commonThings(model);
     }
 
-
     return "redirect:/person";
   }
 
   @GetMapping( "/remove/{id}" )
-  public String removePatient(@PathVariable Integer id) {
+  public String removePerson(@PathVariable Integer id) {
     personService.delete(id);
     return "redirect:/person";
   }
 
-  @GetMapping( "/getPatient/{nic}" )
-  @ResponseBody
-  public Person findByNic(@PathVariable String nic) {
-    return personService.findByNic(nic);
-  }
 
   @GetMapping( "/search" )
   public String searchPage(Model model) {
     commonForAll(model);
     model.addAttribute("person", new Person());
-    return "person/patientSearch";
+    return "person/personSearch";
   }
 
 
@@ -155,13 +156,41 @@ public class PersonController {
     model.addAttribute("message", message);
     commonForAll(model);
     model.addAttribute("person", new Person());
-    return "person/patientSearch";
+    return "person/personSearch";
   }
 
-  @PostMapping(value = "/search")
+  @PostMapping( value = "/search" )
   @ResponseBody
-  public List< Person > search( Person person) {
-    return personService.search(person);
+  public MappingJacksonValue search(Person person) {
+
+    List< Person > persons = personService.search(person);
+    MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(persons);
+
+    SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
+        .filterOutAllExcept("id", "name", "number");
+
+    SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
+        .filterOutAllExcept("id", "name");
+
+    FilterProvider filter = new SimpleFilterProvider()
+        .addFilter("Person", simpleBeanPropertyFilterOne)
+        .addFilter("GramaNiladhari", simpleBeanPropertyFilterTwo);
+    mappingJacksonValue.setFilters(filter);
+
+    return mappingJacksonValue;
   }
 
+  @GetMapping( "/getPerson/{nic}" )
+  @ResponseBody
+  public MappingJacksonValue findByNic(@PathVariable String nic) {
+    MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(personService.findByNic(nic));
+
+    SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
+        .filterOutAllExcept("id", "name");
+    FilterProvider filter = new SimpleFilterProvider()
+        .addFilter("Person", simpleBeanPropertyFilterOne);
+    mappingJacksonValue.setFilters(filter);
+
+    return mappingJacksonValue;
+  }
 }

@@ -74,7 +74,7 @@
             <div class="col-md-4" >
               <label class="control-label" >Gender :</label >
             </div >
-            <div class="col-md-8" >
+            <div class="col-md-8 text-md-left" >
               <div class="custom-control custom-checkbox custom-control-inline "
                    data-th-each="genders,index : ${gender}" >
                 <input class="custom-control-input gender" data-th-checked="${genders==gender}"
@@ -89,72 +89,60 @@
               </div >
             </div >
           </div >
-          <!--Age-->
+          <!--Date of birth-->
           <div class="form-row text-md-right text-sm-left" >
             <div class="col-md-4" >
-              <label class="control-label" for="age" >Age :</label >
+              <label class="control-label" for="dateOfBirth" >Birth date :</label >
             </div >
             <div class="col-md-8" >
-              <input class="form-control" data-th-field="*{age}" id="age"
-                     min="0" required
-                     type="number" />
-              <span class="error" data-th-errors="*{age}"
-                    data-th-if="${#fields.hasErrors('age')}"
-                    id="dateOfBirthError" >Error Birthday</span >
+              <input class="form-control" data-th-field="*{dateOfBirth}" id="dateOfBirth"
+                     placeholder="Ex: 1990 - 01 - 20"
+                     required
+                     type="date" />
+              <span class="error" data-th-errors="*{dateOfBirth}"
+                    data-th-if="${#fields.hasErrors('dateOfBirth')}"
+              >Error Birthday</span >
             </div >
           </div >
           <!--Dead-->
           <div class="form-row text-md-right text-sm-left" data-th-if="${addStatus==false}" >
             <div class="col-md-4" >
-              <label class="control-label" >Live Or Dead :</label >
+              <label class="control-label" >Person Status :</label >
             </div >
             <div class="col-md-8" >
               <div class="custom-control custom-checkbox custom-control-inline "
-                   data-th-each="deadLive,index : ${deadLives}" >
-                <input class="custom-control-input" data-th-checked="${deadLive==deadLive}"
-                       data-th-id="${index.index}+${deadLive}"
-                       data-th-name="${'deadLive'}"
-                       data-th-value="${deadLive}" required
+                   data-th-each="personStatus,index : ${personStatuses}" >
+                <input class="custom-control-input" data-th-checked="${personStatus==personStatus}"
+                       data-th-id="${index.index}+${personStatus}"
+                       data-th-name="${'personStatus'}"
+                       data-th-value="${personStatus}" required
                        type="radio" />
                 <label class="custom-control-label"
-                       data-th-for="${index.index}+${deadLive}"
-                       data-th-text="${deadLive.deadLive}" > radio
+                       data-th-for="${index.index}+${personStatus}"
+                       data-th-text="${personStatus.personStatus}" >
                 </label >
               </div >
-            </div >
-          </div >
-          <!--Date of birth-->
-          <!--               <div class="form-row text-md-right text-sm-left">
-                             <div class="col-md-4">
-                                 <label class="control-label" for="dateOfBirth">Birth date :</label>
-                             </div>
-                             <div class="col-md-8">
-                                 <input class="form-control" data-th-field="*{dateOfBirth}" id="dateOfBirth"
-                                        placeholder="Ex: 1990 - 01 - 20"
-                                        required
-                                        type="date"/>
-                                 <span class="error" data-th-errors="*{dateOfBirth}"
-                                       data-th-if="${#fields.hasErrors('dateOfBirth')}"
-                                       id="dateOfBirthError">Error Birthday</span>
-                             </div>
-                         </div>-->
-          <!--Police Station -->
-          <div class="form-row text-md-right text-sm-left" >
-            <div class="col-md-4" >
-              <label class="control-label" for="policeStation" >Police Station :</label >
-            </div >
-            <div class="col-md-8" >
-              <select class="form-control" data-th-field="*{policeStation}" id="policeStation" required >
-                <option value="" >Please select</option >
-                <option data-th-each="policeStation : ${policeStations}"
-                        data-th-text="${policeStation.name}"
-                        data-th-value="${policeStation.id}" ></option >
-              </select >
             </div >
           </div >
         </div >
         <!--Right Side-->
         <div class="col-md-6 col-sm-6 " >
+          <!--Gramaniladhari division-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="mobileOne" >Gramaniladhari Division :</label >
+            </div >
+            <div class="col-md-8" >
+              <select class="form-control col-md-9" id="gramaNiladhari"
+                      data-th-field="*{gramaNiladhari}" >
+                <option value="" >Please Select</option >
+                <option data-th-each="gramaNiladhari : ${gramaNiladharis}"
+                        data-th-text="${gramaNiladhari.name + ' '+ gramaNiladhari.number}"
+                        data-th-value="${gramaNiladhari.id}"
+                ></option >
+              </select >
+            </div >
+          </div >
           <!--Address-->
           <div class="form-row text-md-right text-sm-left" >
             <div class="col-md-4" >
@@ -180,19 +168,6 @@
                     id="mobileOneError" >Error Mobile Number</span >
             </div >
           </div >
-          <!--Identified Date-->
-          <div class="form-row text-md-right text-sm-left" >
-            <div class="col-md-4" >
-              <label class="control-label" for="identifiedDate" >Identified Date :</label >
-            </div >
-            <div class="col-md-8" >
-              <input class="form-control" data-th-field="*{identifiedDate}" id="identifiedDate"
-                     placeholder="Ex: 1990 - 01 - 20" data-th-required="${addStatus==true}" type="date" />
-              <span class="error" data-th-errors="*{identifiedDate}"
-                    data-th-if="${#fields.hasErrors('identifiedDate')}" >Error Birthday</span >
-            </div >
-          </div >
-
           <!--Created by and created at-->
           <div data-th-if="${addStatus==false}" id="updateStatus" >
             <div class="form-row text-md-right text-sm-left" >
@@ -216,39 +191,28 @@
             </div >
           </div >
         </div >
-        <!-- previous diagnosed list-->
-        <div class="form-group offset-md-3 col-md-6 col-sm-12 text-center flex-column "
-             data-th-if="${addStatus==false}" >
-          <span class="h4 text-center" >Previous Diagnosed Attempts  </span >
-          <ul class="list-group" >
-            <li class="list-group-item " data-th-each="attempt , index : ${person.attempts}" >
-              <span class="mr-2" data-th-text="${index.count}" ></span >:
-              <span data-th-text="${{attempt.identifiedDate}}" ></span >
-            </li >
-          </ul >
-        </div >
-        <!-- button area-->
-        <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
-          <!--Back Button-->
-          <a class="btn btn-dark" data-th-href="${'/person'}" tabindex="10" >
-            <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
-          </a >
-          <!--Save Button-->
-          <button class="btn btn-success ml-md-5" tabindex="8" type="submit" >
-            <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;
-            <span data-th-text="${addStatus==true?'Save': 'Update'}" id="submit" ></span >
-          </button >
-          <!--Cancel Button-->
-          <button class="btn btn-warning ml-md-5" tabindex="9" type="reset" >
-            <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
-          </button >
-        </div >
-        <div class="form-row" >
-          <label data-th-if="${#fields.hasErrors('*')}" data-th-text="'Errors: '" >Errors: </label >
-          <ul >
-            <li class="error" data-th-each="err: ${#fields.errors('*')}" data-th-text="${err}" ></li >
-          </ul >
-        </div >
+      </div >
+      <!-- button area-->
+      <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
+        <!--Back Button-->
+        <a class="btn btn-dark" data-th-href="${'/person'}" tabindex="10" >
+          <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
+        </a >
+        <!--Save Button-->
+        <button class="btn btn-success ml-md-5" tabindex="8" type="submit" >
+          <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;
+          <span data-th-text="${addStatus==true?'Save': 'Update'}" id="submit" ></span >
+        </button >
+        <!--Cancel Button-->
+        <button class="btn btn-warning ml-md-5" tabindex="9" type="reset" >
+          <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
+        </button >
+      </div >
+      <div class="form-row" >
+        <label data-th-if="${#fields.hasErrors('*')}" data-th-text="'Errors: '" >Errors: </label >
+        <ul >
+          <li class="error" data-th-each="err: ${#fields.errors('*')}" data-th-text="${err}" ></li >
+        </ul >
       </div >
     </form >
   </div >
@@ -260,12 +224,9 @@
 <script data-th-src="@{/js/combo-box-search.js}" ></script >
 <script >
     $(document).ready(function () {
-        $("#policeStation").select2({
+        $("#gramaNiladhari").select2({
             data: $(this).val()
         }).addClass("form-control");
-
-        let today = new Date().toISOString().split('T')[0];
-        document.getElementById("identifiedDate").setAttribute('max', today);
     });
 
     $("#nic").keyup(function () {
@@ -273,8 +234,9 @@
         if (nicRegex.test(nic)) {
             $.ajax({
                 type: 'GET',
-                url: $('#patientNic').val() + nic,
+                url: $('#patientNic').val() + nic.toString,
                 success: function (resp) {
+                    console.log(resp)
                     popUpDataSet(resp);
                 },
                 error: function (err) {
@@ -302,7 +264,8 @@
                         hidden: "hidden",
                     },
                 }
-            }).then(() => {
+            }).then((x) => {
+                console.log(x)
                 self.location = location.protocol + "//" + location.host + "/person/edit/" + $("#person_id").val();
             });
         }

@@ -17,6 +17,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.context.annotation.Configuration;
@@ -87,7 +88,7 @@ public class AppCreateAspects {
   }*/
 
 
-  @After( "execution(* lk.covid19.contact_tracer.asset.common_asset.controller.ApplicationCreateController.district(..))" )
+  @AfterReturning( "execution(* lk.covid19.contact_tracer.asset.common_asset.controller.ApplicationCreateController.district(..))" )
   public void createRowSData() {
     Resource resource = resourceLoader.getResource("classpath:excel_files/district.xlsx");
     HashSet< District > savedDistrict = new HashSet<>();
