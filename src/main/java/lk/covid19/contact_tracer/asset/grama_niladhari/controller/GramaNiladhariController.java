@@ -9,6 +9,7 @@ import lk.covid19.contact_tracer.asset.common_asset.model.enums.Province;
 import lk.covid19.contact_tracer.asset.district.controller.DistrictController;
 import lk.covid19.contact_tracer.asset.district.service.DistrictService;
 import lk.covid19.contact_tracer.asset.ds_office.controller.DsOfficeController;
+import lk.covid19.contact_tracer.asset.ds_office.entity.DsOffice;
 import lk.covid19.contact_tracer.asset.ds_office.service.DsOfficeService;
 import lk.covid19.contact_tracer.asset.grama_niladhari.entity.GramaNiladhari;
 import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
@@ -110,11 +111,26 @@ public class GramaNiladhariController {
     return "redirect:/gramaNiladhari";
   }
 
-  @PostMapping(value = "/search")
+  @PostMapping( value = "/search" )
   @ResponseBody
-  public List< GramaNiladhari > search( GramaNiladhari gramaNiladhari) {
-    System.out.println(gramaNiladhari.toString());
-    return gramaNiladhariService.search(gramaNiladhari);
+  public MappingJacksonValue search(GramaNiladhari gramaNiladhari) {
+
+    List< GramaNiladhari > gramaNiladharis = gramaNiladhariService.search(gramaNiladhari);
+    MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(gramaNiladharis);
+
+    SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
+        .filterOutAllExcept("id", "name","number");
+
+    SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
+        .filterOutAllExcept("id", "name");
+
+    FilterProvider filter = new SimpleFilterProvider()
+        .addFilter("GramaNiladhari", simpleBeanPropertyFilterOne)
+        .addFilter("DsOffice", simpleBeanPropertyFilterTwo);
+    mappingJacksonValue.setFilters(filter);
+
+    return mappingJacksonValue;
   }
+  //todo : according to gramaniladari division vs person count[ according to person type]
 
 }

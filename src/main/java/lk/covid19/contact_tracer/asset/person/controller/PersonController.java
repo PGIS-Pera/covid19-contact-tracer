@@ -61,6 +61,9 @@ public class PersonController {
     modelAndView.addObject("selectedPageSize", evalPageSize);
     modelAndView.addObject("pageSizes", PAGE_SIZES);
     modelAndView.addObject("pager", pager);
+    modelAndView.addObject("searchUrl", MvcUriComponentsBuilder
+        .fromMethodName(PersonController.class, "search", new Person())
+        .toUriString());
     return modelAndView;
   }
 
@@ -143,34 +146,6 @@ public class PersonController {
     return "person/patientSearch";
   }
 
-  @PostMapping( "/search" )
-  public String search(Model model, Person person) {
-    List< Person > people = personService.search(person);
-    if ( people.size() == 1 ) {
-      model.addAttribute("patientDetail", people.get(0));
-      return "person/person-detail";
-    } else {
-      if ( person.getIdentifiedDate() != null ) {
-        people.stream()
-            .filter((x) -> {
-              boolean attemptEqual = false;
-              for ( Attempt attempt : x.getAttempts() ) {
-                if ( attempt.getIdentifiedDate().equals(person.getIdentifiedDate()) ) {
-                  attemptEqual = true;
-                  break;
-                }
-              }
-              return attemptEqual;
-            })
-            .collect(Collectors.toList());
-      }
-      model.addAttribute("persons", people);
-      model.addAttribute("message", message(person));
-      commonForAll(model);
-      model.addAttribute("person", new Person());
-      return "person/patientSearch";
-    }
-  }
 
   @PostMapping( "/searchDate" )
   public String searchDate(Model model, TwoDate twoDate) {
@@ -183,138 +158,10 @@ public class PersonController {
     return "person/patientSearch";
   }
 
-  @GetMapping( "/excel" )
-  public String saveExcelData() {
-    return "person/patientAddByExcel";
+  @PostMapping(value = "/search")
+  @ResponseBody
+  public List< Person > search( Person person) {
+    return personService.search(person);
   }
 
- /* @PostMapping( "/excelAdd" )
-  public String saveExcelData(@ModelAttribute Person person, RedirectAttributes redirectAttributes) throws IOException {
-    // Workbook workbook = commonService.getExcelWorkbook(person.getMultipartFile().getInputStream(), Objects
-    // .requireNonNull(person.getMultipartFile().getOriginalFilename()));
-
-    int name_column = 0;
-    int age_column = 0;
-    int nic_column = 0;
-    int mobile_column = 0;
-    int policeArea_column = 0;
-    int remark_column = 0;
-    int identified_date_column = 0;
-    int default_column = 0;
-
-    List< Person > people = new ArrayList<>();
-
-    HSSFWorkbook workbook = new HSSFWorkbook(person.getMultipartFile().getInputStream());
-    SummaryInformation summaryInfo = workbook.getSummaryInformation();
-
-    //Creates a worksheet object representing the first sheet
-    HSSFSheet worksheet = workbook.getSheetAt(0);
-    //Reads the data in excel file until last row is encountered
-
-    Attempt attempt = Attempt.builder()
-        .sheetName(worksheet.getSheetName())
-        .title(summaryInfo.getTitle())
-        .author(summaryInfo.getAuthor())
-        .createdDate(summaryInfo.getCreateDateTime())
-        .lastAuthor(summaryInfo.getLastAuthor())
-        .build();
-
-
-    for ( int i = 0; i <= worksheet.getLastRowNum(); i++ ) {
-      HSSFRow row = worksheet.getRow(i);
-      if ( i == 0 ) {
-        for ( int j = 0; j < 10; j++ ) {
-          switch ( commonService.stringCapitalize(row.getCell(j).getRichStringCellValue().toString()) ) {
-            case "Nic":
-              nic_column = j;
-              break;
-            case "Name":
-              name_column = j;
-              break;
-            case "Age":
-              age_column = j;
-              break;
-            case "Mobile No":
-            case "Mobile":
-              mobile_column = j;
-              break;
-            case "Remark":
-              remark_column = j;
-              break;
-            case "Police Station":
-            case "Police Area":
-            case "Police":
-              policeArea_column = j;
-              break;
-            case "Identified Date":
-            case "Identified":
-            case "Date":
-              identified_date_column = j;
-              break;
-            default:
-              default_column = j;
-          }
-        }
-
-        if ( name_column > 0 && age_column > 0 && nic_column > 0 && mobile_column > 0 && policeArea_column > 0 && remark_column > 0 && default_column > 0 ) {
-          redirectAttributes.addFlashAttribute("message", "Some one change the excel sheet please provide valid " +
-              "excel" +
-              " sheet");
-          return "redirect:/person/excel";
-        }
-      } else {
-        attempt.setRemark(commonService.stringCapitalize(row.getCell(remark_column).getRichStringCellValue().toString()));
-        attempt.setIdentifiedDate(LocalDate.parse(row.getCell(identified_date_column).getRichStringCellValue().toString()));
-        Person personIncoming = Person.builder()
-            .name(commonService.stringCapitalize(row.getCell(name_column).getRichStringCellValue().toString()))
-            .age(Integer.parseInt(row.getCell(age_column).getRichStringCellValue().toString()))
-            .nic(commonService.stringCapitalize(row.getCell(nic_column).getRichStringCellValue().toString()))
-            .mobile(commonService.phoneNumberLengthValidator(commonService.stringCapitalize(row.getCell
-            (mobile_column).getRichStringCellValue().toString())))
-            .policeStationName(commonService.stringCapitalize(row.getCell(policeArea_column).getRichStringCellValue()
-            .toString()))
-            .attempt(attempt)
-            .build();
-        people.add(personIncoming);
-      }
-    }
-    redirectAttributes.addFlashAttribute("persons", personService.persistList(people));
-    return "redirect:/person/excel";
-  }
-*/
-  private String message(Person person) {
-    String message = "";
-    try {
-      if ( person.getName() != null ) {
-        message += " Name : " + person.getName();
-      }
-      if ( person.getNic() != null ) {
-        message += " NIC : " + person.getNic();
-      }
-      if ( person.getCode() != null ) {
-        message += " Register Number : " + person.getCode();
-      }
-/*      if ( person.getAge() > 0 ) {
-        message += " Age : " + person.getAge();
-      }*/
-      if ( person.getGender() != null ) {
-        message += " Gender : " + person.getGender().getGender();
-      }
-      if ( person.getPersonStatus() != null ) {
-        message += " Live or Dead : " + person.getPersonStatus().getPersonStatus();
-      }
-      if ( person.getAddress() != null ) {
-        message += " Address : " + person.getAddress();
-      }
-      if ( person.getMobile() != null ) {
-        message += " Mobile : " + person.getMobile();
-      }
-      if ( person.getIdentifiedDate() != null ) {
-        message += " Identified Date : " + person.getIdentifiedDate();
-      }
-    } catch ( Exception e ) {
-      message += e.getCause().getCause().getMessage();
-    }
-    return message;
-  }
 }

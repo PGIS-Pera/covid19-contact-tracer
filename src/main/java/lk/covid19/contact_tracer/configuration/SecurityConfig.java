@@ -74,10 +74,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-   /* http.csrf().disable();
+    http.csrf().disable();
     http.authorizeRequests().antMatchers("/").permitAll();
-    */
-    http
+    /*http
         .authorizeRequests(
             authorizeRequests ->
                 authorizeRequests
@@ -129,7 +128,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
         .headers()
         .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
-
+*/
   }
 }
 

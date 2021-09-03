@@ -6,7 +6,9 @@ import lk.covid19.contact_tracer.asset.common_asset.model.enums.Gender;
 import lk.covid19.contact_tracer.asset.grama_niladhari.entity.GramaNiladhari;
 import lk.covid19.contact_tracer.asset.person.entity.enums.PersonStatus;
 import lk.covid19.contact_tracer.util.audit.AuditEntity;
+import lk.covid19.contact_tracer.util.service.DateTimeAgeService;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +26,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder( toBuilder = true )
 @JsonFilter( "Person" )
+@ToString
 public class Person extends AuditEntity {
 
   @Column( nullable = false, unique = true )
@@ -53,28 +56,14 @@ public class Person extends AuditEntity {
   @ManyToOne
   @JoinColumn( name = "grama_niladhari_id", nullable = false, foreignKey = @ForeignKey( name =
       "fk_patient_vs_grama_niladhari" ) )
+  @ToString.Exclude
   private GramaNiladhari gramaNiladhari;
 
   @OneToMany( mappedBy = "person", cascade = {CascadeType.MERGE, CascadeType.PERSIST} )
+  @ToString.Exclude
   private List< Attempt > attempts;
 
   @Transient
-  @DateTimeFormat( pattern = "yyyy-MM-dd" )
-  private LocalDate identifiedDate;
-
-  @Transient
-  private String remarks;
-
-  @Transient
-  private String policeStationName;
-
-  @Transient
-  private PersonStatus activeInactive;
-
-  @Transient
-  private Attempt attempt;
-
-  @Transient
-  private MultipartFile multipartFile;
+  private String age;
 
 }
