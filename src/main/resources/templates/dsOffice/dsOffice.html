@@ -5,6 +5,9 @@
   <title >Thymeleaf Springboot </title >
 </head >
 <body >
+<!--table pagination-->
+<link data-th-href="@{/css/dataTables.bootstrap.min.css}" media="all" rel="stylesheet" type="text/css" />
+
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
 
 <div class="container-fluid" >
@@ -98,10 +101,7 @@
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <!--script include-->
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
-<script >
-    /*active boostrap alert - start*/
-    $(".alert").alert();
-    /*active boostrap alert - end*/
-</script >
+<!-- data table -->
+<script src="/js/pagination.js" ></script >
 </body >
 </html >

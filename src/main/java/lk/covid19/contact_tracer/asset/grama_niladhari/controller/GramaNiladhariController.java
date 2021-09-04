@@ -12,6 +12,7 @@ import lk.covid19.contact_tracer.asset.ds_office.controller.DsOfficeController;
 import lk.covid19.contact_tracer.asset.ds_office.service.DsOfficeService;
 import lk.covid19.contact_tracer.asset.grama_niladhari.entity.GramaNiladhari;
 import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
+import lk.covid19.contact_tracer.util.service.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,6 +41,7 @@ public class GramaNiladhariController {
   private final GramaNiladhariService gramaNiladhariService;
   private final DistrictService districtService;
   private final DsOfficeService dsOfficeService;
+  private final CommonService commonService;
 
   private String commonThing(Model model, Boolean booleanValue, GramaNiladhari gramaNiladhariObject) {
     model.addAttribute("addStatus", booleanValue);
@@ -118,7 +120,7 @@ public class GramaNiladhariController {
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(gramaNiladharis);
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name","number");
+        .filterOutAllExcept("id", "name", "number");
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
         .filterOutAllExcept("id", "name");
@@ -126,6 +128,26 @@ public class GramaNiladhariController {
     FilterProvider filter = new SimpleFilterProvider()
         .addFilter("GramaNiladhari", simpleBeanPropertyFilterOne)
         .addFilter("DsOffice", simpleBeanPropertyFilterTwo);
+    mappingJacksonValue.setFilters(filter);
+
+    return mappingJacksonValue;
+  }
+
+  @GetMapping( value = "/searchOne" )
+  @ResponseBody
+  public MappingJacksonValue searchOne(@RequestParam( "name" ) String name) {
+
+    GramaNiladhari gramaNiladhari = GramaNiladhari.builder().name(name).build();
+    List< GramaNiladhari > gramaNiladharis = gramaNiladhariService.search(gramaNiladhari);
+
+    MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(gramaNiladharis);
+
+    SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
+        .filterOutAllExcept("id", "name", "number");
+
+    FilterProvider filter = new SimpleFilterProvider()
+        .addFilter("GramaNiladhari", simpleBeanPropertyFilterOne);
+
     mappingJacksonValue.setFilters(filter);
 
     return mappingJacksonValue;

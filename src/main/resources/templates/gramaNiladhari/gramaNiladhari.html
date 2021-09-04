@@ -5,6 +5,9 @@
   <title >Thymeleaf Springboot </title >
 </head >
 <body >
+<!--table pagination-->
+<link data-th-href="@{/css/dataTables.bootstrap.min.css}" media="all" rel="stylesheet" type="text/css" />
+
 <div data-th-replace="~{fragments/navBar :: navBarFragment}" ></div >
 <div class="container-fluid" >
   <div class="row text-center" >
@@ -207,6 +210,8 @@
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <!--script include-->
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<!-- data table -->
+<script src="/js/pagination.js" ></script >
 <script data-th-src="@{/js/gramaNiladhari.js}" ></script >
 </body >
 </html >

@@ -8,6 +8,8 @@ import lk.covid19.contact_tracer.asset.attempt.entity.Attempt;
 import lk.covid19.contact_tracer.asset.common_asset.model.Pager;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.Gender;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.TwoDate;
+import lk.covid19.contact_tracer.asset.grama_niladhari.controller.GramaNiladhariController;
+import lk.covid19.contact_tracer.asset.grama_niladhari.entity.GramaNiladhari;
 import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.person.entity.enums.PersonStatus;
@@ -81,10 +83,13 @@ public class PersonController {
 
   private String commonThings(Model model) {
     commonForAll(model);
-    model.addAttribute("personNic",
+    model.addAttribute("personNicSearchUrl",
                        MvcUriComponentsBuilder
                            .fromMethodName(PersonController.class, "findByNic", "")
                            .toUriString());
+    model.addAttribute("gramaNiladhariSearchUrl", MvcUriComponentsBuilder
+        .fromMethodName(GramaNiladhariController.class, "searchOne", "")
+        .toUriString());
     return "person/addPerson";
   }
 
@@ -182,7 +187,8 @@ public class PersonController {
 
   @GetMapping( "/getPerson/{nic}" )
   @ResponseBody
-  public MappingJacksonValue findByNic(@PathVariable String nic) {
+  public MappingJacksonValue findByNic(@RequestParam( "nic" ) String nic) {
+    System.out.println(nic);
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(personService.findByNic(nic));
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter

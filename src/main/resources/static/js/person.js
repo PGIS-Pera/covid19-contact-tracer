@@ -1,3 +1,4 @@
+//person
 $(document).ready(() => {
     changePageAndSize();
 });
@@ -98,3 +99,85 @@ $("#searchInput").keyup(function () {
         html_middle_part = '';
     }
 })
+
+//add person
+let data_list = '';
+let grama_niladhari = [];
+$("#gramaNiladhari").keyup(function () {
+    let type_value = $(this).val();
+    if (type_value.length > 3) {
+        $("#gramaNiladhariMessage").html('');
+        $.ajax({
+            type: 'GET',
+            url: $('#gramaNiladhariSearchUrl').val() + type_value,
+            success: function (resp) {
+                grama_niladhari = [];
+                data_list = '';
+                grama_niladhari = resp;
+                for (let i = 0; i < resp.length; i++) {
+                    data_list += ` <option value="${resp[i].id}" >${resp[i].name} -  ${resp[i].number}</option>`
+                }
+                $("#browsers").append(data_list);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    } else {
+        $("#gramaNiladhariMessage").html('Please type more than 3 character');
+    }
+
+    gramaNiladhariNameSet(type_value);
+});
+
+function gramaNiladhariNameSet(type_value) {
+    grama_niladhari.forEach((x) => {
+        if (x.id === parseInt(type_value)) {
+            $("#gramaNiladhariOne").val(`${x.name} - ${x.number}`);
+        }
+    })
+}
+
+
+$("#nic").keyup(function () {
+    let nic = $(this).val();
+    console.log(typeof nic)
+    if (nicRegex.test(nic)) {
+        $.ajax({
+            type: 'GET',
+            url: $('#patientNic').val() + nic,
+            success: function (resp) {
+                console.log(resp)
+                popUpDataSet(resp);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+});
+
+function popUpDataSet(resp) {
+    if (resp) {
+        swal("Write something here:", {
+            title: "Are you sure with this nic \n" + $("#nic").val() + " ?",
+            text: "This person is already on the system, automatically redirect you to add new attempt page!",
+            icon: "warning",
+            dangerMode: true,
+            buttons: true,
+            //  timer: 6000,
+            content: {
+                element: "input",
+                attributes: {
+                    id: "person_id",
+                    type: "text",
+                    value: resp.id,
+                    hidden: "hidden",
+                },
+            }
+        }).then((x) => {
+            console.log(x)
+            self.location = location.protocol + "//" + location.host + "/person/edit/" + $("#person_id").val();
+        });
+    }
+}

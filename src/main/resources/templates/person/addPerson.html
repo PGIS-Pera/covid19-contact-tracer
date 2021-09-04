@@ -5,11 +5,6 @@
   <title >Thymeleaf Springboot </title >
 </head >
 <body >
-<!--combo box search css-->
-<link data-th-href="@{/css/combo-box-search.css}" media="all" rel="stylesheet" type="text/css" />
-<!--person css-->
-<link data-th-href="@{/css/person.css}" media="all" rel="stylesheet" type="text/css" />
-
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
 
 <div class="container-fluid   " >
@@ -21,7 +16,7 @@
     </div >
     <div class="col" >
             <span class="h4 font-weight-bold text-center"
-                  data-th-text="${addStatus==true?'New Patient Add':'Update Patient Details'}" ></span >
+                  data-th-text="${addStatus==true?'New Person Add':'Update Person Details'}" ></span >
     </div >
     <div class="col" >
       <a class="btn btn-success" data-th-href="${'/person'}" >
@@ -150,9 +145,16 @@
               <label class="control-label" for="mobileOne" >Gramaniladhari Division :</label >
             </div >
             <div class="col-md-8" >
-              <select id="gramaNiladhari" class="form-control"
-                      data-th-field="*{gramaNiladhari}" >
-              </select >
+              <input type="text"  id="gramaNiladhariOne" data-th-value="${addStatus==false ? person.gramaNiladhari.name :''}" readonly class="form-control" >
+              <input list="browsers" data-th-field="*{gramaNiladhari}" class="form-control" >
+              <datalist id="browsers" >
+                <option value="Edge" ></option >
+                <option value="Firefox" ></option >
+                <option value="Chrome" ></option >
+                <option value="Opera" ></option >
+                <option value="Safari" ></option >
+              </datalist >
+              <span class="form-text text-muted bg-warring" id="gramaNiladhariMessage" ></span >
             </div >
           </div >
           <!--Address-->
@@ -228,72 +230,11 @@
   </div >
 </div >
 
-<input data-th-value="${patientNic}" hidden id="patientNic" type="text" >
+<input data-th-value="${personNicSearchUrl}" hidden id="patientNic" type="text" >
+<input data-th-value="${gramaNiladhariSearchUrl}" hidden id="gramaNiladhariSearchUrl" type="text" >
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
-<script data-th-src="@{/js/combo-box-search.js}" ></script >
-<script >
-    $(document).ready(function () {
-        $('#gramaNiladhari').select2({
-            placeholder: "Select a gramanidhari division",
-            allowClear: true,
-            theme: "classic",
-            ajax: {
-                url: 'http://localhost:8080/gramaNiladhari/search',
-                data: function (params) {
-                    console.log(params)
-                    // Query parameters will be ?search=[term]&type=public
-                    return {
-                        name: params.term,
-                    };
-                }
-            }
-        });
-    });
-
-    $("#nic").keyup(function () {
-        let nic = $(this).val();
-        if (nicRegex.test(nic)) {
-            $.ajax({
-                type: 'GET',
-                url: $('#patientNic').val() + nic.toString,
-                success: function (resp) {
-                    console.log(resp)
-                    popUpDataSet(resp);
-                },
-                error: function (err) {
-                    console.log(err);
-                }
-            });
-        }
-    });
-
-    function popUpDataSet(resp) {
-        if (resp) {
-            swal("Write something here:", {
-                title: "Are you sure with this nic \n" + $("#nic").val() + " ?",
-                text: "This person is already on the system, automatically redirect you to add new attempt page!",
-                icon: "warning",
-                dangerMode: true,
-                buttons: true,
-                //  timer: 6000,
-                content: {
-                    element: "input",
-                    attributes: {
-                        id: "person_id",
-                        type: "text",
-                        value: resp.id,
-                        hidden: "hidden",
-                    },
-                }
-            }).then((x) => {
-                console.log(x)
-                self.location = location.protocol + "//" + location.host + "/person/edit/" + $("#person_id").val();
-            });
-        }
-    }
-
-</script >
+<script data-th-src="@{/js/person.js}" ></script >
 </body >
 </html >
 
