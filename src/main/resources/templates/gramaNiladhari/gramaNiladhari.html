@@ -29,9 +29,9 @@
   <div class="col-sm-12 flex-column " >
     <div class="row" >
       <div class="container-fluid" >
-        <div class="row" >
+        <div class="row" data-th-if="${gramaNiladharis.totalPages}">
           <!--page per item select -->
-          <div class="col text-left" data-th-if="${gramaNiladharis.totalPages}" >
+          <div class="col text-left"  >
             <div class="form-row" >
               <div class="col text-right" >
                 <label for="pageSizeSelect" >Item Count Per Page : </label >

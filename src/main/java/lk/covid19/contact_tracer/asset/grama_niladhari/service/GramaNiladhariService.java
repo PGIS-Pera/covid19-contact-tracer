@@ -9,17 +9,15 @@ import java.util.List;
 
 
 public interface GramaNiladhariService {
-  public List< GramaNiladhari > findAll();
+   List< GramaNiladhari > findAll();
 
-  public GramaNiladhari findById(Integer id);
+   GramaNiladhari findById(Integer id);
 
-  public GramaNiladhari persist(GramaNiladhari policeStation);
+   GramaNiladhari persist(GramaNiladhari policeStation);
 
-  public boolean delete(Integer id);
+   boolean delete(Integer id);
 
-  public List< GramaNiladhari > search(GramaNiladhari policeStation);
-
-  public boolean isPoliceStationPresent(GramaNiladhari policeStation);
+   List< GramaNiladhari > search(GramaNiladhari policeStation);
 
   Page< GramaNiladhari > findAllPageable(Pageable pageable);
 

@@ -52,11 +52,6 @@ public class GramaNiladhariServiceImpl implements GramaNiladhariService {
     return gramaNiladhariDao.findAll(policeStationExample);
   }
 
-  public boolean isPoliceStationPresent(GramaNiladhari gramaNiladhari) {
-    return gramaNiladhariDao.equals(gramaNiladhari);
-  }
-
-
   @Cacheable
   public Page< GramaNiladhari > findAllPageable(Pageable pageable) {
     return gramaNiladhariDao.findAll(pageable);

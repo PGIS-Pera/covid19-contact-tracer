@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,6 +54,11 @@ public class LocationInteractImpl implements LocationInteractService {
         .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
     Example< LocationInteract > districtExample = Example.of(district, matcher);
     return locationInteractDao.findAll(districtExample);
+  }
+
+  @Cacheable
+  public Page< LocationInteract > findAllPageable(Pageable pageable) {
+    return locationInteractDao.findAll(pageable);
   }
 
 }

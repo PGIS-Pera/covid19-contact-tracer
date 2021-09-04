@@ -4,95 +4,121 @@ package lk.covid19.contact_tracer.asset.location_interact.controller;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import lk.covid19.contact_tracer.asset.common_asset.model.Pager;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.Province;
-import lk.covid19.contact_tracer.asset.district.entity.District;
-import lk.covid19.contact_tracer.asset.district.service.DistrictService;
+import lk.covid19.contact_tracer.asset.district.controller.DistrictController;
+import lk.covid19.contact_tracer.asset.ds_office.controller.DsOfficeController;
+import lk.covid19.contact_tracer.asset.grama_niladhari.controller.GramaNiladhariController;
+import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
+import lk.covid19.contact_tracer.asset.location_interact.entity.LocationInteract;
+import lk.covid19.contact_tracer.asset.location_interact.service.LocationInteractService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
-@RequestMapping( "/visitedPlace" )
+@RequestMapping( "/locationInteract" )
 @RequiredArgsConstructor
 public class LocationInteractController {
 
-  private final DistrictService districtService;
 
-  private String commonThing(Model model, Boolean booleanValue, District districtObject) {
-    model.addAttribute("provinces", Province.values());
+  private static final int BUTTONS_TO_SHOW = 5;
+  private static final int INITIAL_PAGE = 0;
+  private static final int INITIAL_PAGE_SIZE = 5;
+  private static final int[] PAGE_SIZES = {5, 10, 20};
+  private final LocationInteractService locationInteractService;
+  private final GramaNiladhariService gramaNiladhariService;
+
+  private String commonThing(Model model, Boolean booleanValue, LocationInteract locationInteractObject) {
     model.addAttribute("addStatus", booleanValue);
-    model.addAttribute("district", districtObject);
-    return "district/addDistrict";
+    model.addAttribute("locationInteract", locationInteractObject);
+    model.addAttribute("gramaNiladharis", gramaNiladhariService.findAll());
+    return "locationInteract/addLocationInteract";
   }
 
   @GetMapping
-  public String findAll(Model model) {
-    model.addAttribute("districts", districtService.findAll());
-    return "district/district";
+  public ModelAndView showPersonsPage(@RequestParam( "pageSize" ) Optional< Integer > pageSize,
+                                      @RequestParam( "page" ) Optional< Integer > page) {
+    ModelAndView modelAndView = new ModelAndView("locationInteract/locationInteract");
+    int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);
+    int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
+
+    Page< LocationInteract > locationInteract = locationInteractService.findAllPageable(PageRequest.of(evalPage,
+                                                                                                       evalPageSize));
+    Pager pager = new Pager(locationInteract.getTotalPages(), locationInteract.getNumber(), BUTTONS_TO_SHOW);
+    modelAndView.addObject("locationInteracts", locationInteract);
+    modelAndView.addObject("selectedPageSize", evalPageSize);
+    modelAndView.addObject("pageSizes", PAGE_SIZES);
+    modelAndView.addObject("pager", pager);
+    modelAndView.addObject("searchUrl", MvcUriComponentsBuilder
+        .fromMethodName(LocationInteractController.class, "search", new LocationInteract())
+        .toUriString());
+    return modelAndView;
   }
 
   @GetMapping( "/add" )
   public String form(Model model) {
-    return commonThing(model, false, new District());
+    return commonThing(model, false, new LocationInteract());
   }
 
   @GetMapping( "/{id}" )
   public String findById(@PathVariable Integer id, Model model) {
-    model.addAttribute("districtDetail", districtService.findById(id));
-    return "district/district-detail";
+    model.addAttribute("locationInteractDetail", locationInteractService.findById(id));
+    return "locationInteract/locationInteract-detail";
   }
 
   @GetMapping( "/edit/{id}" )
   public String edit(@PathVariable Integer id, Model model) {
-    return commonThing(model, true, districtService.findById(id));
+    return commonThing(model, true, locationInteractService.findById(id));
   }
 
   @PostMapping( value = {"/save", "/update"} )
-  public String persist(@Valid @ModelAttribute District district, BindingResult bindingResult,
+  public String persist(@Valid @ModelAttribute LocationInteract locationInteract, BindingResult bindingResult,
                         RedirectAttributes redirectAttributes, Model model) {
     if ( bindingResult.hasErrors() ) {
-      return commonThing(model, false, district);
+      return commonThing(model, false, locationInteract);
     }
-    try {
-      redirectAttributes.addFlashAttribute("districtDetail", districtService.persist(district));
-    } catch ( Exception e ) {
-      ObjectError error = new ObjectError("district",
-                                          "Please make sure that resolve following error \n. <br> System message -->" + e.getCause().getCause().getMessage());
-      bindingResult.addError(error);
-      return commonThing(model, false, district);
-    }
-    return "redirect:/district";
+    redirectAttributes.addFlashAttribute("locationInteractDetail", locationInteractService.persist(locationInteract));
+    return "redirect:/locationInteract";
   }
 
   @GetMapping( "/delete/{id}" )
   public String delete(@PathVariable Integer id, Model model) {
-    districtService.delete(id);
-    return "redirect:/district";
+    locationInteractService.delete(id);
+    return "redirect:/locationInteract";
   }
 
-  @GetMapping( value = "/getDistrict/{province}" )
+  @PostMapping( value = "/search" )
   @ResponseBody
-  public MappingJacksonValue getDistrictByProvince(@PathVariable String province) {
+  public MappingJacksonValue search(LocationInteract locationInteract) {
 
-    List< District > districts = districtService.findByProvince(Province.valueOf(province));
+    List< LocationInteract > locationInteracts = locationInteractService.search(locationInteract);
+    MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(locationInteracts);
 
-    MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(districts);
+    SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
+        .filterOutAllExcept("id", "name", "number");
 
-    SimpleBeanPropertyFilter simpleBeanPropertyFilter = SimpleBeanPropertyFilter
+    SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
         .filterOutAllExcept("id", "name");
-    FilterProvider filters = new SimpleFilterProvider()
-        .addFilter("District", simpleBeanPropertyFilter);
-    mappingJacksonValue.setFilters(filters);
+
+    FilterProvider filter = new SimpleFilterProvider()
+        .addFilter("LocationInteract", simpleBeanPropertyFilterOne)
+        .addFilter("DsOffice", simpleBeanPropertyFilterTwo);
+    mappingJacksonValue.setFilters(filter);
 
     return mappingJacksonValue;
   }
-
 }

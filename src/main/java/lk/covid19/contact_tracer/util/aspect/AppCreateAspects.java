@@ -26,6 +26,7 @@ import org.springframework.core.io.ResourceLoader;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 
 @Aspect
@@ -87,8 +88,19 @@ public class AppCreateAspects {
     return result;
   }*/
 
+  @After( "execution(* lk.covid19.contact_tracer.asset.common_asset.controller.ApplicationCreateController.sample(..))" )
+public void testONe(){
+    System.out.println(LocalDateTime.now());
+    System.out.println("afert");
+  }
+  @Before( "execution(* lk.covid19.contact_tracer.asset.common_asset.controller.ApplicationCreateController.sample(..))" )
+  public void testTwo(){
+    System.out.println(LocalDateTime.now());
+    System.out.println("before");
 
-  @AfterReturning( "execution(* lk.covid19.contact_tracer.asset.common_asset.controller.ApplicationCreateController.district(..))" )
+  }
+
+  @After( "execution(* lk.covid19.contact_tracer.asset.common_asset.controller.ApplicationCreateController.district(..))" )
   public void createRowSData() {
     Resource resource = resourceLoader.getResource("classpath:excel_files/district.xlsx");
     HashSet< District > savedDistrict = new HashSet<>();

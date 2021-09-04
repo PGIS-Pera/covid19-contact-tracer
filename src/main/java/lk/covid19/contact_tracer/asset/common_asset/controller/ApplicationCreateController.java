@@ -77,4 +77,10 @@ public class ApplicationCreateController {
     return "message/message";
   }
 
+  @GetMapping( "/sample" )
+  public String sample() {
+    System.out.println("come jere");
+    return "/index";
+  }
+
 }

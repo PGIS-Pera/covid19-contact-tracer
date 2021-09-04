@@ -9,21 +9,17 @@
 <div class="container-fluid" >
   <div class="row text-center" >
     <div class="col" >
-      <a class="btn btn-success" data-th-href="${'/person/add'}" >
-        <i class="fa fa-user-plus" ></i > &nbsp; Add Patient </a >
+      <a class="btn btn-success" data-th-href="${'/locationInteract/add'}" >
+        <i class="far fa-building" ></i > &nbsp; Add
+                                          Location Interactions</a >
     </div >
     <div class="col" >
-      <a class="btn btn-success" data-th-href="${'/person/search'}" >
-        <i class="fa fa-search" ></i > &nbsp; Search Patient </a >
+      <span class="font-weight-bold h2" >                    Location Interactions </span >
     </div >
-  </div >
-  <div class="row text-center" >
     <div class="col" >
-      <h4 class="text-center" >
-        <strong >
-          Patient Management
-        </strong >
-      </h4 >
+      <a class="btn btn-primary" data-th-href="${'/home'}" id="searchShow" tabindex="2" >
+        <i class="fas fa-home" style="font-size: 20px" ></i >&nbsp;&nbsp;Home
+      </a >
     </div >
   </div >
 </div >
@@ -33,7 +29,7 @@
   <div class="col-sm-12 flex-column " >
     <div class="row" >
       <div class="container-fluid" >
-        <div class="row" data-th-if="${persons.totalPages}">
+        <div class="row" data-th-if="${locationInteracts.totalPages}">
           <!--page per item select -->
           <div class="col text-left"  >
             <div class="form-row" >
@@ -58,30 +54,33 @@
           </div >
         </div >
         <!--data fill table-->
-        <div class="row" data-th-if="${ persons.getTotalElements() != 0}" >
+        <div class="row" data-th-if="${ locationInteracts.getTotalElements() != 0}" >
           <div class="container-fluid" >
             <table class="table table-hover table-striped table-responsive-sm  mt-1" >
               <tr >
                 <th >Index</th >
-                <th >Re. Number</th >
                 <th >Name</th >
-                <th >NIC</th >
-                <th >Mobile</th >
-                <th >Status</th >
-                <th >Gramaniladhari Division</th >
+                <th >Gramanilashari Division Name</th >
+                <th >Division Secretory Office Name</th >
                 <th >View</th >
               </tr >
-              <tr data-th-each="person, index : ${persons}" >
+              <tr data-th-each="locationInteract, index : ${locationInteracts}" >
                 <td data-th-text="${index.count}" ></td >
-                <td data-th-text="${person.number}" ></td >
-                <td data-th-text="${person.name}" ></td >
-                <td data-th-text="${person.nic}" ></td >
-                <td data-th-text="${person.mobile}" ></td >
-                <td data-th-text="${person.personStatus.personStatus}" ></td >
-                <td data-th-text="${person.gramaNiladhari.name}" ></td >
+                <td data-th-text="${locationInteract.name}" ></td >
+                <td data-th-text="${locationInteract.gramaNiladhari.name}" ></td >
+                <td data-th-text="${locationInteract.gramaNiladhari.dsOffice.name}" ></td >
                 <td >
-                  <a class="btn btn-success btn-sm" data-th-href="${'/person/' + person.id}" ><i
+                  <a class="btn btn-success btn-sm" data-th-href="${'/locationInteract/' + locationInteract.id}" ><i
                         class="fa fa-folder-open" ></i >&nbsp;View</a >
+                  <a class="btn btn-primary btn-sm" id="agOfficeEdit"
+                     data-th-href="${'/locationInteract/edit/' + locationInteract.id}" ><i
+                        class="fa fa-edit" ></i >&nbsp;Edit</a >
+                  <a class="btn btn-danger btn-sm" id="agOfficeRemove"
+                     data-th-href="${'/locationInteract/remove/' + locationInteract.id}"
+                     data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+                     data-th-onclick="if(!(confirm('Are you want to delete this location interact ?'))) return false"
+                  ><i aria-hidden="true" class="fa fa-trash" ></i >
+                    Delete</a >
                 </td >
               </tr >
             </table >
@@ -89,29 +88,29 @@
         </div >
         <!--pagination part -->
         <div class="row" >
-          <div data-th-if="${persons.totalPages}" class="form-group col-md-11 pagination-centered" >
+          <div data-th-if="${locationInteracts.totalPages}" class="form-group col-md-11 pagination-centered" >
             <ul class="pagination" >
-              <li data-th-class="${persons.number == 0} ? disabled : page-item" >
+              <li data-th-class="${locationInteracts.number == 0} ? disabled : page-item" >
                 <a class="page-link"
-                   data-th-href="@{/person/(pageSize=${selectedPageSize}, page=1)}" >&laquo;</a >
+                   data-th-href="@{/locationInteract/(pageSize=${selectedPageSize}, page=1)}" >&laquo;</a >
               </li >
-              <li data-th-class="${persons.number == 0} ? disabled : page-item" >
+              <li data-th-class="${locationInteracts.number == 0} ? disabled : page-item" >
                 <a class="page-link"
-                   data-th-href="@{/person/(pageSize=${selectedPageSize}, page=${persons.number})}" >&larr;</a >
+                   data-th-href="@{/locationInteract/(pageSize=${selectedPageSize}, page=${locationInteracts.number})}" >&larr;</a >
               </li >
-              <li data-th-class="${persons.number == (page - 1)} ? 'active pointer-disabled' : page-item"
+              <li data-th-class="${locationInteracts.number == (page - 1)} ? 'active pointer-disabled' : page-item"
                   data-th-each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}" >
                 <a class="page-link"
-                   data-th-href="@{/person/(pageSize=${selectedPageSize}, page=${page})}"
+                   data-th-href="@{/locationInteract/(pageSize=${selectedPageSize}, page=${page})}"
                    data-th-text="${page}" ></a >
               </li >
-              <li data-th-class="${persons.number + 1 == persons.totalPages} ? disabled : page-item" >
+              <li data-th-class="${locationInteracts.number + 1 == locationInteracts.totalPages} ? disabled : page-item" >
                 <a class="page-link"
-                   data-th-href="@{/person/(pageSize=${selectedPageSize}, page=${persons.number + 2})}" >&rarr;</a >
+                   data-th-href="@{/locationInteract/(pageSize=${selectedPageSize}, page=${locationInteracts.number + 2})}" >&rarr;</a >
               </li >
-              <li data-th-class="${persons.number + 1 == persons.totalPages} ? disabled : page-item" >
+              <li data-th-class="${locationInteracts.number + 1 == locationInteracts.totalPages} ? disabled : page-item" >
                 <a class="page-link"
-                   data-th-href="@{/person/(pageSize=${selectedPageSize}, page=${persons.totalPages})}" >&raquo;</a >
+                   data-th-href="@{/locationInteract/(pageSize=${selectedPageSize}, page=${locationInteracts.totalPages})}" >&raquo;</a >
               </li >
             </ul >
           </div >
@@ -122,7 +121,7 @@
 </div >
 
 <!--if empty list-->
-<div class="row" data-th-if="${ persons.getTotalElements() == 0}" >
+<div class="row" data-th-if="${ locationInteracts.getTotalElements() == 0}" >
   <div class="col-sm-12" >
     <div class="alert alert-warning alert-dismissible fade show"
          role="alert" >
@@ -131,17 +130,17 @@
         <span aria-hidden="true" >&times;</span >
       </button >
       <h3 class="text-center text-danger" >
-        <strong >There is no Person upto know please add Person to
+        <strong >There is no location interact upto know please add location interact to
                  the system
-                 using add Person button.
+                 using add location interact button.
         </strong >
       </h3 >
     </div >
   </div >
 </div >
 
-<!--Show saved person-->
-<div class="row" data-th-if="${personDetail!=null}" >
+<!--Show saved location interact-->
+<div class="row" data-th-if="${locationInteractDetail!=null}" >
   <div class="col-sm-12" >
     <div class="alert alert-success alert-dismissible fade show"
          role="alert" >
@@ -150,7 +149,7 @@
         <span aria-hidden="true" >&times;</span >
       </button >
       <div class="container" >
-        <div data-th-replace="~{person/person-detail :: personDetail}" ></div >
+        <div data-th-replace="~{locationInteract/locationInteract-detail :: locationInteractDetail}" ></div >
       </div >
     </div >
   </div >
@@ -161,8 +160,8 @@
      aria-hidden="true" >
   <div class="modal-dialog modal-xl" role="document" >
     <div class="modal-content" >
-      <div class="modal-header text-center" >
-        <h3 class="modal-title " >Person Search</h3 >
+      <div class="modal-header" >
+        <h5 class="modal-title" >Location Interact Search</h5 >
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
           <span aria-hidden="true" >&times;</span >
         </button >
@@ -178,9 +177,6 @@
                 <select id="selectParameter" class="form-control" tabindex="1" required >
                   <option value="" disabled selected >Please select</option >
                   <option value="name" >Name</option >
-                  <option value="number" >Number</option >
-                  <option value="nic" >NIC</option >
-                  <option value="mobile" >Mobile</option >
                 </select >
               </div >
             </div >
@@ -206,12 +202,10 @@
 </div >
 <input type="hidden" id="searchUrl" data-th-value="${searchUrl}" >
 
-
 <!--footer include-->
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <!--script include-->
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
-
-<script data-th-src="@{/js/person.js}" ></script >
+<script data-th-src="@{/js/locationInteract.js}" ></script >
 </body >
 </html >
