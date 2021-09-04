@@ -54,7 +54,7 @@ public class Person extends AuditEntity {
   @Enumerated( EnumType.STRING )
   private Gender gender;
 
-  @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm" )
+  @DateTimeFormat( pattern = "yyyy-MM-dd" )
   private LocalDate dateOfBirth;
 
   @ManyToOne

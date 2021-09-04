@@ -12,8 +12,8 @@ let html_first_part = `<table class="table table-hover table-striped" id="myTabl
                 <thead class="thead-inverse" >
                 <tr >
                   <th >Index</th >
-                  <th >Name</th >
                   <th >Number</th >
+                  <th >Name</th >
                   <th >Ds Office</th >
                   <th >Modify</th >
                 </tr >
@@ -75,8 +75,8 @@ $("#searchInput").keyup(function () {
                         html_middle_part = html_middle_part + `
                     <tr>
                       <th > ${i + 1}</th >
+                      <th > ${data[i].code}</th >
                       <th > ${data[i].name}</th >
-                      <th > ${data[i].number}</th >
                       <th > </th >
                       <th >
                           <a class="btn btn-success btn-sm" href="${'/gramaNiladhari/' + data[i].id}" >

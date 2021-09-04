@@ -186,9 +186,14 @@ public class PersonController {
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(personService.findByNic(nic));
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name");
+        .filterOutAllExcept("id", "name", "code");
+    SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
+        .filterOutAllExcept("id", "name", "number");
+
     FilterProvider filter = new SimpleFilterProvider()
-        .addFilter("Person", simpleBeanPropertyFilterOne);
+        .addFilter("Person", simpleBeanPropertyFilterOne)
+        .addFilter("GramaNiladhari", simpleBeanPropertyFilterTwo);
+
     mappingJacksonValue.setFilters(filter);
 
     return mappingJacksonValue;

@@ -5,7 +5,11 @@
   <title >Thymeleaf Springboot </title >
 </head >
 <body >
+<!--combo box search css-->
 <link data-th-href="@{/css/combo-box-search.css}" media="all" rel="stylesheet" type="text/css" />
+<!--person css-->
+<link data-th-href="@{/css/person.css}" media="all" rel="stylesheet" type="text/css" />
+
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
 
 <div class="container-fluid   " >
@@ -124,6 +128,19 @@
               </div >
             </div >
           </div >
+          <!--workingPlaceAddress-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="workingPlaceAddress" >Working Place Address :</label >
+            </div >
+            <div class="col-md-8" >
+                            <textarea class="form-control" data-th-field="*{workingPlaceAddress}"
+                                      id="workingPlaceAddress" required rows="4"
+                            ></textarea >
+              <span class="error" data-th-errors="*{workingPlaceAddress}"
+                    data-th-if="${#fields.hasErrors('workingPlaceAddress')}" >Error Address</span >
+            </div >
+          </div >
         </div >
         <!--Right Side-->
         <div class="col-md-6 col-sm-6 " >
@@ -133,13 +150,8 @@
               <label class="control-label" for="mobileOne" >Gramaniladhari Division :</label >
             </div >
             <div class="col-md-8" >
-              <select class="form-control col-md-9" id="gramaNiladhari"
+              <select id="gramaNiladhari" class="form-control"
                       data-th-field="*{gramaNiladhari}" >
-                <option value="" >Please Select</option >
-                <option data-th-each="gramaNiladhari : ${gramaNiladharis}"
-                        data-th-text="${gramaNiladhari.name + ' '+ gramaNiladhari.number}"
-                        data-th-value="${gramaNiladhari.id}"
-                ></option >
               </select >
             </div >
           </div >
@@ -169,25 +181,23 @@
             </div >
           </div >
           <!--Created by and created at-->
-          <div data-th-if="${addStatus==false}" id="updateStatus" >
-            <div class="form-row text-md-right text-sm-left" >
-              <div class="col-md-4" >
-                <label class="control-label" for="createdAt" >Created At :</label >
-              </div >
-              <div class="col-md-8" >
-                <input class="form-control" data-th-value="${{person.createdAt}}" id="createdAt"
-                       readonly
-                       type="text" />
-              </div >
+          <div data-th-if="${addStatus==false}" class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="createdAt" >Created At :</label >
             </div >
-            <div class="form-row text-md-right text-sm-left" >
-              <div class="col-md-4" >
-                <label class="control-label" for="createdBy" >Created By :</label >
-              </div >
-              <div class="col-md-8" >
-                <input class="form-control" data-th-field="*{createdBy}" id="createdBy" readonly
-                       type="text" />
-              </div >
+            <div class="col-md-8" >
+              <input class="form-control" data-th-value="${{person.createdAt}}" id="createdAt"
+                     readonly
+                     type="text" />
+            </div >
+          </div >
+          <div data-th-if="${addStatus==false}" class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="createdBy" >Created By :</label >
+            </div >
+            <div class="col-md-8" >
+              <input class="form-control" data-th-field="*{createdBy}" id="createdBy" readonly
+                     type="text" />
             </div >
           </div >
         </div >
@@ -224,9 +234,21 @@
 <script data-th-src="@{/js/combo-box-search.js}" ></script >
 <script >
     $(document).ready(function () {
-        $("#gramaNiladhari").select2({
-            data: $(this).val()
-        }).addClass("form-control");
+        $('#gramaNiladhari').select2({
+            placeholder: "Select a gramanidhari division",
+            allowClear: true,
+            theme: "classic",
+            ajax: {
+                url: 'http://localhost:8080/gramaNiladhari/search',
+                data: function (params) {
+                    console.log(params)
+                    // Query parameters will be ?search=[term]&type=public
+                    return {
+                        name: params.term,
+                    };
+                }
+            }
+        });
     });
 
     $("#nic").keyup(function () {
@@ -270,6 +292,8 @@
             });
         }
     }
+
 </script >
 </body >
 </html >
+
