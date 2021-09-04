@@ -103,22 +103,22 @@
               >Error Birthday</span >
             </div >
           </div >
-          <!--Dead-->
+          <!--Person Status-->
           <div class="form-row text-md-right text-sm-left" data-th-if="${addStatus==false}" >
             <div class="col-md-4" >
               <label class="control-label" >Person Status :</label >
             </div >
             <div class="col-md-8" >
               <div class="custom-control custom-checkbox custom-control-inline "
-                   data-th-each="personStatus,index : ${personStatuses}" >
-                <input class="custom-control-input" data-th-checked="${personStatus==personStatus}"
-                       data-th-id="${index.index}+${personStatus}"
+                   data-th-each="personState,index : ${personStatuses}" >
+                <input class="custom-control-input" data-th-checked="${personState== person.personStatus}"
+                       data-th-id="${index.index}+${personState}"
                        data-th-name="${'personStatus'}"
-                       data-th-value="${personStatus}" required
+                       data-th-value="${personState}" required
                        type="radio" />
                 <label class="custom-control-label"
-                       data-th-for="${index.index}+${personStatus}"
-                       data-th-text="${personStatus.personStatus}" >
+                       data-th-for="${index.index}+${personState}"
+                       data-th-text="${personState.personStatus}" >
                 </label >
               </div >
             </div >
@@ -205,7 +205,7 @@
         </div >
       </div >
       <!-- button area-->
-      <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
+      <div class="form-group col-md-12 col-sm-12 text-center flex-column mt-3" >
         <!--Back Button-->
         <a class="btn btn-dark" data-th-href="${'/person'}" tabindex="10" >
           <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
