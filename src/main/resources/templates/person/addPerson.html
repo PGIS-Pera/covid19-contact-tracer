@@ -146,11 +146,13 @@
             </div >
             <div class="col-md-8" >
               <input type="text"  id="gramaNiladhariOne" data-th-value="${addStatus==false ? person.gramaNiladhari.name :''}" readonly class="form-control" >
-              <input list="browsers" data-th-field="*{gramaNiladhari}" class="form-control"
-                     placeholder="Please enter gramaniladari division name" >
+                           <input list="browsers" data-th-field="*{gramaNiladhari}" class="form-control"
+                                  placeholder="Please enter gramaniladari division name" >
               <datalist id="browsers" >
               </datalist >
               <span class="form-text text-muted bg-warring" id="gramaNiladhariMessage" ></span >
+              <input name="gramaNiladhari.id" id="gramaNiladhariId"
+                     data-th-value="${addStatus==false ? person.gramaNiladhari.id :''}" hidden >
             </div >
           </div >
           <!--Address-->

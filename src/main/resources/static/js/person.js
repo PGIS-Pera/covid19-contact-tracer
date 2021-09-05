@@ -134,6 +134,7 @@ function gramaNiladhariNameSet(type_value) {
     grama_niladhari.forEach((x) => {
         if (x.id === parseInt(type_value)) {
             $("#gramaNiladhariOne").val(`${x.name} - ${x.number}`);
+            $("#gramaNiladhariId").val(type_value);
         }
     })
 }
