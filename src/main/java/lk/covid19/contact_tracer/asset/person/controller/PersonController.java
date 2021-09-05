@@ -125,7 +125,12 @@ public class PersonController {
       return commonThings(model);
     }
     try {
-      personService.persist(person);
+      Person personDb = personService.persist(person);
+      if ( person.getId() != null ) {
+        return "redirect:/person";
+      } else {
+        return "redirect:/person/attempt/" + personDb.getId();
+      }
     } catch ( Exception e ) {
       ObjectError error = new ObjectError("person",
                                           "Please make sure that resolve following error \n. <br> System message -->" + e.getCause().getCause().getMessage());
@@ -134,8 +139,17 @@ public class PersonController {
       model.addAttribute("person", person);
       return commonThings(model);
     }
+  }
 
-    return "redirect:/person";
+  @GetMapping( "/attempt/{id}" )
+  public String addNewAttempt(@PathVariable Integer id, Model model) {
+    //todo need to manage this
+    model.addAttribute("personDetail", personService.findById(id));
+    model.addAttribute("gramaNiladhariSearchUrl", MvcUriComponentsBuilder
+        .fromMethodName(GramaNiladhariController.class, "searchOne", "")
+        .toUriString());
+
+    return "";
   }
 
   @GetMapping( "/remove/{id}" )
@@ -144,14 +158,12 @@ public class PersonController {
     return "redirect:/person";
   }
 
-
   @GetMapping( "/search" )
   public String searchPage(Model model) {
     commonForAll(model);
     model.addAttribute("person", new Person());
     return "person/personSearch";
   }
-
 
   @PostMapping( "/searchDate" )
   public String searchDate(Model model, TwoDate twoDate) {

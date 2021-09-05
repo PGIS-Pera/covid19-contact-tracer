@@ -19,8 +19,7 @@
     </div >
     <div class="col" >
       <a data-th-href="${'/person'}" class="btn btn-primary" >
-        <i class="fa fa-list" ></i >&nbsp; Show List&nbsp;
-                                    &nbsp;
+        <i class="fa fa-list" ></i >&nbsp; Show List&nbsp; &nbsp;
       </a >
     </div >
   </div >
@@ -35,7 +34,7 @@
           <button class="btn btn-link btn-block" data-toggle="collapse" data-target="#collapseOne"
                   aria-expanded="true"
                   aria-controls="collapseOne" >
-            Patients Search By One Parameter
+            Persons Search By One Parameter
           </button >
         </h5 >
       </div >
@@ -43,15 +42,16 @@
         <div class="card-body" >
           <div class="container-fluid" >
             <div class="col" >
-              <form method="POST" data-th-action="${'/person/search'}" enctype="multipart/form-data" >
+              <form method="POST" data-th-action="${'/person/search'}" >
                 <div class="form-row" >
                   <div class="form-group col-md-4" >
                     <label class="control-label" >Parameter :
                       <select id="selectParameter" class="form-control" tabindex="1" required >
                         <option value="" >Please select</option >
                         <option value="nic" >NIC Number</option >
-                        <option value="number" >Register Number</option >
                         <option value="name" >Name</option >
+                        <option value="mobile" >Mobile</option >
+                        <option value="number" >Register Number</option >
                       </select >
                     </label >
                   </div >
@@ -84,7 +84,7 @@
         <h5 class="mb-0" >
           <button class="btn btn-link collapsed btn-block" data-toggle="collapse" data-target="#collapseTwo"
                   aria-expanded="false" aria-controls="collapseTwo" >
-            Patients Search By Multiple Parameters
+            Persons Search By Multiple Parameters
           </button >
         </h5 >
       </div >
@@ -126,50 +126,24 @@
                       </div >
                     </div >
                   </div >
-                  <!--Age-->
+                  <!--Person Status-->
                   <div class="form-row text-md-right text-sm-left" >
                     <div class="col-md-4" >
-                      <label class="control-label" for="age" >Age :</label >
-                    </div >
-                    <div class="col-md-8" >
-                      <input class="form-control" data-th-field="*{age}" id="age" min="0"
-                             type="number" />
-                    </div >
-                  </div >
-                  <!--Dead-->
-                  <div class="form-row text-md-right text-sm-left" >
-                    <div class="col-md-4" >
-                      <label class="control-label" >Live Or Dead :</label >
+                      <label class="control-label" >Person Status :</label >
                     </div >
                     <div class="col-md-8" >
                       <div class="custom-control custom-checkbox custom-control-inline "
-                           data-th-each="deadLive,index : ${deadLives}" >
-                        <input class="custom-control-input"
-                               data-th-checked="${deadLive==deadLive}"
-                               data-th-id="${index.index}+${deadLive}"
-                               data-th-name="${'deadLive'}"
-                               data-th-value="${deadLive}"
+                           data-th-each="personState,index : ${personStatuses}" >
+                        <input class="custom-control-input" data-th-checked="${personState== person.personStatus}"
+                               data-th-id="${index.index}+${personState}"
+                               data-th-name="${'personStatus'}"
+                               data-th-value="${personState}" required
                                type="radio" />
                         <label class="custom-control-label"
-                               data-th-for="${index.index}+${deadLive}"
-                               data-th-text="${deadLive.deadLive}" > radio
+                               data-th-for="${index.index}+${personState}"
+                               data-th-text="${personState.personStatus}" >
                         </label >
                       </div >
-                    </div >
-                  </div >
-                  <!--Police Station -->
-                  <div class="form-row text-md-right text-sm-left" >
-                    <div class="col-md-4" >
-                      <label class="control-label" for="policeStation" >Police Station :</label >
-                    </div >
-                    <div class="col-md-8" >
-                      <select class="form-control" data-th-field="*{policeStation}"
-                              id="policeStation" >
-                        <option value="" >Please select</option >
-                        <option data-th-each="policeStation : ${policeStations}"
-                                data-th-text="${policeStation.name}"
-                                data-th-value="${policeStation.id}" ></option >
-                      </select >
                     </div >
                   </div >
                 </div >
@@ -181,8 +155,8 @@
                       <label class="control-label" for="address" >Address :</label >
                     </div >
                     <div class="col-md-8" >
-                                        <textarea class="form-control" data-th-field="*{address}" id="address" required
-                                                  rows="4" >                                                            </textarea >
+                      <textarea class="form-control" data-th-field="*{address}" id="address" required
+                                rows="4" >                                                            </textarea >
                     </div >
                   </div >
                   <!--Mobile Number One-->
@@ -193,19 +167,6 @@
                     <div class="col-md-8" >
                       <input class="form-control mobile" data-th-field="*{mobile}" id="mobileOne"
                              maxlength="10" min="9" type="text" />
-                    </div >
-                  </div >
-                  <!--Identified Date-->
-                  <div class="form-row text-md-right text-sm-left" >
-                    <div class="col-md-4" >
-                      <label class="control-label" for="identifiedDate" >Identified Date :</label >
-                    </div >
-                    <div class="col-md-8" >
-                      <input class="form-control" data-th-field="*{identifiedDate}"
-                             id="identifiedDate"
-                             placeholder="Ex: 1990 - 01 - 20"
-                             data-th-required="${addStatus==true}"
-                             type="date" />
                     </div >
                   </div >
                 </div >
@@ -238,7 +199,7 @@
           <button class="btn btn-link btn-block" data-toggle="collapse" data-target="#collapseThree"
                   aria-expanded="true"
                   aria-controls="collapseThree" >
-            Patients Search By Date Different
+            Persons Search By Date Different
           </button >
         </h5 >
       </div >
