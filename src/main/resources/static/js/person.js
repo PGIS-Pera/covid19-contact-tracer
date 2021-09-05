@@ -15,6 +15,9 @@ let html_first_part = `<table class="table table-hover table-striped" id="myTabl
                   <th >Index</th >
                   <th >Number</th >
                   <th >Name</th >
+                  <th >NIC</th >
+                  <th >Mobile</th >
+                  <th >DOB</th >
                   <th >Modify</th >
                 </tr >
                 </thead >
@@ -68,7 +71,6 @@ $("#searchInput").keyup(function () {
         $.post(url, gramaNiladhari,
             function (data, status) {
                 $("#tableShow").text('');
-                console.log(status)
                 console.log(data)
                 if (data.length > 0) {
                     for (let i = 0; i < data.length; i++) {
@@ -77,15 +79,17 @@ $("#searchInput").keyup(function () {
                       <th > ${i + 1}</th >
                       <th > ${data[i].code}</th >
                       <th > ${data[i].name}</th >
-                      <th > </th >
+                      <th > ${data[i].nic}</th >
+                      <th > ${data[i].mobile}</th >
+                      <th > ${data[i].dateOfBirth}</th >
                       <th >
-                          <a class="btn btn-success btn-sm" href="${'/gramaNiladhari/' + data[i].id}" >
+                          <a class="btn btn-success btn-sm" href="${'/person/' + data[i].id}" >
                             <i class="fa fa-folder-open" ></i >&nbsp;View
                           </a >
-                          <a class="btn btn-primary btn-sm" href="${'/gramaNiladhari/edit/' + data[i].id}" >
+                          <a class="btn btn-primary btn-sm" href="${'/person/edit/' + data[i].id}" >
                             <i class="fa fa-edit" ></i >&nbsp;Edit
                           </a >                          
-                          <a class="btn btn-info btn-sm" data-th-href="${'/person/attempt/' + data[i].id}" >
+                          <a class="btn btn-info btn-sm" href="${'/person/attempt/' + data[i].id}" >
                               <i class="fas fa-head-side-virus"></i>&nbsp;New Attempt
                           </a >
                       </th >

@@ -183,12 +183,11 @@ public class PersonController {
   @PostMapping( value = "/search" )
   @ResponseBody
   public MappingJacksonValue search(Person person) {
-    System.out.println(person.toString());
     List< Person > persons = personService.search(person);
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(persons);
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name", "number");
+        .filterOutAllExcept("id", "name", "code","nic","mobile","dateOfBirth");
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
         .filterOutAllExcept("id", "name");
