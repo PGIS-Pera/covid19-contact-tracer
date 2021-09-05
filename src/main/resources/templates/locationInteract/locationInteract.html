@@ -124,40 +124,42 @@
 </div >
 
 <!--if empty list-->
-<div class="row" data-th-if="${ locationInteracts.getTotalElements() == 0}" >
-  <div class="col-sm-12" >
-    <div class="alert alert-warning alert-dismissible fade show"
-         role="alert" >
-      <button aria-label="Close" class="close" data-dismiss="alert"
-              type="button" >
-        <span aria-hidden="true" >&times;</span >
-      </button >
-      <h3 class="text-center text-danger" >
-        <strong >There is no location interact upto know please add location interact to
-                 the system
-                 using add location interact button.
-        </strong >
-      </h3 >
-    </div >
-  </div >
-</div >
-
-<!--Show saved location interact-->
-<div class="row" data-th-if="${locationInteractDetail!=null}" >
-  <div class="col-sm-12" >
-    <div class="alert alert-success alert-dismissible fade show"
-         role="alert" >
-      <button aria-label="Close" class="close" data-dismiss="alert"
-              type="button" >
-        <span aria-hidden="true" >&times;</span >
-      </button >
-      <div class="container" >
-        <div data-th-replace="~{locationInteract/locationInteract-detail :: locationInteractDetail}" ></div >
+<div class="container-fluid" >
+  <div class="row" data-th-if="${ locationInteracts.getTotalElements() == 0}" >
+    <div class="col-sm-12" >
+      <div class="alert alert-warning alert-dismissible fade show"
+           role="alert" >
+        <button aria-label="Close" class="close" data-dismiss="alert"
+                type="button" >
+          <span aria-hidden="true" >&times;</span >
+        </button >
+        <h3 class="text-center text-danger" >
+          <strong >There is no location interact upto know please add location interact to
+                   the system
+                   using add location interact button.
+          </strong >
+        </h3 >
       </div >
     </div >
   </div >
 </div >
-
+<!--Show saved location interact-->
+<div class="container-fluid" >
+  <div class="row" data-th-if="${locationInteractDetail!=null}" >
+    <div class="col-sm-12" >
+      <div class="alert alert-success alert-dismissible fade show"
+           role="alert" >
+        <button aria-label="Close" class="close" data-dismiss="alert"
+                type="button" >
+          <span aria-hidden="true" >&times;</span >
+        </button >
+        <div class="container" >
+          <div data-th-replace="~{locationInteract/locationInteract-detail :: locationInteractDetail}" ></div >
+        </div >
+      </div >
+    </div >
+  </div >
+</div >
 <!--search Modal -->
 <div class="modal fade bd-example-modal-xl" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
      aria-hidden="true" >

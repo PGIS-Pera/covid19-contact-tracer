@@ -36,9 +36,9 @@
   <div class="col-sm-12 flex-column " >
     <div class="row" >
       <div class="container-fluid" >
-        <div class="row" data-th-if="${persons.totalPages}">
+        <div class="row" data-th-if="${persons.totalPages}" >
           <!--page per item select -->
-          <div class="col text-left"  >
+          <div class="col text-left" >
             <div class="form-row" >
               <div class="col text-right" >
                 <label for="pageSizeSelect" >Item Count Per Page : </label >
@@ -85,6 +85,8 @@
                 <td >
                   <a class="btn btn-success btn-sm" data-th-href="${'/person/' + person.id}" ><i
                         class="fa fa-folder-open" ></i >&nbsp;View</a >
+                  <a class="btn btn-info btn-sm" data-th-href="${'/person/attempt/' + person.id}" >
+                    <i class="fas fa-head-side-virus" ></i >&nbsp;New Attempt</a >
                 </td >
               </tr >
             </table >
@@ -125,35 +127,39 @@
 </div >
 
 <!--if empty list-->
-<div class="row" data-th-if="${ persons.getTotalElements() == 0}" >
-  <div class="col-sm-12" >
-    <div class="alert alert-warning alert-dismissible fade show"
-         role="alert" >
-      <button aria-label="Close" class="close" data-dismiss="alert"
-              type="button" >
-        <span aria-hidden="true" >&times;</span >
-      </button >
-      <h3 class="text-center text-danger" >
-        <strong >There is no Person upto know please add Person to
-                 the system
-                 using add Person button.
-        </strong >
-      </h3 >
+<div class="container-fluid" >
+  <div class="row" data-th-if="${ persons.getTotalElements() == 0}" >
+    <div class="col-sm-12" >
+      <div class="alert alert-warning alert-dismissible fade show"
+           role="alert" >
+        <button aria-label="Close" class="close" data-dismiss="alert"
+                type="button" >
+          <span aria-hidden="true" >&times;</span >
+        </button >
+        <h3 class="text-center text-danger" >
+          <strong >There is no Person upto know please add Person to
+                   the system
+                   using add Person button.
+          </strong >
+        </h3 >
+      </div >
     </div >
   </div >
 </div >
 
 <!--Show saved person-->
-<div class="row" data-th-if="${personDetail!=null}" >
-  <div class="col-sm-12" >
-    <div class="alert alert-success alert-dismissible fade show"
-         role="alert" >
-      <button aria-label="Close" class="close" data-dismiss="alert"
-              type="button" >
-        <span aria-hidden="true" >&times;</span >
-      </button >
-      <div class="container" >
-        <div data-th-replace="~{person/person-detail :: personDetail}" ></div >
+<div class="container-fluid" >
+  <div class="row" data-th-if="${personDetail!=null}" >
+    <div class="col-sm-12" >
+      <div class="alert alert-success alert-dismissible fade show"
+           role="alert" >
+        <button aria-label="Close" class="close" data-dismiss="alert"
+                type="button" >
+          <span aria-hidden="true" >&times;</span >
+        </button >
+        <div class="container" >
+          <div data-th-replace="~{person/person-detail :: personDetail}" ></div >
+        </div >
       </div >
     </div >
   </div >

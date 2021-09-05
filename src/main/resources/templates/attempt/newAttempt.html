@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<div class="container-fluid   " >
+  <div class="row text-md-center" >
+    <div class="col" >
+      <a class="btn btn-info" data-th-href="${'/home'}" >
+        <i class="fa fa-home" style="font-size: 20px" ></i > &nbsp; Home
+      </a >
+    </div >
+    <div class="col" >
+            <span class="h4 font-weight-bold text-center"
+                  data-th-text="${addStatus==true?'New Person Add':'Update Person Details'}" ></span >
+    </div >
+    <div class="col" >
+      <a class="btn btn-success" data-th-href="${'/person'}" >
+        <i class="fa fa-list" ></i >&nbsp; View List
+      </a >
+    </div >
+  </div >
+</div >
+<div class="container-fluid" >
+  <div id="accordianId" role="tablist" aria-multiselectable="true" >
+    <div class="card" >
+      <div class="card-header" role="tab" id="section1HeaderId" >
+        <h5 class="mb-0" >
+          <a data-toggle="collapse" data-parent="#accordianId" href="#section1ContentId" aria-expanded="true"
+             aria-controls="section1ContentId" >
+            Person Details
+          </a >
+        </h5 >
+      </div >
+      <div id="section1ContentId" class="collapse in" role="tabpanel" aria-labelledby="section1HeaderId" >
+        <div class="card-body" >
+          <div class="container" >
+            <div data-th-replace="~{person/person-detail :: personDetail}" ></div >
+          </div >
+        </div >
+      </div >
+    </div >
+  </div >
+</div >
+<!--Form Content - start -->
+<div class="container-fluid" >
+  <div class="col" >
+    <form data-th-action="${addStatus==true?'/person/save':'/person/update'}" data-th-object="${person}"
+          method="POST" >
+      <input class="form-control" data-th-field="*{id}" data-th-if="${addStatus==false}" id="id" readonly
+             type="hidden" />
+      <div class="form-row" >
+        <!--Left Side-->
+        <div class="col-md-6 col-sm-6 " >
+          <!--code-->
+          <div class="form-row text-md-right text-sm-left" data-th-if="${addStatus==false}" >
+            <div class="col-md-4" >
+              <label class="control-label" for="code" >Code:</label >
+            </div >
+            <div class="col-md-8" >
+              <input class="form-control" data-th-field="*{code}" id="code" readonly type="text" />
+            </div >
+          </div >
+          <!--Nic-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="nic" >NIC No :</label >
+            </div >
+            <div class="col-md-8" >
+              <input class="form-control" data-th-field="*{nic}" data-th-readonly="${addStatus==false}"
+                     id="nic" maxlength="12"
+                     minlength="10" type="text" />
+              <span class="error" data-th-errors="*{nic}"
+                    data-th-if="${#fields.hasErrors('nic')}" >Error NIC Number</span >
+            </div >
+          </div >
+          <!--Name-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="name" >Name :</label >
+            </div >
+            <div class="col-md-8" >
+              <input class="form-control" data-th-field="*{name}" id="name" required type="text" />
+              <span class="error" data-th-errors="*{name}"
+                    data-th-if="${#fields.hasErrors('name')}" id="nameError" >Error Name</span >
+            </div >
+          </div >
+          <!--Gender-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" >Gender :</label >
+            </div >
+            <div class="col-md-8 text-md-left" >
+              <div class="custom-control custom-checkbox custom-control-inline "
+                   data-th-each="genders,index : ${gender}" >
+                <input class="custom-control-input gender" data-th-checked="${genders==gender}"
+                       data-th-id="${index.index}+${genders}"
+                       data-th-name="${'gender'}"
+                       data-th-value="${genders}" required
+                       type="radio" />
+                <label class="custom-control-label"
+                       data-th-for="${index.index}+${genders}"
+                       data-th-text="${genders.gender}" > radio
+                </label >
+              </div >
+            </div >
+          </div >
+          <!--Date of birth-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="dateOfBirth" >Birth date :</label >
+            </div >
+            <div class="col-md-8" >
+              <input class="form-control" data-th-field="*{dateOfBirth}" id="dateOfBirth"
+                     placeholder="Ex: 1990 - 01 - 20"
+                     required
+                     type="date" />
+              <span class="error" data-th-errors="*{dateOfBirth}"
+                    data-th-if="${#fields.hasErrors('dateOfBirth')}"
+              >Error Birthday</span >
+            </div >
+          </div >
+          <!--Person Status-->
+          <div class="form-row text-md-right text-sm-left" data-th-if="${addStatus==false}" >
+            <div class="col-md-4" >
+              <label class="control-label" >Person Status :</label >
+            </div >
+            <div class="col-md-8" >
+              <div class="custom-control custom-checkbox custom-control-inline "
+                   data-th-each="personState,index : ${personStatuses}" >
+                <input class="custom-control-input" data-th-checked="${personState== person.personStatus}"
+                       data-th-id="${index.index}+${personState}"
+                       data-th-name="${'personStatus'}"
+                       data-th-value="${personState}" required
+                       type="radio" />
+                <label class="custom-control-label"
+                       data-th-for="${index.index}+${personState}"
+                       data-th-text="${personState.personStatus}" >
+                </label >
+              </div >
+            </div >
+          </div >
+          <!--workingPlaceAddress-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="workingPlaceAddress" >Working Place Address :</label >
+            </div >
+            <div class="col-md-8" >
+                            <textarea class="form-control" data-th-field="*{workingPlaceAddress}"
+                                      id="workingPlaceAddress" required rows="4"
+                            ></textarea >
+              <span class="error" data-th-errors="*{workingPlaceAddress}"
+                    data-th-if="${#fields.hasErrors('workingPlaceAddress')}" >Error Address</span >
+            </div >
+          </div >
+        </div >
+        <!--Right Side-->
+        <div class="col-md-6 col-sm-6 " >
+          <!--Gramaniladhari division-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" data-th-for="${'gramaNiladhari'}" >Gramaniladhari Division :</label >
+            </div >
+            <div class="col-md-8" >
+              <input type="text" id="gramaNiladhariOne"
+                     data-th-value="${addStatus==false ? person.gramaNiladhari.name :''}" readonly
+                     class="form-control" disabled >
+              <input list="browsers" data-th-field="*{gramaNiladhari}" class="form-control"
+                     placeholder="Please enter gramaniladari division name" >
+              <datalist id="browsers" >
+              </datalist >
+              <span class="form-text text-muted bg-warring" id="gramaNiladhariMessage" ></span >
+              <input name="gramaNiladhari.id" id="gramaNiladhariId"
+                     data-th-value="${addStatus==false ? person.gramaNiladhari.id :''}" hidden >
+            </div >
+          </div >
+          <!--Address-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="address" >Address :</label >
+            </div >
+            <div class="col-md-8" >
+                            <textarea class="form-control" data-th-field="*{address}" id="address" required rows="4"
+                            ></textarea >
+              <span class="error" data-th-errors="*{address}"
+                    data-th-if="${#fields.hasErrors('address')}" id="addressError" >Error Address</span >
+            </div >
+          </div >
+          <!--Mobile Number One-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="mobileOne" >Mobile :</label >
+            </div >
+            <div class="col-md-8" >
+              <input class="form-control mobile" data-th-field="*{mobile}" id="mobileOne"
+                     maxlength="10" min="9" type="text" />
+              <span class="error" data-th-errors="*{mobile}"
+                    data-th-if="${#fields.hasErrors('mobile')}"
+                    id="mobileOneError" >Error Mobile Number</span >
+            </div >
+          </div >
+          <!--Created by and created at-->
+          <div data-th-if="${addStatus==false}" class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="createdAt" >Created At :</label >
+            </div >
+            <div class="col-md-8" >
+              <input class="form-control" data-th-value="${{person.createdAt}}" id="createdAt"
+                     readonly
+                     type="text" />
+            </div >
+          </div >
+          <div data-th-if="${addStatus==false}" class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="createdBy" >Created By :</label >
+            </div >
+            <div class="col-md-8" >
+              <input class="form-control" data-th-field="*{createdBy}" id="createdBy" readonly
+                     type="text" />
+            </div >
+          </div >
+        </div >
+      </div >
+      <!-- button area-->
+      <div class="form-group col-md-12 col-sm-12 text-center flex-column mt-3" >
+        <!--Back Button-->
+        <a class="btn btn-dark" data-th-href="${'/person'}" >
+          <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
+        </a >
+        <!--Save Button-->
+        <button class="btn btn-success ml-md-5" type="submit" >
+          <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;
+          <span data-th-text="${addStatus==true?'Save': 'Update'}" id="submit" ></span >
+        </button >
+        <!--Cancel Button-->
+        <button class="btn btn-warning ml-md-5" type="reset" >
+          <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
+        </button >
+      </div >
+      <div class="form-row" >
+        <label data-th-if="${#fields.hasErrors('*')}" data-th-text="'Errors: '" >Errors: </label >
+        <ul >
+          <li class="error" data-th-each="err: ${#fields.errors('*')}" data-th-text="${err}" ></li >
+        </ul >
+      </div >
+    </form >
+  </div >
+</div >
+
+<input data-th-value="${personNicSearchUrl}" hidden id="patientNic" type="text" >
+<input data-th-value="${gramaNiladhariSearchUrl}" hidden id="gramaNiladhariSearchUrl" type="text" >
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<script data-th-src="@{/js/person.js}" ></script >
+</body >
+</html >
+

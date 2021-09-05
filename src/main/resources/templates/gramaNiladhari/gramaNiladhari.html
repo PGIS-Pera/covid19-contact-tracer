@@ -32,9 +32,9 @@
   <div class="col-sm-12 flex-column " >
     <div class="row" >
       <div class="container-fluid" >
-        <div class="row" data-th-if="${gramaNiladharis.totalPages}">
+        <div class="row" data-th-if="${gramaNiladharis.totalPages}" >
           <!--page per item select -->
-          <div class="col text-left"  >
+          <div class="col text-left" >
             <div class="form-row" >
               <div class="col text-right" >
                 <label for="pageSizeSelect" >Item Count Per Page : </label >
@@ -124,40 +124,42 @@
 </div >
 
 <!--if empty list-->
-<div class="row" data-th-if="${ gramaNiladharis.getTotalElements() == 0}" >
-  <div class="col-sm-12" >
-    <div class="alert alert-warning alert-dismissible fade show"
-         role="alert" >
-      <button aria-label="Close" class="close" data-dismiss="alert"
-              type="button" >
-        <span aria-hidden="true" >&times;</span >
-      </button >
-      <h3 class="text-center text-danger" >
-        <strong >There is no grama niladhari division upto know please add grama niladhari division to
-                 the system
-                 using add grama niladhari division button.
-        </strong >
-      </h3 >
-    </div >
-  </div >
-</div >
-
-<!--Show saved gramaniladhari-->
-<div class="row" data-th-if="${gramaNiladhariDetail!=null}" >
-  <div class="col-sm-12" >
-    <div class="alert alert-success alert-dismissible fade show"
-         role="alert" >
-      <button aria-label="Close" class="close" data-dismiss="alert"
-              type="button" >
-        <span aria-hidden="true" >&times;</span >
-      </button >
-      <div class="container" >
-        <div data-th-replace="~{gramaNiladhari/gramaNiladhari-detail :: gramaNiladhariDetail}" ></div >
+<div class="container-fluid" >
+  <div class="row" data-th-if="${ gramaNiladharis.getTotalElements() == 0}" >
+    <div class="col-sm-12" >
+      <div class="alert alert-warning alert-dismissible fade show"
+           role="alert" >
+        <button aria-label="Close" class="close" data-dismiss="alert"
+                type="button" >
+          <span aria-hidden="true" >&times;</span >
+        </button >
+        <h3 class="text-center text-danger" >
+          <strong >There is no grama niladhari division upto know please add grama niladhari division to
+                   the system
+                   using add grama niladhari division button.
+          </strong >
+        </h3 >
       </div >
     </div >
   </div >
 </div >
-
+<!--Show saved gramaniladhari-->
+<div class="container-fluid" >
+  <div class="row" data-th-if="${gramaNiladhariDetail!=null}" >
+    <div class="col-sm-12" >
+      <div class="alert alert-success alert-dismissible fade show"
+           role="alert" >
+        <button aria-label="Close" class="close" data-dismiss="alert"
+                type="button" >
+          <span aria-hidden="true" >&times;</span >
+        </button >
+        <div class="container" >
+          <div data-th-replace="~{gramaNiladhari/gramaNiladhari-detail :: gramaNiladhariDetail}" ></div >
+        </div >
+      </div >
+    </div >
+  </div >
+</div >
 <!--search Modal -->
 <div class="modal fade bd-example-modal-xl" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
      aria-hidden="true" >

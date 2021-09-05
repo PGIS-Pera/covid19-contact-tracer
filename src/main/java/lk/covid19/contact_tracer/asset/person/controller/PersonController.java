@@ -11,6 +11,8 @@ import lk.covid19.contact_tracer.asset.common_asset.model.enums.TwoDate;
 import lk.covid19.contact_tracer.asset.grama_niladhari.controller.GramaNiladhariController;
 import lk.covid19.contact_tracer.asset.grama_niladhari.entity.GramaNiladhari;
 import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
+import lk.covid19.contact_tracer.asset.location_interact.controller.LocationInteractController;
+import lk.covid19.contact_tracer.asset.location_interact.entity.LocationInteract;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.person.entity.enums.PersonStatus;
 import lk.covid19.contact_tracer.asset.person.service.PersonService;
@@ -148,8 +150,10 @@ public class PersonController {
     model.addAttribute("gramaNiladhariSearchUrl", MvcUriComponentsBuilder
         .fromMethodName(GramaNiladhariController.class, "searchOne", "")
         .toUriString());
-
-    return "";
+    model.addAttribute("searchUrl", MvcUriComponentsBuilder
+        .fromMethodName(LocationInteractController.class, "search", new LocationInteract())
+        .toUriString());
+    return "attempt/newAttempt";
   }
 
   @GetMapping( "/remove/{id}" )
@@ -179,7 +183,7 @@ public class PersonController {
   @PostMapping( value = "/search" )
   @ResponseBody
   public MappingJacksonValue search(Person person) {
-
+    System.out.println(person.toString());
     List< Person > persons = personService.search(person);
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(persons);
 

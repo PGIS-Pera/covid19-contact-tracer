@@ -15,7 +15,6 @@ let html_first_part = `<table class="table table-hover table-striped" id="myTabl
                   <th >Index</th >
                   <th >Number</th >
                   <th >Name</th >
-                  <th >Ds Office</th >
                   <th >Modify</th >
                 </tr >
                 </thead >
@@ -85,6 +84,9 @@ $("#searchInput").keyup(function () {
                           </a >
                           <a class="btn btn-primary btn-sm" href="${'/gramaNiladhari/edit/' + data[i].id}" >
                             <i class="fa fa-edit" ></i >&nbsp;Edit
+                          </a >                          
+                          <a class="btn btn-info btn-sm" data-th-href="${'/person/attempt/' + data[i].id}" >
+                              <i class="fas fa-head-side-virus"></i>&nbsp;New Attempt
                           </a >
                       </th >
                     </tr >`;

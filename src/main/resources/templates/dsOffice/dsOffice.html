@@ -65,34 +65,38 @@
   </table >
 </div >
 <!--if empty list-->
-<div class="row" id="agOfficeNotList" data-th-if="${ #lists.isEmpty(dsOffices)}" >
-  <div class="container" >
-    <div class="alert alert-warning alert-dismissible fade show"
-         role="alert" >
-      <button type="button" class="close" data-dismiss="alert"
-              aria-label="Close" >
-        <span aria-hidden="true" >&times;</span >
-      </button >
-      <h3 class="text-center text-danger" >
-        <strong >There is no divisional secretory office upto know please add dsOffice to
-                 the system
-                 using add divisional secretory office button.
-        </strong >
-      </h3 >
+<div class="container-fluid" >
+  <div class="row" id="agOfficeNotList" data-th-if="${ #lists.isEmpty(dsOffices)}" >
+    <div class="container" >
+      <div class="alert alert-warning alert-dismissible fade show"
+           role="alert" >
+        <button type="button" class="close" data-dismiss="alert"
+                aria-label="Close" >
+          <span aria-hidden="true" >&times;</span >
+        </button >
+        <h3 class="text-center text-danger" >
+          <strong >There is no divisional secretory office upto know please add dsOffice to
+                   the system
+                   using add divisional secretory office button.
+          </strong >
+        </h3 >
+      </div >
     </div >
   </div >
 </div >
 <!--Show saved dsOffice-->
-<div class="row" data-th-if="${dsOfficeDetail!=null}" >
-  <div class="col-sm-12" >
-    <div class="alert alert-success alert-dismissible fade show"
-         role="alert" >
-      <button type="button" class="close" data-dismiss="alert"
-              aria-label="Close" >
-        <span aria-hidden="true" >&times;</span >
-      </button >
-      <div class="container" >
-        <div data-th-replace="~{dsOffice/dsOffice-detail :: dsOfficeDetail}" ></div >
+<div class="container-fluid" >
+  <div class="row" data-th-if="${dsOfficeDetail!=null}" >
+    <div class="col-sm-12" >
+      <div class="alert alert-success alert-dismissible fade show"
+           role="alert" >
+        <button type="button" class="close" data-dismiss="alert"
+                aria-label="Close" >
+          <span aria-hidden="true" >&times;</span >
+        </button >
+        <div class="container" >
+          <div data-th-replace="~{dsOffice/dsOffice-detail :: dsOfficeDetail}" ></div >
+        </div >
       </div >
     </div >
   </div >
