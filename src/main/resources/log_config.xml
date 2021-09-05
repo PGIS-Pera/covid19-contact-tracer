@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- From high to low OFF , FATAL , ERROR , WARN , INFO , DEBUG , TRACE , ALL -->
+<!-- Log output rules based on current ROOT Level, when log output, the level is higher than root The default level is output -->
+<!-- For each of the following configurations filter Filter out the output file,
+high-level file will appear, and low-level log information will still appear filter Filter logs at this level only -->
+
+
+<!-- Attribute description scan:
+Sex set to true If the configuration file changes, it will be reloaded.
+The default value is true scanPeriod:Set whether the monitoring profile has a modified time interval.
+If no time unit is given, the default unit is milliseconds. When scan by true This property takes effect.
+The default time interval is 1 minute.
+	debug:When this property is set to true Will be printed out logback Internal log information,
+	real-time viewing logback Operation status. The default value is false.  -->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <contextName>covid19_data</contextName>
+
+    <!-- Define log file input location -->
+    <property name="log_dir" value="/soft/apache-tomcat-8.5.30-ems/logs"/>
+    <!-- Maximum log history 30 days -->
+    <property name="maxHistory" value="30"/>
+    <property name="maxFileSize" value="10MB"/>
+
+
+    <!-- ERROR Level log -->
+    <!-- Scroll to record the file, first record the log to the specified file, and when a certain condition is met, record the log to other files RollingFileAppender -->
+    <appender name="ERROR"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- Filters, recording only WARN Level log -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <!-- The most commonly used rolling strategy, which makes rolling strategy according to time.Responsible for rolling as well as starting rolling -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+
+            <!--Log output location can be relative, absolute path -->
+            <fileNamePattern>
+                ${log_dir}/app_error.%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <!-- Optional node, which controls the maximum number of archive files to be retained. If the number is exceeded, the old files will be deleted. Suppose that the setting scrolls every month, and<maxHistory>If it is 6, only the last 6 months' files will be saved, and the previous old files will be deleted. Note that deleting old files means that directories created for archiving will also be deleted -->
+            <maxHistory>${maxHistory}</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${maxFileSize}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- WARN Level log appender -->
+    <appender name="WARN"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- Filters, recording only WARN Level log -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Roll back by day daily -->
+            <fileNamePattern>
+                ${log_dir}/app_warn.%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <!-- Maximum log history 30 days -->
+            <maxHistory>${maxHistory}</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${maxFileSize}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- INFO Level log appender -->
+    <appender name="INFO"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- Filters, recording only INFO Level log -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Roll back by day daily -->
+            <fileNamePattern>
+                ${log_dir}/app_info.%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <!-- Maximum log history 30 days -->
+            <maxHistory>${maxHistory}</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${maxFileSize}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- DEBUG Level log appender -->
+    <appender name="DEBUG"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- Filters, recording only DEBUG Level log -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Roll back by day daily -->
+            <fileNamePattern>
+                ${log_dir}/app_debug.%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <!-- Maximum log history 30 days -->
+            <maxHistory>${maxHistory}</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${maxFileSize}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- TRACE Level log appender -->
+    <appender name="TRACE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- Filters, recording only ERROR Level log -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>TRACE</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Roll back by day daily -->
+            <fileNamePattern>
+                ${log_dir}/app_trace.%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <!-- Maximum log history 30 days -->
+            <maxHistory>${maxHistory}</maxHistory>
+
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${maxFileSize}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="java.sql.PreparedStatement" value="DEBUG"/>
+    <logger name="java.sql.Connection" value="DEBUG"/>
+    <logger name="java.sql.Statement" value="DEBUG"/>
+    <logger name="com.ibatis" value="DEBUG"/>
+    <logger name="com.ibatis.common.jdbc.SimpleDataSource" value="DEBUG"/>
+    <logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG"/>
+    <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" value="DEBUG"/>
+    <logger name="com.apache.ibatis" level="TRACE"/>
+
+    <!-- root level DEBUG -->
+    <root level="debug">
+        <!-- File output -->
+        <appender-ref ref="ERROR"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="WARN"/>
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="TRACE"/>
+    </root>
+</configuration>  

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body id="login" >
+<div class="container-fluid mb-3" >
+  <div class="row mt-3" >
+    <div class="col-md-4 bg-transparent mt-5 offset-md-4" >
+      <form class="p-5 mt-md-5 card rounded login_from" data-th-action="${'/login'}" method="post" >
+        <fieldset >
+          <legend class="text-center h3" >
+            Covid19 Contact Tracer
+          </legend >
+          <div class="form-label-group" >
+            <input type="text" id="username" data-th-name="${'username'}" class="form-control"
+                   placeholder="username" required >
+            <label for="username" >Username</label >
+          </div >
+          <div class="form-label-group" >
+            <input type="password" id="inputPassword" data-th-name="${'password'}"
+                   class="form-control" placeholder="password" required >
+            <label for="inputPassword" >Password</label >
+          </div >
+          <div class="form-group text-right" >
+            <input id="remember-me" type="checkbox" name="remember-me" class="form-check-input" />
+            <label for="remember-me" >Remember Me</label >
+          </div >
+          <div class="form-group text-right" >
+            <button class="btn btn-success " type="submit" >
+              LOGIN
+              <i class="fas fa-sign-in-alt" aria-hidden="true" ></i >
+            </button >
+          </div >
+        </fieldset >
+        <div class="container-fluid " data-th-if="${param.error}" >
+          <p class="bg-white text-capitalize text-danger text-lg-center" >Invalid username or
+                                                                          password. </p >
+        </div >
+        <div class="form-group text-right" >
+          <a data-th-href="${'/forgottenPassword'}" class="text-dark" >Forgotten Password</a >
+        </div >
+      </form >
+    </div >
+  </div >
+</div >
+<!--footer include-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+
+</body >
+</html >

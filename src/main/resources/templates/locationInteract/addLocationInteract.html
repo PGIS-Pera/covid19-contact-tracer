@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<div class="container-fluid   " >
+  <div class="row text-md-center" >
+    <div class="col" >
+      <a class="btn btn-info" data-th-href="${'/home'}" >
+        <i class="fa fa-home" style="font-size: 20px" ></i > &nbsp; Home
+      </a >
+    </div >
+    <div class="col" >
+            <span class="h4 font-weight-bold text-center"
+                  data-th-text="${addStatus==true?'New Location Interact':'Update Location Interact'}" ></span >
+    </div >
+    <div class="col" >
+      <a class="btn btn-success" data-th-href="${'/locationInteract'}" >
+        <i class="fa fa-list" ></i >&nbsp; View List
+      </a >
+    </div >
+  </div >
+</div >
+
+<div class="container-fluid text-center" >
+  <div class="col" >
+    <form data-th-action="${addStatus==true?'/locationInteract/save' :'/locationInteract/update'}"
+          method="post" data-th-object="${locationInteract}" >
+      <input class="form-control col-md-9" readonly data-th-field="*{id}"
+             type="text" data-th-if="${addStatus==false}" />
+      <!--Gramaniladhari division-->
+      <div class="form-row text-md-right text-sm-left" >
+        <div class="col-md-4" >
+          <label class="control-label" data-th-for="${'gramaNiladhari'}" >Gramaniladhari Division :</label >
+        </div >
+        <div class="col-md-8" >
+          <input type="text" id="gramaNiladhariOne"
+                 data-th-value="${addStatus==false ? locationInteract.gramaNiladhari.name :''}" readonly
+                 class="form-control" disabled >
+          <input list="browsers" data-th-field="*{gramaNiladhari}" class="form-control"
+                 placeholder="Please enter gramaniladari division name" >
+          <datalist id="browsers" >
+          </datalist >
+          <span class="form-text text-muted bg-warring" id="gramaNiladhariMessage" ></span >
+          <input name="gramaNiladhari.id" id="gramaNiladhariId"
+                 data-th-value="${addStatus==false ? locationInteract.gramaNiladhari.id :''}" hidden >
+        </div >
+      </div >
+
+      <!--name-->
+      <div class="form-row text-md-right text-sm-left" >
+        <div class="col-md-4" >
+          <label class="control-label" data-th-for="${'name'}" >Location Name : </label >
+        </div >
+        <div class="col-md-8" >
+          <input class="form-control " required data-th-field="*{name}" type="text" />
+          <span class="error" data-th-errors="*{name}" data-th-if="${#fields.hasErrors('name')}" ></span >
+        </div >
+      </div >
+
+      <!-- button area-->
+      <div class="form-group col-md-12 col-sm-12 text-center flex-column mt-3" >
+        <!--Back Button-->
+        <a class="btn btn-dark" data-th-href="${'/person'}" tabindex="10" >
+          <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
+        </a >
+        <!--Save Button-->
+        <button class="btn btn-success ml-md-5" tabindex="8" type="submit" >
+          <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;
+          <span data-th-text="${addStatus==true?'Save': 'Update'}" id="submit" ></span >
+        </button >
+        <!--Cancel Button-->
+        <button class="btn btn-warning ml-md-5" tabindex="9" type="reset" >
+          <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
+        </button >
+      </div >
+      <div class="form-row" >
+        <label data-th-if="${#fields.hasErrors('*')}" data-th-text="'Errors: '" >Errors: </label >
+        <ul >
+          <li class="error" data-th-each="err: ${#fields.errors('*')}" data-th-text="${err}" ></li >
+        </ul >
+      </div >
+    </form >
+  </div >
+</div >
+<input data-th-value="${gramaNiladhariSearchUrl}" hidden id="gramaNiladhariSearchUrl" type="text" >
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<script data-th-src="@{/js/locationInteract.js}" ></script >
+
+</body >
+</html >

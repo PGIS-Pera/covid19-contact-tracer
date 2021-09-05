@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<div class="container-fluid" >
+  <div class="row text-center" >
+    <div class="col" >
+      <a class="btn btn-info" data-th-href="${'/home'}" >
+        Back To Home
+      </a >
+    </div >
+    <div class="col" >
+      <h2 class="text-center" >
+        <strong >
+          <span data-th-text="${addStatus==true?'Update District Details':'New District Details'}" ></span >
+        </strong >
+      </h2 >
+    </div >
+    <div class="col" >
+      <a class="btn btn-success" data-th-href="${'/district'}" >
+        District List </a >
+    </div >
+  </div >
+</div >
+
+<div class="container-fluid text-center" >
+  <div class="col" >
+    <form data-th-action="${addStatus==false?'/district/save' :'/district/update'}"
+          data-th-object="${district}"
+          method="post" >
+
+      <input class="form-control" data-th-field="*{id}" data-th-if="${addStatus==true}" id="id" readonly
+             type="hidden" >
+      <!--Province-->
+      <div class=" form-row p-3" >
+        <label class="form-label col-md-3 " data-th-for="${'province'}" >
+          Province </label >
+
+        <select class="form-control col-md-9" data-th-field="*{province}" >
+          <option data-th-each="province : ${provinces}"
+                  data-th-text="${province.province}"
+                  data-th-value="${province}" ></option >
+        </select >
+        <p class="text-danger" data-th-errors="*{province}"
+           data-th-if="${#fields.hasErrors('province')}" >Error Name</p >
+
+      </div >
+      <!--name-->
+      <div class=" form-row p-3" >
+        <label class="form-label col-md-3" data-th-for="${'name'}" > Name </label >
+
+        <input class="form-control col-md-9" data-th-field="*{name}" type="text" >
+        <p class="text-danger" data-th-errors="*{name}"
+           data-th-if="${#fields.hasErrors('name')}" >Error Name</p >
+
+      </div >
+
+      <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
+        <!--Back Button-->
+        <a class="btn btn-dark" tabindex="10" data-th-href="${'/district'}" >
+          <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
+        </a >
+        <!--Save Button-->
+        <button class="btn btn-success ml-md-5" type="submit" tabindex="8" >
+          <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;
+          <span data-th-text="${addStatus==false?'Save': 'Update'}" id="submit" ></span >
+        </button >
+        <!--Cancel Button-->
+        <button class="btn btn-warning ml-md-5" type="reset" tabindex="9" >
+          <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
+        </button >
+      </div >
+      <div class="form-row" >
+        <label id="errorLabel" data-th-if="${#fields.hasErrors('*')}"
+               data-th-text="'Errors: '" >Errors: </label >
+        <ul >
+          <li id="error" data-th-each="err : ${#fields.errors('*')}" data-th-text="${err}"
+              class="error" ></li >
+        </ul >
+      </div >
+    </form >
+  </div >
+</div >
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+</body >
+</html >

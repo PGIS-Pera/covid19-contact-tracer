@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<!--table pagination-->
+<link data-th-href="@{/css/dataTables.bootstrap.min.css}" media="all" rel="stylesheet" type="text/css" />
+
+<div data-th-replace="~{fragments/navBar :: navBarFragment}" ></div >
+<div class="container-fluid" >
+  <div class="row text-center" >
+    <div class="col" >
+      <a class="btn btn-success" data-th-href="${'/locationInteract/add'}" >
+        <i class="far fa-building" ></i > &nbsp; Add
+                                          Location Interactions</a >
+    </div >
+    <div class="col" >
+      <span class="font-weight-bold h2" >                    Interact Location </span >
+    </div >
+    <div class="col" >
+      <a class="btn btn-primary" data-th-href="${'/home'}" id="searchShow" tabindex="2" >
+        <i class="fas fa-home" style="font-size: 20px" ></i >&nbsp;&nbsp;Home
+      </a >
+    </div >
+  </div >
+</div >
+
+<!--data table-->
+<div class="container-fluid " >
+  <div class="col-sm-12 flex-column " >
+    <div class="row" >
+      <div class="container-fluid" >
+        <div class="row" data-th-if="${locationInteracts.totalPages}" >
+          <!--page per item select -->
+          <div class="col text-left" >
+            <div class="form-row" >
+              <div class="col text-right" >
+                <label for="pageSizeSelect" >Item Count Per Page : </label >
+              </div >
+              <div class="col text-left" >
+                <select class="form-control pagination" id="pageSizeSelect" >
+                  <option data-th-each="pageSize : ${pageSizes}" data-th-text="${pageSize}"
+                          data-th-value="${pageSize}"
+                          data-th-selected="${pageSize} == ${selectedPageSize}" ></option >
+                </select >
+              </div >
+            </div >
+          </div >
+          <!--search model-->
+          <div class="col text-right" >
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modelId" >
+              <i class="fa fa-search" aria-hidden="true" ></i >
+              Search
+            </button >
+          </div >
+        </div >
+        <!--data fill table-->
+        <div class="row" data-th-if="${ locationInteracts.getTotalElements() != 0}" >
+          <div class="container-fluid" >
+            <table class="table table-hover table-striped table-responsive-sm  mt-1" >
+              <tr >
+                <th >Index</th >
+                <th >Name</th >
+                <th >Gramanilashari Division Name</th >
+                <th >Division Secretory Office Name</th >
+                <th >View</th >
+              </tr >
+              <tr data-th-each="locationInteract, index : ${locationInteracts}" >
+                <td data-th-text="${index.count}" ></td >
+                <td data-th-text="${locationInteract.name}" ></td >
+                <td data-th-text="${locationInteract.gramaNiladhari.name}" ></td >
+                <td data-th-text="${locationInteract.gramaNiladhari.dsOffice.name}" ></td >
+                <td >
+                  <a class="btn btn-success btn-sm" data-th-href="${'/locationInteract/' + locationInteract.id}" ><i
+                        class="fa fa-folder-open" ></i >&nbsp;View</a >
+                  <a class="btn btn-primary btn-sm" id="agOfficeEdit"
+                     data-th-href="${'/locationInteract/edit/' + locationInteract.id}" ><i
+                        class="fa fa-edit" ></i >&nbsp;Edit</a >
+                  <a class="btn btn-danger btn-sm" id="agOfficeRemove"
+                     data-th-href="${'/locationInteract/remove/' + locationInteract.id}"
+                     data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+                     data-th-onclick="if(!(confirm('Are you want to delete this location interact ?'))) return false"
+                  ><i aria-hidden="true" class="fa fa-trash" ></i >
+                    Delete</a >
+                </td >
+              </tr >
+            </table >
+          </div >
+        </div >
+        <!--pagination part -->
+        <div class="row" >
+          <div data-th-if="${locationInteracts.totalPages}" class="form-group col-md-11 pagination-centered" >
+            <ul class="pagination" >
+              <li data-th-class="${locationInteracts.number == 0} ? disabled : page-item" >
+                <a class="page-link"
+                   data-th-href="@{/locationInteract/(pageSize=${selectedPageSize}, page=1)}" >&laquo;</a >
+              </li >
+              <li data-th-class="${locationInteracts.number == 0} ? disabled : page-item" >
+                <a class="page-link"
+                   data-th-href="@{/locationInteract/(pageSize=${selectedPageSize}, page=${locationInteracts.number})}" >&larr;</a >
+              </li >
+              <li data-th-class="${locationInteracts.number == (page - 1)} ? 'active pointer-disabled' : page-item"
+                  data-th-each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}" >
+                <a class="page-link"
+                   data-th-href="@{/locationInteract/(pageSize=${selectedPageSize}, page=${page})}"
+                   data-th-text="${page}" ></a >
+              </li >
+              <li data-th-class="${locationInteracts.number + 1 == locationInteracts.totalPages} ? disabled : page-item" >
+                <a class="page-link"
+                   data-th-href="@{/locationInteract/(pageSize=${selectedPageSize}, page=${locationInteracts.number + 2})}" >&rarr;</a >
+              </li >
+              <li data-th-class="${locationInteracts.number + 1 == locationInteracts.totalPages} ? disabled : page-item" >
+                <a class="page-link"
+                   data-th-href="@{/locationInteract/(pageSize=${selectedPageSize}, page=${locationInteracts.totalPages})}" >&raquo;</a >
+              </li >
+            </ul >
+          </div >
+        </div >
+      </div >
+    </div >
+  </div >
+</div >
+
+<!--if empty list-->
+<div class="container-fluid" >
+  <div class="row" data-th-if="${ locationInteracts.getTotalElements() == 0}" >
+    <div class="col-sm-12" >
+      <div class="alert alert-warning alert-dismissible fade show"
+           role="alert" >
+        <button aria-label="Close" class="close" data-dismiss="alert"
+                type="button" >
+          <span aria-hidden="true" >&times;</span >
+        </button >
+        <h3 class="text-center text-danger" >
+          <strong >There is no location interact upto know please add location interact to
+                   the system
+                   using add location interact button.
+          </strong >
+        </h3 >
+      </div >
+    </div >
+  </div >
+</div >
+<!--Show saved location interact-->
+<div class="container-fluid" >
+  <div class="row" data-th-if="${locationInteractDetail!=null}" >
+    <div class="col-sm-12" >
+      <div class="alert alert-success alert-dismissible fade show"
+           role="alert" >
+        <button aria-label="Close" class="close" data-dismiss="alert"
+                type="button" >
+          <span aria-hidden="true" >&times;</span >
+        </button >
+        <div class="container" >
+          <div data-th-replace="~{locationInteract/locationInteract-detail :: locationInteractDetail}" ></div >
+        </div >
+      </div >
+    </div >
+  </div >
+</div >
+<!--search Modal -->
+<div class="modal fade bd-example-modal-xl" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+     aria-hidden="true" >
+  <div class="modal-dialog modal-xl" role="document" >
+    <div class="modal-content" >
+      <div class="modal-header" >
+        <h5 class="modal-title" >Location Interact Search</h5 >
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+          <span aria-hidden="true" >&times;</span >
+        </button >
+      </div >
+      <div class="modal-body" >
+        <div class="container" >
+          <div class="row" >
+            <div class="col-6" >
+              <label for="searchInput" >Enter Location Name : </label >
+              <input type="search" id="searchInput" class="form-control" >
+            </div >
+          </div >
+          <div class="form-row" >
+            <!--result content show-->
+            <div class="col-12" id="tableShow" >
+            </div >
+          </div >
+        </div >
+      </div >
+      <div class="modal-footer" >
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" >
+          Close
+        </button >
+      </div >
+    </div >
+  </div >
+</div >
+<input type="hidden" id="searchUrl" data-th-value="${searchUrl}" >
+<!--footer include-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<!-- data table -->
+<script src="/js/pagination.js" ></script >
+<script src="/js/locationInteract.js" ></script >
+</body >
+</html >

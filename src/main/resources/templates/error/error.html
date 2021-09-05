@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+<main >
+  <div class="col-12 col-sm-12 col-md-12 mt-4" >
+    <div class="container-fluid"
+         data-th-with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}" >
+      <div class="container text-center" >
+        <h1 class="invalid-feedback" data-th-text="|${httpStatus} - ${httpStatus.reasonPhrase}|" >404</h1 >
+        <h1 class="invalid-feedback" data-th-if="${accessDenied!=null}" data-th-text="${accessDenied}" >404</h1 >
+      </div >
+      <div class="col-12 col-sm-12 col-md-12 mt-4 mb-4 p-4" >
+        <marquee behavior="scroll" direction="left" >
+          <div class="container" id="iconAround" >
+            <div id="icon" >
+              <i class="fa fa-frown text-danger " id="iconIn" > </i >
+            </div >
+          </div >
+        </marquee >
+      </div >
+      <div class="container-fluid mt-4 text-center" >
+        <p class="invalid-feedback" data-th-text="${errorMessage}" >Error java.lang.NullPointerException</p >
+      </div >
+      <div class="container-fluid text-center" >
+        <a href="/home" >
+          <button class="btn btn-info" type="submit" >
+            <i class="fa fa-home" style="font-size: 20px" ></i >&nbsp; Home
+          </button >
+        </a >
+      </div >
+    </div >
+  </div >
+</main >
+<!--footer include-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+
+</body >
+</html >

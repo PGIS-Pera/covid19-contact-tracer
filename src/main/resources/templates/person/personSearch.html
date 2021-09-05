@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<!--table pagination-->
+<link data-th-href="@{/css/dataTables.bootstrap.min.css}" media="all" rel="stylesheet" type="text/css" />
+
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<!--Page header -->
+<div class="container-fluid" >
+  <div class="row text-center " >
+    <div class="col" >
+      <a class="btn btn-success" data-th-href="${'/person/add'}" >
+        <i class="fa fa-user-plus" ></i > &nbsp; Add Patient </a >
+    </div >
+    <div class="col" >
+      <a data-th-href="${'/person'}" class="btn btn-primary" >
+        <i class="fa fa-list" ></i >&nbsp; Show List&nbsp; &nbsp;
+      </a >
+    </div >
+  </div >
+</div >
+<!--person find-->
+<div class="container-fluid" >
+  <div id="accordion" class="p-1" >
+    <!--        searching few parameter-->
+    <div class="card" >
+      <div class="card-header text-center" id="headingOne" >
+        <h5 class="mb-0" >
+          <button class="btn btn-link btn-block" data-toggle="collapse" data-target="#collapseOne"
+                  aria-expanded="true"
+                  aria-controls="collapseOne" >
+            Persons Search By One Parameter
+          </button >
+        </h5 >
+      </div >
+      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion" >
+        <div class="card-body" >
+          <div class="container-fluid" >
+            <div class="col" >
+              <form method="POST" data-th-action="${'/person/search'}" >
+                <div class="form-row" >
+                  <div class="form-group col-md-4" >
+                    <label class="control-label" >Parameter :
+                      <select id="selectParameter" class="form-control" tabindex="1" required >
+                        <option value="" >Please select</option >
+                        <option value="nic" >NIC Number</option >
+                        <option value="name" >Name</option >
+                        <option value="mobile" >Mobile</option >
+                        <option value="number" >Register Number</option >
+                      </select >
+                    </label >
+                  </div >
+                  <div class="form-group col-md-4" >
+                    <label class="control-label" >Value :
+                      <input id="valueEmployee" tabindex="2" class="form-control" type="text"
+                             minlength="3"
+                             required
+                             autofocus />
+                    </label >
+                  </div >
+                  <div class="form-group col-md-4" >
+                    <div class="text-left mt-md-3" >
+                      <button id="btnSearchEmployee" class="btn btn-success" tabindex="3"
+                              type="submit" >
+                        <i class="fa fa-search " ></i >&nbsp; &nbsp;Search
+                      </button >
+                    </div >
+                  </div >
+                </div >
+              </form >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+    <!--        searching all parameter-->
+    <div class="card" >
+      <div class="card-header text-center" id="headingTwo" >
+        <h5 class="mb-0" >
+          <button class="btn btn-link collapsed btn-block" data-toggle="collapse" data-target="#collapseTwo"
+                  aria-expanded="false" aria-controls="collapseTwo" >
+            Persons Search By Multiple Parameters
+          </button >
+        </h5 >
+      </div >
+      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion" >
+        <div class="card-body" >
+          <div class="col" >
+            <form data-th-action="${'/person/search'}" method="POST" data-th-object="${person}" >
+              <div class="form-row" >
+                <!--Left Side-->
+                <div class="col-md-6 col-sm-6 " >
+                  <!--Name-->
+                  <div class="form-row text-md-right text-sm-left" >
+                    <div class="col-md-4" >
+                      <label class="control-label" for="name" >Name :</label >
+                    </div >
+                    <div class="col-md-8" >
+                      <input class="form-control" data-th-field="*{name}" id="name"
+                             type="text" />
+                    </div >
+                  </div >
+                  <!--Gender-->
+                  <div class="form-row text-md-right text-sm-left" >
+                    <div class="col-md-4" >
+                      <label class="control-label" >Gender :</label >
+                    </div >
+                    <div class="col-md-8" >
+                      <div class="custom-control custom-checkbox custom-control-inline "
+                           data-th-each="genders,index : ${gender}" >
+                        <input class="custom-control-input gender"
+                               data-th-checked="${genders==gender}"
+                               data-th-id="${index.index}+${genders}"
+                               data-th-name="${'gender'}"
+                               data-th-value="${genders}"
+                               type="radio" />
+                        <label class="custom-control-label"
+                               data-th-for="${index.index}+${genders}"
+                               data-th-text="${genders.gender}" > radio
+                        </label >
+                      </div >
+                    </div >
+                  </div >
+                  <!--Person Status-->
+                  <div class="form-row text-md-right text-sm-left" >
+                    <div class="col-md-4" >
+                      <label class="control-label" >Person Status :</label >
+                    </div >
+                    <div class="col-md-8" >
+                      <div class="custom-control custom-checkbox custom-control-inline "
+                           data-th-each="personState,index : ${personStatuses}" >
+                        <input class="custom-control-input" data-th-checked="${personState== person.personStatus}"
+                               data-th-id="${index.index}+${personState}"
+                               data-th-name="${'personStatus'}"
+                               data-th-value="${personState}" required
+                               type="radio" />
+                        <label class="custom-control-label"
+                               data-th-for="${index.index}+${personState}"
+                               data-th-text="${personState.personStatus}" >
+                        </label >
+                      </div >
+                    </div >
+                  </div >
+                </div >
+                <!--Right Side-->
+                <div class="col-md-6 col-sm-6 " >
+                  <!--Address-->
+                  <div class="form-row text-md-right text-sm-left" >
+                    <div class="col-md-4" >
+                      <label class="control-label" for="address" >Address :</label >
+                    </div >
+                    <div class="col-md-8" >
+                      <textarea class="form-control" data-th-field="*{address}" id="address" required
+                                rows="4" >                                                            </textarea >
+                    </div >
+                  </div >
+                  <!--Mobile Number One-->
+                  <div class="form-row text-md-right text-sm-left" >
+                    <div class="col-md-4" >
+                      <label class="control-label" for="mobileOne" >Mobile :</label >
+                    </div >
+                    <div class="col-md-8" >
+                      <input class="form-control mobile" data-th-field="*{mobile}" id="mobileOne"
+                             maxlength="10" min="9" type="text" />
+                    </div >
+                  </div >
+                </div >
+                <!-- button area-->
+                <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
+                  <!--Back Button-->
+                  <a class="btn btn-dark" data-th-href="${'/person'}" tabindex="10" >
+                    <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
+                  </a >
+                  <!--Search Button-->
+                  <button class="btn btn-success ml-md-5" tabindex="3"
+                          type="submit" >
+                    <i class="fa fa-search " ></i >&nbsp; &nbsp;Search
+                  </button >
+                  <!--Cancel Button-->
+                  <button class="btn btn-warning ml-md-5" tabindex="9" type="reset" >
+                    <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
+                  </button >
+                </div >
+              </div >
+            </form >
+          </div >
+        </div >
+      </div >
+    </div >
+    <!--        searching data range-->
+    <div class="card" >
+      <div class="card-header text-center" id="headingThree" >
+        <h5 class="mb-0" >
+          <button class="btn btn-link btn-block" data-toggle="collapse" data-target="#collapseThree"
+                  aria-expanded="true"
+                  aria-controls="collapseThree" >
+            Persons Search By Date Different
+          </button >
+        </h5 >
+      </div >
+      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion" >
+        <div class="card-body" >
+          <div class="container-fluid" >
+            <div class="col" >
+              <form method="POST" data-th-action="${'/person/searchDate'}" >
+                <div class="form-row" >
+                  <div class="form-group col-md-4" >
+                    <label for="startDate" >FROM :</label >
+                    <input class="form-control" id="startDate" name="startDate" type="date" />
+                  </div >
+                  <div class="form-group col-md-4" >
+                    <label for="endDate" >TO :</label >
+                    <input class="form-control" id="endDate" name="endDate" type="date" />
+                  </div >
+                  <div class="form-group col-md-4" >
+                    <button class="btn btn-success" id="btnSummaryFind" type="submit" ><span
+                          class="glyphicon glyphicon-search" ></span >&nbsp;Search
+                    </button >
+                  </div >
+                </div >
+              </form >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+  </div >
+</div >
+<!--message-->
+<div class="container-fluid text-center" >
+  <div class="row" data-th-if="${message!=null}" >
+    <div class="col-sm-12" >
+      <span class="bg-info" data-th-text="${message}" ></span >
+    </div >
+  </div >
+</div >
+<!--person list-->
+<div class="container-fluid text-center" >
+  <div class="col" >
+    <div class="col" data-th-if="${not #lists.isEmpty(people)}" >
+      <table class="table table-hover table-striped" id="myTable" >
+        <thead >
+        <tr >
+          <th > Index</th >
+          <th > Code</th >
+          <th > Name</th >
+          <th > Mobile</th >
+          <th > Nic</th >
+          <th > Address</th >
+          <th > Modify</th >
+        </tr >
+        </thead >
+        <tbody >
+        <tr data-th-each="person, rowCount : ${people}" data-th-if="" >
+          <th data-th-text="${rowCount.count}" ></th >
+          <th data-th-text="${person.code}" ></th >
+          <th data-th-text="${person.name}" ></th >
+          <th data-th-text="${person.mobileOne}" ></th >
+          <th data-th-text="${person.nic}" ></th >
+          <th data-th-utext="${person.address}" ></th >
+          <th >
+            <a class="btn btn-success btn-sm" data-th-href="${'/person/' + person.id}" >
+              <i class="fa fa-folder-open" ></i >&nbsp;View</a >
+            <a class="btn btn-primary btn-sm" data-th-href="${'/person/edit/' + person.id}" >
+              <i class="fa fa-edit" ></i >&nbsp;Edit</a >
+            <a class="btn btn-info btn-sm" data-th-href="${'/person/attempt/' + person.id}" >
+              <i class="fas fa-head-side-virus" ></i >&nbsp;New Attempt</a >
+          </th >
+        </tr >
+        </tbody >
+      </table >
+    </div >
+  </div >
+  <div class="row" data-th-if="${message!=null}" >
+    <div class="col-sm-12" data-th-if="${ #lists.isEmpty(people)}" >
+      <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+        <button aria-label="Close" class="close" data-dismiss="alert" type="button" >
+          <span aria-hidden="true" >&times;</span >
+        </button >
+        <h3 class="text-center text-danger" >
+          <strong >There are no person on provided details </strong >
+        </h3 >
+      </div >
+    </div >
+  </div >
+</div >
+<!--footer include-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<!-- data table -->
+<script src="/js/pagination.js" ></script >
+</body >
+</html >

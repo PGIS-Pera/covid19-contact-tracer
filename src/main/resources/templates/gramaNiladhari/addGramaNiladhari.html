@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<div class="container-fluid" >
+  <div class="row text-center" >
+    <div class="col" >
+      <a class="btn btn-info" data-th-href="${'/home'}" >
+        Back To Home
+      </a >
+    </div >
+    <div class="col" >
+      <h2 class="text-center" >
+        <strong >
+          <span data-th-text="${addStatus==true?'Update Gramaniladari ':'New Gramaniladari '}" ></span >
+        </strong >
+      </h2 >
+    </div >
+    <div class="col" >
+      <a class="btn btn-success" data-th-href="${'/gramaniladari'}" >
+        Gramaniladari List </a >
+    </div >
+  </div >
+</div >
+
+<div class="container-fluid text-center" >
+  <div class="col" >
+    <form data-th-action="${addStatus==false?'/gramaNiladhari/save' :'/gramaNiladhari/update'}"
+          method="post" data-th-object="${gramaNiladhari}" >
+      <input class="form-control col-md-9" id="id" readonly data-th-field="*{id}"
+             type="text" data-th-if="${addStatus==true}" />
+      <!--Province-->
+      <div class=" form-row  p-3" >
+        <label class="form-label  col-md-3" data-th-for="province" > Province :</label >
+
+        <select class="form-control col-md-9" id="province"
+                data-th-field="${gramaNiladhari.dsOffice.district.province}" >
+          <option value="" >Please Select</option >
+          <option data-th-each="province : ${provinces}"
+                  data-th-text="${province.province}"
+                  data-th-value="${province}"
+          ></option >
+        </select >
+      </div >
+
+      <!--District-->
+      <div class=" form-row p-3" >
+        <label class="form-label col-md-3 " for="district" >
+          District :</label >
+        <select class="form-control col-md-9" id="district"
+                data-th-field="${gramaNiladhari.dsOffice.district}" >
+          <option value="" >Please Select</option >
+          <option data-th-each="district : ${districts}"
+                  data-th-text="${district.name}"
+                  data-th-value="${district.id}"
+          ></option >
+        </select >
+      </div >
+
+      <!--AgOffice-->
+      <div class=" form-row p-3" >
+        <label class="form-label col-md-3 " data-th-for="${'dsOffice'}" > Ds Office :</label >
+        <select class="form-control col-md-9" id="dsOffice"
+                data-th-field="${gramaNiladhari.dsOffice}" >
+          <option value="" >Please Select</option >
+          <option data-th-each="dsOffice : ${dsOffices}"
+                  data-th-text="${dsOffice.name}"
+                  data-th-value="${dsOffice.id}"
+          ></option >
+        </select >
+      </div >
+
+      <!--Number-->
+      <div class=" form-row p-3" >
+        <label data-th-for="${'number'}" class="form-label col-md-3" > Number :</label >
+        <input type="text" class="form-control  col-md-9" data-th-field="*{number}" >
+        <p class="text-danger" data-th-if="${#fields.hasErrors('number')}"
+           data-th-errors="*{number}" >Error Number</p >
+      </div >
+
+      <!--GramaNiladhari-->
+      <div class="form-row p-3" >
+        <label class="control-label col-md-3" for="gramaniladhari" >Grama
+                                                                    Niladhari Division :</label >
+
+        <input class="form-control col-md-9 " id="gramaniladhari"
+               required
+               tabindex="16" data-th-field="*{name}"
+               type="text" />
+        <span class="error" id="gramaniladharidivisionError"
+              data-th-errors="*{name}"
+              data-th-if="${#fields.hasErrors('name')}" >Grama Niladhari Error Email</span >
+
+      </div >
+
+      <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
+        <!--Back Button-->
+        <a class="btn btn-dark" tabindex="10" data-th-href="${'/district'}" >
+          <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
+        </a >
+        <!--Save Button-->
+        <button class="btn btn-success ml-md-5" type="submit" tabindex="8" >
+          <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;
+          <span data-th-text="${addStatus==false?'Save': 'Update'}" id="submit" ></span >
+        </button >
+        <!--Cancel Button-->
+        <button class="btn btn-warning ml-md-5" type="reset" tabindex="9" >
+          <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
+        </button >
+      </div >
+      <div class="form-row" >
+        <label id="errorLabel" data-th-if="${#fields.hasErrors('*')}"
+               data-th-text="'Errors: '" >Errors: </label >
+        <ul >
+          <li id="error" data-th-each="err : ${#fields.errors('*')}" data-th-text="${err}"
+              class="error" ></li >
+        </ul >
+      </div >
+    </form >
+  </div >
+</div >
+<input type="hidden" name="" id="districtURL" data-th-value="${districtURL}">
+<input type="hidden" name="" id="dsOfficeURL" data-th-value="${dsOfficeURL}">
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<script data-th-src="@{/js/gramaNiladhari.js}" ></script >
+</body >
+</html >

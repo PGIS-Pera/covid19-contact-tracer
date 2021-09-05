@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<div class="container-fluid text-center" >
+  <div class="jumbotron jumbotron-fluid bg-white" >
+    <div class="container" >
+      <h1 class="display-3" >Congratulation !</h1 >
+      <p class="lead" data-th-text="${message}" ></p >
+      <hr class="my-2" >
+      <p >Please follow next step</p >
+      <p class="lead" >
+        <a class="btn btn-primary btn-lg" data-th-href="${'/'+href}" role="button" data-th-text="${btn_href}" ></a >
+      </p >
+    </div >
+  </div >
+</div >
+<!--footer fragment-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+</body >
+</html >

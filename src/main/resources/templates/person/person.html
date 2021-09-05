@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<!--table pagination-->
+<link data-th-href="@{/css/dataTables.bootstrap.min.css}" media="all" rel="stylesheet" type="text/css" />
+
+<div data-th-replace="~{fragments/navBar :: navBarFragment}" ></div >
+<div class="container-fluid" >
+  <div class="row text-center" >
+    <div class="col" >
+      <a class="btn btn-success" data-th-href="${'/person/add'}" >
+        <i class="fa fa-user-plus" ></i > &nbsp; Add Person </a >
+    </div >
+    <div class="col" >
+      <a class="btn btn-success" data-th-href="${'/person/search'}" >
+        <i class="fa fa-search" ></i > &nbsp; Search Person </a >
+    </div >
+  </div >
+  <div class="row text-center" >
+    <div class="col" >
+      <h4 class="text-center" >
+        <strong >
+          Person Management
+        </strong >
+      </h4 >
+    </div >
+  </div >
+</div >
+
+<!--data table-->
+<div class="container-fluid " >
+  <div class="col-sm-12 flex-column " >
+    <div class="row" >
+      <div class="container-fluid" >
+        <div class="row" data-th-if="${persons.totalPages}" >
+          <!--page per item select -->
+          <div class="col text-left" >
+            <div class="form-row" >
+              <div class="col text-right" >
+                <label for="pageSizeSelect" >Item Count Per Page : </label >
+              </div >
+              <div class="col text-left" >
+                <select class="form-control pagination" id="pageSizeSelect" >
+                  <option data-th-each="pageSize : ${pageSizes}" data-th-text="${pageSize}"
+                          data-th-value="${pageSize}"
+                          data-th-selected="${pageSize} == ${selectedPageSize}" ></option >
+                </select >
+              </div >
+            </div >
+          </div >
+          <!--search model-->
+          <div class="col text-right" >
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modelId" >
+              <i class="fa fa-search" aria-hidden="true" ></i >
+              Search
+            </button >
+          </div >
+        </div >
+        <!--data fill table-->
+        <div class="row" data-th-if="${ persons.getTotalElements() != 0}" >
+          <div class="container-fluid" >
+            <table class="table table-hover table-striped table-responsive-sm  mt-1" >
+              <tr >
+                <th >Index</th >
+                <th >Re. Number</th >
+                <th >Name</th >
+                <th >NIC</th >
+                <th >Mobile</th >
+                <th >Status</th >
+                <th >Gramaniladhari Division</th >
+                <th >View</th >
+              </tr >
+              <tr data-th-each="person, index : ${persons}" >
+                <td data-th-text="${index.count}" ></td >
+                <td data-th-text="${person.code}" ></td >
+                <td data-th-text="${person.name}" ></td >
+                <td data-th-text="${person.nic}" ></td >
+                <td data-th-text="${person.mobile}" ></td >
+                <td data-th-text="${person.personStatus.personStatus}" ></td >
+                <td data-th-text="${person.gramaNiladhari.name}" ></td >
+                <td >
+                  <a class="btn btn-success btn-sm" data-th-href="${'/person/' + person.id}" ><i
+                        class="fa fa-folder-open" ></i >&nbsp;View</a >
+                  <a class="btn btn-info btn-sm" data-th-href="${'/person/attempt/' + person.id}" >
+                    <i class="fas fa-head-side-virus" ></i >&nbsp;New Attempt</a >
+                </td >
+              </tr >
+            </table >
+          </div >
+        </div >
+        <!--pagination part -->
+        <div class="row" >
+          <div data-th-if="${persons.totalPages}" class="form-group col-md-11 pagination-centered" >
+            <ul class="pagination" >
+              <li data-th-class="${persons.number == 0} ? disabled : page-item" >
+                <a class="page-link"
+                   data-th-href="@{/person/(pageSize=${selectedPageSize}, page=1)}" >&laquo;</a >
+              </li >
+              <li data-th-class="${persons.number == 0} ? disabled : page-item" >
+                <a class="page-link"
+                   data-th-href="@{/person/(pageSize=${selectedPageSize}, page=${persons.number})}" >&larr;</a >
+              </li >
+              <li data-th-class="${persons.number == (page - 1)} ? 'active pointer-disabled' : page-item"
+                  data-th-each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}" >
+                <a class="page-link"
+                   data-th-href="@{/person/(pageSize=${selectedPageSize}, page=${page})}"
+                   data-th-text="${page}" ></a >
+              </li >
+              <li data-th-class="${persons.number + 1 == persons.totalPages} ? disabled : page-item" >
+                <a class="page-link"
+                   data-th-href="@{/person/(pageSize=${selectedPageSize}, page=${persons.number + 2})}" >&rarr;</a >
+              </li >
+              <li data-th-class="${persons.number + 1 == persons.totalPages} ? disabled : page-item" >
+                <a class="page-link"
+                   data-th-href="@{/person/(pageSize=${selectedPageSize}, page=${persons.totalPages})}" >&raquo;</a >
+              </li >
+            </ul >
+          </div >
+        </div >
+      </div >
+    </div >
+  </div >
+</div >
+
+<!--if empty list-->
+<div class="container-fluid" >
+  <div class="row" data-th-if="${ persons.getTotalElements() == 0}" >
+    <div class="col-sm-12" >
+      <div class="alert alert-warning alert-dismissible fade show"
+           role="alert" >
+        <button aria-label="Close" class="close" data-dismiss="alert"
+                type="button" >
+          <span aria-hidden="true" >&times;</span >
+        </button >
+        <h3 class="text-center text-danger" >
+          <strong >There is no Person upto know please add Person to
+                   the system
+                   using add Person button.
+          </strong >
+        </h3 >
+      </div >
+    </div >
+  </div >
+</div >
+
+<!--Show saved person-->
+<div class="container-fluid" >
+  <div class="row" data-th-if="${personDetail!=null}" >
+    <div class="col-sm-12" >
+      <div class="alert alert-success alert-dismissible fade show"
+           role="alert" >
+        <button aria-label="Close" class="close" data-dismiss="alert"
+                type="button" >
+          <span aria-hidden="true" >&times;</span >
+        </button >
+        <div class="container" >
+          <div data-th-replace="~{person/person-detail :: personDetail}" ></div >
+        </div >
+      </div >
+    </div >
+  </div >
+</div >
+
+<!--search Modal -->
+<div class="modal fade bd-example-modal-xl" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+     aria-hidden="true" >
+  <div class="modal-dialog modal-xl" role="document" >
+    <div class="modal-content" >
+      <div class="modal-header text-center" >
+        <h3 class="modal-title " >Person Search</h3 >
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+          <span aria-hidden="true" >&times;</span >
+        </button >
+      </div >
+      <div class="modal-body" >
+        <div class="container" >
+          <div class="row" >
+            <div class="col-6" >
+              <div class="col-4" >
+                <label class="control-label" for="selectParameter" >Parameter :</label >
+              </div >
+              <div class="col-8" >
+                <select id="selectParameter" class="form-control" tabindex="1" required >
+                  <option value="" disabled selected >Please select</option >
+                  <option value="name" >Name</option >
+                  <option value="number" >Number</option >
+                  <option value="nic" >NIC</option >
+                  <option value="mobile" >Mobile</option >
+                </select >
+              </div >
+            </div >
+            <div class="col-6" >
+              <label for="searchInput" >Enter Search Input : </label >
+              <input type="search" id="searchInput" class="form-control" >
+            </div >
+          </div >
+          <div class="form-row" >
+            <!--result content show-->
+            <div class="col-12" id="tableShow" >
+            </div >
+          </div >
+        </div >
+      </div >
+      <div class="modal-footer" >
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" >
+          Close
+        </button >
+      </div >
+    </div >
+  </div >
+</div >
+<input type="hidden" id="searchUrl" data-th-value="${searchUrl}" >
+
+
+<!--footer include-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<!-- data table -->
+<script src="/js/pagination.js" ></script >
+<script src="/js/person.js" ></script >
+</body >
+</html >
