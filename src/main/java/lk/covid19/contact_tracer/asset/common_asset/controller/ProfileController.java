@@ -5,7 +5,7 @@ import lk.covid19.contact_tracer.asset.common_asset.model.PasswordChange;
 import lk.covid19.contact_tracer.asset.user.entity.User;
 import lk.covid19.contact_tracer.asset.user.service.UserService;
 import lk.covid19.contact_tracer.asset.user_details.entity.UserDetails;
-import lk.covid19.contact_tracer.asset.user_details.service.UserDetailsFilesService;
+import lk.covid19.contact_tracer.asset.user_details_files.service.UserDetailsFilesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -1,11 +1,11 @@
-package lk.covid19.contact_tracer.asset.user_details.service.impl;
+package lk.covid19.contact_tracer.asset.user_details_files.service.impl;
 
 import lk.covid19.contact_tracer.asset.common_asset.model.FileInfo;
 import lk.covid19.contact_tracer.asset.user_details.controller.UserDetailsController;
-import lk.covid19.contact_tracer.asset.user_details.dao.UserDetailsFilesDao;
+import lk.covid19.contact_tracer.asset.user_details_files.dao.UserDetailsFilesDao;
 import lk.covid19.contact_tracer.asset.user_details.entity.UserDetails;
-import lk.covid19.contact_tracer.asset.user_details.entity.UserDetailsFiles;
-import lk.covid19.contact_tracer.asset.user_details.service.UserDetailsFilesService;
+import lk.covid19.contact_tracer.asset.user_details_files.entity.UserDetailsFiles;
+import lk.covid19.contact_tracer.asset.user_details_files.service.UserDetailsFilesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;

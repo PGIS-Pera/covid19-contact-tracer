@@ -4,7 +4,7 @@ package lk.covid19.contact_tracer.asset.user_details.service.impl;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.StopActive;
 import lk.covid19.contact_tracer.asset.user_details.dao.UserDetailsDao;
 import lk.covid19.contact_tracer.asset.user_details.entity.UserDetails;
-import lk.covid19.contact_tracer.asset.user_details.service.UserDetailsFilesService;
+import lk.covid19.contact_tracer.asset.user_details_files.service.UserDetailsFilesService;
 import lk.covid19.contact_tracer.asset.user_details.service.UsersDetailsService;
 import lk.covid19.contact_tracer.util.service.CommonService;
 import lombok.RequiredArgsConstructor;

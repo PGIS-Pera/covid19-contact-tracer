@@ -1,5 +1,6 @@
-package lk.covid19.contact_tracer.asset.user_details.entity;
+package lk.covid19.contact_tracer.asset.user_details_files.entity;
 
+import lk.covid19.contact_tracer.asset.user_details.entity.UserDetails;
 import lk.covid19.contact_tracer.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

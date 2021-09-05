@@ -1,5 +1,6 @@
 package lk.covid19.contact_tracer.asset.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.role.entity.Role;
@@ -37,10 +38,12 @@ public class User extends AuditEntity {
   private boolean enabled;
 
   @OneToOne
+  @JoinColumn( name = "user_details_id", nullable = false, foreignKey = @ForeignKey( name =
+      "fk_user_vs_user_details_id" ) )
   private UserDetails userDetails;
 
-  @ManyToOne
-  @JoinColumn( name = "person_id", nullable = false, foreignKey = @ForeignKey( name = "fk_user_vs_person" ) )
+  @OneToOne
+  @JoinColumn( name = "person_id", foreignKey = @ForeignKey( name = "fk_user_vs_person" ) )
   private Person person;
 
   @OneToMany( mappedBy = "user", fetch = FetchType.EAGER )
@@ -49,8 +52,8 @@ public class User extends AuditEntity {
   @ManyToMany( fetch = FetchType.EAGER )
   @Fetch( FetchMode.SUBSELECT )
   @JoinTable( name = "user_role",
-      joinColumns = @JoinColumn( name = "user_id" ),
-      inverseJoinColumns = @JoinColumn( name = "role_id" ) )
+      joinColumns = @JoinColumn( name = "user_id", foreignKey = @ForeignKey( name = "fk_user_role_vs_user" ) ),
+      inverseJoinColumns = @JoinColumn( name = "role_id", foreignKey = @ForeignKey( name = "fk_user_role_vs_user" ) ) )
   private List< Role > roles;
 
 
