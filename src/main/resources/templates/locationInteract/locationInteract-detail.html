@@ -24,36 +24,38 @@
 </div >
 <div class="container-fluid text-center" >
   <div class="container-fluid" data-th-fragment="locationInteractDetail" >
-    <!--Province-->
-    <div class=" form-row  p-3" >
-      <label class="form-label  col-md-3" > Province </label >
-      <p class="display_detail"
-         data-th-text="${locationInteractDetail.gramaNiladhari.dsOffice.district.province.province}" ></p >
-    </div >
-    <!--District-->
-    <div class=" form-row p-3" >
-      <label class="form-label col-md-3 " >
-        District </label >
-      <p class="display_detail"
-         data-th-text="${locationInteractDetail.gramaNiladhari.dsOffice.district.name}" ></p >
-    </div >
-    <!--ds Office-->
-    <div class=" form-row p-3" >
-      <label class="form-label col-md-3 " > Divisional Secretory Office </label >
-      <p class="display_detail"
-         data-th-text="${locationInteractDetail.gramaNiladhari.dsOffice.name}" ></p >
-    </div >
-    <!--GramaNiladhariDivision-->
-    <div class=" form-row p-3" >
-      <label class="col-md-3 form-label" > Gramaniladhari Division Name </label >
-      <p class="display_detail"
-         data-th-text="${locationInteractDetail.gramaNiladhari.name}" ></p >
-    </div >
-    <!--Location Name-->
-    <div class="form-row p-3" >
-      <label class="control-label col-md-3" >Location Name </label >
-      <p class="display_detail"
-         data-th-text="${locationInteractDetail.name}" ></p >
+    <div class="offset-3" >
+      <!--Province-->
+      <div class=" form-row  p-3" >
+        <label class="form-label  col-md-3" > Province : </label >
+        <p class="display_detail"
+           data-th-text="${locationInteractDetail.gramaNiladhari.dsOffice.district.province.province}" ></p >
+      </div >
+      <!--District-->
+      <div class=" form-row p-3" >
+        <label class="form-label col-md-3 " >
+          District : </label >
+        <p class="display_detail"
+           data-th-text="${locationInteractDetail.gramaNiladhari.dsOffice.district.name}" ></p >
+      </div >
+      <!--ds Office-->
+      <div class=" form-row p-3" >
+        <label class="form-label col-md-3 " > Divisional Secretory Office : </label >
+        <p class="display_detail"
+           data-th-text="${locationInteractDetail.gramaNiladhari.dsOffice.name}" ></p >
+      </div >
+      <!--GramaNiladhariDivision-->
+      <div class=" form-row p-3" >
+        <label class="col-md-3 form-label" > Gramaniladhari Division Name : </label >
+        <p class="display_detail"
+           data-th-text="${locationInteractDetail.gramaNiladhari.name}" ></p >
+      </div >
+      <!--Location Name-->
+      <div class="form-row p-3" >
+        <label class="control-label col-md-3" >Location Name : </label >
+        <p class="display_detail"
+           data-th-text="${locationInteractDetail.name}" ></p >
+      </div >
     </div >
   </div >
   <!--  todo need to show patient count and date time within last 10 days-->
