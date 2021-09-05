@@ -21,34 +21,7 @@
           <div class="dropdown-menu" aria-labelledby="general" >
             <a data-sec-authorize="hasAnyAuthority('ROLE_GUARD')" class="dropdown-item"
                href="/category" >Category Management</a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_SUPERINTENDENT', 'ROLE_ASSISTANT_SUPERINTENDENT')"
-               class="dropdown-item" href="/chandler" >Chandler Management</a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_SUPERINTENDENT', 'ROLE_ASSISTANT_SUPERINTENDENT')"
-               class="dropdown-item" href="/chandlerLicense" >Chandler License Management</a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_GUARD')" class="dropdown-item"
-               href="/item" >Item Management</a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_SHIP_AGENT', 'ROLE_SUPERINTENDENT')"
-               class="dropdown-item" href="/payment" >Payment Management</a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_SUPERINTENDENT')"
-               class="dropdown-item" href="/role" >Role Management</a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT_SUPERINTENDENT')"
-               class="dropdown-item" href="/shipAgent" >Ship Agent Management</a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_ADMIN')"
-               class="dropdown-item" href="/user" >User Management</a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_SUPERINTENDENT', 'ROLE_ASSISTANT_SUPERINTENDENT')"
-               class="dropdown-item" href="/userDetails" >User Details Management</a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_INSPECTOR')"
-               class="dropdown-item" href="/vesselArrivalHistory" >Vessel Arrival History Management</a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_INSPECTOR')"
-               class="dropdown-item" href="/vessel" >Vessel Management</a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_SHIP_AGENT')"
-               class="dropdown-item" href="/vesselOrder" >Vessel Order Management</a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_CHANDLER')"
-               class="dropdown-item" href="/vesselOrderItemBid" >Vessel Order bid Management</a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_SUPERINTENDENT', 'ROLE_ASSISTANT_SUPERINTENDENT')"
-               class="dropdown-item" href="/vesselOrder" >Vessel Order Approval Management</a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_INSPECTOR')" class="dropdown-item"
-               href="/warehouseBlock" >Warehouse Block Management</a >
+
           </div >
         </li >
         <li class="nav-item dropdown ml-2" >
@@ -58,35 +31,7 @@
           <div class="dropdown-menu" aria-labelledby="transaction" >
             <a data-sec-authorize="hasAnyAuthority('ROLE_GUARD')" class="dropdown-item"
                href="/category/add" >Add Category </a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT_SUPERINTENDENT')"
-               class="dropdown-item" href="/chandler/add" >Add Chandler </a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_ASSISTANT_SUPERINTENDENT')"
-               class="dropdown-item" href="/chandlerLicense" >Add Chandler License </a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_GUARD')" class="dropdown-item"
-               href="/item/add" >Add Item </a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_SHIP_AGENT')"
-               class="dropdown-item" href="/payment" >Add Payment </a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_ADMIN')"
-               class="dropdown-item" href="/role/add" >Add Role </a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_ADMIN','ASSISTANT_SUPERINTENDENT')"
-               class="dropdown-item"
-               href="/shipAgent/add" >Add Ship Agent </a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_ADMIN')"
-               class="dropdown-item" href="/user/add" >Add User </a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_SUPERINTENDENT', 'ROLE_ASSISTANT_SUPERINTENDENT')"
-               class="dropdown-item" href="/userDetails/add" >Add User Details </a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_INSPECTOR')"
-               class="dropdown-item" href="/vesselArrivalHistory/arrival" >Add Vessel Arrival History </a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_INSPECTOR')"
-               class="dropdown-item" href="/vessel/add" >Add Vessel </a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_SHIP_AGENT')" class="dropdown-item"
-               href="/vesselOrder/add" >Add Vessel Order </a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_SUPERINTENDENT')" class="dropdown-item"
-               href="/vesselOrderItemApproval" >Add Vessel Order Item Approval</a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_CHANDLER')" class="dropdown-item"
-               href="/vesselOrderItemBid" >Add Vessel Order Item Bid</a >
-            <a data-sec-authorize="hasAnyAuthority('ROLE_INSPECTOR')" class="dropdown-item"
-               href="/warehouseBlock/add" >Add Warehouse Block </a >
+
           </div >
         </li >
         <li class="nav-item dropdown ml-2" >
@@ -96,9 +41,6 @@
              aria-expanded="false" >Report</a >
           <div class="dropdown-menu" aria-labelledby="report" >
             <a class="dropdown-item" href="/report/chandlers" >Chandlers Details </a >
-            <a class="dropdown-item" href="/report/shipAgent" >Ship Agent Details</a >
-            <a class="dropdown-item" href="/report/vessel" >Vessel Details</a >
-            <a class="dropdown-item" href="/report/vesselOrder" >Vessel Order Details</a >
           </div >
         </li >
       </ul >

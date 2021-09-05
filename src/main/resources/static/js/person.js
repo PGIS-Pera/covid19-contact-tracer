@@ -138,16 +138,13 @@ function gramaNiladhariNameSet(type_value) {
     })
 }
 
-
 $("#nic").keyup(function () {
     let nic = $(this).val();
-    console.log(typeof nic)
     if (nicRegex.test(nic)) {
         $.ajax({
             type: 'GET',
             url: $('#patientNic').val() + nic,
             success: function (resp) {
-                console.log(resp)
                 popUpDataSet(resp);
             },
             error: function (err) {
@@ -158,26 +155,51 @@ $("#nic").keyup(function () {
 });
 
 function popUpDataSet(resp) {
+    console.log(resp.id)
     if (resp) {
         swal("Write something here:", {
             title: "Are you sure with this nic \n" + $("#nic").val() + " ?",
-            text: "This person is already on the system, automatically redirect you to add new attempt page!",
+            text: "This person is already on the system, please choose what you want to !",
             icon: "warning",
             dangerMode: true,
-            buttons: true,
-            //  timer: 6000,
-            content: {
-                element: "input",
-                attributes: {
-                    id: "person_id",
-                    type: "text",
-                    value: resp.id,
-                    hidden: "hidden",
+            closeOnClickOutside: false,
+            buttons: {
+                cancel: "Cancel",
+                catch: {
+                    text: "Edit Person Detail",
+                    value: "edit",
                 },
+                defeat: {
+                    text: "New Attempt",
+                    value: "new_attempt"
+                },
+            },
+        }).then((value) => {
+            switch (value) {
+                case "new_attempt":
+                    swal({
+                        title: "Gotcha!",
+                        text: "Will direct to new attempt add page ",
+                        icon: "success",
+                        className: "swal-background",
+                        buttons: false,
+                        timer: 3000,
+                    });
+                    self.location = location.protocol + "//" + location.host + "/attempt/add/" + resp.id;
+                    break;
+
+                case "edit":
+                    swal({
+                        title: "Gotcha!",
+                        text: "Will direct to edit person detail ",
+                        icon: "success",
+                        className: "swal-background",
+                        buttons: false,
+                        timer: 3000,
+                    });
+                    self.location = location.protocol + "//" + location.host + "/person/edit/" + resp.id;
+                    break;
             }
-        }).then((x) => {
-            console.log(x)
-            self.location = location.protocol + "//" + location.host + "/person/edit/" + $("#person_id").val();
         });
     }
 }

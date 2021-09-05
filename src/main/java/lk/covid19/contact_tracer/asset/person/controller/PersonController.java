@@ -188,7 +188,6 @@ public class PersonController {
   @GetMapping( "/getPerson/{nic}" )
   @ResponseBody
   public MappingJacksonValue findByNic(@RequestParam( "nic" ) String nic) {
-    System.out.println(nic);
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(personService.findByNic(nic));
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter

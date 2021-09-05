@@ -146,13 +146,9 @@
             </div >
             <div class="col-md-8" >
               <input type="text"  id="gramaNiladhariOne" data-th-value="${addStatus==false ? person.gramaNiladhari.name :''}" readonly class="form-control" >
-              <input list="browsers" data-th-field="*{gramaNiladhari}" class="form-control" >
+              <input list="browsers" data-th-field="*{gramaNiladhari}" class="form-control"
+                     placeholder="Please enter gramaniladari division name" >
               <datalist id="browsers" >
-                <option value="Edge" ></option >
-                <option value="Firefox" ></option >
-                <option value="Chrome" ></option >
-                <option value="Opera" ></option >
-                <option value="Safari" ></option >
               </datalist >
               <span class="form-text text-muted bg-warring" id="gramaNiladhariMessage" ></span >
             </div >
