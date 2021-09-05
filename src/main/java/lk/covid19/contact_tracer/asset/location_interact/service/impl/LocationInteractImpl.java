@@ -17,7 +17,7 @@ import java.util.List;
 
 
 @Service
-@CacheConfig( cacheNames = "visitedPlace" )
+@CacheConfig( cacheNames = "locationInteract" )
 @RequiredArgsConstructor
 public class LocationInteractImpl implements LocationInteractService {
   private final LocationInteractDao locationInteractDao;
@@ -33,11 +33,11 @@ public class LocationInteractImpl implements LocationInteractService {
     return locationInteractDao.getById(id);
   }
 
-  @Caching( evict = {@CacheEvict( value = "district", allEntries = true )},
-      put = {@CachePut( value = "district", key = "#district.id" )} )
-  public LocationInteract persist(LocationInteract district) {
-    district.setName(commonService.stringCapitalize(district.getName()));
-    return locationInteractDao.save(district);
+  @Caching( evict = {@CacheEvict( value = "locationInteract", allEntries = true )},
+      put = {@CachePut( value = "locationInteract", key = "#locationInteract.id" )} )
+  public LocationInteract persist(LocationInteract locationInteract) {
+    locationInteract.setName(commonService.stringCapitalize(locationInteract.getName()));
+    return locationInteractDao.save(locationInteract);
   }
 
   @CacheEvict( allEntries = true )
@@ -47,13 +47,13 @@ public class LocationInteractImpl implements LocationInteractService {
   }
 
   @Cacheable
-  public List< LocationInteract > search(LocationInteract district) {
+  public List< LocationInteract > search(LocationInteract locationInteract) {
     ExampleMatcher matcher = ExampleMatcher
         .matching()
         .withIgnoreCase()
         .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-    Example< LocationInteract > districtExample = Example.of(district, matcher);
-    return locationInteractDao.findAll(districtExample);
+    Example< LocationInteract > locationInteractExample = Example.of(locationInteract, matcher);
+    return locationInteractDao.findAll(locationInteractExample);
   }
 
   @Cacheable

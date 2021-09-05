@@ -25,10 +25,10 @@ import java.time.LocalDateTime;
 public class PersonLocationInteractTime extends AuditEntity {
 
   @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm" )
-  private LocalDateTime reachAt;
+  private LocalDateTime arrivalAt;
 
   @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm" )
-  private LocalDateTime outAt;
+  private LocalDateTime leaveAt;
 
   @ManyToOne
   @JoinColumn( name = "person_id", nullable = false, foreignKey = @ForeignKey( name =

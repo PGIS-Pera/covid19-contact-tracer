@@ -17,12 +17,12 @@
     <div class="col" >
       <h4 class="  text-dark text-center" >
         <strong >
-          <span data-th-text="${patientDetail.name}" ></span >
+          <span data-th-text="${personDetail.name}" ></span >
         </strong >
       </h4 >
     </div >
     <div class="col" >
-      <a class="btn btn-primary" data-th-href="${'/person'}" >
+      <a class="btn btn-success" data-th-href="${'/person'}" >
         <i class="fa fa-list" ></i >&nbsp; View List
       </a >
     </div >
@@ -30,7 +30,7 @@
 </div >
 <!--Form Content - start -->
 <div class="container-fluid" >
-  <div class="form-row" >
+  <div class="form-row" data-th-fragment="personDetail" >
     <!--Left Side-->
     <div class="col-md-6 col-sm-6 " >
       <!--code-->
@@ -39,7 +39,7 @@
           <label class="control-label" for="code" >Code:</label >
         </div >
         <div class="col-md-8" >
-          <p class="form-control" data-th-text="${patientDetail.code}" id="code" ></p >
+          <p class="form-control" data-th-text="${personDetail.code}" id="code" ></p >
         </div >
       </div >
       <!--Nic-->
@@ -48,7 +48,7 @@
           <label class="control-label" for="nic" >NIC No :</label >
         </div >
         <div class="col-md-8" >
-          <p class="form-control" data-th-text="${patientDetail.nic}" id="nic" ></p >
+          <p class="form-control" data-th-text="${personDetail.nic}" id="nic" ></p >
         </div >
       </div >
       <!--Name-->
@@ -57,7 +57,7 @@
           <label class="control-label" for="name" >Name :</label >
         </div >
         <div class="col-md-8" >
-          <p class="form-control" data-th-text="${patientDetail.name}" id="name" ></p >
+          <p class="form-control" data-th-text="${personDetail.name}" id="name" ></p >
         </div >
       </div >
       <!--Gender-->
@@ -66,7 +66,7 @@
           <label class="control-label" for="gender" >Gender :</label >
         </div >
         <div class="col-md-8" >
-          <p class="form-control" data-th-text="${patientDetail.gender.gender}" id="gender" ></p >
+          <p class="form-control" data-th-text="${personDetail.gender.gender}" id="gender" ></p >
         </div >
       </div >
       <!--Age-->
@@ -75,37 +75,37 @@
           <label class="control-label" for="age" >Age :</label >
         </div >
         <div class="col-md-8" >
-          <p class="form-control" data-th-text="${patientDetail.age}" id="age" ></p >
-        </div >
-      </div >
-      <!--Dead-->
-      <div class="form-row text-md-right text-sm-left" data-th-if="${addStatus==false}" >
-        <div class="col-md-4" >
-          <label class="control-label" for="liveDead" >Live Or Dead :</label >
-        </div >
-        <div class="col-md-8" >
-          <p class="form-control" data-th-text="${patientDetail.deadLive.deadLive}" id="liveDead" ></p >
-        </div >
-      </div >
-      <!--Police Station-->
-      <div class="form-row text-md-right text-sm-left" >
-        <div class="col-md-4" >
-          <label class="control-label" for="policeStation" >Police Station :</label >
-        </div >
-        <div class="col-md-8" >
-          <p class="form-control" data-th-text="${patientDetail.policeStation.name}" id="policeStation" ></p >
+          <p class="form-control" data-th-text="${personDetail.age}" id="age" ></p >
         </div >
       </div >
     </div >
     <!--Right Side-->
     <div class="col-md-6 col-sm-6 " >
+      <!--Person Status-->
+      <div class="form-row text-md-right text-sm-left" >
+        <div class="col-md-4" >
+          <label class="control-label" for="liveDead" >Person Status :</label >
+        </div >
+        <div class="col-md-8" >
+          <p class="form-control" data-th-text="${personDetail.personStatus.personStatus}" id="liveDead" ></p >
+        </div >
+      </div >
+      <!--Gramaniladhari Division Name-->
+      <div class="form-row text-md-right text-sm-left" >
+        <div class="col-md-4" >
+          <label class="control-label" for="gramaNiladhari" >Gramaniladhari Division Name :</label >
+        </div >
+        <div class="col-md-8" >
+          <p class="form-control" data-th-text="${personDetail.gramaNiladhari.name}" id="gramaNiladhari" ></p >
+        </div >
+      </div >
       <!--Address-->
       <div class="form-row text-md-right text-sm-left" >
         <div class="col-md-4" >
           <label class="control-label" for="address" >Address :</label >
         </div >
         <div class="col-md-8" >
-          <p class="form-control" data-th-utext="${patientDetail.address}" id="address" ></p >
+          <p class="form-control" data-th-utext="${personDetail.address}" id="address" ></p >
         </div >
       </div >
       <!--Mobile Number One-->
@@ -114,16 +114,7 @@
           <label class="control-label" for="mobileOne" >Mobile :</label >
         </div >
         <div class="col-md-8" >
-          <p class="form-control" data-th-text="${patientDetail.mobile}" id="mobileOne" ></p >
-        </div >
-      </div >
-      <!--Identified Date-->
-      <div class="form-row text-md-right text-sm-left" >
-        <div class="col-md-4" >
-          <label class="control-label" for="identifiedDate" >Identified Date :</label >
-        </div >
-        <div class="col-md-8" >
-          <p class="form-control" data-th-text="${patientDetail.identifiedDate}" id="identifiedDate" ></p >
+          <p class="form-control" data-th-text="${personDetail.mobile}" id="mobileOne" ></p >
         </div >
       </div >
       <!--created at-->
@@ -132,7 +123,8 @@
           <label class="control-label" for="createdAt" >Created At :</label >
         </div >
         <div class="col-md-8" >
-          <p class="form-control" data-th-text="${patientDetail.person.createdAt}" id="createdAt" ></p >
+          <p class="form-control" data-th-text="${#temporals.format(personDetail.createdAt, 'dd-MM-yyyy HH:mm')}"
+             id="createdAt" ></p >
         </div >
       </div >
       <!--Created by-->
@@ -141,30 +133,42 @@
           <label class="control-label" for="createdBy" >Created By :</label >
         </div >
         <div class="col-md-8" >
-          <p class="form-control" data-th-text="${patientDetail.createdBy}" id="createdBy" ></p >
+          <p class="form-control" data-th-text="${personDetail.createdBy}" id="createdBy" ></p >
         </div >
       </div >
     </div >
     <!-- previous diagnosed list-->
     <div class="form-group offset-md-3 col-md-6 col-sm-12 text-center flex-column " >
       <span class="h4 text-center" >Previous Diagnosed Attempts  </span >
-      <ul class="list-group" >
-        <li class="list-group-item " data-th-each="attempt , index : ${patientDetail.attempts}" >
+      <!--list have value -->
+      <ul data-th-if="${not #lists.isEmpty(personDetail.attempts)}" class="list-group" >
+        <li class="list-group-item " data-th-each="attempt , index : ${personDetail.attempts}" >
           <span class="mr-2" data-th-text="${index.count}" ></span >:
           <span data-th-text="${{attempt.identifiedDate}}" ></span >
         </li >
       </ul >
-    </div >
-    <!--Button-->
-    <div class="form-group col-md-12 col-sm-12 text-left flex-column " >
-      <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
-        <a data-th-href="${'/person'}" >
-          <button class="btn btn-secondary" tabindex="10" type="button" >
-            <i class="fa fa-arrow-circle-left " style="font-size: 20px" ></i >&nbsp; &nbsp;Back
-          </button >
-        </a >
+      <!--list have no value-->
+      <div class="container-fluid" >
+        <div class="row" data-th-if="${#lists.isEmpty(personDetail.attempts)}" >
+          <div class="col-sm-12" >
+            <div class="alert alert-warning alert-dismissible fade show"
+                 role="alert" >
+              <h3 class="text-center text-danger" >
+                <strong >There is no Record.
+                </strong >
+              </h3 >
+            </div >
+          </div >
+        </div >
       </div >
     </div >
+  </div >
+  <!--Button-->
+  <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
+    <!--Back Button-->
+    <a class="btn btn-dark" data-th-href="${'/person'}" tabindex="10" >
+      <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
+    </a >
   </div >
 </div >
 <!--footer include-->

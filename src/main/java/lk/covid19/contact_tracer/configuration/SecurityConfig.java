@@ -74,16 +74,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http.csrf().disable();
+/*    http.csrf().disable();
     http.authorizeRequests().antMatchers("/").permitAll();
-    /*http
+    */
+    http
         .authorizeRequests(
             authorizeRequests ->
                 authorizeRequests
                     .antMatchers(ALL_PERMIT_URL).permitAll()
                     .antMatchers("/category/**").hasAnyRole("GUARD")
                     .antMatchers("/actuator/**").hasAnyRole("ADMIN")
-
                     .anyRequest()
                     .authenticated())
         // Login form
@@ -128,7 +128,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
         .headers()
         .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
-*/
   }
 }
 

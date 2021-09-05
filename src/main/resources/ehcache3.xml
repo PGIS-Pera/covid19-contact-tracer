@@ -4,39 +4,15 @@
         xsi:schemaLocation="http://www.ehcache.org/v3 https://www.ehcache.org/schema/ehcache-core-3.0.xsd
 							http://www.ehcache.org/v3/jsr107 https://www.ehcache.org/schema/ehcache-107-ext-3.0.xsd">
 
-    <!--1. userDetails-->
-    <cache alias="userDetails">
+    <!--1. attempt-->
+    <cache alias="attempt">
         <expiry>
             <ttl unit="seconds">60000</ttl>
         </expiry>
         <heap unit="entries">4000</heap>
         <jsr107:mbeans enable-statistics="true"/>
     </cache>
-    <!--2. user-->
-    <cache alias="user">
-        <expiry>
-            <ttl unit="seconds">6000</ttl>
-        </expiry>
-        <heap unit="entries">400</heap>
-        <jsr107:mbeans enable-statistics="true"/>
-    </cache>
-    <!--3. role-->
-    <cache alias="role">
-        <expiry>
-            <ttl unit="seconds">6000</ttl>
-        </expiry>
-        <heap unit="entries">400</heap>
-        <jsr107:mbeans enable-statistics="true"/>
-    </cache>
-    <!--4. person-->
-    <cache alias="person">
-        <expiry>
-            <ttl unit="seconds">60000</ttl>
-        </expiry>
-        <heap unit="entries">20000</heap>
-        <jsr107:mbeans enable-statistics="true"/>
-    </cache>
-    <!--5. district-->
+    <!--2. district-->
     <cache alias="district">
         <expiry>
             <ttl unit="seconds">60000</ttl>
@@ -44,7 +20,15 @@
         <heap unit="entries">25</heap>
         <jsr107:mbeans enable-statistics="true"/>
     </cache>
-    <!--6. gramaniladhari-->
+    <!--3. dsOffice-->
+    <cache alias="dsOffice">
+        <expiry>
+            <ttl unit="seconds">60000</ttl>
+        </expiry>
+        <heap unit="entries">14022</heap>
+        <jsr107:mbeans enable-statistics="true"/>
+    </cache>
+    <!--4. gramaniladhari-->
     <cache alias="gramaNiladhari">
         <expiry>
             <ttl unit="seconds">60000</ttl>
@@ -52,12 +36,52 @@
         <heap unit="entries">14022</heap>
         <jsr107:mbeans enable-statistics="true"/>
     </cache>
-    <!--7. dsOffice-->
-    <cache alias="dsOffice">
+    <!--5. locationInteract-->
+    <cache alias="locationInteract">
         <expiry>
             <ttl unit="seconds">60000</ttl>
         </expiry>
         <heap unit="entries">14022</heap>
+        <jsr107:mbeans enable-statistics="true"/>
+    </cache>
+    <!--6. person-->
+    <cache alias="person">
+        <expiry>
+            <ttl unit="seconds">60000</ttl>
+        </expiry>
+        <heap unit="entries">50000</heap>
+        <jsr107:mbeans enable-statistics="true"/>
+    </cache>
+    <!--7. personLocationInteractTime-->
+    <cache alias="personLocationInteractTime">
+        <expiry>
+            <ttl unit="seconds">60000</ttl>
+        </expiry>
+        <heap unit="entries">50000</heap>
+        <jsr107:mbeans enable-statistics="true"/>
+    </cache>
+    <!--8. role-->
+    <cache alias="role">
+        <expiry>
+            <ttl unit="seconds">6000</ttl>
+        </expiry>
+        <heap unit="entries">400</heap>
+        <jsr107:mbeans enable-statistics="true"/>
+    </cache>
+    <!--9. user-->
+    <cache alias="user">
+        <expiry>
+            <ttl unit="seconds">6000</ttl>
+        </expiry>
+        <heap unit="entries">400</heap>
+        <jsr107:mbeans enable-statistics="true"/>
+    </cache>
+    <!--10. userDetails-->
+    <cache alias="userDetails">
+        <expiry>
+            <ttl unit="seconds">60000</ttl>
+        </expiry>
+        <heap unit="entries">4000</heap>
         <jsr107:mbeans enable-statistics="true"/>
     </cache>
 

@@ -53,7 +53,7 @@ public class User extends AuditEntity {
   @Fetch( FetchMode.SUBSELECT )
   @JoinTable( name = "user_role",
       joinColumns = @JoinColumn( name = "user_id", foreignKey = @ForeignKey( name = "fk_user_role_vs_user" ) ),
-      inverseJoinColumns = @JoinColumn( name = "role_id", foreignKey = @ForeignKey( name = "fk_user_role_vs_user" ) ) )
+      inverseJoinColumns = @JoinColumn( name = "role_id", foreignKey = @ForeignKey( name = "fk_user_role_vs_role" ) ) )
   private List< Role > roles;
 
 

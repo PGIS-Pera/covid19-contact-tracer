@@ -26,9 +26,6 @@ public class Attempt extends AuditEntity {
 
   private String remark;
 
-  @DateTimeFormat( pattern = "yyyy-MM-dd" )
-  private Date createdDate;
-
   @ManyToOne
   @JoinColumn( name = "person_id", nullable = false, foreignKey = @ForeignKey( name = "fk_attempt_vs_person" ) )
   private Person person;

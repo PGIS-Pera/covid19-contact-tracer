@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import lk.covid19.contact_tracer.asset.attempt.entity.Attempt;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.Gender;
 import lk.covid19.contact_tracer.asset.grama_niladhari.entity.GramaNiladhari;
+import lk.covid19.contact_tracer.asset.location_interact.entity.LocationInteract;
+import lk.covid19.contact_tracer.asset.location_interact.service.impl.LocationInteractImpl;
 import lk.covid19.contact_tracer.asset.person.entity.enums.PersonStatus;
+import lk.covid19.contact_tracer.asset.person_location_interact_time.entity.PersonLocationInteractTime;
 import lk.covid19.contact_tracer.util.audit.AuditEntity;
 import lk.covid19.contact_tracer.util.service.DateTimeAgeService;
 import lombok.*;
@@ -66,6 +69,10 @@ public class Person extends AuditEntity {
   @OneToMany( mappedBy = "person", cascade = {CascadeType.MERGE, CascadeType.PERSIST} )
   @ToString.Exclude
   private List< Attempt > attempts;
+
+  @OneToMany( mappedBy = "person", cascade = {CascadeType.MERGE, CascadeType.PERSIST} )
+  @ToString.Exclude
+  private List< PersonLocationInteractTime > personLocationInteractTimes;
 
   @Transient
   private String age;

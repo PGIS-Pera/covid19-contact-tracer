@@ -17,6 +17,7 @@ import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.person.entity.enums.PersonStatus;
 import lk.covid19.contact_tracer.asset.person.service.PersonService;
 import lk.covid19.contact_tracer.util.service.CommonService;
+import lk.covid19.contact_tracer.util.service.DateTimeAgeService;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.hpsf.SummaryInformation;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -56,6 +57,7 @@ public class PersonController {
   private final PersonService personService;
   private final CommonService commonService;
   private final GramaNiladhariService gramaNiladhariService;
+  private final DateTimeAgeService dateTimeAgeService;
 
   @GetMapping
   public ModelAndView showPersonsPage(@RequestParam( "pageSize" ) Optional< Integer > pageSize,
@@ -98,6 +100,7 @@ public class PersonController {
   @GetMapping( "/{id}" )
   public String personView(@PathVariable( "id" ) Integer id, Model model) {
     Person person = personService.findById(id);
+    person.setAge(dateTimeAgeService.getDateDifference(person.getDateOfBirth(), LocalDate.now()));
     model.addAttribute("personDetail", person);
     model.addAttribute("addStatus", false);
     return "person/person-detail";
@@ -106,6 +109,7 @@ public class PersonController {
   @GetMapping( "/edit/{id}" )
   public String editPersonForm(@PathVariable( "id" ) Integer id, Model model) {
     Person person = personService.findById(id);
+    person.setAge(dateTimeAgeService.getDateDifference(person.getDateOfBirth(), LocalDate.now()));
     model.addAttribute("person", person);
     model.addAttribute("addStatus", false);
     return commonThings(model);
@@ -146,11 +150,13 @@ public class PersonController {
   @GetMapping( "/attempt/{id}" )
   public String addNewAttempt(@PathVariable Integer id, Model model) {
     //todo need to manage this
-    model.addAttribute("personDetail", personService.findById(id));
+    Person person = personService.findById(id);
+    person.setAge(dateTimeAgeService.getDateDifference(person.getDateOfBirth(), LocalDate.now()));
+    model.addAttribute("personDetail", person);
     model.addAttribute("gramaNiladhariSearchUrl", MvcUriComponentsBuilder
         .fromMethodName(GramaNiladhariController.class, "searchOne", "")
         .toUriString());
-    model.addAttribute("searchUrl", MvcUriComponentsBuilder
+    model.addAttribute("locationInteractUrl", MvcUriComponentsBuilder
         .fromMethodName(LocationInteractController.class, "search", new LocationInteract())
         .toUriString());
     return "attempt/newAttempt";

@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @Service
-@CacheConfig( cacheNames = "patientVisitedPlaceTime" )
+@CacheConfig( cacheNames = "personLocationInteractTime" )
 @RequiredArgsConstructor
 public class PersonLocationInteractTimeServiceImpl implements PersonLocationInteractTimeService {
   private final PersonLocationInteractTimeDao personLocationInteractTimeDao;
@@ -28,17 +28,17 @@ public class PersonLocationInteractTimeServiceImpl implements PersonLocationInte
     return personLocationInteractTimeDao.getById(id);
   }
 
-  @Caching( evict = {@CacheEvict( value = "patientVisitedPlaceTime", allEntries = true )},
-      put = {@CachePut( value = "patientVisitedPlaceTime", key = "#personLocationInteractTime.id" )} )
+  @Caching( evict = {@CacheEvict( value = "personLocationInteractTime", allEntries = true )},
+      put = {@CachePut( value = "personLocationInteractTime", key = "#personLocationInteractTime.id" )} )
   public PersonLocationInteractTime persist(PersonLocationInteractTime personLocationInteractTime) {
-    // patientVisitedPlaceTime.setName(commonService.stringCapitalize(patientVisitedPlaceTime.getName()));
+    // personLocationInteractTime.setName(commonService.stringCapitalize(personLocationInteractTime.getName()));
     return personLocationInteractTimeDao.save(personLocationInteractTime);
   }
 
-  @Caching( evict = {@CacheEvict( value = "patientVisitedPlaceTime", allEntries = true )},
-      put = {@CachePut( value = "patientVisitedPlaceTime", key = "'#personLocationInteractTime.id'" )} )
+  @Caching( evict = {@CacheEvict( value = "personLocationInteractTime", allEntries = true )},
+      put = {@CachePut( value = "personLocationInteractTime", key = "'#personLocationInteractTime.id'" )} )
   public List< PersonLocationInteractTime > persistAll(List< PersonLocationInteractTime > personLocationInteractTimes) {
-    // patientVisitedPlaceTime.setName(commonService.stringCapitalize(patientVisitedPlaceTime.getName()));
+    // personLocationInteractTime.setName(commonService.stringCapitalize(personLocationInteractTime.getName()));
     return personLocationInteractTimeDao.saveAll(personLocationInteractTimes);
   }
 

@@ -20,7 +20,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@CacheConfig( cacheNames = "patient" )
+@CacheConfig( cacheNames = "person" )
 public class PersonServiceImpl implements PersonService {
 
   private final PersonDao personDao;
@@ -42,11 +42,11 @@ public class PersonServiceImpl implements PersonService {
     return personDao.getById(id);
   }
 
-  @Caching( evict = {@CacheEvict( value = "patient", allEntries = true )},
-      put = {@CachePut( value = "patient", key = "#person.id" )} )
+  @Caching( evict = {@CacheEvict( value = "person", allEntries = true )},
+      put = {@CachePut( value = "person", key = "#person.id" )} )
   public Person persist(Person person) {
     if ( person.getId() == null ) {
-      patientPersist(person);
+      personPersist(person);
     }
     person.setMobile(person.getMobile() != null ?
                          commonService.phoneNumberLengthValidator(person.getMobile()) : null);
@@ -54,13 +54,13 @@ public class PersonServiceImpl implements PersonService {
     return personDao.save(person);
   }
 
-  @Caching( evict = {@CacheEvict( value = "patient", allEntries = true )},
-      put = {@CachePut( value = "patient", key = "'#patient.id'" )} )
+  @Caching( evict = {@CacheEvict( value = "person", allEntries = true )},
+      put = {@CachePut( value = "person", key = "'#person.id'" )} )
   public List< Person > persistList(List< Person > person) {
     return personDao.saveAll(person);
   }
 
-  private void patientPersist(Person person) {
+  private void personPersist(Person person) {
     person.setPersonStatus(PersonStatus.GENERAL);
     if ( personDao.findFirstByOrderByIdDesc() == null ) {
       person.setCode("LKCP" + commonService.numberAutoGen(null).toString());
@@ -81,8 +81,8 @@ public class PersonServiceImpl implements PersonService {
         .matching()
         .withIgnoreCase()
         .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-    Example< Person > patientExample = Example.of(person, matcher);
-    return personDao.findAll(patientExample);
+    Example< Person > personExample = Example.of(person, matcher);
+    return personDao.findAll(personExample);
   }
 
   @Cacheable
