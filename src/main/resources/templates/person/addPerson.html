@@ -142,12 +142,14 @@
           <!--Gramaniladhari division-->
           <div class="form-row text-md-right text-sm-left" >
             <div class="col-md-4" >
-              <label class="control-label" for="mobileOne" >Gramaniladhari Division :</label >
+              <label class="control-label" data-th-for="${'gramaNiladhari'}" >Gramaniladhari Division :</label >
             </div >
             <div class="col-md-8" >
-              <input type="text"  id="gramaNiladhariOne" data-th-value="${addStatus==false ? person.gramaNiladhari.name :''}" readonly class="form-control" >
-                           <input list="browsers" data-th-field="*{gramaNiladhari}" class="form-control"
-                                  placeholder="Please enter gramaniladari division name" >
+              <input type="text" id="gramaNiladhariOne"
+                     data-th-value="${addStatus==false ? person.gramaNiladhari.name :''}" readonly
+                     class="form-control" disabled >
+              <input list="browsers" data-th-field="*{gramaNiladhari}" class="form-control"
+                     placeholder="Please enter gramaniladari division name" >
               <datalist id="browsers" >
               </datalist >
               <span class="form-text text-muted bg-warring" id="gramaNiladhariMessage" ></span >
@@ -205,16 +207,16 @@
       <!-- button area-->
       <div class="form-group col-md-12 col-sm-12 text-center flex-column mt-3" >
         <!--Back Button-->
-        <a class="btn btn-dark" data-th-href="${'/person'}" tabindex="10" >
+        <a class="btn btn-dark" data-th-href="${'/person'}" >
           <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
         </a >
         <!--Save Button-->
-        <button class="btn btn-success ml-md-5" tabindex="8" type="submit" >
+        <button class="btn btn-success ml-md-5" type="submit" >
           <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;
           <span data-th-text="${addStatus==true?'Save': 'Update'}" id="submit" ></span >
         </button >
         <!--Cancel Button-->
-        <button class="btn btn-warning ml-md-5" tabindex="9" type="reset" >
+        <button class="btn btn-warning ml-md-5" type="reset" >
           <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
         </button >
       </div >

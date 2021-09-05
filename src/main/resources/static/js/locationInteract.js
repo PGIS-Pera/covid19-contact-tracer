@@ -13,8 +13,6 @@ let html_first_part = `<table class="table table-hover table-striped" id="myTabl
                 <tr >
                   <th >Index</th >
                   <th >Name</th >
-                  <th >Number</th >
-                  <th >Ds Office</th >
                   <th >Modify</th >
                 </tr >
                 </thead >
@@ -30,54 +28,30 @@ let html_no_alert = `<div class="row" >
                              <span aria-hidden="true" >&times;</span >
                            </button >
                            <h3 class="text-center text-danger" >
-                             <strong >There is no person according to your provided details.
+                             <strong >There is no location according to your provided details.
                              </strong >
                            </h3 >
                          </div >
                        </div >
                      </div >`;
 
-$("#selectParameter").change(function () {
-    $("#tableShow").text('');
-    $("#searchInput").val('');
-})
 
 $("#searchInput").keyup(function () {
     let url = $("#searchUrl").val();
-    let select_parameter_value = $("#selectParameter").val();
     let enter_value = $(this).val();
-    let gramaNiladhari = {};
+    if (enter_value.length >= 3) {
+        let locationInteract = {};
+        locationInteract.name = enter_value;
 
-    if (select_parameter_value === null) {
-        swal({
-            title: "Time to take attention !",
-            icon: "warning",
-            text: `Please Select Search Parameter before enter value. `,
-        });
-        $(this).val('');
-    }
-
-    if (enter_value.length >= 3 && select_parameter_value.length > 0) {
-        if (select_parameter_value === "name") {
-            gramaNiladhari.name = enter_value;
-        }
-        if (select_parameter_value === "number") {
-            gramaNiladhari.number = enter_value;
-        }
-
-        $.post(url, gramaNiladhari,
+        $.post(url, locationInteract,
             function (data, status) {
                 $("#tableShow").text('');
-                console.log(status)
-                console.log(data)
                 if (data.length > 0) {
                     for (let i = 0; i < data.length; i++) {
                         html_middle_part = html_middle_part + `
                     <tr>
                       <th > ${i + 1}</th >
                       <th > ${data[i].name}</th >
-                      <th > ${data[i].number}</th >
-                      <th > </th >
                       <th >
                           <a class="btn btn-success btn-sm" href="${'/gramaNiladhari/' + data[i].id}" >
                             <i class="fa fa-folder-open" ></i >&nbsp;View
@@ -98,3 +72,42 @@ $("#searchInput").keyup(function () {
         html_middle_part = '';
     }
 })
+
+//add location interact
+let data_list = '';
+let grama_niladhari = [];
+$("#gramaNiladhari").keyup(function () {
+    let type_value = $(this).val();
+    if (type_value.length > 3) {
+        $("#gramaNiladhariMessage").html('');
+        $.ajax({
+            type: 'GET',
+            url: $('#gramaNiladhariSearchUrl').val() + type_value,
+            success: function (resp) {
+                grama_niladhari = [];
+                data_list = '';
+                grama_niladhari = resp;
+                for (let i = 0; i < resp.length; i++) {
+                    data_list += ` <option value="${resp[i].id}" >${resp[i].name} -  ${resp[i].number}</option>`
+                }
+                $("#browsers").append(data_list);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    } else {
+        $("#gramaNiladhariMessage").html('Please type more than 3 character');
+    }
+
+    gramaNiladhariNameSet(type_value);
+});
+
+function gramaNiladhariNameSet(type_value) {
+    grama_niladhari.forEach((x) => {
+        if (x.id === parseInt(type_value)) {
+            $("#gramaNiladhariOne").val(`${x.name} - ${x.number}`);
+            $("#gramaNiladhariId").val(type_value);
+        }
+    })
+}

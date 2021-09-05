@@ -45,7 +45,9 @@ public class LocationInteractController {
   private String commonThing(Model model, Boolean booleanValue, LocationInteract locationInteractObject) {
     model.addAttribute("addStatus", booleanValue);
     model.addAttribute("locationInteract", locationInteractObject);
-    model.addAttribute("gramaNiladharis", gramaNiladhariService.findAll());
+    model.addAttribute("gramaNiladhariSearchUrl", MvcUriComponentsBuilder
+        .fromMethodName(GramaNiladhariController.class, "searchOne", "")
+        .toUriString());
     return "locationInteract/addLocationInteract";
   }
 
@@ -71,7 +73,7 @@ public class LocationInteractController {
 
   @GetMapping( "/add" )
   public String form(Model model) {
-    return commonThing(model, false, new LocationInteract());
+    return commonThing(model, true, new LocationInteract());
   }
 
   @GetMapping( "/{id}" )
@@ -82,7 +84,7 @@ public class LocationInteractController {
 
   @GetMapping( "/edit/{id}" )
   public String edit(@PathVariable Integer id, Model model) {
-    return commonThing(model, true, locationInteractService.findById(id));
+    return commonThing(model, false, locationInteractService.findById(id));
   }
 
   @PostMapping( value = {"/save", "/update"} )
@@ -115,8 +117,10 @@ public class LocationInteractController {
         .filterOutAllExcept("id", "name");
 
     FilterProvider filter = new SimpleFilterProvider()
-        .addFilter("LocationInteract", simpleBeanPropertyFilterOne)
-        .addFilter("DsOffice", simpleBeanPropertyFilterTwo);
+        .addFilter("LocationInteract", simpleBeanPropertyFilterTwo)
+        .addFilter("GramaNiladhari", simpleBeanPropertyFilterOne)
+        .addFilter("DsOffice", simpleBeanPropertyFilterTwo)
+        .addFilter("District", simpleBeanPropertyFilterTwo);
     mappingJacksonValue.setFilters(filter);
 
     return mappingJacksonValue;

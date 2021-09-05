@@ -17,7 +17,7 @@
                                           Location Interactions</a >
     </div >
     <div class="col" >
-      <span class="font-weight-bold h2" >                    Location Interactions </span >
+      <span class="font-weight-bold h2" >                    Interact Location </span >
     </div >
     <div class="col" >
       <a class="btn btn-primary" data-th-href="${'/home'}" id="searchShow" tabindex="2" >
@@ -32,9 +32,9 @@
   <div class="col-sm-12 flex-column " >
     <div class="row" >
       <div class="container-fluid" >
-        <div class="row" data-th-if="${locationInteracts.totalPages}">
+        <div class="row" data-th-if="${locationInteracts.totalPages}" >
           <!--page per item select -->
-          <div class="col text-left"  >
+          <div class="col text-left" >
             <div class="form-row" >
               <div class="col text-right" >
                 <label for="pageSizeSelect" >Item Count Per Page : </label >
@@ -173,18 +173,7 @@
         <div class="container" >
           <div class="row" >
             <div class="col-6" >
-              <div class="col-4" >
-                <label class="control-label" for="selectParameter" >Parameter :</label >
-              </div >
-              <div class="col-8" >
-                <select id="selectParameter" class="form-control" tabindex="1" required >
-                  <option value="" disabled selected >Please select</option >
-                  <option value="name" >Name</option >
-                </select >
-              </div >
-            </div >
-            <div class="col-6" >
-              <label for="searchInput" >Enter Search Input : </label >
+              <label for="searchInput" >Enter Location Name : </label >
               <input type="search" id="searchInput" class="form-control" >
             </div >
           </div >
@@ -204,13 +193,12 @@
   </div >
 </div >
 <input type="hidden" id="searchUrl" data-th-value="${searchUrl}" >
-
 <!--footer include-->
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <!--script include-->
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
 <!-- data table -->
 <script src="/js/pagination.js" ></script >
-<script data-th-src="@{/js/locationInteract.js}" ></script >
+<script src="/js/locationInteract.js" ></script >
 </body >
 </html >

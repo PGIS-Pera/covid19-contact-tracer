@@ -7,86 +7,90 @@
 <body >
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
 
-<div class="container-fluid" >
-  <div class="row text-center" >
+<div class="container-fluid   " >
+  <div class="row text-md-center" >
     <div class="col" >
       <a class="btn btn-info" data-th-href="${'/home'}" >
-        Back To Home
+        <i class="fa fa-home" style="font-size: 20px" ></i > &nbsp; Home
       </a >
     </div >
     <div class="col" >
-      <h2 class="text-center" >
-        <strong >
-          <span data-th-text="${addStatus==true?'Update Location Details':'New Location Details'}" ></span >
-        </strong >
-      </h2 >
+            <span class="h4 font-weight-bold text-center"
+                  data-th-text="${addStatus==true?'New Location Interact':'Update Location Interact'}" ></span >
     </div >
     <div class="col" >
       <a class="btn btn-success" data-th-href="${'/locationInteract'}" >
-        Location List </a >
+        <i class="fa fa-list" ></i >&nbsp; View List
+      </a >
     </div >
   </div >
 </div >
 
 <div class="container-fluid text-center" >
   <div class="col" >
-    <form data-th-action="${addStatus==false?'/locationInteract/save' :'/locationInteract/update'}"
+    <form data-th-action="${addStatus==true?'/locationInteract/save' :'/locationInteract/update'}"
           method="post" data-th-object="${locationInteract}" >
-      <input class="form-control col-md-9" id="id" readonly data-th-field="*{id}"
-             type="text" data-th-if="${addStatus==true}" />
+      <input class="form-control col-md-9" readonly data-th-field="*{id}"
+             type="text" data-th-if="${addStatus==false}" />
+      <!--Gramaniladhari division-->
+      <div class="form-row text-md-right text-sm-left" >
+        <div class="col-md-4" >
+          <label class="control-label" data-th-for="${'gramaNiladhari'}" >Gramaniladhari Division :</label >
+        </div >
+        <div class="col-md-8" >
+          <input type="text" id="gramaNiladhariOne"
+                 data-th-value="${addStatus==false ? locationInteract.gramaNiladhari.name :''}" readonly
+                 class="form-control" disabled >
+          <input list="browsers" data-th-field="*{gramaNiladhari}" class="form-control"
+                 placeholder="Please enter gramaniladari division name" >
+          <datalist id="browsers" >
+          </datalist >
+          <span class="form-text text-muted bg-warring" id="gramaNiladhariMessage" ></span >
+          <input name="gramaNiladhari.id" id="gramaNiladhariId"
+                 data-th-value="${addStatus==false ? locationInteract.gramaNiladhari.id :''}" hidden >
+        </div >
+      </div >
 
-      <!--Grama Niladhari Division-->
-      <div class=" form-row p-3" >
-        <label class="col-md-3 form-label" data-th-for="${'gramaniladhari'}" >Grama Niladhari Division </label >
-        <select class="col-md-9 form-control"                 data-th-field="*{gramaniladhari}" required >
-          <option value="" selected disabled>Please Select</option >
-          <option data-th-each="gramaniladhari : ${gramaniladharis}"
-                  data-th-text="${gramaniladhari.name+' '+ gramaniladhari.number}"
-                  data-th-value="${gramaniladhari.id}"
-          ></option >
-        </select >
-      </div >
       <!--name-->
-      <div class="form-row p-3" >
-        <label class="control-label col-md-3" data-th-for="${'name'}" >Location Name</label >
-        <input class="form-control col-md-9 "               required              data-th-field="*{name}"               type="text" />
-        <span class="error"               data-th-errors="*{name}"              data-th-if="${#fields.hasErrors('name')}" ></span >
+      <div class="form-row text-md-right text-sm-left" >
+        <div class="col-md-4" >
+          <label class="control-label" data-th-for="${'name'}" >Location Name : </label >
+        </div >
+        <div class="col-md-8" >
+          <input class="form-control " required data-th-field="*{name}" type="text" />
+          <span class="error" data-th-errors="*{name}" data-th-if="${#fields.hasErrors('name')}" ></span >
+        </div >
       </div >
-      <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
+
+      <!-- button area-->
+      <div class="form-group col-md-12 col-sm-12 text-center flex-column mt-3" >
         <!--Back Button-->
-        <a class="btn btn-dark" tabindex="10" data-th-href="${'/district'}" >
+        <a class="btn btn-dark" data-th-href="${'/person'}" tabindex="10" >
           <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
         </a >
         <!--Save Button-->
-        <button class="btn btn-success ml-md-5" type="submit" tabindex="8" >
+        <button class="btn btn-success ml-md-5" tabindex="8" type="submit" >
           <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;
-          <span data-th-text="${addStatus==false?'Save': 'Update'}" id="submit" ></span >
+          <span data-th-text="${addStatus==true?'Save': 'Update'}" id="submit" ></span >
         </button >
         <!--Cancel Button-->
-        <button class="btn btn-warning ml-md-5" type="reset" tabindex="9" >
+        <button class="btn btn-warning ml-md-5" tabindex="9" type="reset" >
           <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
         </button >
       </div >
       <div class="form-row" >
-        <label id="errorLabel" data-th-if="${#fields.hasErrors('*')}"
-               data-th-text="'Errors: '" >Errors: </label >
+        <label data-th-if="${#fields.hasErrors('*')}" data-th-text="'Errors: '" >Errors: </label >
         <ul >
-          <li id="error" data-th-each="err : ${#fields.errors('*')}" data-th-text="${err}"
-              class="error" ></li >
+          <li class="error" data-th-each="err: ${#fields.errors('*')}" data-th-text="${err}" ></li >
         </ul >
       </div >
     </form >
   </div >
 </div >
+<input data-th-value="${gramaNiladhariSearchUrl}" hidden id="gramaNiladhariSearchUrl" type="text" >
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
-<!--script include-->
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
-<script >
-    $(document).ready(function () {
-        $("#gramaNiladhari").select2({
-            data: $(this).val()
-        }).addClass("form-control");
-    });
-</script >
+<script data-th-src="@{/js/locationInteract.js}" ></script >
+
 </body >
 </html >

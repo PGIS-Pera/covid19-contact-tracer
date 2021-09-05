@@ -100,7 +100,7 @@ $("#searchInput").keyup(function () {
     }
 })
 
-//add person
+
 let data_list = '';
 let grama_niladhari = [];
 $("#gramaNiladhari").keyup(function () {
