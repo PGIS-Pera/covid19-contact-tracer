@@ -8,6 +8,7 @@ import lk.covid19.contact_tracer.asset.location_interact.entity.LocationInteract
 import lk.covid19.contact_tracer.asset.location_interact.service.impl.LocationInteractImpl;
 import lk.covid19.contact_tracer.asset.person.entity.enums.PersonStatus;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.entity.PersonLocationInteractTime;
+import lk.covid19.contact_tracer.asset.user.entity.User;
 import lk.covid19.contact_tracer.util.audit.AuditEntity;
 import lk.covid19.contact_tracer.util.service.DateTimeAgeService;
 import lombok.*;
@@ -59,6 +60,10 @@ public class Person extends AuditEntity {
 
   @DateTimeFormat( pattern = "yyyy-MM-dd" )
   private LocalDate dateOfBirth;
+
+  @OneToOne(mappedBy = "person")
+  @ToString.Exclude
+  private User user;
 
   @ManyToOne
   @JoinColumn( name = "grama_niladhari_id", nullable = false, foreignKey = @ForeignKey( name =

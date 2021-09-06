@@ -37,13 +37,13 @@ public class User extends AuditEntity {
   @Column( nullable = false )
   private boolean enabled;
 
-  @OneToOne
-  @JoinColumn( name = "user_details_id", nullable = false, foreignKey = @ForeignKey( name =
-      "fk_user_vs_user_details_id" ) )
+  @OneToOne( cascade = CascadeType.ALL )
+  @JoinColumn( name = "user_details_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey( name =
+      "fk_user_vs_user_details" ) )
   private UserDetails userDetails;
 
-  @OneToOne
-  @JoinColumn( name = "person_id", foreignKey = @ForeignKey( name = "fk_user_vs_person" ) )
+  @OneToOne( cascade = CascadeType.ALL )
+  @JoinColumn( name = "person_id", referencedColumnName = "id", foreignKey = @ForeignKey( name = "fk_user_vs_person" ) )
   private Person person;
 
   @OneToMany( mappedBy = "user", fetch = FetchType.EAGER )
