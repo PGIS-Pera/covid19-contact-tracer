@@ -46,7 +46,7 @@ public class User extends AuditEntity {
   @JoinColumn( name = "person_id", referencedColumnName = "id", foreignKey = @ForeignKey( name = "fk_user_vs_person" ) )
   private Person person;
 
-  @OneToMany( mappedBy = "user", fetch = FetchType.EAGER )
+  @OneToMany( mappedBy = "user")
   private List< UserSessionLog > userSessionLogs;
 
   @ManyToMany( fetch = FetchType.EAGER )
