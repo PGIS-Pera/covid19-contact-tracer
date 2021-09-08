@@ -4,8 +4,8 @@
         xsi:schemaLocation="http://www.ehcache.org/v3 https://www.ehcache.org/schema/ehcache-core-3.0.xsd
 							http://www.ehcache.org/v3/jsr107 https://www.ehcache.org/schema/ehcache-107-ext-3.0.xsd">
 
-    <!--1. attempt-->
-    <cache alias="attempt">
+    <!--1. turn-->
+    <cache alias="turn">
         <expiry>
             <ttl unit="seconds">60000</ttl>
         </expiry>

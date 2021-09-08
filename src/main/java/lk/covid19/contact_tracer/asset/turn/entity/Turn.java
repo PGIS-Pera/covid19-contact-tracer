@@ -1,4 +1,4 @@
-package lk.covid19.contact_tracer.asset.attempt.entity;
+package lk.covid19.contact_tracer.asset.turn.entity;
 
 import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.util.audit.AuditEntity;
@@ -10,7 +10,6 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.time.LocalDate;
-import java.util.Date;
 
 
 @Entity
@@ -19,7 +18,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Attempt extends AuditEntity {
+public class Turn extends AuditEntity {
 
   @DateTimeFormat( pattern = "yyyy-MM-dd" )
   private LocalDate identifiedDate;

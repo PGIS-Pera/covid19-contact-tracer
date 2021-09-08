@@ -198,3 +198,14 @@ input:focus:invalid {
 .swal-background {
     background-color: rgb(245, 248, 250);
 }
+
+/*bootstrap model background*/
+.modal-backdrop {
+    opacity: 0.7 !important;
+}
+
+/*loading background*/
+.loading-background {
+    background: url("/img/LoaderIcon.gif") no-repeat 95% 50% lightgreen;
+    background-size: 165px;
+}

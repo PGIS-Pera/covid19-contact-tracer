@@ -139,17 +139,17 @@
     </div >
     <!-- previous diagnosed list-->
     <div class="form-group offset-md-3 col-md-6 col-sm-12 text-center flex-column " >
-      <span class="h4 text-center" >Previous Diagnosed Attempts  </span >
+      <span class="h4 text-center" >Previous Diagnosed Turn  </span >
       <!--list have value -->
-      <ul data-th-if="${not #lists.isEmpty(personDetail.attempts)}" class="list-group" >
-        <li class="list-group-item " data-th-each="attempt , index : ${personDetail.attempts}" >
+      <ul data-th-if="${not #lists.isEmpty(personDetail.turns)}" class="list-group" >
+        <li class="list-group-item " data-th-each="turn , index : ${personDetail.turns}" >
           <span class="mr-2" data-th-text="${index.count}" ></span >:
-          <span data-th-text="${{attempt.identifiedDate}}" ></span >
+          <span data-th-text="${{turn.identifiedDate}}" ></span >
         </li >
       </ul >
       <!--list have no value-->
       <div class="container-fluid" >
-        <div class="row" data-th-if="${#lists.isEmpty(personDetail.attempts)}" >
+        <div class="row" data-th-if="${ #lists.isEmpty(personDetail.turns)}" >
           <div class="col-sm-12" >
             <div class="alert alert-warning alert-dismissible fade show"
                  role="alert" >

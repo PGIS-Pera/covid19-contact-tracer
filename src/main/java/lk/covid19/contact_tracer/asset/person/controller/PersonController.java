@@ -4,12 +4,10 @@ package lk.covid19.contact_tracer.asset.person.controller;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import lk.covid19.contact_tracer.asset.attempt.entity.Attempt;
 import lk.covid19.contact_tracer.asset.common_asset.model.Pager;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.Gender;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.TwoDate;
 import lk.covid19.contact_tracer.asset.grama_niladhari.controller.GramaNiladhariController;
-import lk.covid19.contact_tracer.asset.grama_niladhari.entity.GramaNiladhari;
 import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
 import lk.covid19.contact_tracer.asset.location_interact.controller.LocationInteractController;
 import lk.covid19.contact_tracer.asset.location_interact.entity.LocationInteract;
@@ -19,10 +17,6 @@ import lk.covid19.contact_tracer.asset.person.service.PersonService;
 import lk.covid19.contact_tracer.util.service.CommonService;
 import lk.covid19.contact_tracer.util.service.DateTimeAgeService;
 import lombok.RequiredArgsConstructor;
-import org.apache.poi.hpsf.SummaryInformation;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.converter.json.MappingJacksonValue;
@@ -33,15 +27,11 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Controller
@@ -156,7 +146,7 @@ public class PersonController {
     model.addAttribute("gramaNiladhariSearchUrl", MvcUriComponentsBuilder
         .fromMethodName(GramaNiladhariController.class, "searchOne", "")
         .toUriString());
-    model.addAttribute("locationInteractUrl", MvcUriComponentsBuilder
+    model.addAttribute("locationInteractSearchUrl", MvcUriComponentsBuilder
         .fromMethodName(LocationInteractController.class, "search", new LocationInteract())
         .toUriString());
     return "attempt/newAttempt";
