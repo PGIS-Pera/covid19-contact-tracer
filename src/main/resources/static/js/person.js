@@ -194,7 +194,7 @@ function popUpDataSet(resp) {
                         buttons: false,
                         timer: 3000,
                     });
-                    self.location = location.protocol + "//" + location.host + "/person/attempt/" + resp.id;
+                    self.location = location.protocol + "//" + location.host + "/person/turn/" + resp.id;
                     break;
 
                 case "edit":

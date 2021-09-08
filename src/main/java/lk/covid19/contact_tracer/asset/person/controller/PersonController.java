@@ -137,7 +137,7 @@ public class PersonController {
     }
   }
 
-  @GetMapping( "/attempt/{id}" )
+  @GetMapping( "/turn/{id}" )
   public String addNewAttempt(@PathVariable Integer id, Model model) {
     //todo need to manage this
     Person person = personService.findById(id);

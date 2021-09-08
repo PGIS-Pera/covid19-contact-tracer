@@ -29,8 +29,8 @@ public class TurnServiceImpl implements TurnService {
     return turnDao.getById(id);
   }
 
-  @Caching( evict = {@CacheEvict( value = "attempt", allEntries = true )},
-      put = {@CachePut( value = "attempt", key = "#turn.id" )} )
+  @Caching( evict = {@CacheEvict( value = "turn", allEntries = true )},
+      put = {@CachePut( value = "turn", key = "#turn.id" )} )
   public Turn persist(Turn turn) {
     return turnDao.save(turn);
   }
@@ -47,8 +47,8 @@ public class TurnServiceImpl implements TurnService {
         .matching()
         .withIgnoreCase()
         .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-    Example< Turn > attemptExample = Example.of(turn, matcher);
-    return turnDao.findAll(attemptExample);
+    Example< Turn > turnExample = Example.of(turn, matcher);
+    return turnDao.findAll(turnExample);
   }
 
   @Cacheable

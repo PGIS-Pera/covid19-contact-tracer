@@ -54,7 +54,7 @@
 <div class="container-fluid" >
   <div class="col-md-8 offset-md-2" >
     <form data-th-action="${'/person/turn/save'}" data-th-object="${personDetail}"
-          method="POST" id="attemptForm" >
+          method="POST" >
       <input data-th-field="*{id}" data-th-if="${addStatus==false}" readonly type="hidden" id="personId" />
       <!--turn-->
       <div class="form-row" >
@@ -148,7 +148,7 @@
       <!--Interact Location History-->
       <div class="form-row" >
         <div class="container-fluid" >
-          <table class="table table-striped table-inverse table-hover" >
+          <table class="table table-striped table-inverse table-hover" id="myTable" >
             <caption style="caption-side:top;" class="font-weight-bold text-center h4" >
               Locations Interact With Person &nbsp&nbsp&nbsp <br /><span class="font-weight-bold text-left h6" >Total location count which person interact : </span >
               <span id="totalPlace" class="font-weight-bold text-center h6" ></span >
@@ -340,9 +340,8 @@
                 leaveAt: leaveAt
             }
             personLocationInteractTimes.push(personLocationInteractTime)
-            console.log(personLocationInteractTime)
+            tableRowAdd();
 
-            $("#myTable tbody ").html(html);
         } else {
             swal({
                 title: "Please check your entered values",
@@ -353,26 +352,14 @@
 
     });
 
-    $(document).ready(function () {
-        $("#attemptForm").submit(function (e) {
-            e.preventDefault();
+    // $("#myTable tbody ").html(html);
 
-        });
-    });
+    function tableRowAdd() {
+
+    }
 
 
     function removeItem(obj) {
-        let selectedFiledId = obj.getAttribute('id').slice(2);
-        //id,name,sellPrice,abQut,exDate
-        $("#item").append(optionTagAdd(
-            $(`#id${selectedFiledId}`).val(),
-            $(`#na${selectedFiledId}`).val(),
-            $(`#sp${selectedFiledId}`).val(),
-            $(`#aq${selectedFiledId}`).val(),
-            $(`#ex${selectedFiledId}`).val()));
-        selectedInvoiceLedger = selectedInvoiceLedger.filter(function (obj) {
-            return obj.id !== $(`#id${selectedFiledId}`).val();
-        })
         document.getElementById("myTable").deleteRow(obj.parentNode.parentNode.rowIndex);
     }
 
