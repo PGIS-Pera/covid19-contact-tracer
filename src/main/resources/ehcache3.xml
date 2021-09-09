@@ -84,5 +84,29 @@
         <heap unit="entries">4000</heap>
         <jsr107:mbeans enable-statistics="true"/>
     </cache>
+    <!--11. turnHistory-->
+    <cache alias="turnHistory">
+        <expiry>
+            <ttl unit="seconds">60000</ttl>
+        </expiry>
+        <heap unit="entries">4000</heap>
+        <jsr107:mbeans enable-statistics="true"/>
+    </cache>
+    <!--12. turnHistory-->
+    <cache alias="turnInHistoryNote">
+        <expiry>
+            <ttl unit="seconds">60000</ttl>
+        </expiry>
+        <heap unit="entries">4000</heap>
+        <jsr107:mbeans enable-statistics="true"/>
+    </cache>
+    <!--13. stayLocation-->
+    <cache alias="stayLocation">
+        <expiry>
+            <ttl unit="seconds">60000</ttl>
+        </expiry>
+        <heap unit="entries">4000</heap>
+        <jsr107:mbeans enable-statistics="true"/>
+    </cache>
 
 </config>
