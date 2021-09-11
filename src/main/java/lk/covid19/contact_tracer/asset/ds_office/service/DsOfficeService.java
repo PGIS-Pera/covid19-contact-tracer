@@ -24,4 +24,6 @@ public interface DsOfficeService {
   List< DsOffice > findByDistrict(District district);
 
   DsOffice findByName(String name);
+  //todo total count according to person status
+  //todo total count according to gs division level
 }

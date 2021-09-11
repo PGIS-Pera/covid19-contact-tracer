@@ -21,4 +21,6 @@ public interface DistrictService {
   List< District > findByProvince(Province province);
 
   District findByName(String name);
+  //todo total count according to person status
+  //todo total count according to ds office level
 }

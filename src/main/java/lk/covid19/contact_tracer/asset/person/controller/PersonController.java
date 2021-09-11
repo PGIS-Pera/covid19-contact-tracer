@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import lk.covid19.contact_tracer.asset.common_asset.model.Pager;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.Gender;
-import lk.covid19.contact_tracer.asset.common_asset.model.enums.TwoDate;
+import lk.covid19.contact_tracer.asset.common_asset.model.TwoDate;
 import lk.covid19.contact_tracer.asset.grama_niladhari.controller.GramaNiladhariController;
 import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
 import lk.covid19.contact_tracer.asset.location_interact.controller.LocationInteractController;
@@ -148,6 +148,9 @@ public class PersonController {
         .toUriString());
     model.addAttribute("locationInteractSearchUrl", MvcUriComponentsBuilder
         .fromMethodName(LocationInteractController.class, "search", new LocationInteract())
+        .toUriString());
+    model.addAttribute("locationInteractSaveUrl", MvcUriComponentsBuilder
+        .fromMethodName(LocationInteractController.class, "attemptNew", new LocationInteract())
         .toUriString());
     return "attempt/newAttempt";
   }

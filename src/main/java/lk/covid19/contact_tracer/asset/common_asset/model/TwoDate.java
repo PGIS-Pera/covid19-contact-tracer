@@ -1,4 +1,4 @@
-package lk.covid19.contact_tracer.asset.common_asset.model.enums;
+package lk.covid19.contact_tracer.asset.common_asset.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

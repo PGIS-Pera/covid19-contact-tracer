@@ -1,4 +1,4 @@
-package lk.covid19.contact_tracer.asset.report;
+package lk.covid19.contact_tracer.asset.report.Controller;
 
 import lk.covid19.contact_tracer.asset.turn.service.TurnService;
 import lk.covid19.contact_tracer.asset.district.service.DistrictService;

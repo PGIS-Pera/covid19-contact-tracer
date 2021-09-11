@@ -125,4 +125,10 @@ public class LocationInteractController {
 
     return mappingJacksonValue;
   }
+
+  @PostMapping( value = "/attempt/new" )
+  @ResponseBody
+  public LocationInteract attemptNew(LocationInteract locationInteract) {
+    return locationInteractService.persist(locationInteract);
+  }
 }
