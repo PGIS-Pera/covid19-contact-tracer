@@ -17,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonFilter( "LocationInteract" )
+@Builder
 @ToString
 public class LocationInteract extends AuditEntity {
 

@@ -20,5 +20,7 @@ public interface LocationInteractService {
 
   List< LocationInteract > search(LocationInteract district);
 
-  Page< LocationInteract> findAllPageable(Pageable pageable);
+  Page< LocationInteract > findAllPageable(Pageable pageable);
+
+  LocationInteract findByGramaNiladhariAndName(LocationInteract locationInteract);
 }

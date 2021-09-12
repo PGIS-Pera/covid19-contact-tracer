@@ -125,7 +125,7 @@ public class PersonController {
       if ( person.getId() != null ) {
         return "redirect:/person";
       } else {
-        return "redirect:/person/attempt/" + personDb.getId();
+        return "redirect:/person/turn/" + personDb.getId();
       }
     } catch ( Exception e ) {
       ObjectError error = new ObjectError("person",
@@ -138,7 +138,7 @@ public class PersonController {
   }
 
   @GetMapping( "/turn/{id}" )
-  public String addNewAttempt(@PathVariable Integer id, Model model) {
+  public String addNewTurn(@PathVariable Integer id, Model model) {
     //todo need to manage this
     Person person = personService.findById(id);
     person.setAge(dateTimeAgeService.getDateDifference(person.getDateOfBirth(), LocalDate.now()));
@@ -150,9 +150,15 @@ public class PersonController {
         .fromMethodName(LocationInteractController.class, "search", new LocationInteract())
         .toUriString());
     model.addAttribute("locationInteractSaveUrl", MvcUriComponentsBuilder
-        .fromMethodName(LocationInteractController.class, "attemptNew", new LocationInteract())
+        .fromMethodName(LocationInteractController.class, "turnNew", "", "")
         .toUriString());
-    return "attempt/newAttempt";
+    return "turn/newTurn";
+  }
+
+  @PostMapping( "/turn" )
+  public String savePersonTurn(Person person) {
+    personService.saveAndTurn(person);
+    return "redirect:/person";
   }
 
   @GetMapping( "/remove/{id}" )
@@ -171,8 +177,8 @@ public class PersonController {
   @PostMapping( "/searchDate" )
   public String searchDate(Model model, TwoDate twoDate) {
     String message = "This report is belong start at " + twoDate.getStartDate() + " end at " + twoDate.getEndDate();
-    model.addAttribute("persons", personService.findByAttemptIdentifiedDateRange(twoDate.getStartDate(),
-                                                                                 twoDate.getEndDate()));
+    model.addAttribute("persons", personService.findByTurnIdentifiedDateRange(twoDate.getStartDate(),
+                                                                              twoDate.getEndDate()));
     model.addAttribute("message", message);
     commonForAll(model);
     model.addAttribute("person", new Person());
@@ -186,7 +192,7 @@ public class PersonController {
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(persons);
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name", "code","nic","mobile","dateOfBirth");
+        .filterOutAllExcept("id", "name", "code", "nic", "mobile", "dateOfBirth");
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
         .filterOutAllExcept("id", "name");

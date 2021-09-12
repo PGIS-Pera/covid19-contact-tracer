@@ -1,6 +1,7 @@
 package lk.covid19.contact_tracer.asset.person.service.impl;
 
 
+import lk.covid19.contact_tracer.asset.person_location_interact_time.service.PersonLocationInteractTimeService;
 import lk.covid19.contact_tracer.asset.turn.entity.Turn;
 import lk.covid19.contact_tracer.asset.turn.service.TurnService;
 import lk.covid19.contact_tracer.asset.person.dao.PersonDao;
@@ -26,6 +27,7 @@ public class PersonServiceImpl implements PersonService {
   private final PersonDao personDao;
   private final CommonService commonService;
   private final TurnService turnService;
+  private final PersonLocationInteractTimeService personLocationInteractTimeService;
 
   @Cacheable
   public Page< Person > findAllPageable(Pageable pageable) {
@@ -95,12 +97,18 @@ public class PersonServiceImpl implements PersonService {
     return personDao.findFirstByOrderByIdDesc();
   }
 
-  @Override
-  public List< Person > findByAttemptIdentifiedDateRange(LocalDate startDate, LocalDate endDate) {
+  @Cacheable
+  public List< Person > findByTurnIdentifiedDateRange(LocalDate startDate, LocalDate endDate) {
     HashSet< Person > person = new HashSet<>();
     for ( Turn turn : turnService.findByIdentifiedDateIsBetween(startDate, endDate) ) {
       person.add(personDao.getById(turn.getPerson().getId()));
     }
     return new ArrayList<>(person);
+  }
+
+  @Cacheable
+  public void saveAndTurn(Person person) {
+    person.getTurns().forEach(turnService::persist);
+    personLocationInteractTimeService.persistAll(person.getPersonLocationInteractTimes());
   }
 }

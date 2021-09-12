@@ -15,6 +15,8 @@ import lk.covid19.contact_tracer.asset.location_interact.service.LocationInterac
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -110,6 +112,30 @@ public class LocationInteractController {
     List< LocationInteract > locationInteracts = locationInteractService.search(locationInteract);
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(locationInteracts);
 
+    return getMappingJacksonValue(mappingJacksonValue);
+  }
+
+  @PostMapping( value = "/attempt/new" )
+  @ResponseBody
+  public MappingJacksonValue turnNew(@RequestParam( "name" ) String name, @RequestParam( "id" ) Integer id) {
+
+    LocationInteract locationInteract = new LocationInteract();
+    locationInteract.setName(name);
+    locationInteract.setGramaNiladhari(gramaNiladhariService.findById(id));
+
+    LocationInteract locationInteractDb = locationInteractService.findByGramaNiladhariAndName(locationInteract);
+
+    MappingJacksonValue mappingJacksonValue;
+    if ( locationInteractDb != null ) {
+      mappingJacksonValue = new MappingJacksonValue(locationInteractDb);
+    } else {
+      mappingJacksonValue =
+          new MappingJacksonValue(locationInteractService.persist(locationInteract));
+    }
+    return getMappingJacksonValue(mappingJacksonValue);
+  }
+
+  private MappingJacksonValue getMappingJacksonValue(MappingJacksonValue mappingJacksonValue) {
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
         .filterOutAllExcept("id", "name", "number");
 
@@ -124,11 +150,5 @@ public class LocationInteractController {
     mappingJacksonValue.setFilters(filter);
 
     return mappingJacksonValue;
-  }
-
-  @PostMapping( value = "/attempt/new" )
-  @ResponseBody
-  public LocationInteract attemptNew(LocationInteract locationInteract) {
-    return locationInteractService.persist(locationInteract);
   }
 }
