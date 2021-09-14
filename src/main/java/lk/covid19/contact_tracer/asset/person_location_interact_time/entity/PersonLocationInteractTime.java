@@ -24,10 +24,10 @@ import java.time.LocalDateTime;
 @JsonFilter( "PersonLocationInteractTime" )
 public class PersonLocationInteractTime extends AuditEntity {
 
-  @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm" )
+  @DateTimeFormat( pattern = "yyyy-MM-dd'T'HH:mm" )
   private LocalDateTime arrivalAt;
 
-  @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm" )
+  @DateTimeFormat( pattern = "yyyy-MM-dd'T'HH:mm" )
   private LocalDateTime leaveAt;
 
   @ManyToOne

@@ -6,6 +6,7 @@ import lk.covid19.contact_tracer.asset.common_asset.model.FileInfo;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.Gender;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.StopActive;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.Title;
+import lk.covid19.contact_tracer.asset.user.entity.User;
 import lk.covid19.contact_tracer.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -66,6 +67,9 @@ public class UserDetails extends AuditEntity {
 
   @DateTimeFormat( pattern = "yyyy-MM-dd" )
   private LocalDate dateOfBirth;
+
+  @OneToOne(mappedBy = "userDetails")
+  private User user;
 
   @Transient
   private MultipartFile file;

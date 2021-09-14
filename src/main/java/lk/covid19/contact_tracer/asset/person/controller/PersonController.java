@@ -4,12 +4,10 @@ package lk.covid19.contact_tracer.asset.person.controller;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import lk.covid19.contact_tracer.asset.attempt.entity.Attempt;
 import lk.covid19.contact_tracer.asset.common_asset.model.Pager;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.Gender;
-import lk.covid19.contact_tracer.asset.common_asset.model.enums.TwoDate;
+import lk.covid19.contact_tracer.asset.common_asset.model.TwoDate;
 import lk.covid19.contact_tracer.asset.grama_niladhari.controller.GramaNiladhariController;
-import lk.covid19.contact_tracer.asset.grama_niladhari.entity.GramaNiladhari;
 import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
 import lk.covid19.contact_tracer.asset.location_interact.controller.LocationInteractController;
 import lk.covid19.contact_tracer.asset.location_interact.entity.LocationInteract;
@@ -19,10 +17,6 @@ import lk.covid19.contact_tracer.asset.person.service.PersonService;
 import lk.covid19.contact_tracer.util.service.CommonService;
 import lk.covid19.contact_tracer.util.service.DateTimeAgeService;
 import lombok.RequiredArgsConstructor;
-import org.apache.poi.hpsf.SummaryInformation;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.converter.json.MappingJacksonValue;
@@ -33,15 +27,11 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Controller
@@ -135,7 +125,7 @@ public class PersonController {
       if ( person.getId() != null ) {
         return "redirect:/person";
       } else {
-        return "redirect:/person/attempt/" + personDb.getId();
+        return "redirect:/person/turn/" + personDb.getId();
       }
     } catch ( Exception e ) {
       ObjectError error = new ObjectError("person",
@@ -147,8 +137,8 @@ public class PersonController {
     }
   }
 
-  @GetMapping( "/attempt/{id}" )
-  public String addNewAttempt(@PathVariable Integer id, Model model) {
+  @GetMapping( "/turn/{id}" )
+  public String addNewTurn(@PathVariable Integer id, Model model) {
     //todo need to manage this
     Person person = personService.findById(id);
     person.setAge(dateTimeAgeService.getDateDifference(person.getDateOfBirth(), LocalDate.now()));
@@ -156,10 +146,19 @@ public class PersonController {
     model.addAttribute("gramaNiladhariSearchUrl", MvcUriComponentsBuilder
         .fromMethodName(GramaNiladhariController.class, "searchOne", "")
         .toUriString());
-    model.addAttribute("locationInteractUrl", MvcUriComponentsBuilder
-        .fromMethodName(LocationInteractController.class, "search", new LocationInteract())
+    model.addAttribute("locationInteractSearchUrl", MvcUriComponentsBuilder
+        .fromMethodName(LocationInteractController.class, "search", "")
         .toUriString());
-    return "attempt/newAttempt";
+    model.addAttribute("locationInteractSaveUrl", MvcUriComponentsBuilder
+        .fromMethodName(LocationInteractController.class, "turnNew", "", "")
+        .toUriString());
+    return "turn/newTurn";
+  }
+
+  @PostMapping( "/turn" )
+  public String savePersonTurn(Person person) {
+    personService.saveAndTurn(person);
+    return "redirect:/person";
   }
 
   @GetMapping( "/remove/{id}" )
@@ -178,8 +177,8 @@ public class PersonController {
   @PostMapping( "/searchDate" )
   public String searchDate(Model model, TwoDate twoDate) {
     String message = "This report is belong start at " + twoDate.getStartDate() + " end at " + twoDate.getEndDate();
-    model.addAttribute("persons", personService.findByAttemptIdentifiedDateRange(twoDate.getStartDate(),
-                                                                                 twoDate.getEndDate()));
+    model.addAttribute("persons", personService.findByTurnIdentifiedDateRange(twoDate.getStartDate(),
+                                                                              twoDate.getEndDate()));
     model.addAttribute("message", message);
     commonForAll(model);
     model.addAttribute("person", new Person());
@@ -193,7 +192,7 @@ public class PersonController {
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(persons);
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name", "code","nic","mobile","dateOfBirth");
+        .filterOutAllExcept("id", "name", "code", "nic", "mobile", "dateOfBirth");
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
         .filterOutAllExcept("id", "name");
@@ -208,7 +207,7 @@ public class PersonController {
 
   @GetMapping( "/getPerson/{nic}" )
   @ResponseBody
-  public MappingJacksonValue findByNic(@RequestParam( "nic" ) String nic) {
+  public MappingJacksonValue findByNic(@PathVariable String nic) {
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(personService.findByNic(nic));
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter

@@ -85,7 +85,9 @@ public class GramaNiladhariController {
 
   @GetMapping( "/{id}" )
   public String findById(@PathVariable Integer id, Model model) {
-    model.addAttribute("gramaNiladhariDetail", gramaNiladhariService.findById(id));
+    GramaNiladhari gramaNiladhari = gramaNiladhariService.findById(id);
+    model.addAttribute("gramaNiladhariDetail", gramaNiladhari);
+    model.addAttribute("attributeAndCounts", commonService.personsAccordingToType(gramaNiladhari.getPersons()));
     return "gramaNiladhari/gramaNiladhari-detail";
   }
 

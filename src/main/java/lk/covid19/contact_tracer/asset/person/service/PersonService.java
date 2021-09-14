@@ -29,5 +29,7 @@ public interface PersonService {
 
   List< Person > persistList(List< Person > people);
 
-  List< Person > findByAttemptIdentifiedDateRange(LocalDate startDate, LocalDate endDate);
+  List< Person > findByTurnIdentifiedDateRange(LocalDate startDate, LocalDate endDate);
+
+  void saveAndTurn(Person person);
 }

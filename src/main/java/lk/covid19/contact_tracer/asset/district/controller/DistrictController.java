@@ -7,6 +7,10 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.Province;
 import lk.covid19.contact_tracer.asset.district.entity.District;
 import lk.covid19.contact_tracer.asset.district.service.DistrictService;
+import lk.covid19.contact_tracer.asset.ds_office.service.DsOfficeService;
+import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
+import lk.covid19.contact_tracer.asset.person.entity.Person;
+import lk.covid19.contact_tracer.util.service.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Controller;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,6 +30,9 @@ import java.util.List;
 public class DistrictController {
 
   private final DistrictService districtService;
+  private final DsOfficeService dsOfficeService;
+  private final GramaNiladhariService gramaNiladhariService;
+  private final CommonService commonService;
 
   private String commonThing(Model model, Boolean booleanValue, District districtObject) {
     model.addAttribute("provinces", Province.values());
@@ -46,7 +54,11 @@ public class DistrictController {
 
   @GetMapping( "/{id}" )
   public String findById(@PathVariable Integer id, Model model) {
-    model.addAttribute("districtDetail", districtService.findById(id));
+    District district = districtService.findById(id);
+    model.addAttribute("districtDetail", district);
+    List< Person > persons = new ArrayList<>();
+    district.getDsOffices().forEach(x -> dsOfficeService.findById(x.getId()).getGramaNiladharis().forEach(y -> persons.addAll(gramaNiladhariService.findById(y.getId()).getPersons())));
+    model.addAttribute("attributeAndCounts", commonService.personsAccordingToType(persons));
     return "district/district-detail";
   }
 

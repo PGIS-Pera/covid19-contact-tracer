@@ -1,6 +1,9 @@
 //person
 $(document).ready(() => {
     changePageAndSize();
+    $('[type="date"]').prop('max', function () {
+        return new Date().toJSON().split('T')[0];
+    });
 });
 
 changePageAndSize = () => {
@@ -191,7 +194,7 @@ function popUpDataSet(resp) {
                         buttons: false,
                         timer: 3000,
                     });
-                    self.location = location.protocol + "//" + location.host + "/attempt/add/" + resp.id;
+                    self.location = location.protocol + "//" + location.host + "/person/turn/" + resp.id;
                     break;
 
                 case "edit":

@@ -17,6 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonFilter( "LocationInteract" )
+@Builder
+@ToString
 public class LocationInteract extends AuditEntity {
 
   @Size( min = 2, message = "Your district name should be included more than two characters" )
@@ -28,6 +30,7 @@ public class LocationInteract extends AuditEntity {
   private GramaNiladhari gramaNiladhari;
 
   @OneToMany( mappedBy = "locationInteract" )
+  @ToString.Exclude
   private List< PersonLocationInteractTime > personLocationInteractTimes;
 
 }

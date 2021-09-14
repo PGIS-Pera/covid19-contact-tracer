@@ -3,9 +3,9 @@
         xmlns='http://www.ehcache.org/v3'
         xsi:schemaLocation="http://www.ehcache.org/v3 https://www.ehcache.org/schema/ehcache-core-3.0.xsd
 							http://www.ehcache.org/v3/jsr107 https://www.ehcache.org/schema/ehcache-107-ext-3.0.xsd">
-
-    <!--1. attempt-->
-    <cache alias="attempt">
+<!--todo need to re verify -->
+    <!--1. turn-->
+    <cache alias="turn">
         <expiry>
             <ttl unit="seconds">60000</ttl>
         </expiry>
@@ -78,6 +78,30 @@
     </cache>
     <!--10. userDetails-->
     <cache alias="userDetails">
+        <expiry>
+            <ttl unit="seconds">60000</ttl>
+        </expiry>
+        <heap unit="entries">4000</heap>
+        <jsr107:mbeans enable-statistics="true"/>
+    </cache>
+    <!--11. turnHistory-->
+    <cache alias="turnHistory">
+        <expiry>
+            <ttl unit="seconds">60000</ttl>
+        </expiry>
+        <heap unit="entries">4000</heap>
+        <jsr107:mbeans enable-statistics="true"/>
+    </cache>
+    <!--12. turnHistory-->
+    <cache alias="turnInHistoryNote">
+        <expiry>
+            <ttl unit="seconds">60000</ttl>
+        </expiry>
+        <heap unit="entries">4000</heap>
+        <jsr107:mbeans enable-statistics="true"/>
+    </cache>
+    <!--13. stayLocation-->
+    <cache alias="stayLocation">
         <expiry>
             <ttl unit="seconds">60000</ttl>
         </expiry>
