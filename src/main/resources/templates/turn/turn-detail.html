@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<div class="container-fluid" >
+  <div class="row text-center " >
+    <div class="col" >
+      <a class="btn btn-primary" data-th-href="${'/home'}" >
+        <i class="fa fa-home" style="font-size: 20px" ></i > &nbsp; Home
+      </a >
+    </div >
+    <div class="col" >
+      <h4 class="  text-dark text-center" >
+        <strong >
+          <span data-th-text="${turnDetail.person.name}" ></span >
+        </strong >
+      </h4 >
+    </div >
+    <div class="col" >
+      <a class="btn btn-success" data-th-href="${'/turn'}" >
+        <i class="fa fa-list" ></i >&nbsp; View List
+      </a >
+    </div >
+  </div >
+</div >
+<!--Form Content - start -->
+<div class="container-fluid" >
+  <div class="form-row" data-th-fragment="turnDetail" >
+    <div class="col-md-12 mt-3" >
+      <div id="accordianId" role="tablist" aria-multiselectable="true" >
+        <div class="card" >
+          <div class="card-header" role="tab" id="section1HeaderId" >
+            <h5 class="mb-0" >
+              <a class="text-decoration-none" data-toggle="collapse" data-parent="#accordianId"
+                 href="#section1ContentId"
+                 aria-expanded="true"
+                 aria-controls="section1ContentId" >
+                <div class="text-center container-fluid" >
+                  Person Details
+                </div >
+              </a >
+            </h5 >
+          </div >
+          <div id="section1ContentId" class="collapse in" role="tabpanel" aria-labelledby="section1HeaderId" >
+            <div class="card-body" >
+              <div class="container-fluid" >
+                <div data-th-replace="~{person/person-detail :: personDetail(personDetail=${turnDetail.person})}" ></div >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+    <!--Left Side-->
+    <div class="col-md-6 col-sm-6 " >
+      <!--date-->
+      <div class="form-row text-md-right text-sm-left" >
+        <div class="col-md-4" >
+          <label class="control-label" for="name" >Identified Date :</label >
+        </div >
+        <div class="col-md-8" >
+          <p class="form-control" data-th-text="${{turnDetail.identifiedDate}}" id="name" ></p >
+        </div >
+      </div >
+      <!--remarks-->
+      <div class="form-row text-md-right text-sm-left" >
+        <div class="col-md-4" >
+          <label class="control-label" for="address" >Remarks :</label >
+        </div >
+        <div class="col-md-8" >
+          <p class="form-control" data-th-utext="${turnDetail.remark}" id="address" ></p >
+        </div >
+      </div >
+    </div >
+    <!--Right Side-->
+    <div class="col-md-6 col-sm-6 " >
+      <!--created at-->
+      <div class="form-row text-md-right text-sm-left" >
+        <div class="col-md-4" >
+          <label class="control-label" for="createdAt" >Created At :</label >
+        </div >
+        <div class="col-md-8" >
+          <p class="form-control" data-th-text="${#temporals.format(turnDetail.createdAt, 'dd-MM-yyyy HH:mm')}"
+             id="createdAt" ></p >
+        </div >
+      </div >
+      <!--Created by-->
+      <div class="form-row text-md-right text-sm-left" >
+        <div class="col-md-4" >
+          <label class="control-label" for="createdBy" >Created By :</label >
+        </div >
+        <div class="col-md-8" >
+          <p class="form-control" data-th-text="${turnDetail.createdBy}" id="createdBy" ></p >
+        </div >
+      </div >
+    </div >
+    <!-- Locations was interacted-->
+    <div class="col-md-12" >
+      <div class="row" >
+        <div class="container text-center" >
+          <p class="h4 " >Previous Diagnosed Turn </p >
+        </div >
+      </div >
+      <div class="row" data-th-if="${not #lists.isEmpty(turnDetail.person.personLocationInteractTimes)}" >
+        <div class="container" >
+          <table class="table table-striped table-inverse " id="myTable" >
+            <thead class="thead-inverse" >
+            <tr >
+              <th >Index</th >
+              <th >Gramaniladari Division Name and Code</th >
+              <th >Location Name</th >
+              <th >Arrival At</th >
+              <th >Departure At</th >
+              <th >Created By</th >
+              <th >Updated By</th >
+            </tr >
+            </thead >
+            <tbody >
+            <tr data-th-each="personLocationInteractTime , index : ${turnDetail.person.personLocationInteractTimes}" >
+              <td data-th-text="${index.count}" ></td >
+              <td data-th-text="${personLocationInteractTime.locationInteract.gramaNiladhari.name+' - '+personLocationInteractTime.locationInteract.gramaNiladhari.number}" ></td >
+              <td data-th-text="${personLocationInteractTime.locationInteract.name}" ></td >
+              <td data-th-text="${#temporals.format(personLocationInteractTime.arrivalAt, 'dd-MM-yyyy HH:mm')}" ></td >
+              <td data-th-text="${#temporals.format(personLocationInteractTime.leaveAt, 'dd-MM-yyyy HH:mm')}" ></td >
+              <td data-th-text="${personLocationInteractTime.createdBy}" ></td >
+              <td data-th-text="${personLocationInteractTime.updatedBy}" ></td >
+            </tr >
+            </tbody >
+          </table >
+        </div >
+      </div >
+      <div class="row" data-th-if="${ #lists.isEmpty(turnDetail.person.personLocationInteractTimes)}" >
+        <!--list have no value-->
+        <div class="container-fluid" >
+          <div class="row" >
+            <div class="col-sm-12" >
+              <div class="alert alert-warning alert-dismissible fade show"
+                   role="alert" >
+                <h3 class="text-center text-danger" >
+                  <strong >There is no Record.
+                  </strong >
+                </h3 >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+  </div >
+  <!--Button-->
+  <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
+    <!--Back Button-->
+    <a class="btn btn-dark" data-th-href="${'/turn'}" tabindex="10" >
+      <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
+    </a >
+  </div >
+</div >
+<!--footer include-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+
+</body >
+</html >

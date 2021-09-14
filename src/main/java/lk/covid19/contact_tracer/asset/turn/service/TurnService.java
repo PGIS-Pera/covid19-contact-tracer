@@ -26,4 +26,6 @@ public interface TurnService {
   List< Turn > findByIdentifiedDateIsBetween(LocalDate startDate, LocalDate endDate);
 
   Page< Turn > findAllPageable(Pageable pageable);
+
+
 }

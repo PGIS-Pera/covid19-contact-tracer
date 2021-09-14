@@ -10,7 +10,6 @@ import lk.covid19.contact_tracer.asset.district.controller.DistrictController;
 import lk.covid19.contact_tracer.asset.district.service.DistrictService;
 import lk.covid19.contact_tracer.asset.ds_office.controller.DsOfficeController;
 import lk.covid19.contact_tracer.asset.ds_office.service.DsOfficeService;
-import lk.covid19.contact_tracer.asset.turn.service.TurnService;
 import lk.covid19.contact_tracer.asset.turn.entity.Turn;
 import lk.covid19.contact_tracer.asset.turn.service.TurnService;
 import lk.covid19.contact_tracer.util.service.CommonService;
@@ -21,7 +20,6 @@ import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
@@ -109,16 +107,18 @@ public class TurnController {
   }
 
   @GetMapping( "/delete/{id}" )
-  public String delete(@PathVariable Integer id, Model model) {
+  public String delete(@PathVariable Integer id) {
     turnService.delete(id);
     return "redirect:/turn";
   }
-/*
+
   @PostMapping( value = "/search" )
   @ResponseBody
   public MappingJacksonValue search(Turn turn) {
 
     List< Turn > turns = turnService.search(turn);
+    turns.forEach(System.out::println);
+
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(turns);
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
@@ -135,7 +135,7 @@ public class TurnController {
     return mappingJacksonValue;
   }
 
-  @GetMapping( value = "/searchOne" )
+/*  @GetMapping( value = "/searchOne" )
   @ResponseBody
   public MappingJacksonValue searchOne(@RequestParam( "name" ) String name) {
 

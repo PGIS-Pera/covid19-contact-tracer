@@ -61,16 +61,16 @@
             <table class="table table-hover table-striped table-responsive-sm  mt-1" >
               <tr >
                 <th >Index</th >
-                <th >Number</th >
-                <th >Name</th >
-                <th > Secretory Office Name</th >
+                <th >Person Code</th >
+                <th >Person Name</th >
+                <th >Identified Date</th >
                 <th >View</th >
               </tr >
               <tr data-th-each="turn, index : ${turns}" >
                 <td data-th-text="${index.count}" ></td >
-                <td data-th-text="${turn.number}" ></td >
-                <td data-th-text="${turn.name}" ></td >
-                <td data-th-text="${turn.dsOffice.name}" ></td >
+                <td data-th-text="${turn.person.code}" ></td >
+                <td data-th-text="${turn.person.name}" ></td >
+                <td data-th-text="${{turn.identifiedDate}}" ></td >
                 <td >
                   <a class="btn btn-success btn-sm" data-th-href="${'/turn/' + turn.id}" ><i
                         class="fa fa-folder-open" ></i >&nbsp;View</a >
@@ -165,7 +165,7 @@
   <div class="modal-dialog modal-xl" role="document" >
     <div class="modal-content" >
       <div class="modal-header" >
-        <h5 class="modal-title" >Gamaniladari Search</h5 >
+        <h5 class="modal-title" >Turn Search</h5 >
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
           <span aria-hidden="true" >&times;</span >
         </button >
@@ -182,6 +182,7 @@
                   <option value="" disabled selected >Please select</option >
                   <option value="name" >Name</option >
                   <option value="number" >Number</option >
+                  <option value="mobile" >Mobile</option >
                 </select >
               </div >
             </div >
@@ -213,6 +214,6 @@
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
 <!-- data table -->
 <script src="/js/pagination.js" ></script >
-<script data-th-src="@{/js/turn.js}" ></script >
+<script src="/js/turn.js" ></script >
 </body >
 </html >
