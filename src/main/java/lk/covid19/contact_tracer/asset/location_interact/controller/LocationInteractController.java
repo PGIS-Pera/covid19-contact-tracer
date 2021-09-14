@@ -107,7 +107,9 @@ public class LocationInteractController {
 
   @PostMapping( value = "/search" )
   @ResponseBody
-  public MappingJacksonValue search(LocationInteract locationInteract) {
+  public MappingJacksonValue search(@RequestParam( "name" ) String name) {
+    LocationInteract locationInteract = new LocationInteract();
+    locationInteract.setName(name);
 
     List< LocationInteract > locationInteracts = locationInteractService.search(locationInteract);
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(locationInteracts);
@@ -118,7 +120,6 @@ public class LocationInteractController {
   @PostMapping( value = "/attempt/new" )
   @ResponseBody
   public MappingJacksonValue turnNew(@RequestParam( "name" ) String name, @RequestParam( "id" ) Integer id) {
-
     LocationInteract locationInteract = new LocationInteract();
     locationInteract.setName(name);
     locationInteract.setGramaNiladhari(gramaNiladhariService.findById(id));

@@ -108,7 +108,10 @@ public class PersonServiceImpl implements PersonService {
 
   @Cacheable
   public void saveAndTurn(Person person) {
-    person.getTurns().forEach(turnService::persist);
+    person.getTurns().forEach(x -> {
+      System.out.println(x.toString());
+      turnService.persist(x);
+    });
     personLocationInteractTimeService.persistAll(person.getPersonLocationInteractTimes());
   }
 }

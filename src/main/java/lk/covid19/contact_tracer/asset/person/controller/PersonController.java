@@ -147,7 +147,7 @@ public class PersonController {
         .fromMethodName(GramaNiladhariController.class, "searchOne", "")
         .toUriString());
     model.addAttribute("locationInteractSearchUrl", MvcUriComponentsBuilder
-        .fromMethodName(LocationInteractController.class, "search", new LocationInteract())
+        .fromMethodName(LocationInteractController.class, "search", "")
         .toUriString());
     model.addAttribute("locationInteractSaveUrl", MvcUriComponentsBuilder
         .fromMethodName(LocationInteractController.class, "turnNew", "", "")
@@ -207,7 +207,7 @@ public class PersonController {
 
   @GetMapping( "/getPerson/{nic}" )
   @ResponseBody
-  public MappingJacksonValue findByNic(@RequestParam( "nic" ) String nic) {
+  public MappingJacksonValue findByNic(@PathVariable String nic) {
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(personService.findByNic(nic));
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter

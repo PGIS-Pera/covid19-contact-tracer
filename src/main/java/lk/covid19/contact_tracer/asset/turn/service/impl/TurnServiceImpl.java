@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -59,6 +61,11 @@ public class TurnServiceImpl implements TurnService {
   @Cacheable
   public List< Turn > findByIdentifiedDateIsBetween(LocalDate startDate, LocalDate endDate) {
     return turnDao.findByIdentifiedDateIsBetween(startDate, endDate);
+  }
+
+  @Cacheable
+  public Page< Turn > findAllPageable(Pageable pageable) {
+    return turnDao.findAll(pageable);
   }
 
 }

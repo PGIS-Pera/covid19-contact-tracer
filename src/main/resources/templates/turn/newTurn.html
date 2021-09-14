@@ -5,7 +5,7 @@
   <title >Thymeleaf Springboot </title >
 </head >
 <body >
-
+<link data-th-href="@{/css/newTurn.css}" media="all" rel="stylesheet" type="text/css" />
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
 
 <div class="container-fluid   " >
@@ -17,7 +17,7 @@
     </div >
     <div class="col" >
             <span class="h4 font-weight-bold text-center"
-                  data-th-text="${'Person Record With Virus'}" ></span >
+                  data-th-text="${'Infected Person Record'}" ></span >
     </div >
     <div class="col" >
       <a class="btn btn-success" data-th-href="${'/person'}" >
@@ -52,141 +52,154 @@
 </div >
 <!--Form Content - start -->
 <div class="container-fluid" >
-  <div class="col-md-8 offset-md-2" >
-    <form data-th-action="${'/person/turn/save'}" data-th-object="${personDetail}"
-          method="POST" >
-      <input data-th-field="*{id}" readonly type="hidden" id="personId" />
-      <!--turn-->
-      <div class="form-row" >
-        <div class="container-fluid" >
-          <input type="hidden" name="turn[0].person.id" data-th-value="${personDetail.id}" >
-          <div class="form-group" >
-            <label for="identifiedDate" >Identified Date</label >
-            <input type="date" name="turn[0].identifiedDate" id="identifiedDate" class="form-control"
-                   placeholder="" >
-          </div >
-          <div class="form-group" >
-            <label for="remark" >Remarks</label >
-            <textarea name="turn[0].remark" id="remark" class="form-control" cols="4" ></textarea >
-          </div >
+  <form data-th-action="${'/person/turn'}" data-th-object="${personDetail}"
+        method="POST" >
+    <input data-th-field="*{id}" readonly type="hidden" id="personId" />
+    <!--turn-->
+    <div class="form-row" >
+      <div class="page-header text-primary container-fluid " >
+        <div class="text-center" >
+          <h5 >Turn Related</h5 >
+        </div >
+        <hr />
+      </div >
+    </div >
+    <div class="form-row" >
+      <input type="hidden" name="turn[0].person.id" data-th-value="${personDetail.id}" >
+      <div class="col-md-6 col-sm-6 " >
+        <div class="form-group" >
+          <label for="identifiedDate" >Identified Date :</label >
+          <input type="date" name="turn[0].identifiedDate" id="identifiedDate" class="form-control"
+                 placeholder="" >
         </div >
       </div >
-      <!--interact location history add -->
-      <div class="container" >
-        <div class="row" >
-          <!--Left Side-->
-          <div class="col-md-6 col-sm-6 " >
-            <!--locationInteract-->
-            <div class="form-row text-md-right text-sm-left" >
-              <div class="col-md-4" >
-                <label class="control-label" data-th-for="${'locationInteract'}" >Location Interact :</label >
-              </div >
-              <div class="col-md-8" >
-                <input type="text" id="locationInteract" class="form-control"
-                       placeholder="Please enter interact location name" >
-                <input type="text" id="locationInteractOne" readonly
-                       class="form-control" disabled >
-                <div id="locationInteract-box" ></div >
-                <span class="form-text text-muted bg-warring" id="locationInteractMessage" ></span >
-                <input name="locationInteract.id" id="locationInteractId" value="" hidden >
-              </div >
-            </div >
-          </div >
-          <!--Right Side-->
-          <div class="col-md-6 col-sm-6 " >
-            <div class="form-row text-md-right text-sm-left" >
-              <div class="col" >
-                <label class="control-label" data-th-for="${'locationInteract'}" > Add Location Interact Using Button
-                                                                                   --> </label >
-              </div >
-              <div class="col text-center" >
-                <button type="button" class="btn btn-info btn-sm " data-toggle="modal" data-target="#modelId" >
-                  <i class="fas fa-notes-medical" ></i >
-                  New
-                </button >
-              </div >
-            </div >
-          </div >
+      <div class="col-md-6 col-sm-6 " >
+        <div class="form-group" >
+          <label for="remark" >Remarks:</label >
+          <textarea name="turn[0].remark" id="remark" class="form-control" cols="4" ></textarea >
         </div >
-        <div class="row" >
-          <!--Left Side-->
-          <div class="col-md-6 col-sm-6 " >
-            <!--Arrival At-->
-            <div class="form-row text-md-right text-sm-left" >
-              <div class="col-md-4" >
-                <label class="control-label" for="arrivalAt" >Arrival At :</label >
-              </div >
-              <div class="col-md-8" >
-                <input class="form-control" id="arrivalAt" type="datetime-local" />
-              </div >
+      </div >
+    </div >
+    <!--interact location history add -->
+    <div class="form-row" >
+      <div class="page-header text-primary container-fluid " >
+        <div class="text-center" >
+          <h5 >Interact Location Related</h5 >
+        </div >
+        <hr />
+      </div >
+    </div >
+    <div class="container" >
+      <div class="row" >
+        <!--Left Side-->
+        <div class="col-md-6 col-sm-6 " >
+          <!--locationInteract-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" data-th-for="${'locationInteract'}" >Location Interact :</label >
             </div >
-          </div >
-          <!--Right Side-->
-          <div class="col-md-6 col-sm-6 " >
-            <!--departure At-->
-            <div class="form-row text-md-right text-sm-left" >
-              <div class="col-md-4" >
-                <label class="control-label" for="leaveAt" >Departure At :</label >
-              </div >
-              <div class="col-md-8" >
-                <input class="form-control" id="leaveAt" type="datetime-local" />
-              </div >
+            <div class="col-md-8" >
+              <input type="text" id="locationInteract" class="form-control"
+                     placeholder="Please enter interact location name" >
+              <input type="text" id="locationInteractOne" readonly class="form-control" disabled value="" >
+              <div id="locationInteract-box" ></div >
+              <span class="form-text text-muted bg-warring" > Please type more than 3 character</span >
+              <input name="locationInteract.id" id="locationInteractId" value="" hidden type="number" >
             </div >
           </div >
         </div >
-        <div class="row mt-2" >
-          <div class="container text-right" >
-            <button class="btn btn-primary " type="button" id="addTable" >Add to Table &nbsp;<i
-                  class="fas fa-table" ></i ></button >
+        <!--Right Side-->
+        <div class="col-md-6 col-sm-6 " >
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col" >
+              <label class="control-label" data-th-for="${'locationInteract'}" > Add Location :</label >
+            </div >
+            <div class="col text-center" >
+              <button type="button" class="btn btn-info btn-group" data-toggle="modal" data-target="#modelId" >
+                <i class="fas fa-notes-medical" ></i > &nbsp;&nbsp; New
+              </button >
+            </div >
           </div >
         </div >
       </div >
-      <!--Interact Location History-->
-      <div class="form-row" >
-        <div class="container-fluid" >
-          <table class="table table-striped table-inverse table-hover" id="myTable" >
-            <caption style="caption-side:top;" class="font-weight-bold text-center h4" >
-              Locations Interact With Person &nbsp&nbsp&nbsp <br /><span class="font-weight-bold text-left h6" >Total location count which person interact : </span >
-              <span id="totalPlace" class="font-weight-bold text-center h6" ></span >
-            </caption >
-            <thead class="thead-inverse" >
-            <tr >
-              <th >Location Name</th >
-              <th >Arrival At</th >
-              <th >Leave At</th >
-              <th >Modify</th >
-            </tr >
-            </thead >
-            <tbody >
-            </tbody >
-          </table >
+      <div class="row" >
+        <!--Left Side-->
+        <div class="col-md-6 col-sm-6 " >
+          <!--Arrival At-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="arrivalAt" >Arrival At :</label >
+            </div >
+            <div class="col-md-8" >
+              <input class="form-control" id="arrivalAt" type="datetime-local" />
+            </div >
+          </div >
+        </div >
+        <!--Right Side-->
+        <div class="col-md-6 col-sm-6 " >
+          <!--departure At-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="leaveAt" >Departure At :</label >
+            </div >
+            <div class="col-md-8" >
+              <input class="form-control" id="leaveAt" type="datetime-local" />
+            </div >
+          </div >
         </div >
       </div >
-      <!-- button area-->
-      <div class="form-group col-md-12 col-sm-12 text-center flex-column mt-3" >
-        <!--Back Button-->
-        <a class="btn btn-dark" data-th-href="${'/person'}" >
-          <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
-        </a >
-        <!--Save Button-->
-        <button class="btn btn-success ml-md-5" type="submit" >
-          <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;
-          <span data-th-text="${'Save'}" ></span >
-        </button >
-        <!--Cancel Button-->
-        <button class="btn btn-warning ml-md-5" type="reset" >
-          <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
-        </button >
+      <div class="row mt-2" >
+        <div class="container text-right" >
+          <button class="btn btn-primary btn-sm" type="button" id="addTable" >Add to Table &nbsp;<i
+                class="fas fa-table" ></i ></button >
+        </div >
       </div >
-    </form >
-  </div >
+    </div >
+    <!--Interact Location History-->
+    <div class="form-row" >
+      <div class="container-fluid" >
+        <table class="table table-striped table-inverse table-hover" id="myTable" >
+          <caption style="caption-side:top;" class="font-weight-bold text-center h4" >
+            Locations Interact With Person &nbsp;&nbsp;&nbsp; <br /><span class="font-weight-bold text-left h6" >Total location count which person interact : </span >
+            <span id="totalPlace" class="font-weight-bold text-center h6" ></span >
+          </caption >
+          <thead class="thead-inverse" >
+          <tr >
+            <th >Location Name</th >
+            <th >Arrival At</th >
+            <th >Leave At</th >
+            <th >Modify</th >
+          </tr >
+          </thead >
+          <tbody >
+          </tbody >
+        </table >
+      </div >
+    </div >
+    <!-- button area-->
+    <div class="form-group col-md-12 col-sm-12 text-center flex-column mt-3" >
+      <!--Back Button-->
+      <a class="btn btn-dark" data-th-href="${'/person'}" >
+        <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back
+      </a >
+      <!--Save Button-->
+      <button class="btn btn-success ml-md-5" type="submit" >
+        <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;
+        <span data-th-text="${'Save'}" ></span >
+      </button >
+      <!--Cancel Button-->
+      <button class="btn btn-warning ml-md-5" type="reset" >
+        <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
+      </button >
+    </div >
+  </form >
 </div >
 
 
 <!--location interaction new add -->
 <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
      aria-hidden="true" data-backdrop="static" data-keyboard="false" >
-  <div class="modal-dialog " role="document" >
+  <div class="modal-dialog modal-lg" role="document" >
     <div class="modal-content" >
       <div class="modal-header" >
         <h5 class="modal-title" >New Interaction Location Add</h5 >
@@ -205,11 +218,11 @@
                   <div class="col-md-8" >
                     <input type="text" id="gramaNiladhari" class="form-control"
                            placeholder="Please enter gramaniladari division name" onkeyup="gramaniladhari(this)" />
-                    <input type="text" id="gramaNiladhariOne" readonly
-                           class="form-control" disabled >
+                    <input type="text" id="gramaNiladhariOne" readonly name="locationInteract.gramaNiladhari.name"
+                           class="form-control" disabled value="" >
                     <div id="gramaNiladhari-box" ></div >
-                    <span class="form-text text-muted bg-warring" id="gramaNiladhariMessage" ></span >
-                    <input name="gramaNiladhari.id" id="gramaNiladhariId" hidden value="" >
+                    <span class="form-text text-muted bg-warring" >Please type more than 3 character</span >
+                    <input name="locationInteract.gramaNiladhari.id" id="gramaNiladhariId" hidden value="" >
                   </div >
                 </div >
                 <!--locationInteract-->
@@ -218,7 +231,7 @@
                     <label class="control-label" data-th-for="${'locationInteract'}" >Location Interact Name :</label >
                   </div >
                   <div class="col-md-8" >
-                    <input type="text" id="locationInteractNew" class="form-control"
+                    <input type="text" id="locationInteractNew" class="form-control" name="name" value=""
                            placeholder="Please enter interact location name" >
                   </div >
                 </div >
@@ -227,11 +240,10 @@
           </div >
         </div >
         <div class="modal-footer" >
-          <button type="button" class="btn btn-danger" data-dismiss="modal" >
-            <i class="fa fa-window-close" aria-hidden="true" ></i >&nbsp;&nbsp;
-                                                                   Close
+          <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" id="closeModel" >
+            <i class="fa fa-window-close" aria-hidden="true" ></i >&nbsp;&nbsp; Close
           </button >
-          <button type="submit" class="btn btn-success" >
+          <button type="submit" class="btn btn-success btn-sm" id="saveModel" >
             <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;
             <span data-th-text="${'Save'}" ></span >
           </button >
@@ -241,246 +253,12 @@
   </div >
 </div >
 
-
 <input data-th-value="${gramaNiladhariSearchUrl}" hidden id="gramaNiladhariSearchUrl" type="text" >
 <input data-th-value="${locationInteractSearchUrl}" hidden id="locationInteractSearchUrl" type="text" >
 <input data-th-value="${locationInteractSaveUrl}" hidden id="locationInteractSaveUrl" type="text" >
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
-<script type="text/javascript" >
-    $('[type="date"]').prop('max', function () {
-        return new Date().toJSON().split('T')[0];
-    });
-
-    $('[type="datetime-local"]').prop('max', function () {
-        let now = new Date();
-        let year = now.getFullYear();
-        let month = now.getMonth();
-        let date = now.getDate();
-        let hours = now.getHours();
-        let min = now.getMinutes()
-        return `${year}-${month > 9 ? month : '0' + month}-${date > 9 ? date : '0' + date}T${hours > 9 ? hours : '0' + hours}:${min > 9 ? min : '0' + min}`;
-    });
-
-    //max min value changes in leaveAt and arrivalAt
-    document.getElementById("arrivalAt").addEventListener('change', function () {
-        document.getElementById("leaveAt").setAttribute("min", document.getElementById('arrivalAt').value);
-    })
-
-    let message_html = 'Please type more than 3 character';
-    // AJAX call for autocomplete gramaniladhari
-    let gramaNiladhari = [];
-
-    function gramaniladhari(val) {
-        $("#gramaNiladhariMessage").html('');
-        if (val.value.length > 3) {
-            $("#gramaNiladhariMessage").html('');
-            $.ajax({
-                type: "GET",
-                url: $("#gramaNiladhariSearchUrl").val() + val.value,
-                success: function (data) {
-                    let html_first_part = `<ul class="list-group list-group-flush justify-content-center">`;
-                    let html_middle_part = ``;
-                    for (let i = 0; i < data.length; i++) {
-                        html_middle_part += `<li onClick="selectGramaNiladhari(${data[i].id})" class="list-group-item font-weight-bold p">${data[i].name} - ${data[i].number}</li >`;
-                    }
-                    $("#gramaNiladhari-box").show();
-                    $("#gramaNiladhari-box").html(html_first_part + html_middle_part);
-                    $("#gramaNiladhari").css("background", "#FFF");
-                    interaction = data;
-                }
-            });
-        } else {
-            $("#gramaNiladhariMessage").after(message_html);
-        }
-    }
-
-    function selectGramaNiladhari(val) {
-        $("#gramaNiladhari").attr('value', val);
-        $("#gramaNiladhari-box").hide();
-        interaction.forEach((x) => {
-            if (x.id === parseInt(val)) {
-                $("#gramaNiladhariOne").val(`${x.name} - ${x.number}`);
-                $("#gramaNiladhariId").attr('value', x.id);
-            }
-        })
-    }
-
-    // AJAX call for autocomplete interaction
-    let interaction = [];
-    $("#locationInteract").keyup(function () {
-        let type_value = $(this).val();
-        let gramaNiladhari_type_value = document.getElementById("gramaNiladhariId").value;
-
-        let locationInteract_objects = {};
-
-        if (type_value.length > 3) {
-            locationInteract_objects = {};
-            if (gramaNiladhari_type_value) {
-                locationInteract_objects.gramaNiladhari = {
-                    id: gramaNiladhari_type_value
-                };
-            } else {
-                locationInteract_objects.name = type_value;
-            }
-            $("#locationInteractMessage").html('');
-            $.ajax({
-                type: "POST",
-                url: $("#locationInteractSearchUrl").val(),
-                data: JSON.stringify(locationInteract_objects),
-                success: function (data) {
-                    let html_first_part = `<ul class="list-group list-group-flush justify-content-center">`;
-                    let html_middle_part = ``;
-                    for (let i = 0; i < data.length; i++) {
-                        html_middle_part += `<li onClick="selectInteraction(${data[i].id})" class="list-group-item font-weight-bold p">${data[i].name}</li >`;
-                    }
-                    $("#locationInteract-box").show();
-                    $("#locationInteract-box").html(html_first_part + html_middle_part);
-                    $("#locationInteract").css("background", "#FFF");
-                    interaction = data;
-                }
-            });
-        } else {
-            $("#locationInteractMessage").html(message_html);
-        }
-    });
-
-    function selectInteraction(val) {
-        $("#locationInteract").attr('value', val);
-        $("#locationInteract-box").hide();
-        interaction.forEach((x) => {
-            if (x.id === parseInt(val)) {
-                $("#locationInteractOne").val(`${x.name}`);
-                $("#locationInteractId").attr('value', x.id);
-            }
-        })
-    }
-
-    let personLocationInteractTimes = [];
-
-    $("#addTable").bind('click', function () {
-        let person_id = $("#personId").val();
-        let locationInteract = $("#locationInteractId").val();
-        let locationInteractName = $("#locationInteractOne").val();
-        let arrivalAt = $("#arrivalAt").val();
-        let leaveAt = $("#leaveAt").val();
-
-        if (person_id && locationInteract && arrivalAt && leaveAt) {
-            let personLocationInteractTime = {
-                person: {id: person_id},
-                locationInteract: {id: locationInteract, name: locationInteractName},
-                arrivalAt: arrivalAt,
-                leaveAt: leaveAt
-            }
-            personLocationInteractTimes.push(personLocationInteractTime)
-            tableRowAdd();
-            console.log(personLocationInteractTime)
-        } else {
-            swal({
-                title: "Please check your entered values",
-                text: "Check \n Location Interact \n Arrival At or Departure at \n shoud not be empty.",
-                icon: "warning",
-            })
-        }
-
-    });
-
-    function clearValues() {
-        $("#locationInteract, #locationInteractId, #locationInteractOne, #gramaNiladhari, #gramaNiladhariId, #gramaNiladhariOne, #arrivalAt, #leaveAt").val('');
-    }
-
-    function tableRowAdd() {
-        let html = ``;
-        let i = 0;
-        personLocationInteractTimes.forEach((x) => {
-            html += tableRowHtml(x, i);
-            i++;
-        })
-        $("#myTable tbody ").html(html);
-        clearValues();
-        $("#totalPlace").val(personLocationInteractTimes.length);
-    }
-
-
-    function tableRowHtml(obj, i) {
-
-        return `<tr >
-                  <td >
-                    <input id="pi${i}" type="text" name="personLocationInteractTimes[${i}].person.id" value="${obj.person.id}" hidden required>
-                    <input id="li${i}" type="text" name="personLocationInteractTimes[${i}].locationInteract.id" value="${obj.locationInteract.id}" hidden required>
-                    <input id="ln${i}" type="text" name="personLocationInteractTimes[${i}].locationInteract.name" value="${obj.locationInteract.name}" readonly class="form-control">
-                  </td >
-                  <td >
-                    <input id="aa${i}" type="datetime-local" name="personLocationInteractTimes[${i}].arrivalAt" value="${obj.arrivalAt}" readonly class="form-control" required>
-                  </td >
-                  <td >
-                    <input id="la${i}" type="datetime-local" name="personLocationInteractTimes[${i}].leaveAt" value="${obj.leaveAt}" readonly class="form-control" required>
-                  </td >
-                  <td >
-                    <button id="bi${i}" class="btn btn-danger btn-sm" type="button" onclick="removeRow(i)">
-                      <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;
-                                                                                   Remove
-                    </button >
-                  </td >
-                </tr >`
-    }
-
-
-    function removeRow(obj) {
-        console.log(obj.id + " id")
-        let removeFiledId = obj.getAttribute('id').slice(2);
-
-        let personLocationInteractTime = {
-            person: {id: $(`pi${removeFiledId}`).val()},
-            locationInteract: {id: $(`li${removeFiledId}`).val(), name: $(`la${removeFiledId}`).val()},
-            arrivalAt: $(`aa${removeFiledId}`).val(),
-            leaveAt: $(`la${removeFiledId}`).val()
-        }
-        document.getElementById("myTable").deleteRow(obj.parentNode.parentNode.rowIndex);
-        removeItemAll(personLocationInteractTimes, personLocationInteractTime);
-        tableRowAdd();
-    }
-
-    function removeItemAll(arr, value) {
-        let i = 0;
-        while (i < arr.length) {
-            if (arr[i] === value) {
-                arr.splice(i, 1);
-            } else {
-                ++i;
-            }
-        }
-        return arr;
-    }
-
-    //new location history
-    $(document).ready(function () {
-        $("#contactForm").submit(function (event) {
-            submitForm();
-            return false;
-        });
-    });
-
-    function submitForm() {
-        $.ajax({
-            type: "POST",
-            url: $("#locationInteractSaveUrl").val(),
-            cache: false,
-            data: $('form#contactForm').serialize(),
-            success: function (response) {
-                $("#locationInteractOne").val(`${response.name}`);
-                $("#locationInteract").val(`${response.name}`);
-                $("#locationInteractId").attr('value', response.id);
-                $("#modelId").modal('hide');
-            },
-            error: function () {
-                alert("Error");
-            }
-        });
-    }
-
-</script >
-
+<script type="text/javascript" src="/js/newTurn.js" ></script >
 </body >
 </html >
 
