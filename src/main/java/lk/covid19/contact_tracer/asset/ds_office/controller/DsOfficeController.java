@@ -10,6 +10,9 @@ import lk.covid19.contact_tracer.asset.district.entity.District;
 import lk.covid19.contact_tracer.asset.district.service.DistrictService;
 import lk.covid19.contact_tracer.asset.ds_office.entity.DsOffice;
 import lk.covid19.contact_tracer.asset.ds_office.service.DsOfficeService;
+import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
+import lk.covid19.contact_tracer.asset.person.entity.Person;
+import lk.covid19.contact_tracer.util.service.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -29,6 +33,8 @@ public class DsOfficeController {
 
   private final DsOfficeService dsOfficeService;
   private final DistrictService districtService;
+  private final GramaNiladhariService gramaNiladhariService;
+  private final CommonService commonService;
 
 
   private String commonThing(Model model, Boolean booleanValue, DsOffice dsOfficeObject) {
@@ -55,7 +61,11 @@ public class DsOfficeController {
 
   @GetMapping( "/{id}" )
   public String findById(@PathVariable Integer id, Model model) {
-    model.addAttribute("dsOfficeDetail", dsOfficeService.findById(id));
+    DsOffice dsOffice = dsOfficeService.findById(id);
+    model.addAttribute("dsOfficeDetail", dsOffice);
+    List< Person > persons = new ArrayList<>();
+    dsOffice.getGramaNiladharis().forEach(x -> persons.addAll(gramaNiladhariService.findById(x.getId()).getPersons()));
+    model.addAttribute("attributeAndCounts", commonService.personsAccordingToType(persons));
     return "dsOffice/dsOffice-detail";
   }
 
