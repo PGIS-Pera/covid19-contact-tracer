@@ -46,6 +46,7 @@ $("#selectParameter").change(function () {
 })
 
 $("#searchInput").keyup(function () {
+    //todo need to check this turn search using person
     let url = $("#searchUrl").val();
     let select_parameter_value = $("#selectParameter").val();
     let enter_value = $(this).val();
