@@ -65,18 +65,18 @@
       </div >
     </div >
     <div class="form-row" >
-      <input type="hidden" name="turn[0].person.id" data-th-value="${personDetail.id}" >
+      <input type="hidden" name="turns[0].person.id" data-th-value="${personDetail.id}" required >
       <div class="col-md-6 col-sm-6 " >
         <div class="form-group" >
           <label for="identifiedDate" >Identified Date :</label >
-          <input type="date" name="turn[0].identifiedDate" id="identifiedDate" class="form-control"
-                 placeholder="" >
+          <input type="date" name="turns[0].identifiedDate" id="identifiedDate" class="form-control"
+                 placeholder="" required >
         </div >
       </div >
       <div class="col-md-6 col-sm-6 " >
         <div class="form-group" >
           <label for="remark" >Remarks:</label >
-          <textarea name="turn[0].remark" id="remark" class="form-control" cols="4" ></textarea >
+          <textarea name="turns[0].remark" id="remark" class="form-control" cols="4" ></textarea >
         </div >
       </div >
     </div >
