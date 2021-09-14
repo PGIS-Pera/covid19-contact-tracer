@@ -142,9 +142,13 @@
       <span class="h4 text-center" >Previous Diagnosed Turn  </span >
       <!--list have value -->
       <ul data-th-if="${not #lists.isEmpty(personDetail.turns)}" class="list-group" >
+        <li >
+          <span class="mr-2 text-center text-decoration-underline" data-th-text="${'Turn No '}" ></span >:
+          <span class="ml-2 text-center text-decoration-underline" data-th-text="${'Identified Date'}" ></span >
+        </li >
         <li class="list-group-item " data-th-each="turn , index : ${personDetail.turns}" >
-          <span class="mr-2" data-th-text="${index.count}" ></span >:
-          <span data-th-text="${{turn.identifiedDate}}" ></span >
+          <span class="mr-2 text-center" data-th-text="${index.count}" ></span >:
+          <span class="ml-2 text-center" data-th-text="${{turn.identifiedDate}}" ></span >
         </li >
       </ul >
       <!--list have no value-->
