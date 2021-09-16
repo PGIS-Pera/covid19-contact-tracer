@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<!--table pagination-->
+<link data-th-href="@{/css/dataTables.bootstrap.min.css}" media="all" rel="stylesheet" type="text/css" />
+
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<div class="container-fluid" >
+  <div class="row text-center" >
+    <div class="col" >
+      <span class="font-weight-bold h2" >                    Recent Locations where patient was found </span >
+    </div >
+    <div class="col" >
+      <a class="btn btn-primary" data-th-href="${'/home'}" id="searchShow" tabindex="2" >
+        <i class="fas fa-home" style="font-size: 20px" ></i >&nbsp;&nbsp;Home
+      </a >
+    </div >
+  </div >
+</div >
+
+<!--data find form-->
+<div class="container-fluid" >
+  <!--date selection rows-->
+  <div class="form-row" >
+    <!--Left Side-->
+    <div class="col-md-6 col-sm-6 " >
+      <!--Arrival At-->
+      <div class="form-row text-md-right text-sm-left" >
+        <div class="col-md-4" >
+          <label class="control-label" for="arrivalAt" >Arrival At :</label >
+        </div >
+        <div class="col-md-8" >
+          <input class="form-control" id="arrivalAt" type="datetime-local" />
+        </div >
+      </div >
+    </div >
+    <!--Right Side-->
+    <div class="col-md-6 col-sm-6 " >
+      <!--departure At-->
+      <div class="form-row text-md-right text-sm-left" >
+        <div class="col-md-4" >
+          <label class="control-label" for="leaveAt" >Departure At :</label >
+        </div >
+        <div class="col-md-8" >
+          <input class="form-control" id="leaveAt" type="datetime-local" />
+        </div >
+      </div >
+    </div >
+  </div >
+  <!--  grmaniladhari selection row-->
+  <div class="form-row" >
+    <!--Left Side-->
+    <div class="col-md-6 col-sm-6 " >
+      <div class="form-row text-md-right text-sm-left" >
+        <div class="col-md-4" >
+          <label class="control-label" for="gramaNiladhari" >Gramaniladhari Division :</label >
+        </div >
+        <div class="col-md-8" >
+          <input type="text" id="gramaNiladhari" class="form-control"
+                 placeholder="Please enter gramaniladari division name" onkeyup="gramaniladhari(this)" />
+          <input type="text" id="gramaNiladhariOne" readonly name="locationInteract.gramaNiladhari.name"
+                 class="form-control" disabled value="" >
+          <div id="gramaNiladhari-box" ></div >
+          <span class="form-text text-muted bg-warring" >Please type more than 3 character</span >
+          <input name="locationInteract.gramaNiladhari.id" id="gramaNiladhariId" hidden value="" >
+        </div >
+      </div >
+
+    </div >
+    <!--Right Side-->
+    <div class="col-md-6 col-sm-6 " >
+      <div class="form-row text-md-right text-sm-left p-5" >
+        <div class="col-md-4" >
+          <a class="btn btn-success btn-group text-white" >
+            <i class="fa fa-search" ></i > &nbsp; Search </a >
+        </div >
+        <div class="col-md-4" >
+          <a class="btn btn-primary btn-group text-white" >
+            <i class="fa fa-comments" ></i > &nbsp; SMS Subscribe &nbsp; <i class="fa fa-rocket" ></i > </a >
+        </div >
+      </div >
+    </div >
+  </div >
+</div >
+
+<!--if not empty list-->
+<div class="container-fluid" >
+  <table class="table table-hover table-striped" id="myTable" >
+    <thead class="thead-inverse" >
+    <tr >
+      <th >Index</th >
+      <th >Location Name</th >
+      <th >Arrival At</th >
+      <th >Departure At</th >
+    </tr >
+    </thead >
+    <tbody >
+
+    </tbody >
+  </table >
+</div >
+
+<input data-th-value="${gramaNiladhariSearchUrl}" hidden id="gramaNiladhariSearchUrl" type="text" >
+<input hidden id="locationInteractSearchUrl" type="text" >
+<!--footer fragment-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<!-- data table -->
+<script src="/js/pagination.js" ></script >
+<script src="/js/patientVisitedPlaceTime.js" ></script >
+</body >
+</html >

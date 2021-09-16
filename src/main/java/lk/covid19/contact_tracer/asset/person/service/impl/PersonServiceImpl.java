@@ -1,6 +1,7 @@
 package lk.covid19.contact_tracer.asset.person.service.impl;
 
 
+import lk.covid19.contact_tracer.asset.grama_niladhari.entity.GramaNiladhari;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.service.PersonLocationInteractTimeService;
 import lk.covid19.contact_tracer.asset.turn.entity.Turn;
 import lk.covid19.contact_tracer.asset.turn.service.TurnService;
@@ -108,7 +109,16 @@ public class PersonServiceImpl implements PersonService {
 
   @Cacheable
   public void saveAndTurn(Person person) {
+    Person personDb = personDao.getById(person.getId());
+    personDb.setPersonStatus(PersonStatus.INFECTED);
+    personDao.save(personDb);
     person.getTurns().forEach(turnService::persist);
     personLocationInteractTimeService.persistAll(person.getPersonLocationInteractTimes());
   }
+
+  @Cacheable
+  public List< Person > findByGramaNiladhari(GramaNiladhari gramaNiladhari) {
+    return personDao.findByGramaNiladhari(gramaNiladhari);
+  }
+
 }

@@ -1,6 +1,7 @@
 package lk.covid19.contact_tracer.asset.person.service;
 
 
+import lk.covid19.contact_tracer.asset.grama_niladhari.entity.GramaNiladhari;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,4 +33,6 @@ public interface PersonService {
   List< Person > findByTurnIdentifiedDateRange(LocalDate startDate, LocalDate endDate);
 
   void saveAndTurn(Person person);
+
+  List< Person > findByGramaNiladhari(GramaNiladhari gramaNiladhari);
 }

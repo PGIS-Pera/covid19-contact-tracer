@@ -117,7 +117,7 @@ public class GramaNiladhariController {
   @PostMapping( value = "/search" )
   @ResponseBody
   public MappingJacksonValue search(GramaNiladhari gramaNiladhari) {
-
+    System.out.println(gramaNiladhari.toString());
     List< GramaNiladhari > gramaNiladharis = gramaNiladhariService.search(gramaNiladhari);
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(gramaNiladharis);
 
