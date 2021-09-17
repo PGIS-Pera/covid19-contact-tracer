@@ -19,6 +19,7 @@ import java.util.List;
 @JsonFilter( "StayLocation" )
 @ToString
 public class StayLocation extends AuditEntity {
+  // this mean where patient was being before infected
   @Size( min = 2, max = 60, message = "Your Stream length should be 12" )
   private String name;
 

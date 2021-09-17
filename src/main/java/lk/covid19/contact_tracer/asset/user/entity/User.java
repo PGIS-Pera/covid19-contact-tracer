@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.role.entity.Role;
 import lk.covid19.contact_tracer.asset.user_details.entity.UserDetails;
+import lk.covid19.contact_tracer.asset.user_treatment_center.entity.UserTreatmentCenter;
 import lk.covid19.contact_tracer.configuration.sec_user_detail_service.entity.UserSessionLog;
 import lk.covid19.contact_tracer.util.audit.AuditEntity;
 import lombok.AllArgsConstructor;
@@ -42,12 +43,12 @@ public class User extends AuditEntity {
       "fk_user_vs_user_details" ) )
   private UserDetails userDetails;
 
-  @OneToOne( cascade = CascadeType.ALL )
-  @JoinColumn( name = "person_id", referencedColumnName = "id", foreignKey = @ForeignKey( name = "fk_user_vs_person" ) )
-  private Person person;
-
-  @OneToMany( mappedBy = "user")
+  @OneToMany( mappedBy = "user" )
   private List< UserSessionLog > userSessionLogs;
+
+  @OneToMany( mappedBy = "user" )
+  private List< UserTreatmentCenter > userTreatmentCenters;
+
 
   @ManyToMany( fetch = FetchType.EAGER )
   @Fetch( FetchMode.SUBSELECT )

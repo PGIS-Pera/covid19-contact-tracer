@@ -8,6 +8,8 @@ import lk.covid19.contact_tracer.asset.ds_office.entity.DsOffice;
 import lk.covid19.contact_tracer.asset.ds_office.service.DsOfficeService;
 import lk.covid19.contact_tracer.asset.grama_niladhari.entity.GramaNiladhari;
 import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
+import lk.covid19.contact_tracer.asset.news_subscription.entity.News;
+import lk.covid19.contact_tracer.asset.news_subscription.service.NewsService;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.person.service.PersonService;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.controller.PersonLocationInteractTimeController;
@@ -40,46 +42,20 @@ import java.util.List;
 public class NewTurnAspects {
 
   private final MobileMessageService mobileMessageService;
+  private final NewsService newsService;
   private final PersonService personService;
 
-
-    /*
-       //What kind of method calls I would intercept
-       //execution(* PACKAGE.*.*(..))
-       //Weaving & Weaver
-       @Before( "execution(* com.aop.example.aspect.service.HelloService.getMessage(..))" )
-       public void before() {
-           System.out.println(" Before");
-       }
-       @After( "execution(* com.aop.example.aspect.service.HelloService.getMessage(..))" )
-       public void after() {
-           System.out.println(" After");
-       }
-       @AfterReturning( "execution(* com.aop.example.aspect.service.HelloService.getMessage(..))" )
-       public void afterReturning() {
-           //when method execute successfully this method would execute
-           System.out.println(" After Returning");
-       }
-       @AfterThrowing( "execution(* com.aop.example.aspect.service.HelloService.getMessage(..))" )
-       public void afterThrowing() {
-           //without error this method would not be executed
-           System.out.println(" After Throwing");
-       }
-   */
-
-
-  // after
 
   @After( value =
       "execution(* lk.covid19.contact_tracer.asset.person.service.PersonService.saveAndTurn(..))" )
   public void before() {
     Person person = personService.findLastPatient();
-    List< Person > persons = personService.findByGramaNiladhari(person.getGramaNiladhari());
+    List< News > newses = newsService.findByGramaNiladhari(person.getGramaNiladhari());
     String locationListUrl = MvcUriComponentsBuilder
         .fromMethodName(PersonLocationInteractTimeController.class, "interactLocationSearchPage")
         .toUriString();
     String message = "Please check new updated location list \n" + locationListUrl;
-    persons.forEach(x -> {
+    newses.forEach(x -> {
       String mobile = "+94" + x.getMobile().substring(1, 9);
       try {
         mobileMessageService.sendSMS(mobile, message);

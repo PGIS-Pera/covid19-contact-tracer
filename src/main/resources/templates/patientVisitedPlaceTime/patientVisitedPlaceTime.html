@@ -10,10 +10,10 @@
 
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
 
-<div class="container-fluid" >
+<div class="container-fluid mt-2" >
   <div class="row text-center" >
     <div class="col" >
-      <span class="font-weight-bold h2" >                    Recent Locations where patient was found </span >
+      <span class="font-weight-bold h2" > Recent Locations where patient was found </span >
     </div >
     <div class="col" >
       <a class="btn btn-primary" data-th-href="${'/home'}" id="searchShow" tabindex="2" >
@@ -24,7 +24,7 @@
 </div >
 
 <!--data find form-->
-<div class="container-fluid" >
+<div class="container-fluid mt-2" >
   <!--date selection rows-->
   <div class="form-row" >
     <!--Left Side-->
@@ -75,12 +75,12 @@
     <!--Right Side-->
     <div class="col-md-6 col-sm-6 " >
       <div class="form-row text-md-right text-sm-left p-5" >
-        <div class="col-md-4" >
+        <div class="col-md-4 text-left" >
           <a class="btn btn-success btn-group text-white" >
             <i class="fa fa-search" ></i > &nbsp; Search </a >
         </div >
-        <div class="col-md-4" >
-          <a class="btn btn-primary btn-group text-white" >
+        <div class="col-md-4 text-right" >
+          <a class="btn btn-primary btn-group text-white" data-toggle="modal" data-target="#modelId" >
             <i class="fa fa-comments" ></i > &nbsp; SMS Subscribe &nbsp; <i class="fa fa-rocket" ></i > </a >
         </div >
       </div >
@@ -104,6 +104,65 @@
     </tbody >
   </table >
 </div >
+
+
+<!--location interaction new add -->
+<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false" >
+  <div class="modal-dialog modal-lg" role="document" >
+    <div class="modal-content" >
+      <div class="modal-header" >
+        <h5 class="modal-title" >News subscription</h5 >
+      </div >
+      <form id="contactForm" name="contact" role="form" >
+        <div class="modal-body" >
+          <div class="container" >
+            <div class="row" >
+              <!--Left Side-->
+              <div class="col" >
+                <!--Gramaniladhari division-->
+                <div class="form-row text-md-right text-sm-left" >
+                  <div class="col-md-4" >
+                    <label class="control-label" for="treatmentCenter" >Gramaniladhari Division :</label >
+                  </div >
+                  <div class="col-md-8" >
+                    <input type="text" id="gramaNiladhari1" class="form-control"
+                           placeholder="Please enter gramaniladari division name" onkeyup="gramaniladhari(this)" />
+                    <input type="text" id="gramaNiladhari1One" readonly name="locationInteract.treatmentCenter.name"
+                           class="form-control" disabled value="" >
+                    <div id="gramaNiladhari1-box" ></div >
+                    <span class="form-text text-muted bg-warring" >Please type more than 3 character</span >
+                    <input name="treatmentCenter.id" id="gramaNiladhari1Id" hidden value="" >
+                  </div >
+                </div >
+                <!--locationInteract-->
+                <div class="form-row text-md-right text-sm-left" >
+                  <div class="col-md-4" >
+                    <label class="control-label" data-th-for="${'mobile'}" >Mobile :</label >
+                  </div >
+                  <div class="col-md-8" >
+                    <input type="text" id="locationInteractNew" class="form-control" name="mobile" value=""
+                           placeholder="please enter mobile number" >
+                  </div >
+                </div >
+              </div >
+            </div >
+          </div >
+        </div >
+        <div class="modal-footer" >
+          <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" id="closeModel" >
+            <i class="fa fa-window-close" aria-hidden="true" ></i >&nbsp;&nbsp; Close
+          </button >
+          <button type="submit" class="btn btn-success btn-sm" id="saveModel" >
+            <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;
+            <span data-th-text="${'Save'}" ></span >
+          </button >
+        </div >
+      </form >
+    </div >
+  </div >
+</div >
+
 
 <input data-th-value="${gramaNiladhariSearchUrl}" hidden id="gramaNiladhariSearchUrl" type="text" >
 <input hidden id="locationInteractSearchUrl" type="text" >

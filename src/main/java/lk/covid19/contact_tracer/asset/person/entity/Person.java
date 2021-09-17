@@ -55,13 +55,9 @@ public class Person extends AuditEntity {
   @DateTimeFormat( pattern = "yyyy-MM-dd" )
   private LocalDate dateOfBirth;
 
-  @OneToOne(mappedBy = "person")
-  @ToString.Exclude
-  private User user;
-
   @ManyToOne
   @JoinColumn( name = "grama_niladhari_id", nullable = false, foreignKey = @ForeignKey( name =
-      "fk_patient_vs_grama_niladhari" ) )
+      "fk_news_vs_grama_niladhari" ) )
   @ToString.Exclude
   private GramaNiladhari gramaNiladhari;
 
