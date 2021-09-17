@@ -17,6 +17,8 @@ document.getElementById("arrivalAt").addEventListener('change', function () {
 let gramaNiladhari = [];
 
 function gramaniladhari(val) {
+    let filedId = val.getAttribute('id');
+    console.log(filedId)
     if (val.value.length > 3) {
         $.ajax({
             type: "GET",

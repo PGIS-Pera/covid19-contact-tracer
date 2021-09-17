@@ -47,8 +47,8 @@ public class TurnInHistoryNote extends AuditEntity {
   private TurnHistory turnHistory;
 
   @ManyToOne
-  @JoinColumn( name = "quarantine_center_id", foreignKey = @ForeignKey( name =
-      "fk_turn_in_history_note_vs_quarantine_center" ) )
+  @JoinColumn( name = "treatment_center_id", foreignKey = @ForeignKey( name =
+      "fk_turn_in_history_note_vs_treatment_center" ) )
   private TreatmentCenter treatmentCenter;
 
 }
