@@ -19,6 +19,7 @@ let gramaNiladhari = [];
 function gramaniladhari(val) {
     let filedId = val.getAttribute('id');
     console.log(filedId)
+    //todo 9/18 finished point
     if (val.value.length > 3) {
         $.ajax({
             type: "GET",
