@@ -2,16 +2,90 @@
 <html lang="en" >
 <head data-th-replace="~{fragments/header :: headerFragment}" >
   <meta charset="UTF-8" >
-  <title >Thymeleaf Springboot </title >
+  <title >CodePen - Responsive and Animated Pie Charts</title >
 </head >
-<body >
-<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
-<iframe src="https://covid19.gov.lk" class="container-fluid vh-100 mt-n3" ></iframe >
 
-<!--footer include-->
-<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
-<!--script include-->
-<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<body >
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" >
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' >
+<link rel="stylesheet" href="./css/index_style.css" >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+<!-- partial:index.partial.html -->
+<div class="wrapper" >
+  <!-- Page Header -->
+  <header >
+
+    <!-- This div is  intentionally blank. It creates the transparent black overlay over the video which you can modify in the CSS -->
+    <div class="overlay" ></div >
+
+    <!-- The HTML5 video element that will create the background video on the header -->
+    <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" >
+      <!--<source src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4" type="video/mp4"> -->
+      <source
+            src="https://media.istockphoto.com/videos/red-coronavirus-xray-cancer-illness-ncov-virus-close-up-defocus-red-video-id1207750416"
+            type="video/mp4" >
+      <!--<source src="https://media.istockphoto.com/videos/dispersed-corona-viruses-with-blue-liquid-background-video-id1217834492" type="video/mp4">-->
+
+    </video >
+
+    <!-- The header content -->
+    <div class="container h-100" >
+      <div class="d-flex h-100 text-center align-items-center" >
+        <div class="w-100 text-white" >
+          <h1 class="display-3" >Covid19 Contact Tracer</h1 >
+          <p class="lead mb-0" >Standing Together</p >
+        </div >
+      </div >
+    </div >
+  </header >
+  <!-- End of Page Header -->
+
+  <!-- JSON Request -->
+  <div class="mypanel" ></div >
+  <div id="date" ></div >
+
+  <!-- End of JSON request -->
+  <div class="pie-charts" >
+    <div class="pieID--operations pie-chart--wrapper" >
+      <h2 >Summary of Total Cases</h2 >
+      <div class="pie-chart" >
+        <div class="pie-chart__pie" ></div >
+        <ul class="pie-chart__legend" >
+          <li ><em >Recovered</em ><span id="totRecov" >000000</span ></li >
+          <li ><em >Active</em ><span id="totActiv" >00000</span ></li >
+          <li ><em >Death</em ><span id="totDeth" >000000</span ></li >
+        </ul >
+      </div >
+    </div >
+    <div class="pieID--categories pie-chart--wrapper" >
+      <h2 >Daily Reports</h2 >
+      <div class="pie-chart" >
+        <div class="pie-chart__pie" ></div >
+        <ul class="pie-chart__legend" >
+          <li ><em >New</em ><span id="dailyNew" >1111</span ></li >
+          <li ><em >Recovered</em ><span id="DailyRecov" >1111</span ></li >
+          <li ><em >Deth</em ><span id="dailyDeth" >000</span ></li >
+        </ul >
+      </div >
+    </div >
+    <div class="pieID--operations pie-chart--wrapper" >
+      <h2 >Operations</h2 >
+      <div class="pie-chart" >
+        <div class="pie-chart__pie" ></div >
+        <ul class="pie-chart__legend" >
+          <li ><em >Addition</em ><span >486</span ></li >
+          <li ><em >Subtraction</em ><span >156</span ></li >
+          <li ><em >Multiplication</em ><span >215</span ></li >
+        </ul >
+      </div >
+    </div >
+  </div >
+</div >
+
+
+<script src='https://code.jquery.com/jquery-2.2.4.min.js' ></script >
+<script src='https://codepen.io/MaciejCaputa/pen/EmMooZ.js' ></script >
+<script src="./js/index_script.js" ></script >
 
 </body >
 </html >
