@@ -1,26 +1,18 @@
 package lk.covid19.contact_tracer.asset.person_location_interact_time.controller;
 
 
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import lk.covid19.contact_tracer.asset.common_asset.model.TwoDateGramaNiladhari;
 import lk.covid19.contact_tracer.asset.grama_niladhari.controller.GramaNiladhariController;
-import lk.covid19.contact_tracer.asset.grama_niladhari.entity.GramaNiladhari;
 import lk.covid19.contact_tracer.asset.location_interact.entity.LocationInteract;
 import lk.covid19.contact_tracer.asset.news_subscription.controller.NewsController;
 import lk.covid19.contact_tracer.asset.news_subscription.entity.News;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.entity.PersonLocationInteractTime;
-import lk.covid19.contact_tracer.asset.turn.service.TurnService;
-import lk.covid19.contact_tracer.asset.location_interact.service.LocationInteractService;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.service.PersonLocationInteractTimeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
