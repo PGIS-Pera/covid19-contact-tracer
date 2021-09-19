@@ -1,7 +1,6 @@
 package lk.covid19.contact_tracer.asset.news_subscription.service;
 
 
-import lk.covid19.contact_tracer.asset.common_asset.model.enums.Province;
 import lk.covid19.contact_tracer.asset.grama_niladhari.entity.GramaNiladhari;
 import lk.covid19.contact_tracer.asset.news_subscription.entity.News;
 
@@ -20,4 +19,6 @@ public interface NewsService {
   List< News > search(News news);
 
   List< News > findByGramaNiladhari(GramaNiladhari gramaNiladhari);
+
+  void unsubscribe(String mobile);
 }

@@ -45,38 +45,43 @@
   <div id="date" ></div >
 
   <!-- End of JSON request -->
-  <div class="pie-charts" >
-    <div class="pieID--operations pie-chart--wrapper" >
-      <h2 >Summary of Total Cases</h2 >
-      <div class="pie-chart" >
-        <div class="pie-chart__pie" ></div >
-        <ul class="pie-chart__legend" >
-          <li ><em >Recovered</em ><span id="totRecov" >000000</span ></li >
-          <li ><em >Active</em ><span id="totActiv" >00000</span ></li >
-          <li ><em >Death</em ><span id="totDeth" >000000</span ></li >
-        </ul >
+  <div class="wrapper" >
+
+    <div class="pie-charts" >
+      <div class="pieID--localstat pie-chart--wrapper" >
+        <h2 >Local Statistics</h2 >
+        <div class="pie-chart" >
+          <div class="pie-chart__pie" ></div >
+          <ul class="pie-chart__legend" >
+            <li ><em >Total Recovered</em ><span id="totRecov" >642</span ></li >
+            <li ><em >Total Deths</em ><span id="totDeth" >358</span ></li >
+            <li ><em >Active Cases</em ><span id="totActiv" >642</span ></li >
+            <li ><em >Total Cases</em ><span id="totCases" >358</span ></li >
+          </ul >
+        </div >
       </div >
-    </div >
-    <div class="pieID--categories pie-chart--wrapper" >
-      <h2 >Daily Reports</h2 >
-      <div class="pie-chart" >
-        <div class="pie-chart__pie" ></div >
-        <ul class="pie-chart__legend" >
-          <li ><em >New</em ><span id="dailyNew" >1111</span ></li >
-          <li ><em >Recovered</em ><span id="DailyRecov" >1111</span ></li >
-          <li ><em >Deth</em ><span id="dailyDeth" >000</span ></li >
-        </ul >
+      <div class="pieID--dailystat pie-chart--wrapper" >
+        <h2 >Daily Local Statistics</h2 >
+        <div class="pie-chart" >
+          <div class="pie-chart__pie" ></div >
+          <ul class="pie-chart__legend" >
+            <li ><em >New Cases</em ><span id="dailyNew" >768</span ></li >
+            <li ><em >Recovered</em ><span id="DailyRecov" >232</span ></li >
+            <li ><em >Deaths</em ><span id="dailyDeth" >768</span ></li >
+          </ul >
+        </div >
       </div >
-    </div >
-    <div class="pieID--operations pie-chart--wrapper" >
-      <h2 >Operations</h2 >
-      <div class="pie-chart" >
-        <div class="pie-chart__pie" ></div >
-        <ul class="pie-chart__legend" >
-          <li ><em >Addition</em ><span >486</span ></li >
-          <li ><em >Subtraction</em ><span >156</span ></li >
-          <li ><em >Multiplication</em ><span >215</span ></li >
-        </ul >
+      <div class="pieID--globalstat pie-chart--wrapper" >
+        <h2 >Global Statistics</h2 >
+        <div class="pie-chart" >
+          <div class="pie-chart__pie" ></div >
+          <ul class="pie-chart__legend" >
+            <li ><em >Global Recovered</em ><span id="glbRecovered" >486</span ></li >
+            <li ><em >Global Deths</em ><span id="glbDeth" >156</span ></li >
+            <li ><em >Global Active Cases</em ><span id="glbActive" >215</span ></li >
+            <li ><em >Global Total Cases</em ><span id="glbTotal" >143</span ></li >
+          </ul >
+        </div >
       </div >
     </div >
   </div >

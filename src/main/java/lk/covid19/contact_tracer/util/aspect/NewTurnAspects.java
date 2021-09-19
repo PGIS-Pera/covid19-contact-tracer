@@ -8,6 +8,7 @@ import lk.covid19.contact_tracer.asset.ds_office.entity.DsOffice;
 import lk.covid19.contact_tracer.asset.ds_office.service.DsOfficeService;
 import lk.covid19.contact_tracer.asset.grama_niladhari.entity.GramaNiladhari;
 import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
+import lk.covid19.contact_tracer.asset.news_subscription.controller.NewsController;
 import lk.covid19.contact_tracer.asset.news_subscription.entity.News;
 import lk.covid19.contact_tracer.asset.news_subscription.service.NewsService;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
@@ -54,10 +55,15 @@ public class NewTurnAspects {
     String locationListUrl = MvcUriComponentsBuilder
         .fromMethodName(PersonLocationInteractTimeController.class, "interactLocationSearchPage")
         .toUriString();
-    String message = "Please check new updated location list \n" + locationListUrl;
     newses.forEach(x -> {
       String mobile = "+94" + x.getMobile().substring(1, 9);
       try {
+        String unsubscribeUrl = MvcUriComponentsBuilder
+            .fromMethodName(NewsController.class, "unSubscribe", x.getMobile())
+            .toUriString();
+        String message = "Please check new updated location list \n" + locationListUrl + "\n if you want to " +
+            "unsubscribe click here " + unsubscribeUrl;
+
         mobileMessageService.sendSMS(mobile, message);
       } catch ( Exception e ) {
         e.printStackTrace();

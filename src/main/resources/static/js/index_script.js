@@ -1,18 +1,24 @@
 $.getJSON('https://www.hpb.health.gov.lk/api/get-current-statistical', function (data) {
 
-    let now_date = (data.data.update_date_time);
+    var now_date = (data.data.update_date_time);
+
     document.getElementById("date").innerHTML = now_date;
     document.getElementById("totRecov").innerHTML = (data.data.local_recovered);
     document.getElementById("totDeth").innerHTML = (data.data.local_deaths);
     document.getElementById("totActiv").innerHTML = (data.data.local_active_cases);
+    document.getElementById("totCases").innerHTML = (data.data.local_active_cases) + (data.data.local_recovered) + (data.data.local_deaths);
 
     document.getElementById("dailyNew").innerHTML = (data.data.local_new_cases);
     document.getElementById("DailyRecov").innerHTML = 1500;
     document.getElementById("dailyDeth").innerHTML = (data.data.local_new_deaths);
 
-    let stat = [(data.data.local_new_cases), (data.data.local_new_deaths), (data.data.local_total_cases), (data.data.local_deaths), (data.data.local_recovered), (data.data.local_active_cases)];
+    document.getElementById("glbRecovered").innerHTML = (data.data.global_recovered);
+    document.getElementById("glbDeth").innerHTML = (data.data.global_deaths);
+    document.getElementById("glbActive").innerHTML = (data.data.global_total_cases) - (data.data.global_recovered) - (data.data.global_deaths);
+    document.getElementById("glbTotal").innerHTML = (data.data.global_total_cases);
 
 });
+
 
 function sliceSize(dataNum, dataTotal) {
     return (dataNum / dataTotal) * 360;
@@ -57,13 +63,13 @@ function createPie(id) {
 
     color = [
         "cornflowerblue",
-        "brown",
+        "olivedrab",
         "orange",
-        "red",
+        "tomato",
         "crimson",
         "purple",
-        "blue",
-        "green",
+        "turquoise",
+        "forestgreen",
         "navy"
     ];
 
@@ -98,9 +104,9 @@ function shuffle(a) {
 }
 
 function createPieCharts() {
-    createPie('.pieID--micro-skills');
-    createPie('.pieID--categories');
-    createPie('.pieID--operations');
+    createPie('.pieID--localstat');
+    createPie('.pieID--dailystat');
+    createPie('.pieID--globalstat');
 }
 
 createPieCharts();

@@ -36,6 +36,13 @@ public class NewsServiceImpl implements NewsService {
   @Caching( evict = {@CacheEvict( value = "news", allEntries = true )},
       put = {@CachePut( value = "news", key = "#news.id" )} )
   public News persist(News news) {
+    News newsDb = newsDao.findByMobile(news.getMobile());
+    if ( newsDb != null ) {
+      newsDb.setMobile(commonService.phoneNumberLengthValidator(news.getMobile()));
+      news = newsDb;
+    } else {
+      news.setMobile(commonService.phoneNumberLengthValidator(news.getMobile()));
+    }
     return newsDao.save(news);
   }
 
@@ -59,6 +66,12 @@ public class NewsServiceImpl implements NewsService {
   @Cacheable
   public List< News > findByGramaNiladhari(GramaNiladhari gramaNiladhari) {
     return newsDao.findByGramaNiladhari(gramaNiladhari);
+  }
+
+  @CacheEvict( allEntries = true )
+  public void unsubscribe(String mobile) {
+    News news = newsDao.findByMobile(mobile);
+    newsDao.deleteById(news.getId());
   }
 
 }

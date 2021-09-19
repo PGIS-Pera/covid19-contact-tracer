@@ -12,10 +12,10 @@
 
 <div class="container-fluid mt-2" >
   <div class="row text-center" >
-    <div class="col" >
+    <div class="col-7" >
       <span class="font-weight-bold h2" > Recent Locations where patient was found </span >
     </div >
-    <div class="col" >
+    <div class="col-5" >
       <a class="btn btn-primary" data-th-href="${'/home'}" id="searchShow" tabindex="2" >
         <i class="fas fa-home" style="font-size: 20px" ></i >&nbsp;&nbsp;Home
       </a >
@@ -51,6 +51,13 @@
         </div >
       </div >
     </div >
+    <!--  date selection message-->
+    <div class="form-row" >
+      <div class="alert alert-primary" role="alert" >
+        <strong >Please select date range within 14 days because of covid-19 virus would be infected within 5
+                 days. </strong >
+      </div >
+    </div >
   </div >
   <!--  grmaniladhari selection row-->
   <div class="form-row" >
@@ -75,11 +82,11 @@
     <!--Right Side-->
     <div class="col-md-6 col-sm-6 " >
       <div class="form-row text-md-right text-sm-left p-5" >
-        <div class="col-md-4 text-left" >
+        <div class="col-md-5 text-left" >
           <a class="btn btn-success btn-group text-white" >
             <i class="fa fa-search" ></i > &nbsp; Search </a >
         </div >
-        <div class="col-md-4 text-right" >
+        <div class="col-md-7 text-right" >
           <a class="btn btn-primary btn-group text-white" data-toggle="modal" data-target="#modelId" >
             <i class="fa fa-comments" ></i > &nbsp; SMS Subscribe &nbsp; <i class="fa fa-rocket" ></i > </a >
         </div >
@@ -106,6 +113,13 @@
 </div >
 
 
+<!--  general message-->
+<div class="form-row" >
+  <div class="alert alert-warning" role="alert" >
+    <strong >Please get self-quarantine and inform relevant officers if you have any interaction with identified place
+             within 5 days. </strong >
+  </div >
+</div >
 <!--location interaction new add -->
 <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
      aria-hidden="true" data-backdrop="static" data-keyboard="false" >
@@ -165,7 +179,7 @@
 
 
 <input data-th-value="${gramaNiladhariSearchUrl}" hidden id="gramaNiladhariSearchUrl" type="text" >
-<input hidden id="locationInteractSearchUrl" type="text" >
+<input data-th-value="${subscribeUrl}" hidden id="subscribeUrl" type="text" >
 <!--footer fragment-->
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <!--script include-->

@@ -1,5 +1,11 @@
 package lk.covid19.contact_tracer.asset.person_location_interact_time.service.impl;
 
+import lk.covid19.contact_tracer.asset.common_asset.model.TwoDateGramaNiladhari;
+import lk.covid19.contact_tracer.asset.common_asset.model.enums.StopActive;
+import lk.covid19.contact_tracer.asset.grama_niladhari.entity.GramaNiladhari;
+import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
+import lk.covid19.contact_tracer.asset.location_interact.entity.LocationInteract;
+import lk.covid19.contact_tracer.asset.location_interact.service.LocationInteractService;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.dao.PersonLocationInteractTimeDao;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.entity.PersonLocationInteractTime;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.service.PersonLocationInteractTimeService;
@@ -9,7 +15,8 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -17,6 +24,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PersonLocationInteractTimeServiceImpl implements PersonLocationInteractTimeService {
   private final PersonLocationInteractTimeDao personLocationInteractTimeDao;
+  private final LocationInteractService locationInteractService;
+  private final GramaNiladhariService gramaNiladhariService;
 
   @Cacheable
   public List< PersonLocationInteractTime > findAll() {
@@ -58,6 +67,34 @@ public class PersonLocationInteractTimeServiceImpl implements PersonLocationInte
     return personLocationInteractTimeDao.findAll(districtExample);
   }
 
+  @Cacheable
+  public Map< LocationInteract, List< PersonLocationInteractTime > > searchWithDateTime(TwoDateGramaNiladhari twoDateGramaNiladhari) {
+    GramaNiladhari gramaNiladhari = gramaNiladhariService.findById(twoDateGramaNiladhari.getGramaNiladhari().getId());
+    List< LocationInteract > locationInteracts = locationInteractService.findByGramaNiladhari(gramaNiladhari);
+    List< PersonLocationInteractTime > personLocationInteractTimes = new ArrayList<>();
+
+    Map< LocationInteract, List< PersonLocationInteractTime > > acceptedReport = new HashMap<>();
+
+    for ( LocationInteract locationInteract : locationInteracts ) {
+      List< PersonLocationInteractTime > personLocationInteractTimeDb =
+          personLocationInteractTimeDao
+              .findByLocationInteractAndArrivalAtBetweenAndLeaveAtBetweenAndStopActive(
+                  locationInteract,
+                  twoDateGramaNiladhari.getArrivalAt(),
+                  twoDateGramaNiladhari.getLeaveAt(),
+                  twoDateGramaNiladhari.getArrivalAt(),
+                  twoDateGramaNiladhari.getLeaveAt(),
+                  StopActive.ACTIVE);
+
+      if ( !personLocationInteractTimeDb.isEmpty() ) {
+        acceptedReport.put(locationInteract,
+                           personLocationInteractTimeDb.stream().sorted(Comparator.comparing(PersonLocationInteractTime::getArrivalAt))
+                               .collect(Collectors.toList()));
+      }
+    }
+
+    return acceptedReport;
+  }
 
 }
 

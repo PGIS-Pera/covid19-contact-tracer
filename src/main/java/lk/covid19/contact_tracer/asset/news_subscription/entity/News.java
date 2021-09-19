@@ -19,6 +19,7 @@ public class News {
   @GeneratedValue( strategy = GenerationType.IDENTITY )
   private Integer id;
 
+  @Column( unique = true )
   private String mobile;
 
   @ManyToOne

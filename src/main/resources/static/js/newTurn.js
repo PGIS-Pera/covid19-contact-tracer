@@ -157,7 +157,6 @@ $("#addTable").bind('click', function () {
 
 });
 
-
 function tableRowAdd() {
     let html = ``;
     let i = 0;
@@ -168,7 +167,6 @@ function tableRowAdd() {
     $("#myTable tbody ").html(html);
     $("#totalPlace").html(personLocationInteractTimes.length);
 }
-
 
 function tableRowHtml(obj, i) {
     return `<tr >
@@ -190,7 +188,6 @@ function tableRowHtml(obj, i) {
                   </td >
                 </tr >`;
 }
-
 
 function removeRow(obj) {
     let removeFiledId = obj.getAttribute('id').slice(2);
@@ -219,7 +216,6 @@ function removeRow(obj) {
 
     tableRowAdd();
 }
-
 
 //new location history
 $(document).ready(function () {

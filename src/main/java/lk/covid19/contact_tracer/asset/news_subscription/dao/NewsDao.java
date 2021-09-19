@@ -13,4 +13,6 @@ import java.util.List;
 @Repository
 public interface NewsDao extends JpaRepository< News, Integer > {
   List< News > findByGramaNiladhari(GramaNiladhari gramaNiladhari);
+
+  News findByMobile(String mobile);
 }

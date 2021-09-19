@@ -18,8 +18,6 @@ let gramaNiladhari = [];
 
 function gramaniladhari(val) {
     let filedId = val.getAttribute('id');
-    console.log(filedId)
-    //todo 9/18 finished point
     if (val.value.length > 3) {
         $.ajax({
             type: "GET",
@@ -28,24 +26,66 @@ function gramaniladhari(val) {
                 let html_first_part = `<ul class="list-group list-group-flush justify-content-center">`;
                 let html_middle_part = ``;
                 for (let i = 0; i < data.length; i++) {
-                    html_middle_part += `<li onClick="selectGramaNiladhari(${data[i].id})" class="list-group-item font-weight-bold p">${data[i].name} - ${data[i].number}</li >`;
+                    html_middle_part += `<li id="${filedId}-${data[i].id}" onClick="selectGramaNiladhari(this)" class="list-group-item font-weight-bold p">${data[i].name} - ${data[i].number}</li >`;
                 }
                 // $("#gramaNiladhari-box");
-                $("#gramaNiladhari-box").show().html(html_first_part + html_middle_part);
-                $("#gramaNiladhari").css("background", "#FFF");
+                $(`#${filedId}-box`).show().html(html_first_part + html_middle_part);
+                $(`#${filedId}`).css("background", "#FFF");
                 gramaNiladhari = data;
             }
         });
+    } else {
+        $(`#${filedId}-box`).hide();
     }
 }
 
 function selectGramaNiladhari(val) {
-    $("#gramaNiladhari").attr('value', val);
-    $("#gramaNiladhari-box").hide();
-    interaction.forEach((x) => {
-        if (x.id === parseInt(val)) {
-            $("#gramaNiladhariOne").val(`${x.name} - ${x.number}`);
-            $("#gramaNiladhariId").attr('value', x.id);
+    let id = val.getAttribute('id');
+    let id_part = id.split("-")[0];
+    let _id = id.split("-")[1];
+    console.log(_id)
+
+    $(`#${id_part}`).attr('value', val);
+    $(`#${id_part}-box`).hide();
+    gramaNiladhari.forEach((x) => {
+        if (x.id === parseInt(_id)) {
+            $(`#${id_part}One`).val(`${x.name} - ${x.number}`);
+            $(`#${id_part}Id`).attr('value', x.id);
         }
     })
+}
+
+/*
+personLocationInteractTime = {
+stopActive:"ACTIVE",
+arrivalAt:,
+leaveAt:,
+gramaNiladhari:{
+        id:,
+        }
+     }
+
+ */
+
+function submitForm() {
+    $.ajax({
+        type: "POST",
+        url: $("#locationInteractSaveUrl").val().split("&")[0] + $("#locationInteractNew").val() + "&id=" + $("#gramaNiladhariId").val(),
+        cache: false,
+        success: function (response) {
+            $("#locationInteractOne").attr('value', response.name);
+            $("#locationInteract").attr('value', response.name);
+            $("#locationInteractId").attr('value', response.id);
+            // $("#modelId").hide();
+            let button = document.getElementById("closeModel");
+            button.click();
+        },
+        error: function () {
+            swal({
+                title: "Please check your entered values",
+                text: "Check \n Gramaniladhari Division \n Location Name \n should not be empty.",
+                icon: "warning",
+            });
+        }
+    });
 }
