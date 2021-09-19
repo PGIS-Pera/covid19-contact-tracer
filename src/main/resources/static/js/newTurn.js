@@ -171,6 +171,7 @@ function tableRowAdd() {
 function tableRowHtml(obj, i) {
     return `<tr >
                   <td >
+                    <input  type="text" name="personLocationInteractTimes[${i}].stopActive" value="ACTIVE" hidden required>
                     <input id="pi${i}" type="text" name="personLocationInteractTimes[${i}].person.id" value="${obj.person.id}" hidden required>
                     <input id="li${i}" type="text" name="personLocationInteractTimes[${i}].locationInteract.id" value="${obj.locationInteract.id}" hidden required>
                     <input id="ln${i}" type="text" name="personLocationInteractTimes[${i}].locationInteract.name" value="${obj.locationInteract.name}" readonly class="form-control">
