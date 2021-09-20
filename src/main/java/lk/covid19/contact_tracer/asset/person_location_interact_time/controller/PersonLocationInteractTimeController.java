@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
@@ -31,7 +32,7 @@ public class PersonLocationInteractTimeController {
         .fromMethodName(GramaNiladhariController.class, "searchOne", "")
         .toUriString());
     model.addAttribute("subscribeUrl", MvcUriComponentsBuilder
-        .fromMethodName(NewsController.class, "subscribe", new News())
+        .fromMethodName(NewsController.class, "subscribe", "")
         .toUriString());
     model.addAttribute("interactLocationSearchPageDataUrl", MvcUriComponentsBuilder
         .fromMethodName(PersonLocationInteractTimeController.class, "interactLocationSearchPageData",
@@ -40,7 +41,7 @@ public class PersonLocationInteractTimeController {
     return "patientVisitedPlaceTime/patientVisitedPlaceTime";
   }
 
-  @GetMapping( "/getPlaces" )
+  @PostMapping( "/getPlaces" )
   @ResponseBody
   public Map< LocationInteract, List< PersonLocationInteractTime > > interactLocationSearchPageData(TwoDateGramaNiladhari twoDateGramaNiladhari) {
     System.out.println(twoDateGramaNiladhari.toString());

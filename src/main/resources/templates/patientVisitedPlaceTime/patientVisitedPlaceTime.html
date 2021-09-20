@@ -162,8 +162,8 @@
                     <label class="control-label" data-th-for="${'mobile'}" >Mobile :</label >
                   </div >
                   <div class="col-md-8" >
-                    <input type="text" id="locationInteractNew" class="form-control" name="mobile" value=""
-                           placeholder="please enter mobile number" >
+                    <input type="text" id="mobile" class="form-control mobile" name="mobile" value=""
+                           placeholder="please enter mobile number" minlength="9" maxlength="10" >
                   </div >
                 </div >
               </div >
@@ -187,6 +187,7 @@
 
 <input data-th-value="${gramaNiladhariSearchUrl}" hidden id="gramaNiladhariSearchUrl" type="text" >
 <input data-th-value="${subscribeUrl}" hidden id="subscribeUrl" type="text" >
+<input data-th-value="${interactLocationSearchPageDataUrl}" hidden id="interactLocationSearchPageDataUrl" type="text" >
 <!--footer fragment-->
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <!--script include-->

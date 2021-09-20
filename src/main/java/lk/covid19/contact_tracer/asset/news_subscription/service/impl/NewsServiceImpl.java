@@ -3,6 +3,7 @@ package lk.covid19.contact_tracer.asset.news_subscription.service.impl;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.Province;
 import lk.covid19.contact_tracer.asset.grama_niladhari.entity.GramaNiladhari;
 
+import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
 import lk.covid19.contact_tracer.asset.news_subscription.dao.NewsDao;
 import lk.covid19.contact_tracer.asset.news_subscription.entity.News;
 import lk.covid19.contact_tracer.asset.news_subscription.service.NewsService;
@@ -21,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NewsServiceImpl implements NewsService {
   private final NewsDao newsDao;
+  private final GramaNiladhariService gramaNiladhariService;
   private final CommonService commonService;
 
   @Cacheable
@@ -34,14 +36,21 @@ public class NewsServiceImpl implements NewsService {
   }
 
   @Caching( evict = {@CacheEvict( value = "news", allEntries = true )},
-      put = {@CachePut( value = "news", key = "#news.id" )} )
+      put = {@CachePut( value = "news", key = "#p0" )} )
   public News persist(News news) {
     News newsDb = newsDao.findByMobile(news.getMobile());
+    GramaNiladhari gramaNiladhari = gramaNiladhariService.findById(news.getGramaNiladhari().getId());
     if ( newsDb != null ) {
-      newsDb.setMobile(commonService.phoneNumberLengthValidator(news.getMobile()));
-      news = newsDb;
+      news = News.builder()
+          .id(newsDb.getId())
+          .mobile(commonService.phoneNumberLengthValidator(news.getMobile()))
+          .gramaNiladhari(gramaNiladhari)
+          .build();
     } else {
-      news.setMobile(commonService.phoneNumberLengthValidator(news.getMobile()));
+      news = News.builder()
+          .mobile(commonService.phoneNumberLengthValidator(news.getMobile()))
+          .gramaNiladhari(gramaNiladhari)
+          .build();
     }
     return newsDao.save(news);
   }

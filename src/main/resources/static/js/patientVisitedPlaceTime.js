@@ -55,6 +55,77 @@ function selectGramaNiladhari(val) {
     })
 }
 
+
+$(document).ready(function () {
+    $("#contactForm").submit(function () {
+        subscribeForm();
+        $("#mobile").val('')
+        $("#gramaNiladhari1Id").val('')
+        return false;
+    });
+
+});
+
+function subscribeForm() {
+    let mobile = $("#mobile").val();
+    let gramaNiladhari = {
+        "id": $("#gramaNiladhari1Id").val(),
+    };
+
+    if (!mobileRegex.test(mobile)) {
+        swal({
+            title: "Please check your entered values",
+            text: "Mobile number is not valid \n please re-checked it.",
+            icon: "warning",
+        });
+    }
+
+    let news = {}
+    news["mobile"] = mobile;
+    news["gramaNiladhari"] = gramaNiladhari;
+
+    console.log(news)
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: $("#subscribeUrl").val(),
+        data: JSON.stringify(news),
+        dataType: 'json',
+        cache: false,
+        timeout: 600000,
+        success: function (response) {
+            console.log(response)
+            saveModel();
+        },
+        error: function (e) {
+            var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+                + e.responseText + "&lt;/pre&gt;";
+            console.log(json);
+            console.log("ERROR : ", e);
+            if (e.status === 200) {
+                saveModel();
+            }
+            swal({
+                title: "Error ",
+                text: "There is something an error",
+                icon: "warning",
+            });
+        }
+    });
+}
+
+function saveModel() {
+    let button = document.getElementById("saveModel");
+    button.click();
+    swal({
+        buttons: false,
+        title: "Congratulations \n News Alert Successfully Subscribe !",
+        icon: "success",
+        timer: 2000,
+    });
+}
+
 /*
 personLocationInteractTime = {
 stopActive:"ACTIVE",
@@ -66,24 +137,48 @@ gramaNiladhari:{
      }
 
  */
+
 // 19/09 stay here
-function submitForm() {
+
+function showLocation() {
+    let personLocationInteractTime = {}
+    let gramaNiladhari = {
+        "id": $("#gramaNiladhariId").val(),
+        "name": $("#gramaNiladhariOne").val()
+    };
+    let arrivalAt = $("#arrivalAt").val();
+    let leaveAt = $("#leaveAt").val();
+
+    personLocationInteractTime["arrivalAt"] = arrivalAt;
+    personLocationInteractTime["leaveAt"] = leaveAt;
+    personLocationInteractTime["stopActive"] = "ACTIVE";
+    personLocationInteractTime["gramaNiladhari"] = gramaNiladhari;
+
+    console.log(personLocationInteractTime)
+
     $.ajax({
         type: "POST",
-        url: $("#locationInteractSaveUrl").val().split("&")[0] + $("#locationInteractNew").val() + "&id=" + $("#gramaNiladhariId").val(),
+        contentType: "application/json",
+        url: $("#interactLocationSearchPageDataUrl").val(),
+        data: JSON.stringify(personLocationInteractTime),
+        dataType: 'json',
         cache: false,
+        timeout: 600000,
         success: function (response) {
-            $("#locationInteractOne").attr('value', response.name);
-            $("#locationInteract").attr('value', response.name);
-            $("#locationInteractId").attr('value', response.id);
-            // $("#modelId").hide();
-            let button = document.getElementById("closeModel");
-            button.click();
+            console.log(response)
+            saveModel();
         },
-        error: function () {
+        error: function (e) {
+            var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+                + e.responseText + "&lt;/pre&gt;";
+            console.log(json);
+            console.log("ERROR : ", e);
+            if (e.status === 200) {
+                saveModel();
+            }
             swal({
-                title: "Please check your entered values",
-                text: "Check \n Gramaniladhari Division \n Location Name \n should not be empty.",
+                title: "Error ",
+                text: "There is something an error",
                 icon: "warning",
             });
         }

@@ -26,7 +26,7 @@ public class Turn extends AuditEntity {
 
   private String remark;
 
-  @ManyToOne( fetch = FetchType.EAGER )
+  @ManyToOne
   @JoinColumn( name = "person_id", nullable = false, foreignKey = @ForeignKey( name = "fk_turn_vs_person" ) )
   private Person person;
 

@@ -108,5 +108,13 @@
         <heap unit="entries">4000</heap>
         <jsr107:mbeans enable-statistics="true"/>
     </cache>
+    <!--14. news-->
+    <cache alias="news">
+        <expiry>
+            <ttl unit="seconds">60000</ttl>
+        </expiry>
+        <heap unit="entries">4000</heap>
+        <jsr107:mbeans enable-statistics="true"/>
+    </cache>
 
 </config>

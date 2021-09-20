@@ -164,7 +164,6 @@ $("#nic").keyup(function () {
 });
 
 function popUpDataSet(resp) {
-    console.log(resp.id)
     if (resp) {
         swal("Write something here:", {
             title: "Are you sure with this nic \n" + $("#nic").val() + " ?",

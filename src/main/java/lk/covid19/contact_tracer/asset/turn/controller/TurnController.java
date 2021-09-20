@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import lk.covid19.contact_tracer.asset.common_asset.model.Pager;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.Province;
+import lk.covid19.contact_tracer.asset.common_asset.model.enums.StopActive;
 import lk.covid19.contact_tracer.asset.district.controller.DistrictController;
 import lk.covid19.contact_tracer.asset.district.service.DistrictService;
 import lk.covid19.contact_tracer.asset.ds_office.controller.DsOfficeController;
@@ -49,6 +50,7 @@ public class TurnController {
     model.addAttribute("addStatus", booleanValue);
     model.addAttribute("turn", turnObject);
     model.addAttribute("provinces", Province.values());
+    model.addAttribute("stopActive", StopActive.values());
     model.addAttribute("districtURL",
                        MvcUriComponentsBuilder
                            .fromMethodName(DistrictController.class, "getDistrictByProvince", "")
@@ -93,9 +95,19 @@ public class TurnController {
 
   @GetMapping( "/edit/{id}" )
   public String edit(@PathVariable Integer id, Model model) {
-    model.addAttribute("districts", districtService.findAll());
-    model.addAttribute("agOffices", dsOfficeService.findAll());
-    return commonThing(model, true, turnService.findById(id));
+    model.addAttribute("addStatus", true);
+    model.addAttribute("turn", turnService.findById(id));
+    model.addAttribute("provinces", Province.values());
+    model.addAttribute("stopActive", StopActive.values());
+    model.addAttribute("districtURL",
+                       MvcUriComponentsBuilder
+                           .fromMethodName(DistrictController.class, "getDistrictByProvince", "")
+                           .toUriString());
+    model.addAttribute("dsOfficeURL",
+                       MvcUriComponentsBuilder
+                           .fromMethodName(DsOfficeController.class, "getDsOfficeByDistrict", "")
+                           .toUriString());
+    return "turn/editTurn";
   }
 
   @PostMapping( value = {"/save", "/update"} )
