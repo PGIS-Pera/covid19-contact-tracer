@@ -123,7 +123,7 @@ public class TreatmentCenterController {
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(treatmentCenters);
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name", "number");
+        .filterOutAllExcept("id", "name", "number", "dsOffice");
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
         .filterOutAllExcept("id", "name");

@@ -192,7 +192,7 @@ public class PersonController {
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(persons);
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name", "code", "nic", "mobile", "dateOfBirth");
+        .filterOutAllExcept("id", "name", "code", "nic", "mobile", "dateOfBirth", "gramaNiladhari");
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
         .filterOutAllExcept("id", "name");

@@ -122,7 +122,7 @@ public class GramaNiladhariController {
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(gramaNiladharis);
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name", "number");
+        .filterOutAllExcept("id", "name", "number", "dsOffice");
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
         .filterOutAllExcept("id", "name");

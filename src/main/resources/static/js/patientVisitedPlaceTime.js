@@ -66,7 +66,7 @@ gramaNiladhari:{
      }
 
  */
-
+// 19/09 stay here
 function submitForm() {
     $.ajax({
         type: "POST",

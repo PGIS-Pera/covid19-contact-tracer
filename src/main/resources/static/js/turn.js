@@ -50,7 +50,7 @@ $("#searchInput").keyup(function () {
     let url = $("#searchUrl").val();
     let select_parameter_value = $("#selectParameter").val();
     let enter_value = $(this).val();
-    let turn = {};
+    let person = {};
 
     if (select_parameter_value === null) {
         swal({
@@ -63,25 +63,26 @@ $("#searchInput").keyup(function () {
 
     if (enter_value.length >= 3 && select_parameter_value.length > 0) {
         if (select_parameter_value === "name") {
-            turn.person = {'name': enter_value};
+            person.name = enter_value;
         }
         if (select_parameter_value === "number") {
-            turn.person = {'number': enter_value};
+            person.number = enter_value;
         }
         if (mobileRegex.test(select_parameter_value) && select_parameter_value === "mobile") {
-            turn.person = {'mobile': enter_value};
+            person.mobile = enter_value;
         }
-        console.log(turn)
-        $.post(url, turn,
+        console.log(person)
+        $.post(url, person,
             function (data, status) {
+                console.log(data)
                 $("#tableShow").text('');
                 if (data.length > 0) {
                     for (let i = 0; i < data.length; i++) {
                         html_middle_part = html_middle_part + `
                     <tr>
                       <th > ${i + 1}</th >
-                      <th > ${data[i].turn.code}</th >
-                      <th > ${data[i].turn.name}</th >
+                      <th > ${data[i].person.code}</th >
+                      <th > ${data[i].person.name}</th >
                       <th > ${data[i].identifiedDate}</th >
                       <th >
                           <a class="btn btn-success btn-sm" href="${'/turn/' + data[i].id}" >

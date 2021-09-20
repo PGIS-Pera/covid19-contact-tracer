@@ -10,6 +10,7 @@ import lk.covid19.contact_tracer.asset.district.controller.DistrictController;
 import lk.covid19.contact_tracer.asset.district.service.DistrictService;
 import lk.covid19.contact_tracer.asset.ds_office.controller.DsOfficeController;
 import lk.covid19.contact_tracer.asset.ds_office.service.DsOfficeService;
+import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.turn.entity.Turn;
 import lk.covid19.contact_tracer.asset.turn.service.TurnService;
 import lk.covid19.contact_tracer.util.service.CommonService;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -114,44 +116,24 @@ public class TurnController {
 
   @PostMapping( value = "/search" )
   @ResponseBody
-  public MappingJacksonValue search(Turn turn) {
-
-    List< Turn > turns = turnService.search(turn);
-    turns.forEach(System.out::println);
+  public MappingJacksonValue search(Person person) {
+    System.out.println(person.toString());
+    List< Turn > turns = turnService.findByPerson(person);
 
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(turns);
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name", "number");
+        .filterOutAllExcept("name", "code");
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name");
+        .filterOutAllExcept("id", "identifiedDate", "person");
 
     FilterProvider filter = new SimpleFilterProvider()
-        .addFilter("Turn", simpleBeanPropertyFilterOne)
-        .addFilter("DsOffice", simpleBeanPropertyFilterTwo);
+        .addFilter("Person", simpleBeanPropertyFilterOne)
+        .addFilter("Turn", simpleBeanPropertyFilterTwo);
     mappingJacksonValue.setFilters(filter);
 
     return mappingJacksonValue;
   }
 
-/*  @GetMapping( value = "/searchOne" )
-  @ResponseBody
-  public MappingJacksonValue searchOne(@RequestParam( "name" ) String name) {
-
-    Turn turn = Turn.builder().name(name).build();
-    List< Turn > turns = turnService.search(turn);
-
-    MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(turns);
-
-    SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name", "number");
-
-    FilterProvider filter = new SimpleFilterProvider()
-        .addFilter("Turn", simpleBeanPropertyFilterOne);
-
-    mappingJacksonValue.setFilters(filter);
-
-    return mappingJacksonValue;
-  }*/
 }

@@ -71,7 +71,6 @@ public class PersonLocationInteractTimeServiceImpl implements PersonLocationInte
   public Map< LocationInteract, List< PersonLocationInteractTime > > searchWithDateTime(TwoDateGramaNiladhari twoDateGramaNiladhari) {
     GramaNiladhari gramaNiladhari = gramaNiladhariService.findById(twoDateGramaNiladhari.getGramaNiladhari().getId());
     List< LocationInteract > locationInteracts = locationInteractService.findByGramaNiladhari(gramaNiladhari);
-    List< PersonLocationInteractTime > personLocationInteractTimes = new ArrayList<>();
 
     Map< LocationInteract, List< PersonLocationInteractTime > > acceptedReport = new HashMap<>();
 
