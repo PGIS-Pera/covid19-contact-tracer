@@ -63,6 +63,9 @@ $(document).ready(function () {
         $("#gramaNiladhari1Id").val('')
         return false;
     });
+    $("#searchBtn").click(function () {
+        showLocation();
+    })
 
 });
 
@@ -138,7 +141,7 @@ gramaNiladhari:{
 
  */
 
-// 19/09 stay here
+// 21/09 stay here
 
 function showLocation() {
     let personLocationInteractTime = {}
@@ -166,21 +169,13 @@ function showLocation() {
         timeout: 600000,
         success: function (response) {
             console.log(response)
-            saveModel();
+
         },
         error: function (e) {
             var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
                 + e.responseText + "&lt;/pre&gt;";
             console.log(json);
             console.log("ERROR : ", e);
-            if (e.status === 200) {
-                saveModel();
-            }
-            swal({
-                title: "Error ",
-                text: "There is something an error",
-                icon: "warning",
-            });
         }
     });
 }
