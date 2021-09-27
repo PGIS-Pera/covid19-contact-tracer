@@ -43,7 +43,7 @@ function selectGramaNiladhari(val) {
     let id = val.getAttribute('id');
     let id_part = id.split("-")[0];
     let _id = id.split("-")[1];
-    console.log(_id)
+
 
     $(`#${id_part}`).attr('value', val);
     $(`#${id_part}-box`).hide();
@@ -94,15 +94,12 @@ function subscribeForm() {
         contentType: "application/json",
         url: $("#subscribeUrl").val(),
         data: JSON.stringify(news),
-        dataType: 'json',
-        cache: false,
-        timeout: 600000,
         success: function (response) {
             console.log(response)
             saveModel();
         },
         error: function (e) {
-            var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+            let json = "<h4>Ajax Response</h4>&lt;pre&gt;"
                 + e.responseText + "&lt;/pre&gt;";
             console.log(json);
             console.log("ERROR : ", e);
@@ -119,7 +116,7 @@ function subscribeForm() {
 }
 
 function saveModel() {
-    let button = document.getElementById("saveModel");
+    let button = document.getElementById("closeModel");
     button.click();
     swal({
         buttons: false,
@@ -164,9 +161,6 @@ function showLocation() {
         contentType: "application/json",
         url: $("#interactLocationSearchPageDataUrl").val(),
         data: JSON.stringify(personLocationInteractTime),
-        dataType: 'json',
-        cache: false,
-        timeout: 600000,
         success: function (response) {
             console.log(response)
 
