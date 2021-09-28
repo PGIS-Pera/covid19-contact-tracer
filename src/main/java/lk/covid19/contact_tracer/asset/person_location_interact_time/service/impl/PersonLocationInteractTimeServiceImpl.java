@@ -1,5 +1,6 @@
 package lk.covid19.contact_tracer.asset.person_location_interact_time.service.impl;
 
+import lk.covid19.contact_tracer.asset.common_asset.model.LocationInteractTimeReport;
 import lk.covid19.contact_tracer.asset.common_asset.model.TwoDateGramaNiladhari;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.StopActive;
 import lk.covid19.contact_tracer.asset.grama_niladhari.entity.GramaNiladhari;
@@ -68,11 +69,11 @@ public class PersonLocationInteractTimeServiceImpl implements PersonLocationInte
   }
 
   @Cacheable
-  public Map< LocationInteract, List< PersonLocationInteractTime > > searchWithDateTime(TwoDateGramaNiladhari twoDateGramaNiladhari) {
+  public List< LocationInteractTimeReport > searchWithDateTime(TwoDateGramaNiladhari twoDateGramaNiladhari) {
     GramaNiladhari gramaNiladhari = gramaNiladhariService.findById(twoDateGramaNiladhari.getGramaNiladhari().getId());
     List< LocationInteract > locationInteracts = locationInteractService.findByGramaNiladhari(gramaNiladhari);
 
-    Map< LocationInteract, List< PersonLocationInteractTime > > acceptedReport = new HashMap<>();
+    List< LocationInteractTimeReport > acceptedReport = new ArrayList<>();
 
     for ( LocationInteract locationInteract : locationInteracts ) {
       List< PersonLocationInteractTime > personLocationInteractTimeDb =
@@ -86,9 +87,14 @@ public class PersonLocationInteractTimeServiceImpl implements PersonLocationInte
                   StopActive.ACTIVE);
 
       if ( !personLocationInteractTimeDb.isEmpty() ) {
-        acceptedReport.put(locationInteract,
-                           personLocationInteractTimeDb.stream().sorted(Comparator.comparing(PersonLocationInteractTime::getArrivalAt))
-                               .collect(Collectors.toList()));
+        LocationInteractTimeReport report = LocationInteractTimeReport.builder()
+            .locationInteract(locationInteract)
+            .personLocationInteractTimes(personLocationInteractTimeDb
+                                             .stream()
+                                             .sorted(Comparator.comparing(PersonLocationInteractTime::getArrivalAt))
+                                             .collect(Collectors.toList()))
+            .build();
+        acceptedReport.add(report);
       }
     }
 

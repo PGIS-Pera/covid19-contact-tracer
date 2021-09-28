@@ -1,6 +1,7 @@
 package lk.covid19.contact_tracer.asset.person_location_interact_time.service;
 
 
+import lk.covid19.contact_tracer.asset.common_asset.model.LocationInteractTimeReport;
 import lk.covid19.contact_tracer.asset.common_asset.model.TwoDateGramaNiladhari;
 import lk.covid19.contact_tracer.asset.location_interact.entity.LocationInteract;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.entity.PersonLocationInteractTime;
@@ -22,5 +23,5 @@ public interface PersonLocationInteractTimeService {
 
   List< PersonLocationInteractTime > search(PersonLocationInteractTime personLocationInteractTime);
 
-  Map< LocationInteract, List< PersonLocationInteractTime > > searchWithDateTime(TwoDateGramaNiladhari twoDateGramaNiladhari);
+  List< LocationInteractTimeReport > searchWithDateTime(TwoDateGramaNiladhari twoDateGramaNiladhari);
 }
