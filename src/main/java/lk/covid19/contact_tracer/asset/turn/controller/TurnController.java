@@ -42,9 +42,6 @@ public class TurnController {
   private static final int INITIAL_PAGE_SIZE = 5;
   private static final int[] PAGE_SIZES = {5, 10, 20};
   private final TurnService turnService;
-  private final DistrictService districtService;
-  private final DsOfficeService dsOfficeService;
-  private final CommonService commonService;
 
   private String commonThing(Model model, Boolean booleanValue, Turn turnObject) {
     model.addAttribute("addStatus", booleanValue);
@@ -135,14 +132,19 @@ public class TurnController {
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(turns);
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
-        .filterOutAllExcept("name", "code");
+        .filterOutAllExcept("name", "code", "gramaNiladhari");
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
         .filterOutAllExcept("id", "identifiedDate", "person");
 
+    SimpleBeanPropertyFilter gramaNiladhari = SimpleBeanPropertyFilter
+        .filterOutAllExcept("id", "name", "number");
+
     FilterProvider filter = new SimpleFilterProvider()
         .addFilter("Person", simpleBeanPropertyFilterOne)
-        .addFilter("Turn", simpleBeanPropertyFilterTwo);
+        .addFilter("Turn", simpleBeanPropertyFilterTwo)
+        .addFilter("GramaNiladhari", gramaNiladhari);
+
     mappingJacksonValue.setFilters(filter);
 
     return mappingJacksonValue;

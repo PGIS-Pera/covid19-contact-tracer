@@ -18,6 +18,7 @@ let html_first_part = `<table class="table table-hover table-striped" id="myTabl
                 <th >Person Code</th >
                 <th >Person Name</th >
                 <th >Identified Date</th >
+                <th >Gramaniladhari Division</th >
                 <th >View</th >
                 </tr >
                 </thead >
@@ -46,7 +47,6 @@ $("#selectParameter").change(function () {
 })
 
 $("#searchInput").keyup(function () {
-    //todo need to check this turn search using person
     let url = $("#searchUrl").val();
     let select_parameter_value = $("#selectParameter").val();
     let enter_value = $(this).val();
@@ -71,10 +71,8 @@ $("#searchInput").keyup(function () {
         if (mobileRegex.test(select_parameter_value) && select_parameter_value === "mobile") {
             person.mobile = enter_value;
         }
-        console.log(person)
         $.post(url, person,
             function (data, status) {
-                console.log(data)
                 $("#tableShow").text('');
                 if (data.length > 0) {
                     for (let i = 0; i < data.length; i++) {
@@ -83,7 +81,8 @@ $("#searchInput").keyup(function () {
                       <th > ${i + 1}</th >
                       <th > ${data[i].person.code}</th >
                       <th > ${data[i].person.name}</th >
-                      <th > ${data[i].identifiedDate}</th >
+                      <th > ${data[i].identifiedDate[0]}-${data[i].identifiedDate[1]}-${data[i].identifiedDate[2]}</th >
+                      <th > ${data[i].person.gramaNiladhari.name} - ${data[i].person.gramaNiladhari.number}</th>
                       <th >
                           <a class="btn btn-success btn-sm" href="${'/turn/' + data[i].id}" >
                             <i class="fa fa-folder-open" ></i >&nbsp;View

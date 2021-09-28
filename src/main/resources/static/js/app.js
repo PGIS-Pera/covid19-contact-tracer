@@ -38,6 +38,13 @@ $(document).ready(function () {
 
     });
 
+    //table search
+    $("#myInput").on("keyup", function () {
+        let value = $(this).val().toLowerCase();
+        $("#myTableBody tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
 });
 
 

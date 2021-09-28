@@ -48,6 +48,16 @@
               </div >
             </div >
           </div >
+          <div class="col text-left" >
+            <div class="form-row" >
+              <div class="col text-right" >
+                <label for="myInput" >Search In Table : </label >
+              </div >
+              <div class="col text-left" >
+                <input id="myInput" type="text" placeholder="Search.." class="form-control" >
+              </div >
+            </div >
+          </div >
           <!--search model-->
           <div class="col text-right" >
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modelId" >
@@ -67,6 +77,7 @@
                 <th >Division Secretory Office Name</th >
                 <th >View</th >
               </tr >
+              <tbody id="myTableBody" >
               <tr data-th-each="locationInteract, index : ${locationInteracts}" >
                 <td data-th-text="${index.count}" ></td >
                 <td data-th-text="${locationInteract.name}" ></td >
@@ -86,6 +97,7 @@
                     Delete</a >
                 </td >
               </tr >
+              </tbody >
             </table >
           </div >
         </div >
