@@ -12,9 +12,11 @@ import lk.covid19.contact_tracer.asset.district.service.DistrictService;
 import lk.covid19.contact_tracer.asset.ds_office.controller.DsOfficeController;
 import lk.covid19.contact_tracer.asset.ds_office.service.DsOfficeService;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
+import lk.covid19.contact_tracer.asset.person.service.PersonService;
 import lk.covid19.contact_tracer.asset.turn.entity.Turn;
 import lk.covid19.contact_tracer.asset.turn.service.TurnService;
 import lk.covid19.contact_tracer.util.service.CommonService;
+import lk.covid19.contact_tracer.util.service.DateTimeAgeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +30,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +44,10 @@ public class TurnController {
   private static final int INITIAL_PAGE = 0;
   private static final int INITIAL_PAGE_SIZE = 5;
   private static final int[] PAGE_SIZES = {5, 10, 20};
+
   private final TurnService turnService;
+  private final PersonService personService;
+  private final DateTimeAgeService dateTimeAgeService;
 
   private String commonThing(Model model, Boolean booleanValue, Turn turnObject) {
     model.addAttribute("addStatus", booleanValue);
@@ -62,6 +68,7 @@ public class TurnController {
   @GetMapping
   public ModelAndView showPersonsPage(@RequestParam( "pageSize" ) Optional< Integer > pageSize,
                                       @RequestParam( "page" ) Optional< Integer > page) {
+    //todo-> normally we thorough to get data within 14 days
     ModelAndView modelAndView = new ModelAndView("turn/turn");
     int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);
     int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
@@ -86,14 +93,22 @@ public class TurnController {
 
   @GetMapping( "/{id}" )
   public String findById(@PathVariable Integer id, Model model) {
-    model.addAttribute("turnDetail", turnService.findById(id));
+    Turn turn = turnService.findById(id);
+    Person person = personService.findById(turn.getPerson().getId());
+    person.setAge(dateTimeAgeService.getDateDifference(person.getDateOfBirth(), LocalDate.now()));
+    model.addAttribute("personDetail", person);
+    model.addAttribute("turnDetail", turn);
     return "turn/turn-detail";
   }
 
   @GetMapping( "/edit/{id}" )
   public String edit(@PathVariable Integer id, Model model) {
     model.addAttribute("addStatus", true);
-    model.addAttribute("turn", turnService.findById(id));
+    Turn turn = turnService.findById(id);
+    Person person = personService.findById(turn.getPerson().getId());
+    person.setAge(dateTimeAgeService.getDateDifference(person.getDateOfBirth(), LocalDate.now()));
+    model.addAttribute("personDetail", person);
+    model.addAttribute("turnDetail", turn);
     model.addAttribute("provinces", Province.values());
     model.addAttribute("stopActive", StopActive.values());
     model.addAttribute("districtURL",
