@@ -8,14 +8,13 @@ import lk.covid19.contact_tracer.asset.common_asset.model.Pager;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.Province;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.StopActive;
 import lk.covid19.contact_tracer.asset.district.controller.DistrictController;
-import lk.covid19.contact_tracer.asset.district.service.DistrictService;
 import lk.covid19.contact_tracer.asset.ds_office.controller.DsOfficeController;
-import lk.covid19.contact_tracer.asset.ds_office.service.DsOfficeService;
+import lk.covid19.contact_tracer.asset.grama_niladhari.controller.GramaNiladhariController;
+import lk.covid19.contact_tracer.asset.location_interact.controller.LocationInteractController;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.person.service.PersonService;
 import lk.covid19.contact_tracer.asset.turn.entity.Turn;
 import lk.covid19.contact_tracer.asset.turn.service.TurnService;
-import lk.covid19.contact_tracer.util.service.CommonService;
 import lk.covid19.contact_tracer.util.service.DateTimeAgeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -31,7 +30,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,8 +47,8 @@ public class TurnController {
   private final PersonService personService;
   private final DateTimeAgeService dateTimeAgeService;
 
-  private String commonThing(Model model, Boolean booleanValue, Turn turnObject) {
-    model.addAttribute("addStatus", booleanValue);
+  private String commonThing(Model model, Turn turnObject) {
+    model.addAttribute("addStatus", false);
     model.addAttribute("turn", turnObject);
     model.addAttribute("provinces", Province.values());
     model.addAttribute("stopActive", StopActive.values());
@@ -88,7 +86,7 @@ public class TurnController {
 
   @GetMapping( "/add" )
   public String form(Model model) {
-    return commonThing(model, false, new Turn());
+    return commonThing(model, new Turn());
   }
 
   @GetMapping( "/{id}" )
@@ -109,16 +107,16 @@ public class TurnController {
     person.setAge(dateTimeAgeService.getDateDifference(person.getDateOfBirth(), LocalDate.now()));
     model.addAttribute("personDetail", person);
     model.addAttribute("turnDetail", turn);
-    model.addAttribute("provinces", Province.values());
     model.addAttribute("stopActive", StopActive.values());
-    model.addAttribute("districtURL",
-                       MvcUriComponentsBuilder
-                           .fromMethodName(DistrictController.class, "getDistrictByProvince", "")
-                           .toUriString());
-    model.addAttribute("dsOfficeURL",
-                       MvcUriComponentsBuilder
-                           .fromMethodName(DsOfficeController.class, "getDsOfficeByDistrict", "")
-                           .toUriString());
+    model.addAttribute("gramaNiladhariSearchUrl", MvcUriComponentsBuilder
+        .fromMethodName(GramaNiladhariController.class, "searchOne", "")
+        .toUriString());
+    model.addAttribute("locationInteractSearchUrl", MvcUriComponentsBuilder
+        .fromMethodName(LocationInteractController.class, "search", "")
+        .toUriString());
+    model.addAttribute("locationInteractSaveUrl", MvcUriComponentsBuilder
+        .fromMethodName(LocationInteractController.class, "turnNew", "", "")
+        .toUriString());
     return "turn/editTurn";
   }
 
@@ -126,7 +124,7 @@ public class TurnController {
   public String persist(@Valid @ModelAttribute Turn turn, BindingResult bindingResult,
                         RedirectAttributes redirectAttributes, Model model) {
     if ( bindingResult.hasErrors() ) {
-      return commonThing(model, false, turn);
+      return commonThing(model, turn);
     }
     redirectAttributes.addFlashAttribute("turnDetail", turnService.persist(turn));
     return "redirect:/turn";

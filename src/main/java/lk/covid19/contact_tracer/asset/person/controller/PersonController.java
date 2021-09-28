@@ -139,7 +139,6 @@ public class PersonController {
 
   @GetMapping( "/turn/{id}" )
   public String addNewTurn(@PathVariable Integer id, Model model) {
-    //todo need to manage this
     Person person = personService.findById(id);
     person.setAge(dateTimeAgeService.getDateDifference(person.getDateOfBirth(), LocalDate.now()));
     model.addAttribute("personDetail", person);

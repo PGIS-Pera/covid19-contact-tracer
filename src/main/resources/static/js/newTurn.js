@@ -66,7 +66,11 @@ $("#locationInteract").keyup(function () {
             url: $("#locationInteractSearchUrl").val() + type_value,
             success: function (data) {
                 for (let i = 0; i < data.length; i++) {
-                    html_middle_part += `<li onClick="selectInteraction(${data[i].id})" class="list-group-item font-weight-bold p">${data[i].name}</li >`;
+                    html_middle_part += `
+                    <li onClick="selectInteraction(${data[i].id})" class="list-group-item font-weight-bold p">
+                    Place Name : ${data[i].name}
+                    - Gramaniladhari Division Name & Number : ${data[i].gramaNiladhari.name} - ${data[i].gramaNiladhari.number}
+                    </li >`;
                 }
                 $("#locationInteract-box").show().html(html_first_part + html_middle_part);
                 $("#locationInteract").css("background", "#FFF");
