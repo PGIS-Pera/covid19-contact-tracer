@@ -44,9 +44,6 @@ function selectGramaNiladhari(val) {
     let id_part = id.split("-")[0];
     let _id = id.split("-")[1];
 
-    console.log("gramaNiladhari id ")
-    console.log(_id)
-
     $(`#${id_part}`).attr('value', val);
     $(`#${id_part}-box`).hide();
     gramaNiladhari.forEach((x) => {
@@ -88,8 +85,6 @@ function subscribeForm() {
     news["mobile"] = mobile;
     news["gramaNiladhari"] = gramaNiladhari;
 
-    console.log(news)
-
     $.ajax({
         type: "POST",
         contentType: "application/json",
@@ -100,9 +95,6 @@ function subscribeForm() {
             saveModel();
         },
         error: function (e) {
-            let json = "<h4>Ajax Response</h4>&lt;pre&gt;"
-                + e.responseText + "&lt;/pre&gt;";
-            console.log(json);
             console.log("ERROR : ", e);
             if (e.status === 200) {
                 saveModel();
@@ -160,9 +152,6 @@ function showLocation() {
                 searchInputValueClear();
             },
             error: function (e) {
-                let json = "<h4>Ajax Response</h4>&lt;pre&gt;"
-                    + e.responseText + "&lt;/pre&gt;";
-                console.log(json);
                 console.log("ERROR : ", e);
             }
         });
