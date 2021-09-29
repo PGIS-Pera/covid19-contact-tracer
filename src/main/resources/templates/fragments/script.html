@@ -20,44 +20,6 @@
   <!--custom javascript-->
   <script src="/js/app.js" ></script >
 
-  <!--notification count get url-->
-  <!--  <script>
-        $(document).ready(function () {
-            /*
-            console.log("petition count url "+ petitionCountUrl);
-            console.log("document.URL : "+document.URL);
-            console.log("document.location.href : "+document.location.href);
-            console.log("document.location.origin : "+document.location.origin);
-            console.log("document.location.hostname : "+document.location.hostname);
-            console.log("document.location.host : "+document.location.host);
-            console.log("document.location.pathname : "+document.location.pathname);
-            */
-
-            let petitionCountUrl = document.location.origin + "/petitionCount";
-            if (document.location.pathname !== "/login") {
-                // to get petition count every five secound
-                window.setInterval(function () {
-                    $.ajax({
-                        type: "get",
-                        dataType: 'json',
-                        contentType: 'application/json',
-                        url: petitionCountUrl,
-                        success: function (data, textStatus) {
-                            if (textStatus === 'success') {
-                                /// call your function here
-                                $("#petitionTodayCount").html(data);
-                            }
-                        },
-                        error: function (xhr, textStatus, errorThrown) {
-                            console.log('request failed   ' + errorThrown);
-                            location.reload();
-                        }
-                    });
-
-                }, 5000);
-            }
-        });
-    </script>-->
 </div >
 </body >
 </html >

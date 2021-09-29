@@ -10,10 +10,12 @@
     <div class="collapse navbar-collapse" id="collapsibleNavId" >
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0" >
         <li class="nav-item active ml-2" >
-          <a class="nav-link text-white font-weight-bolder" href="/mainWindow" >Home <span
+          <a class="nav-link font-weight-bolder" data-sec-authorize="isAuthenticated()" href="/mainWindow" >Home <span
+                class="sr-only" >(current)</span ></a >
+          <a class="nav-link font-weight-bolder" data-sec-authorize="!isAuthenticated()" href="/" >Home <span
                 class="sr-only" >(current)</span ></a >
         </li >
-        <li class="nav-item dropdown ml-2" >
+        <li class="nav-item dropdown ml-2" data-sec-authorize="isAuthenticated()" >
           <a class="nav-link dropdown-toggle" href="#" id="general"
              data-toggle="dropdown"
              aria-haspopup="true"
@@ -37,7 +39,7 @@
                href="/userDetails" >User Details Management</a >
           </div >
         </li >
-        <li class="nav-item dropdown ml-2" >
+        <li class="nav-item dropdown ml-2" data-sec-authorize="isAuthenticated()" >
           <a class="nav-link dropdown-toggle" href="#" id="transaction"
              data-toggle="dropdown" aria-haspopup="true"
              aria-expanded="false" >Transaction</a >
@@ -60,7 +62,7 @@
                href="/userDetails/add" >User Details Add</a >
           </div >
         </li >
-        <li class="nav-item dropdown ml-2" >
+        <li class="nav-item dropdown ml-2" data-sec-authorize="isAuthenticated()" >
           <a class="nav-link dropdown-toggle" href="#" id="report"
              data-toggle="dropdown"
              aria-haspopup="true"
@@ -68,6 +70,10 @@
           <div class="dropdown-menu" aria-labelledby="report" >
             <a class="dropdown-item" href="/report/chandlers" >Chandlers Details </a >
           </div >
+        </li >
+        <li class="nav-item active ml-2" >
+          <a class="nav-link font-weight-bolder" href="/patientVisitedPlaceTime" >Recent Identified Places <span
+                class="sr-only" >(current)</span ></a >
         </li >
       </ul >
 

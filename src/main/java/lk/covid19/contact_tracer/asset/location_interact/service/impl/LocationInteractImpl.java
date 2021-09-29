@@ -70,5 +70,9 @@ public class LocationInteractImpl implements LocationInteractService {
                                                            locationInteract.getGramaNiladhari());
   }
 
+  public List< LocationInteract > findByGramaNiladhari(GramaNiladhari gramaNiladhari) {
+    return locationInteractDao.findByGramaNiladhari(gramaNiladhari);
+  }
+
 }
 

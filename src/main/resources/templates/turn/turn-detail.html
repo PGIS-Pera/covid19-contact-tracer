@@ -116,6 +116,7 @@
               <th >Location Name</th >
               <th >Arrival At</th >
               <th >Departure At</th >
+              <th >Status</th >
               <th >Created By</th >
               <th >Updated By</th >
             </tr >
@@ -127,6 +128,7 @@
               <td data-th-text="${personLocationInteractTime.locationInteract.name}" ></td >
               <td data-th-text="${#temporals.format(personLocationInteractTime.arrivalAt, 'dd-MM-yyyy HH:mm')}" ></td >
               <td data-th-text="${#temporals.format(personLocationInteractTime.leaveAt, 'dd-MM-yyyy HH:mm')}" ></td >
+              <td data-th-text="${personLocationInteractTime.stopActive.stopActive}" ></td >
               <td data-th-text="${personLocationInteractTime.createdBy}" ></td >
               <td data-th-text="${personLocationInteractTime.updatedBy}" ></td >
             </tr >

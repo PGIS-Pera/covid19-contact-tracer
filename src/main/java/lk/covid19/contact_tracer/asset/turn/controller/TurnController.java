@@ -6,13 +6,16 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import lk.covid19.contact_tracer.asset.common_asset.model.Pager;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.Province;
+import lk.covid19.contact_tracer.asset.common_asset.model.enums.StopActive;
 import lk.covid19.contact_tracer.asset.district.controller.DistrictController;
-import lk.covid19.contact_tracer.asset.district.service.DistrictService;
 import lk.covid19.contact_tracer.asset.ds_office.controller.DsOfficeController;
-import lk.covid19.contact_tracer.asset.ds_office.service.DsOfficeService;
+import lk.covid19.contact_tracer.asset.grama_niladhari.controller.GramaNiladhariController;
+import lk.covid19.contact_tracer.asset.location_interact.controller.LocationInteractController;
+import lk.covid19.contact_tracer.asset.person.entity.Person;
+import lk.covid19.contact_tracer.asset.person.service.PersonService;
 import lk.covid19.contact_tracer.asset.turn.entity.Turn;
 import lk.covid19.contact_tracer.asset.turn.service.TurnService;
-import lk.covid19.contact_tracer.util.service.CommonService;
+import lk.covid19.contact_tracer.util.service.DateTimeAgeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +29,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,15 +42,16 @@ public class TurnController {
   private static final int INITIAL_PAGE = 0;
   private static final int INITIAL_PAGE_SIZE = 5;
   private static final int[] PAGE_SIZES = {5, 10, 20};
-  private final TurnService turnService;
-  private final DistrictService districtService;
-  private final DsOfficeService dsOfficeService;
-  private final CommonService commonService;
 
-  private String commonThing(Model model, Boolean booleanValue, Turn turnObject) {
-    model.addAttribute("addStatus", booleanValue);
+  private final TurnService turnService;
+  private final PersonService personService;
+  private final DateTimeAgeService dateTimeAgeService;
+
+  private String commonThing(Model model, Turn turnObject) {
+    model.addAttribute("addStatus", false);
     model.addAttribute("turn", turnObject);
     model.addAttribute("provinces", Province.values());
+    model.addAttribute("stopActive", StopActive.values());
     model.addAttribute("districtURL",
                        MvcUriComponentsBuilder
                            .fromMethodName(DistrictController.class, "getDistrictByProvince", "")
@@ -61,6 +66,7 @@ public class TurnController {
   @GetMapping
   public ModelAndView showPersonsPage(@RequestParam( "pageSize" ) Optional< Integer > pageSize,
                                       @RequestParam( "page" ) Optional< Integer > page) {
+    //todo-> normally we thorough to get data within 14 days
     ModelAndView modelAndView = new ModelAndView("turn/turn");
     int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);
     int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
@@ -80,27 +86,45 @@ public class TurnController {
 
   @GetMapping( "/add" )
   public String form(Model model) {
-    return commonThing(model, false, new Turn());
+    return commonThing(model, new Turn());
   }
 
   @GetMapping( "/{id}" )
   public String findById(@PathVariable Integer id, Model model) {
-    model.addAttribute("turnDetail", turnService.findById(id));
+    Turn turn = turnService.findById(id);
+    Person person = personService.findById(turn.getPerson().getId());
+    person.setAge(dateTimeAgeService.getDateDifference(person.getDateOfBirth(), LocalDate.now()));
+    model.addAttribute("personDetail", person);
+    model.addAttribute("turnDetail", turn);
     return "turn/turn-detail";
   }
 
   @GetMapping( "/edit/{id}" )
   public String edit(@PathVariable Integer id, Model model) {
-    model.addAttribute("districts", districtService.findAll());
-    model.addAttribute("agOffices", dsOfficeService.findAll());
-    return commonThing(model, true, turnService.findById(id));
+    model.addAttribute("addStatus", true);
+    Turn turn = turnService.findById(id);
+    Person person = personService.findById(turn.getPerson().getId());
+    person.setAge(dateTimeAgeService.getDateDifference(person.getDateOfBirth(), LocalDate.now()));
+    model.addAttribute("personDetail", person);
+    model.addAttribute("turnDetail", turn);
+    model.addAttribute("stopActive", StopActive.values());
+    model.addAttribute("gramaNiladhariSearchUrl", MvcUriComponentsBuilder
+        .fromMethodName(GramaNiladhariController.class, "searchOne", "")
+        .toUriString());
+    model.addAttribute("locationInteractSearchUrl", MvcUriComponentsBuilder
+        .fromMethodName(LocationInteractController.class, "search", "")
+        .toUriString());
+    model.addAttribute("locationInteractSaveUrl", MvcUriComponentsBuilder
+        .fromMethodName(LocationInteractController.class, "turnNew", "", "")
+        .toUriString());
+    return "turn/editTurn";
   }
 
   @PostMapping( value = {"/save", "/update"} )
   public String persist(@Valid @ModelAttribute Turn turn, BindingResult bindingResult,
                         RedirectAttributes redirectAttributes, Model model) {
     if ( bindingResult.hasErrors() ) {
-      return commonThing(model, false, turn);
+      return commonThing(model, turn);
     }
     redirectAttributes.addFlashAttribute("turnDetail", turnService.persist(turn));
     return "redirect:/turn";
@@ -114,44 +138,29 @@ public class TurnController {
 
   @PostMapping( value = "/search" )
   @ResponseBody
-  public MappingJacksonValue search(Turn turn) {
-
-    List< Turn > turns = turnService.search(turn);
-    turns.forEach(System.out::println);
+  public MappingJacksonValue search(Person person) {
+    System.out.println(person.toString());
+    List< Turn > turns = turnService.findByPerson(person);
 
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(turns);
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name", "number");
+        .filterOutAllExcept("name", "code", "gramaNiladhari");
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name");
+        .filterOutAllExcept("id", "identifiedDate", "person");
+
+    SimpleBeanPropertyFilter gramaNiladhari = SimpleBeanPropertyFilter
+        .filterOutAllExcept("id", "name", "number");
 
     FilterProvider filter = new SimpleFilterProvider()
-        .addFilter("Turn", simpleBeanPropertyFilterOne)
-        .addFilter("DsOffice", simpleBeanPropertyFilterTwo);
+        .addFilter("Person", simpleBeanPropertyFilterOne)
+        .addFilter("Turn", simpleBeanPropertyFilterTwo)
+        .addFilter("GramaNiladhari", gramaNiladhari);
+
     mappingJacksonValue.setFilters(filter);
 
     return mappingJacksonValue;
   }
 
-/*  @GetMapping( value = "/searchOne" )
-  @ResponseBody
-  public MappingJacksonValue searchOne(@RequestParam( "name" ) String name) {
-
-    Turn turn = Turn.builder().name(name).build();
-    List< Turn > turns = turnService.search(turn);
-
-    MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(turns);
-
-    SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name", "number");
-
-    FilterProvider filter = new SimpleFilterProvider()
-        .addFilter("Turn", simpleBeanPropertyFilterOne);
-
-    mappingJacksonValue.setFilters(filter);
-
-    return mappingJacksonValue;
-  }*/
 }

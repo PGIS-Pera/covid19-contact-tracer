@@ -1,5 +1,6 @@
 package lk.covid19.contact_tracer.asset.turn.entity;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.turn_history.entity.TurnHistory;
 import lk.covid19.contact_tracer.util.audit.AuditEntity;
@@ -17,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@JsonFilter( "Turn" )
 public class Turn extends AuditEntity {
 
   @DateTimeFormat( pattern = "yyyy-MM-dd" )

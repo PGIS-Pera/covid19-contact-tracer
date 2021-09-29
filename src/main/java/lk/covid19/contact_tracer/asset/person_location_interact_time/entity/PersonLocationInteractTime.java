@@ -1,6 +1,7 @@
 package lk.covid19.contact_tracer.asset.person_location_interact_time.entity;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import lk.covid19.contact_tracer.asset.common_asset.model.enums.StopActive;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.location_interact.entity.LocationInteract;
 import lk.covid19.contact_tracer.util.audit.AuditEntity;
@@ -10,10 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,6 +21,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @JsonFilter( "PersonLocationInteractTime" )
 public class PersonLocationInteractTime extends AuditEntity {
+
+  @Enumerated( EnumType.STRING )
+  private StopActive stopActive;
 
   @DateTimeFormat( pattern = "yyyy-MM-dd'T'HH:mm" )
   private LocalDateTime arrivalAt;

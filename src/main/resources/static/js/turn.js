@@ -18,6 +18,7 @@ let html_first_part = `<table class="table table-hover table-striped" id="myTabl
                 <th >Person Code</th >
                 <th >Person Name</th >
                 <th >Identified Date</th >
+                <th >Gramaniladhari Division</th >
                 <th >View</th >
                 </tr >
                 </thead >
@@ -46,11 +47,10 @@ $("#selectParameter").change(function () {
 })
 
 $("#searchInput").keyup(function () {
-    //todo need to check this turn search using person
     let url = $("#searchUrl").val();
     let select_parameter_value = $("#selectParameter").val();
     let enter_value = $(this).val();
-    let turn = {};
+    let person = {};
 
     if (select_parameter_value === null) {
         swal({
@@ -63,16 +63,15 @@ $("#searchInput").keyup(function () {
 
     if (enter_value.length >= 3 && select_parameter_value.length > 0) {
         if (select_parameter_value === "name") {
-            turn.person = {'name': enter_value};
+            person.name = enter_value;
         }
         if (select_parameter_value === "number") {
-            turn.person = {'number': enter_value};
+            person.number = enter_value;
         }
         if (mobileRegex.test(select_parameter_value) && select_parameter_value === "mobile") {
-            turn.person = {'mobile': enter_value};
+            person.mobile = enter_value;
         }
-        console.log(turn)
-        $.post(url, turn,
+        $.post(url, person,
             function (data, status) {
                 $("#tableShow").text('');
                 if (data.length > 0) {
@@ -80,9 +79,10 @@ $("#searchInput").keyup(function () {
                         html_middle_part = html_middle_part + `
                     <tr>
                       <th > ${i + 1}</th >
-                      <th > ${data[i].turn.code}</th >
-                      <th > ${data[i].turn.name}</th >
-                      <th > ${data[i].identifiedDate}</th >
+                      <th > ${data[i].person.code}</th >
+                      <th > ${data[i].person.name}</th >
+                      <th > ${data[i].identifiedDate[0]}-${data[i].identifiedDate[1]}-${data[i].identifiedDate[2]}</th >
+                      <th > ${data[i].person.gramaNiladhari.name} - ${data[i].person.gramaNiladhari.number}</th>
                       <th >
                           <a class="btn btn-success btn-sm" href="${'/turn/' + data[i].id}" >
                             <i class="fa fa-folder-open" ></i >&nbsp;View

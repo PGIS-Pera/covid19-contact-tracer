@@ -117,12 +117,12 @@ public class GramaNiladhariController {
   @PostMapping( value = "/search" )
   @ResponseBody
   public MappingJacksonValue search(GramaNiladhari gramaNiladhari) {
-
+    System.out.println(gramaNiladhari.toString());
     List< GramaNiladhari > gramaNiladharis = gramaNiladhariService.search(gramaNiladhari);
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(gramaNiladharis);
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name", "number");
+        .filterOutAllExcept("id", "name", "number", "dsOffice");
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
         .filterOutAllExcept("id", "name");

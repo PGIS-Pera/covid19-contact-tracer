@@ -2,6 +2,7 @@ package lk.covid19.contact_tracer.asset.turn_in_history.entity;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import lk.covid19.contact_tracer.asset.person.entity.enums.PersonStatus;
+import lk.covid19.contact_tracer.asset.treatment_center.entity.TreatmentCenter;
 import lk.covid19.contact_tracer.asset.turn_history.entity.TurnHistory;
 import lk.covid19.contact_tracer.asset.turn_in_history.entity.enums.Symptoms;
 import lk.covid19.contact_tracer.asset.turn_in_history.entity.enums.TurnInHistoryNoteStatus;
@@ -10,7 +11,6 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -45,5 +45,10 @@ public class TurnInHistoryNote extends AuditEntity {
       "fk_turn_in_history_note_vs_turn_history" ) )
   @ToString.Exclude
   private TurnHistory turnHistory;
+
+  @ManyToOne
+  @JoinColumn( name = "treatment_center_id", foreignKey = @ForeignKey( name =
+      "fk_turn_in_history_note_vs_treatment_center" ) )
+  private TreatmentCenter treatmentCenter;
 
 }

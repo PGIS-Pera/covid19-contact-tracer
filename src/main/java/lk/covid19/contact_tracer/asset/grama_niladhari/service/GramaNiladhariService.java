@@ -13,11 +13,11 @@ public interface GramaNiladhariService {
 
    GramaNiladhari findById(Integer id);
 
-   GramaNiladhari persist(GramaNiladhari policeStation);
+   GramaNiladhari persist(GramaNiladhari gramaNiladhari);
 
    boolean delete(Integer id);
 
-   List< GramaNiladhari > search(GramaNiladhari policeStation);
+   List< GramaNiladhari > search(GramaNiladhari gramaNiladhari);
 
   Page< GramaNiladhari > findAllPageable(Pageable pageable);
 //todo total count according to person status

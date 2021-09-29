@@ -5,7 +5,7 @@ $('[type="date"]').prop('max', function () {
 $('[type="datetime-local"]').prop('max', function () {
     let now = new Date();
     let year = now.getFullYear();
-    let month = now.getMonth();
+    let month = now.getMonth() + 1;
     let date = now.getDate();
     let hours = now.getHours();
     let min = now.getMinutes()
@@ -66,7 +66,11 @@ $("#locationInteract").keyup(function () {
             url: $("#locationInteractSearchUrl").val() + type_value,
             success: function (data) {
                 for (let i = 0; i < data.length; i++) {
-                    html_middle_part += `<li onClick="selectInteraction(${data[i].id})" class="list-group-item font-weight-bold p">${data[i].name}</li >`;
+                    html_middle_part += `
+                    <li onClick="selectInteraction(${data[i].id})" class="list-group-item font-weight-bold p">
+                    Place Name : ${data[i].name}
+                    - Gramaniladhari Division Name & Number : ${data[i].gramaNiladhari.name} - ${data[i].gramaNiladhari.number}
+                    </li >`;
                 }
                 $("#locationInteract-box").show().html(html_first_part + html_middle_part);
                 $("#locationInteract").css("background", "#FFF");
@@ -157,7 +161,6 @@ $("#addTable").bind('click', function () {
 
 });
 
-
 function tableRowAdd() {
     let html = ``;
     let i = 0;
@@ -169,10 +172,10 @@ function tableRowAdd() {
     $("#totalPlace").html(personLocationInteractTimes.length);
 }
 
-
 function tableRowHtml(obj, i) {
     return `<tr >
                   <td >
+                    <input  type="text" name="personLocationInteractTimes[${i}].stopActive" value="ACTIVE" hidden required>
                     <input id="pi${i}" type="text" name="personLocationInteractTimes[${i}].person.id" value="${obj.person.id}" hidden required>
                     <input id="li${i}" type="text" name="personLocationInteractTimes[${i}].locationInteract.id" value="${obj.locationInteract.id}" hidden required>
                     <input id="ln${i}" type="text" name="personLocationInteractTimes[${i}].locationInteract.name" value="${obj.locationInteract.name}" readonly class="form-control">
@@ -190,7 +193,6 @@ function tableRowHtml(obj, i) {
                   </td >
                 </tr >`;
 }
-
 
 function removeRow(obj) {
     let removeFiledId = obj.getAttribute('id').slice(2);
@@ -219,7 +221,6 @@ function removeRow(obj) {
 
     tableRowAdd();
 }
-
 
 //new location history
 $(document).ready(function () {

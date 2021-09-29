@@ -52,20 +52,20 @@ let html_first_part = `<table class="table table-hover table-striped" id="myTabl
 let html_last_part = ` </tbody ></table >`
 let html_middle_part = ``;
 let html_no_alert = `<div class="row" >
-                                              <div class="col-sm-12" >
-                                                <div class="alert alert-warning alert-dismissible fade show"
-                                                     role="alert" >
-                                                  <button aria-label="Close" class="close" data-dismiss="alert"
-                                                          type="button" >
-                                                    <span aria-hidden="true" >&times;</span >
-                                                  </button >
-                                                  <h3 class="text-center text-danger" >
-                                                    <strong >There is no grama niladhari division according to your provided details.
-                                                    </strong >
-                                                  </h3 >
-                                                </div >
-                                              </div >
-                                            </div >`;
+                       <div class="col-sm-12" >
+                         <div class="alert alert-warning alert-dismissible fade show"
+                              role="alert" >
+                           <button aria-label="Close" class="close" data-dismiss="alert"
+                                   type="button" >
+                             <span aria-hidden="true" >&times;</span >
+                           </button >
+                           <h3 class="text-center text-danger" >
+                             <strong >There is no grama niladhari division according to your provided details.
+                             </strong >
+                           </h3 >
+                         </div >
+                       </div >
+                     </div >`;
 
 $("#selectParameter").change(function () {
     $("#tableShow").text('');
@@ -74,6 +74,7 @@ $("#selectParameter").change(function () {
 
 $("#searchInput").keyup(function () {
     let url = $("#searchUrl").val();
+    console.log(url)
     let select_parameter_value = $("#selectParameter").val();
     let enter_value = $(this).val();
     let gramaNiladhari = {};
@@ -94,7 +95,7 @@ $("#searchInput").keyup(function () {
         if (select_parameter_value === "number") {
             gramaNiladhari.number = enter_value;
         }
-
+        console.log(gramaNiladhari)
         $.post(url, gramaNiladhari,
             function (data, status) {
                 $("#tableShow").text('');

@@ -138,16 +138,19 @@ public class LocationInteractController {
 
   private MappingJacksonValue getMappingJacksonValue(MappingJacksonValue mappingJacksonValue) {
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name", "number");
-
+        .filterOutAllExcept("id", "name", "number", "dsOffice");
     SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name");
+        .filterOutAllExcept("id", "name", "gramaNiladhari");
+    SimpleBeanPropertyFilter simpleBeanPropertyFilterThree = SimpleBeanPropertyFilter
+        .filterOutAllExcept("id", "name", "district");
+    SimpleBeanPropertyFilter simpleBeanPropertyFilterFour = SimpleBeanPropertyFilter
+        .filterOutAllExcept("id", "name", "district", "province");
 
     FilterProvider filter = new SimpleFilterProvider()
         .addFilter("LocationInteract", simpleBeanPropertyFilterTwo)
         .addFilter("GramaNiladhari", simpleBeanPropertyFilterOne)
-        .addFilter("DsOffice", simpleBeanPropertyFilterTwo)
-        .addFilter("District", simpleBeanPropertyFilterTwo);
+        .addFilter("DsOffice", simpleBeanPropertyFilterThree)
+        .addFilter("District", simpleBeanPropertyFilterFour);
     mappingJacksonValue.setFilters(filter);
 
     return mappingJacksonValue;

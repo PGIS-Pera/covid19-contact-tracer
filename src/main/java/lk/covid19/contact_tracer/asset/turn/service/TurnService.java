@@ -28,4 +28,5 @@ public interface TurnService {
   Page< Turn > findAllPageable(Pageable pageable);
 
 
+  List< Turn > findByPerson(Person person);
 }

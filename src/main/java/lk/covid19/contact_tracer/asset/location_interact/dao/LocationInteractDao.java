@@ -12,4 +12,6 @@ import java.util.List;
 @Repository
 public interface LocationInteractDao extends JpaRepository< LocationInteract, Integer > {
   LocationInteract findByNameAndGramaNiladhari(String name, GramaNiladhari gramaNiladhari);
+
+  List< LocationInteract > findByGramaNiladhari(GramaNiladhari gramaNiladhari);
 }

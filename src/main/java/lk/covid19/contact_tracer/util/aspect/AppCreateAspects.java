@@ -1,7 +1,6 @@
 package lk.covid19.contact_tracer.util.aspect;
 
 
-
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.Province;
 import lk.covid19.contact_tracer.asset.district.entity.District;
 import lk.covid19.contact_tracer.asset.district.service.DistrictService;
@@ -88,24 +87,27 @@ public class AppCreateAspects {
     return result;
   }*/
 
-  @After( "execution(* lk.covid19.contact_tracer.asset.common_asset.controller.ApplicationCreateController.sample(..))" )
-public void testONe(){
+  @After( "execution(* lk.covid19.contact_tracer.asset.common_asset.controller.ApplicationCreateController.sample(..)" +
+      ")" )
+  public void testONe() {
     System.out.println(LocalDateTime.now());
     System.out.println("afert");
   }
-  @Before( "execution(* lk.covid19.contact_tracer.asset.common_asset.controller.ApplicationCreateController.sample(..))" )
-  public void testTwo(){
+
+  @Before( "execution(* lk.covid19.contact_tracer.asset.common_asset.controller.ApplicationCreateController.sample(." +
+      ".))" )
+  public void testTwo() {
     System.out.println(LocalDateTime.now());
     System.out.println("before");
 
   }
 
-  @After( "execution(* lk.covid19.contact_tracer.asset.common_asset.controller.ApplicationCreateController.district(..))" )
+  @After( "execution(* lk.covid19.contact_tracer.asset.common_asset.controller.ApplicationCreateController.district(." +
+      ".))" )
   public void createRowSData() {
     Resource resource = resourceLoader.getResource("classpath:excel_files/district.xlsx");
     HashSet< District > savedDistrict = new HashSet<>();
     HashSet< DsOffice > savedDsOffice = new HashSet<>();
-
 
     try {
       FileInputStream inputStream = new FileInputStream(resource.getFile());
@@ -125,7 +127,6 @@ public void testONe(){
       e.printStackTrace();
       System.err.println(e.getMessage());
     }
-
 
     Resource resource_grma = resourceLoader.getResource("classpath:excel_files/grama_niladhari.xlsx");
 

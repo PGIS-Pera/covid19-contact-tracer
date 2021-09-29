@@ -48,8 +48,8 @@ public class GramaNiladhariServiceImpl implements GramaNiladhariService {
         .matching()
         .withIgnoreCase()
         .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-    Example< GramaNiladhari > policeStationExample = Example.of(gramaNiladhari, matcher);
-    return gramaNiladhariDao.findAll(policeStationExample);
+    Example< GramaNiladhari > gramaNiladhariExample = Example.of(gramaNiladhari, matcher);
+    return gramaNiladhariDao.findAll(gramaNiladhariExample);
   }
 
   @Cacheable

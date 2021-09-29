@@ -139,7 +139,6 @@ public class PersonController {
 
   @GetMapping( "/turn/{id}" )
   public String addNewTurn(@PathVariable Integer id, Model model) {
-    //todo need to manage this
     Person person = personService.findById(id);
     person.setAge(dateTimeAgeService.getDateDifference(person.getDateOfBirth(), LocalDate.now()));
     model.addAttribute("personDetail", person);
@@ -192,7 +191,7 @@ public class PersonController {
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(persons);
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name", "code", "nic", "mobile", "dateOfBirth");
+        .filterOutAllExcept("id", "name", "code", "nic", "mobile", "dateOfBirth", "gramaNiladhari");
 
     SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
         .filterOutAllExcept("id", "name");
