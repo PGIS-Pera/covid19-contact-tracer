@@ -43,7 +43,7 @@ function gramaniladhari(val) {
 function selectGramaNiladhari(val) {
     $("#gramaNiladhari").attr('value', val);
     $("#gramaNiladhari-box").hide();
-    gramaNiladhari.forEach((x) => {
+    interaction.forEach((x) => {
         if (x.id === parseInt(val)) {
             $("#gramaNiladhariOne").val(`${x.name} - ${x.number}`);
             $("#gramaNiladhariId").attr('value', x.id);

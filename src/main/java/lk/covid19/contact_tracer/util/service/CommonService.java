@@ -70,6 +70,7 @@ public class CommonService {
   public List< AttributeAndCount > personsAccordingToType(List< Person > persons) {
     List< AttributeAndCount > attributeAndCounts = new ArrayList<>();
     for ( PersonStatus personStatus : PersonStatus.values() ) {
+      //todo-> need to check
       int count = (int) persons.stream().filter(x -> x.getPersonStatus().equals(personStatus)).count();
       String name = personStatus.getPersonStatus();
       AttributeAndCount attributeAndCount = AttributeAndCount.builder().count(count).name(name).build();

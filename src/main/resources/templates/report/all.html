@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<div class="container-fluid" >
+  <div class="row text-center" >
+    <div class="col" >
+    </div >
+    <div class="col" >
+      <span class="font-weight-bold h2" >                    Province Report </span >
+    </div >
+    <div class="col" >
+      <a class="btn btn-primary" data-th-href="${'/home'}" id="searchShow" tabindex="2" >
+        <i class="fas fa-home" style="font-size: 20px" ></i >&nbsp;&nbsp;Home
+      </a >
+    </div >
+  </div >
+</div >
+
+<div class="container-fluid text-center" >
+
+</div >
+<!--footer fragment-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+</body >
+</html >

@@ -50,9 +50,10 @@
     </div >
   </div >
 </div >
+
 <!--Form Content - start -->
 <div class="container-fluid" >
-  <form data-th-action="${'/person/turn'}" data-th-object="${personDetail}"
+  <form data-th-action="${'/turn/save'}" data-th-object="${turnDetail}"
         method="POST" >
     <input data-th-field="*{id}" readonly type="hidden" id="personId" />
     <!--turn-->
@@ -65,7 +66,7 @@
       </div >
     </div >
     <div class="form-row" >
-      <input type="hidden" data-th-field="*{person.id}" required >
+      <input type="hidden" data-th-field="*{person}" required >
       <div class="col-md-6 col-sm-6 " >
         <div class="form-group" >
           <label data-th-for="${'identifiedDate'}" >Identified Date :</label >
@@ -80,16 +81,90 @@
         </div >
       </div >
     </div >
+    <!--interact location history add -->
+    <div class="form-row" >
+      <div class="page-header text-primary container-fluid " >
+        <div class="text-center" >
+          <h5 >Interact Location Related</h5 >
+        </div >
+        <hr />
+      </div >
+    </div >
+    <div class="container" >
+      <div class="row" >
+        <!--Left Side-->
+        <div class="col-md-6 col-sm-6 " >
+          <!--locationInteract-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" data-th-for="${'locationInteract'}" >Location Interact :</label >
+            </div >
+            <div class="col-md-8" >
+              <input type="text" id="locationInteract" class="form-control"
+                     placeholder="Please enter interact location name" >
+              <input type="text" id="locationInteractOne" readonly class="form-control" disabled value="" >
+              <div id="locationInteract-box" ></div >
+              <span class="form-text text-muted bg-warring" > Please type more than 3 character</span >
+              <input name="locationInteract.id" id="locationInteractId" value="" hidden type="number" >
+            </div >
+          </div >
+        </div >
+        <!--Right Side-->
+        <div class="col-md-6 col-sm-6 " >
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col" >
+              <label class="control-label" data-th-for="${'locationInteract'}" > Add Location :</label >
+            </div >
+            <div class="col text-center" >
+              <button type="button" class="btn btn-info btn-group" data-toggle="modal" data-target="#modelId" >
+                <i class="fas fa-notes-medical" ></i > &nbsp;&nbsp; New
+              </button >
+            </div >
+          </div >
+        </div >
+      </div >
+      <div class="row" >
+        <!--Left Side-->
+        <div class="col-md-6 col-sm-6 " >
+          <!--Arrival At-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="arrivalAt" >Arrival At :</label >
+            </div >
+            <div class="col-md-8" >
+              <input class="form-control" id="arrivalAt" type="datetime-local" />
+            </div >
+          </div >
+        </div >
+        <!--Right Side-->
+        <div class="col-md-6 col-sm-6 " >
+          <!--departure At-->
+          <div class="form-row text-md-right text-sm-left" >
+            <div class="col-md-4" >
+              <label class="control-label" for="leaveAt" >Departure At :</label >
+            </div >
+            <div class="col-md-8" >
+              <input class="form-control" id="leaveAt" type="datetime-local" />
+            </div >
+          </div >
+        </div >
+      </div >
+      <div class="row mt-2" >
+        <div class="container text-right" >
+          <button class="btn btn-primary btn-sm" type="button" id="addTable" >Add to Table &nbsp;<i
+                class="fas fa-table" ></i ></button >
+        </div >
+      </div >
+    </div >
     <!--Interact Location History-->
     <div class="form-row" >
       <div class="container-fluid" >
-        <table class="table table-striped table-inverse table-hover" id="myTable" >
+        <table class="table table-striped table-inverse table-hover" >
           <caption style="caption-side:top;" class="font-weight-bold text-center h4" >
             Locations Interact With Person
           </caption >
           <thead class="thead-inverse" >
           <tr >
-            <th >Index</th >
             <th >Location Name</th >
             <th >Arrival At</th >
             <th >Leave At</th >
@@ -97,8 +172,30 @@
           </tr >
           </thead >
           <tbody >
-          <tr >
-
+          <!--todo 28/09/2021 pending need to complete turn edit -->
+          <tr data-th-each="personLocationInteractTime, index : ${personLocationInteractTimes}" >
+            <td >
+              <input type="text" name="personLocationInteractTimes[${i}].stopActive" value="ACTIVE" hidden required >
+              <input id="pi${i}" type="text" name="personLocationInteractTimes[${i}].person.id" value="${obj.person.id}"
+                     hidden required >
+              <input id="li${i}" type="text" name="personLocationInteractTimes[${i}].locationInteract.id"
+                     value="${obj.locationInteract.id}" hidden required >
+              <input id="ln${i}" type="text" name="personLocationInteractTimes[${i}].locationInteract.name"
+                     value="${obj.locationInteract.name}" readonly class="form-control" >
+            </td >
+            <td >
+              <input id="aa${i}" type="datetime-local" name="personLocationInteractTimes[${i}].arrivalAt"
+                     value="${obj.arrivalAt}" readonly class="form-control" required >
+            </td >
+            <td >
+              <input id="la${i}" type="datetime-local" name="personLocationInteractTimes[${i}].leaveAt"
+                     value="${obj.leaveAt}" readonly class="form-control" required >
+            </td >
+            <td >
+              <button id="bi${i}" class="btn btn-danger btn-sm" type="button" onclick="removeRow(this)" >
+                <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp; Remove
+              </button >
+            </td >
           </tr >
           </tbody >
         </table >
@@ -186,7 +283,7 @@
 <input data-th-value="${locationInteractSaveUrl}" hidden id="locationInteractSaveUrl" type="text" >
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
-<script type="text/javascript" src="/js/newTurn.js" ></script >
+<script type="text/javascript" src="/js/editTurn.js" ></script >
 </body >
 </html >
 
