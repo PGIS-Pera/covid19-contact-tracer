@@ -1,12 +1,15 @@
 package lk.covid19.contact_tracer.asset.report.service.impl;
 
+import lk.covid19.contact_tracer.asset.common_asset.model.enums.Province;
 import lk.covid19.contact_tracer.asset.district.service.DistrictService;
 import lk.covid19.contact_tracer.asset.ds_office.service.DsOfficeService;
 import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.person.service.PersonService;
+import lk.covid19.contact_tracer.asset.report.model.DistrictReportDTO;
 import lk.covid19.contact_tracer.asset.report.model.DsOfficeReportDTO;
 import lk.covid19.contact_tracer.asset.report.model.GramaniladariReportDTO;
+import lk.covid19.contact_tracer.asset.report.model.ProvinceReportDTO;
 import lk.covid19.contact_tracer.asset.report.service.ReportService;
 import lk.covid19.contact_tracer.asset.turn.entity.Turn;
 import lk.covid19.contact_tracer.asset.turn.service.TurnService;
@@ -28,7 +31,6 @@ public class ReportServiceImpl implements ReportService {
   private final TurnService turnService;
   private final PersonService personService;
   private final GramaNiladhariService gramaNiladhariService;
-  private final DateTimeAgeService dateTimeAgeService;
   private final DistrictService districtService;
   private final DsOfficeService dsOfficeService;
 
@@ -61,5 +63,32 @@ public class ReportServiceImpl implements ReportService {
     dsOfficeReportDTO.setDsOffice(dsOfficeService.findById(dsOfficeReportDTO.getDsOffice().getId()));
 
     return dsOfficeReportDTO;
+  }
+
+  public DistrictReportDTO district(DistrictReportDTO districtReportDTO) {
+    List< Turn > turns = turnService.findByIdentifiedDateIsBetween(districtReportDTO.getTurnStartAt(),
+                                                                   districtReportDTO.getTurnEndAt())
+        .stream()
+        .filter(x -> x.getPerson().getGramaNiladhari().getDsOffice().getDistrict().equals(districtReportDTO.getDistrict()))
+        .collect(Collectors.toList());
+
+    List< Person > persons = new ArrayList<>();
+    turns.forEach(x -> persons.add(personService.findById(x.getPerson().getId())));
+    districtReportDTO.setAttributeAndCounts(commonService.personsAccordingToType(persons));
+    districtReportDTO.setDistrict(districtService.findById(districtReportDTO.getDistrict().getId()));
+    return districtReportDTO;
+  }
+
+  public ProvinceReportDTO province(ProvinceReportDTO provinceReportDTO) {
+    List< Turn > turns = turnService.findByIdentifiedDateIsBetween(provinceReportDTO.getTurnStartAt(),
+                                                                   provinceReportDTO.getTurnEndAt())
+        .stream()
+        .filter(x -> x.getPerson().getGramaNiladhari().getDsOffice().getDistrict().getProvince().equals(provinceReportDTO.getProvince()))
+        .collect(Collectors.toList());
+
+    List< Person > persons = new ArrayList<>();
+    turns.forEach(x -> persons.add(personService.findById(x.getPerson().getId())));
+    provinceReportDTO.setAttributeAndCounts(commonService.personsAccordingToType(persons));
+    return provinceReportDTO;
   }
 }
