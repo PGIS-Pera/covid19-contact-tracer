@@ -1,5 +1,6 @@
 package lk.covid19.contact_tracer.asset.report.controller;
 
+import lk.covid19.contact_tracer.asset.common_asset.model.TwoDate;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.Province;
 import lk.covid19.contact_tracer.asset.district.service.DistrictService;
 import lk.covid19.contact_tracer.asset.ds_office.service.DsOfficeService;
@@ -108,11 +109,17 @@ public class ReportController {
 
   @GetMapping( "/all" )
   public String all(Model model) {
+    model.addAttribute("message", "Please select date range.");
+    model.addAttribute("provinceReportDetail", new ProvinceReportDTO());
     return "report/all";
   }
 
   @PostMapping( "/all" )
-  public String allReport() {
+  public String allReport(@ModelAttribute ProvinceReportDTO provinceReportDTO, Model model) {
+    model.addAttribute("message",
+                       "This report is belongs to from " + provinceReportDTO.getTurnStartAt().toString() + " to "
+                           + provinceReportDTO.getTurnEndAt().toString());
+    model.addAttribute("allReportDetail", reportService.all(provinceReportDTO));
 
     return "report/all";
   }

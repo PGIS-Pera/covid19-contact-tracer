@@ -91,4 +91,15 @@ public class ReportServiceImpl implements ReportService {
     provinceReportDTO.setAttributeAndCounts(commonService.personsAccordingToType(persons));
     return provinceReportDTO;
   }
+
+  public ProvinceReportDTO all(ProvinceReportDTO provinceReportDTO) {
+    List< Turn > turns = turnService.findByIdentifiedDateIsBetween(provinceReportDTO.getTurnStartAt(),
+                                                                   provinceReportDTO.getTurnEndAt())
+        .stream().distinct().collect(Collectors.toList());
+
+    List< Person > persons = new ArrayList<>();
+    turns.forEach(x -> persons.add(personService.findById(x.getPerson().getId())));
+    provinceReportDTO.setAttributeAndCounts(commonService.personsAccordingToType(persons));
+    return provinceReportDTO;
+  }
 }

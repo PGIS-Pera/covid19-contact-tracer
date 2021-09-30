@@ -13,4 +13,6 @@ public interface ReportService {
   DistrictReportDTO district(DistrictReportDTO districtReportDTO);
 
   ProvinceReportDTO province(ProvinceReportDTO provinceReportDTO);
+
+  ProvinceReportDTO all(ProvinceReportDTO provinceReportDTO);
 }
