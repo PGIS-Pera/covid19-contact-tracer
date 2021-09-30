@@ -5,6 +5,7 @@ import lk.covid19.contact_tracer.asset.ds_office.service.DsOfficeService;
 import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.person.service.PersonService;
+import lk.covid19.contact_tracer.asset.report.model.DsOfficeReportDTO;
 import lk.covid19.contact_tracer.asset.report.model.GramaniladariReportDTO;
 import lk.covid19.contact_tracer.asset.report.service.ReportService;
 import lk.covid19.contact_tracer.asset.turn.entity.Turn;
@@ -45,5 +46,20 @@ public class ReportServiceImpl implements ReportService {
     gramaniladariReportDTO.setGramaNiladhari(gramaNiladhariService.findById(gramaniladariReportDTO.getGramaNiladhari().getId()));
 
     return gramaniladariReportDTO;
+  }
+
+  public DsOfficeReportDTO dsOffice(DsOfficeReportDTO dsOfficeReportDTO) {
+    List< Turn > turns = turnService.findByIdentifiedDateIsBetween(dsOfficeReportDTO.getTurnStartAt(),
+                                                                   dsOfficeReportDTO.getTurnEndAt())
+        .stream()
+        .filter(x -> x.getPerson().getGramaNiladhari().getDsOffice().equals(dsOfficeReportDTO.getDsOffice()))
+        .collect(Collectors.toList());
+
+    List< Person > persons = new ArrayList<>();
+    turns.forEach(x -> persons.add(personService.findById(x.getPerson().getId())));
+    dsOfficeReportDTO.setAttributeAndCounts(commonService.personsAccordingToType(persons));
+    dsOfficeReportDTO.setDsOffice(dsOfficeService.findById(dsOfficeReportDTO.getDsOffice().getId()));
+
+    return dsOfficeReportDTO;
   }
 }

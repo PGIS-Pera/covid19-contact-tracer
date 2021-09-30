@@ -4,6 +4,7 @@ import lk.covid19.contact_tracer.asset.district.service.DistrictService;
 import lk.covid19.contact_tracer.asset.ds_office.service.DsOfficeService;
 import lk.covid19.contact_tracer.asset.grama_niladhari.controller.GramaNiladhariController;
 import lk.covid19.contact_tracer.asset.person.service.PersonService;
+import lk.covid19.contact_tracer.asset.report.model.DsOfficeReportDTO;
 import lk.covid19.contact_tracer.asset.report.model.GramaniladariReportDTO;
 import lk.covid19.contact_tracer.asset.report.service.ReportService;
 import lk.covid19.contact_tracer.asset.turn.service.TurnService;
@@ -50,13 +51,19 @@ public class ReportController {
 
   @GetMapping( "/dsOffice" )
   public String dsOffice(Model model) {
+    model.addAttribute("message", "Please select date range and divisional sectary division.");
     model.addAttribute("dsOffices", dsOfficeService.findAll());
+    model.addAttribute("dsOfficeReportDetail", new DsOfficeReportDTO());
     return "report/dsOffice";
   }
 
   @PostMapping( "/dsOffice" )
-  public String dsOfficeReport() {
-
+  public String dsOfficeReport(@ModelAttribute DsOfficeReportDTO dsOfficeReportDTO, Model model) {
+    model.addAttribute("message",
+                       "This report is belongs to from " + dsOfficeReportDTO.getTurnStartAt().toString() + " to "
+                           + dsOfficeReportDTO.getTurnEndAt().toString());
+    model.addAttribute("dsOffices", dsOfficeService.findAll());
+    model.addAttribute("dsOfficeReportDetail", reportService.dsOffice(dsOfficeReportDTO));
     return "report/dsOffice";
   }
 
