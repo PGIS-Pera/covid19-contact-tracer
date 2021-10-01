@@ -110,7 +110,7 @@ public class ReportController {
   @GetMapping( "/all" )
   public String all(Model model) {
     model.addAttribute("message", "Please select date range.");
-    model.addAttribute("provinceReportDetail", new ProvinceReportDTO());
+    model.addAttribute("allReportDetail", new ProvinceReportDTO());
     return "report/all";
   }
 
