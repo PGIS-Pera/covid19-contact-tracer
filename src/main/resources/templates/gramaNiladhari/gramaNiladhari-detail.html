@@ -77,28 +77,46 @@
     </div >
   </div >
   <!--summary report-->
-  <div class="col-6 offset-md-3" >
+  <div class="col-8 offset-md-4" >
     <div class="container-fluid" >
       <div class="row" >
-        <h3 >Summary Report</h3 >
+        <div class="col-6" >
+          <h5 >Summary Report</h5 >
+        </div >
+        <div class="col-6" >
+          <h5 > Graphical representation </h5 >
+        </div >
       </div >
       <div class="row" >
-        <table class="table table-striped table-inverse table-responsive" >
-          <thead class="thead-inverse" >
-          <tr >
-            <th >Index</th >
-            <th >Status Name</th >
-            <th >Patient Count</th >
-          </tr >
-          </thead >
-          <tbody >
-          <tr data-th-each="attributeAndCount, index : ${attributeAndCounts}" >
-            <td data-th-text="${index.count}" ></td >
-            <td data-th-text="${attributeAndCount.name}" ></td >
-            <td data-th-text="${attributeAndCount.count}" ></td >
-          </tr >
-          </tbody >
-        </table >
+        <div class="col-6" >
+          <table class="table table-striped table-inverse table-responsive" id="summaryReport" >
+            <thead class="thead-inverse" >
+            <tr >
+              <th >Index</th >
+              <th >Status Name</th >
+              <th >Patient Count</th >
+            </tr >
+            </thead >
+            <tbody >
+            <tr data-th-each="attributeAndCount, index : ${attributeAndCounts}" >
+              <td data-th-text="${index.count}" ></td >
+              <td data-th-text="${attributeAndCount.name}" ></td >
+              <td data-th-text="${attributeAndCount.count}" ></td >
+            </tr >
+            </tbody >
+          </table >
+        </div >
+        <div class="col-6" >
+          <div class="row" >
+            <div class="col-md-1" ></div >
+            <div class="col-md-10" >
+              <div style="width:400px; height:100px;" >
+                <canvas id="myChart" width="400" height="100" ></canvas >
+              </div >
+            </div >
+            <div class="col-md-1" ></div >
+          </div >
+        </div >
       </div >
     </div >
   </div >
@@ -114,5 +132,64 @@
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <!--script include-->
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<script >
+
+    let STATUS = [];
+    let PATIENT_COUNT = [];
+    let COLORS = [];
+
+    function showTableData() {
+        let myTab = document.getElementById('summaryReport');
+        for (let i = 1; i < myTab.rows.length; i++) {
+            // GET THE CELLS COLLECTION OF THE CURRENT ROW.
+            let objCells = myTab.rows.item(i).cells;
+            STATUS.push(objCells.item(1).innerHTML);
+            PATIENT_COUNT.push(parseInt(objCells.item(2).innerHTML));
+            COLORS.push('#' + Math.floor(Math.random() * 16777215).toString(16));
+        }
+    }
+
+    let canvas = document.getElementById("myChart");
+    let ctx = canvas.getContext('2d');
+
+    let data = {
+        labels: STATUS,
+        datasets: [
+            {
+                fill: true,
+                backgroundColor: COLORS,
+                data: PATIENT_COUNT,
+// Notice the borderColor
+                borderColor: ['black', 'black'],
+                borderWidth: [2, 2]
+            }
+        ]
+    };
+
+    // Notice the rotation from the documentation.
+
+    let options = {
+        responsive: true,
+        title: {
+            display: true,
+            text: 'What happens when you lend your favorite t-shirt to a girl ?',
+            position: 'top'
+        },
+        rotation: -0.7 * Math.PI
+    };
+
+
+    $(document).ready(function () {
+        showTableData();
+        // Chart declaration:
+        let myBarChart = new Chart(ctx, {
+            type: 'pie',
+            data: data,
+            options: options
+        });
+    });
+
+
+</script >
 </body >
 </html >

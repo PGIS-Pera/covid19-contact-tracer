@@ -1,6 +1,5 @@
 package lk.covid19.contact_tracer.asset.report.service.impl;
 
-import lk.covid19.contact_tracer.asset.common_asset.model.enums.Province;
 import lk.covid19.contact_tracer.asset.district.service.DistrictService;
 import lk.covid19.contact_tracer.asset.ds_office.service.DsOfficeService;
 import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
@@ -14,8 +13,6 @@ import lk.covid19.contact_tracer.asset.report.service.ReportService;
 import lk.covid19.contact_tracer.asset.turn.entity.Turn;
 import lk.covid19.contact_tracer.asset.turn.service.TurnService;
 import lk.covid19.contact_tracer.util.service.CommonService;
-import lk.covid19.contact_tracer.util.service.DateTimeAgeService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,11 +32,11 @@ public class ReportServiceImpl implements ReportService {
   private final DsOfficeService dsOfficeService;
 
   public GramaniladariReportDTO gramaniladhari(GramaniladariReportDTO gramaniladariReportDTO) {
-
     List< Turn > turns = turnService.findByIdentifiedDateIsBetween(gramaniladariReportDTO.getTurnStartAt(),
                                                                    gramaniladariReportDTO.getTurnEndAt())
         .stream()
-        .filter(x -> x.getPerson().getGramaNiladhari().equals(gramaniladariReportDTO.getGramaNiladhari()))
+        .filter((x) -> x.getPerson().getGramaNiladhari().getId()
+            .equals(gramaniladariReportDTO.getGramaNiladhari().getId()))
         .collect(Collectors.toList());
 
     List< Person > persons = new ArrayList<>();
@@ -54,7 +51,7 @@ public class ReportServiceImpl implements ReportService {
     List< Turn > turns = turnService.findByIdentifiedDateIsBetween(dsOfficeReportDTO.getTurnStartAt(),
                                                                    dsOfficeReportDTO.getTurnEndAt())
         .stream()
-        .filter(x -> x.getPerson().getGramaNiladhari().getDsOffice().equals(dsOfficeReportDTO.getDsOffice()))
+        .filter(x -> x.getPerson().getGramaNiladhari().getDsOffice().getId().equals(dsOfficeReportDTO.getDsOffice().getId()))
         .collect(Collectors.toList());
 
     List< Person > persons = new ArrayList<>();
