@@ -20,5 +20,4 @@ public interface GramaNiladhariService {
    List< GramaNiladhari > search(GramaNiladhari gramaNiladhari);
 
   Page< GramaNiladhari > findAllPageable(Pageable pageable);
-//todo total count according to person status
 }
