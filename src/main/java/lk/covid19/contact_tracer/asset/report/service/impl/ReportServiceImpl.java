@@ -51,14 +51,7 @@ public class ReportServiceImpl implements ReportService {
     List< Turn > turns = turnService.findByIdentifiedDateIsBetween(dsOfficeReportDTO.getTurnStartAt(),
                                                                    dsOfficeReportDTO.getTurnEndAt())
         .stream()
-        .filter(x -> {
-                  var lets =
-                      x.getPerson().getGramaNiladhari().getDsOffice().getId().equals(dsOfficeReportDTO.getDsOffice().getId());
-                  System.out.println(x.getPerson().getGramaNiladhari().getDsOffice().getId());
-                  System.out.println(lets);
-                  System.out.println(dsOfficeReportDTO.getDsOffice().getId());
-                  return lets;
-                }
+        .filter(x -> x.getPerson().getGramaNiladhari().getDsOffice().getId().equals(dsOfficeReportDTO.getDsOffice().getId())
                )
         .collect(Collectors.toList());
 
