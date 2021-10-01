@@ -5,6 +5,7 @@
   <title >Thymeleaf Springboot </title >
 </head >
 <body >
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
 
 <div class="container-fluid" >
@@ -12,7 +13,7 @@
     <div class="col" >
     </div >
     <div class="col" >
-      <span class="font-weight-bold h2" >Divisional Secretory Office Report </span >
+      <span class="font-weight-bold h2" >D S Office Report </span >
     </div >
     <div class="col" >
       <a class="btn btn-primary" data-th-href="${'/home'}" id="searchShow" tabindex="2" >
@@ -26,7 +27,7 @@
   <!--data search form-->
   <div class="row" >
     <div class="container-fluid" >
-      <form action="/report/gramaniladhari" method="POST" >
+      <form action="/report/dsOffice" method="POST" >
         <div class="row" >
           <div class="col" >
             <div class="form-row text-md-right text-sm-left" >
@@ -51,19 +52,18 @@
         </div >
         <div class="row" >
           <div class="col" >
-            <!--Gramaniladhari division-->
+            <!-- ds office-->
             <div class="form-row text-md-right text-sm-left" >
               <div class="col-md-4" >
-                <label class="control-label" for="gramaNiladhari" >Gramaniladhari Division :</label >
+                <label class="control-label" for="dsOffice" >Ds Office :</label >
               </div >
               <div class="col-md-8" >
-                <input type="text" id="gramaNiladhari" class="form-control"
-                       placeholder="Please enter gramaniladari division name" onkeyup="gramaniladhari(this)" />
-                <input type="text" id="gramaNiladhariOne" readonly name="gramaNiladhari.name"
-                       class="form-control" disabled value="" required >
-                <div id="gramaNiladhari-box" ></div >
-                <span class="form-text text-muted bg-warring" >Please type more than 3 character</span >
-                <input name="gramaNiladhari.id" id="gramaNiladhariId" hidden value="" required >
+                <select name="dsOffice" id="dsOffice" class="form-control" required >
+                  <option data-th-each="dsOffice : ${dsOffices}"
+                          data-th-text="${dsOffice.name}"
+                          data-th-value="${dsOffice.id}"
+                  ></option >
+                </select >
               </div >
             </div >
           </div >
@@ -85,14 +85,14 @@
     </div >
   </div >
   <!--  data show-->
-  <div class="row mt-3" data-th-fragment="{dsOfficeReportDetail.gramaNiladhariFragment}" >
+  <div class="row mt-3" data-th-fragment="{dsOfficeFragment}" >
     <div class="container" >
       <div class="row" >
         <div class=" bg-primary container text-center" >
           <strong ><span data-th-text="${message}" ></span ></strong >
         </div >
       </div >
-      <div class="row mt-3" data-th-if="${dsOfficeReportDetail.gramaNiladhari != null}" >
+      <div class="row mt-3" data-th-if="${dsOfficeReportDetail.dsOffice != null}" >
         <div class="container-fluid" >
           <div class="row" >
             <div id="accordianId" role="tablist" aria-multiselectable="true" class="col-12" >
@@ -195,8 +195,9 @@
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <!--script include-->
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" ></script >
 <script >
+
 
     let STATUS = [];
     let PATIENT_COUNT = [];
@@ -242,6 +243,10 @@
     };
 
     $(document).ready(function () {
+        $('#dsOffice').select2({
+            placeholder: 'Select ds office'
+        })
+
         showTableData();
         // Chart declaration:
         let myBarChart = new Chart(ctx, {
