@@ -31,8 +31,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-
-	//implementation 'org.geoserver:gs-kml:C105.2.18.2.02'
+	implementation 'org.hibernate:hibernate-search-orm:5.11.9.Final'
+	implementation 'org.hibernate:hibernate-search-elasticsearch:5.11.9.Final'
+	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
@@ -57,8 +58,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
-	implementation 'org.aspectj:aspectjweaver:1.9.7'
+	implementation 'org.aspectj:aspectjweaver'
 
+	implementation group: 'org.webjars', name: 'bootstrap', version: '4.4.1'
+	implementation group: 'org.webjars', name: 'font-awesome', version: '5.11.2'
+	implementation group: 'org.webjars.npm', name: 'chart.js', version: '2.9.3'
 
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -69,6 +73,7 @@ dependencies {
 
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'

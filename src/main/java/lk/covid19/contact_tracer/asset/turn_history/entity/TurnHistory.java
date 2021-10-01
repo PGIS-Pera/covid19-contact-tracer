@@ -21,7 +21,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder( toBuilder = true )
 @JsonFilter( "TurnHistory" )
-@ToString
 public class TurnHistory extends AuditEntity {
 
   @Enumerated( EnumType.STRING )

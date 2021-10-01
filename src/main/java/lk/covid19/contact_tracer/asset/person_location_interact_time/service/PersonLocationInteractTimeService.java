@@ -6,6 +6,7 @@ import lk.covid19.contact_tracer.asset.common_asset.model.TwoDateGramaNiladhari;
 import lk.covid19.contact_tracer.asset.location_interact.entity.LocationInteract;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.entity.PersonLocationInteractTime;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -24,4 +25,6 @@ public interface PersonLocationInteractTimeService {
   List< PersonLocationInteractTime > search(PersonLocationInteractTime personLocationInteractTime);
 
   List< LocationInteractTimeReport > searchWithDateTime(TwoDateGramaNiladhari twoDateGramaNiladhari);
+
+  List< LocationInteractTimeReport > findByArrivalAtBetween(LocalDate identifiedDate);
 }

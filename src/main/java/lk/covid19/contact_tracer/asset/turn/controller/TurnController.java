@@ -13,6 +13,7 @@ import lk.covid19.contact_tracer.asset.grama_niladhari.controller.GramaNiladhari
 import lk.covid19.contact_tracer.asset.location_interact.controller.LocationInteractController;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.person.service.PersonService;
+import lk.covid19.contact_tracer.asset.person_location_interact_time.service.PersonLocationInteractTimeService;
 import lk.covid19.contact_tracer.asset.turn.entity.Turn;
 import lk.covid19.contact_tracer.asset.turn.service.TurnService;
 import lk.covid19.contact_tracer.util.service.DateTimeAgeService;
@@ -46,6 +47,7 @@ public class TurnController {
   private final TurnService turnService;
   private final PersonService personService;
   private final DateTimeAgeService dateTimeAgeService;
+  private final PersonLocationInteractTimeService personLocationInteractTimeService;
 
   private String commonThing(Model model, Turn turnObject) {
     model.addAttribute("addStatus", false);
@@ -107,6 +109,8 @@ public class TurnController {
     person.setAge(dateTimeAgeService.getDateDifference(person.getDateOfBirth(), LocalDate.now()));
     model.addAttribute("personDetail", person);
     model.addAttribute("turnDetail", turn);
+    model.addAttribute("personLocationInteractTimes",
+                       personLocationInteractTimeService.findByArrivalAtBetween(turn.getIdentifiedDate()));
     model.addAttribute("stopActive", StopActive.values());
     model.addAttribute("gramaNiladhariSearchUrl", MvcUriComponentsBuilder
         .fromMethodName(GramaNiladhariController.class, "searchOne", "")

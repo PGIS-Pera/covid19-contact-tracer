@@ -68,7 +68,17 @@
              aria-haspopup="true"
              aria-expanded="false" >Report</a >
           <div class="dropdown-menu" aria-labelledby="report" >
-            <a class="dropdown-item" href="/report/chandlers" >Chandlers Details </a >
+            <a data-sec-authorize="hasAnyAuthority('ROLE_ADMIN')" class="dropdown-item"
+               href="/report/gramaniladhari" >Gramaniladhari </a >
+            <a data-sec-authorize="hasAnyAuthority('ROLE_ADMIN')" class="dropdown-item"
+               href="/report/dsOffice" >Divisional Sectretory Office </a >
+            <a data-sec-authorize="hasAnyAuthority('ROLE_ADMIN')" class="dropdown-item"
+               href="/report/district" >District </a >
+            <a data-sec-authorize="hasAnyAuthority('ROLE_ADMIN')" class="dropdown-item"
+               href="/report/province" >Province </a >
+            <a data-sec-authorize="hasAnyAuthority('ROLE_ADMIN')" class="dropdown-item"
+               href="/report/all" >All
+                                   Summary </a >
           </div >
         </li >
         <li class="nav-item active ml-2" >

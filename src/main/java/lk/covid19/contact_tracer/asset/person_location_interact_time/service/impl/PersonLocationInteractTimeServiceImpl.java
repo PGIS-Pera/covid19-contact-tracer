@@ -10,12 +10,15 @@ import lk.covid19.contact_tracer.asset.location_interact.service.LocationInterac
 import lk.covid19.contact_tracer.asset.person_location_interact_time.dao.PersonLocationInteractTimeDao;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.entity.PersonLocationInteractTime;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.service.PersonLocationInteractTimeService;
+import lk.covid19.contact_tracer.util.service.DateTimeAgeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,6 +30,7 @@ public class PersonLocationInteractTimeServiceImpl implements PersonLocationInte
   private final PersonLocationInteractTimeDao personLocationInteractTimeDao;
   private final LocationInteractService locationInteractService;
   private final GramaNiladhariService gramaNiladhariService;
+  private final DateTimeAgeService dateTimeAgeService;
 
   @Cacheable
   public List< PersonLocationInteractTime > findAll() {
@@ -99,6 +103,11 @@ public class PersonLocationInteractTimeServiceImpl implements PersonLocationInte
     }
 
     return acceptedReport;
+  }
+
+  public List< LocationInteractTimeReport > findByArrivalAtBetween(LocalDate identifiedDate) {
+    LocalDateTime from = dateTimeAgeService.dateTimeToLocalDateStartInDay(identifiedDate);
+    return personLocationInteractTimeDao.findByArrivalAtBetween(from, LocalDateTime.now());
   }
 
 }

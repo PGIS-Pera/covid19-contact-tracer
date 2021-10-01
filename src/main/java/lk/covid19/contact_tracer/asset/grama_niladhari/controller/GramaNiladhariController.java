@@ -109,7 +109,7 @@ public class GramaNiladhariController {
   }
 
   @GetMapping( "/delete/{id}" )
-  public String delete(@PathVariable Integer id, Model model) {
+  public String delete(@PathVariable Integer id) {
     gramaNiladhariService.delete(id);
     return "redirect:/gramaNiladhari";
   }
@@ -117,7 +117,6 @@ public class GramaNiladhariController {
   @PostMapping( value = "/search" )
   @ResponseBody
   public MappingJacksonValue search(GramaNiladhari gramaNiladhari) {
-    System.out.println(gramaNiladhari.toString());
     List< GramaNiladhari > gramaNiladharis = gramaNiladhariService.search(gramaNiladhari);
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(gramaNiladharis);
 
@@ -154,6 +153,5 @@ public class GramaNiladhariController {
 
     return mappingJacksonValue;
   }
-  //todo : according to gramaniladari division vs person count[ according to person type]
 
 }
