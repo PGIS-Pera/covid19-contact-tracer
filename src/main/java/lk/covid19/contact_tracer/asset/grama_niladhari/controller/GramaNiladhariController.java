@@ -108,7 +108,7 @@ public class GramaNiladhariController {
     return "redirect:/gramaNiladhari";
   }
 
-  @GetMapping( "/delete/{id}" )
+  @GetMapping( "/remove/{id}" )
   public String delete(@PathVariable Integer id) {
     gramaNiladhariService.delete(id);
     return "redirect:/gramaNiladhari";

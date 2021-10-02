@@ -99,7 +99,7 @@ public class LocationInteractController {
     return "redirect:/locationInteract";
   }
 
-  @GetMapping( "/delete/{id}" )
+  @GetMapping( "/remove/{id}" )
   public String delete(@PathVariable Integer id, Model model) {
     locationInteractService.delete(id);
     return "redirect:/locationInteract";

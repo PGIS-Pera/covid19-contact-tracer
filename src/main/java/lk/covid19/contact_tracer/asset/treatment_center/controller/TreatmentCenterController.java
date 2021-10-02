@@ -109,7 +109,7 @@ public class TreatmentCenterController {
     return "redirect:/quarantineCenter";
   }
 
-  @GetMapping( "/delete/{id}" )
+  @GetMapping( "/remove/{id}" )
   public String delete(@PathVariable Integer id, Model model) {
     treatmentCenterService.delete(id);
     return "redirect:/quarantineCenter";
