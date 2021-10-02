@@ -1,4 +1,6 @@
 .card {
+    border-radius: 5px 0 5px 0;
+    text-align: center;
     transition: all .8s linear;
     -o-transition: all .8s linear;
     -moz-transition: all .8s linear;
@@ -10,4 +12,10 @@
     transition: background-color 1000ms linear;
     cursor: pointer;
     box-shadow: 4px 5px 25px 10px rgba(18, 248, 248, 0.27);
+}
+
+.card > a {
+    text-decoration: none;
+    font-weight: bold;
+    font-style: italic;
 }

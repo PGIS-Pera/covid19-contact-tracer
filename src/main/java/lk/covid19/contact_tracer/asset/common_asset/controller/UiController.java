@@ -1,5 +1,6 @@
 package lk.covid19.contact_tracer.asset.common_asset.controller;
 
+import lk.covid19.contact_tracer.asset.report.service.ReportService;
 import lk.covid19.contact_tracer.asset.user.service.UserService;
 import lk.covid19.contact_tracer.util.service.DateTimeAgeService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ public class UiController {
 
   private final UserService userService;
   private final DateTimeAgeService dateTimeAgeService;
+  private final ReportService reportService;
 
 
   @GetMapping( value = {"/", "/index"} )
@@ -22,19 +24,7 @@ public class UiController {
 
   @GetMapping( value = {"/home", "/mainWindow"} )
   public String getHome(Model model) {
-    //do some logic here if you want something to be done whenever
-        /*User authUser = userService.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
-        Set<Petition> petitionSet = new HashSet<>();
-        minutePetitionService
-                .findByEmployeeAndCreatedAtBetween(authUser.getEmployee(),
-                        dateTimeAgeService
-                                .dateTimeToLocalDateStartInDay(LocalDate.now()),
-                        dateTimeAgeService
-                                .dateTimeToLocalDateEndInDay(LocalDate.now())).forEach(
-                minutePetition -> {
-                    petitionSet.add(petitionService.findById(minutePetition.getPetition().getId()));
-                });
-        model.addAttribute("petitions", petitionSet.toArray());*/
+    model.addAttribute("allReportDetail", reportService.allCurrent());
     return "mainWindow";
   }
 

@@ -2,7 +2,7 @@
 <html lang="en" >
 <body >
 <div data-th-fragment="navBarFragment" >
-  <nav class="navbar navbar-expand-md font-weight-bold mb-2 text-white" >
+  <nav class="navbar navbar-expand-md mb-2 text-white" >
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
             aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation" >
       <span class="navbar-toggler-icon" ></span >
@@ -10,9 +10,9 @@
     <div class="collapse navbar-collapse" id="collapsibleNavId" >
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0" >
         <li class="nav-item active ml-2" >
-          <a class="nav-link font-weight-bolder" data-sec-authorize="isAuthenticated()" href="/mainWindow" >Home <span
+          <a class="nav-link " data-sec-authorize="isAuthenticated()" href="/mainWindow" >Home <span
                 class="sr-only" >(current)</span ></a >
-          <a class="nav-link font-weight-bolder" data-sec-authorize="!isAuthenticated()" href="/" >Home <span
+          <a class="nav-link " data-sec-authorize="!isAuthenticated()" href="/" >Home <span
                 class="sr-only" >(current)</span ></a >
         </li >
         <li class="nav-item dropdown ml-2" data-sec-authorize="isAuthenticated()" >
@@ -82,7 +82,7 @@
           </div >
         </li >
         <li class="nav-item active ml-2" >
-          <a class="nav-link font-weight-bolder" href="/patientVisitedPlaceTime" >Recent Identified Places <span
+          <a class="nav-link " href="/patientVisitedPlaceTime" >Recent Identified Places <span
                 class="sr-only" >(current)</span ></a >
         </li >
       </ul >

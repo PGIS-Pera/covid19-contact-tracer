@@ -120,7 +120,6 @@ public class ReportController {
                        "This report is belongs to from " + provinceReportDTO.getTurnStartAt().toString() + " to "
                            + provinceReportDTO.getTurnEndAt().toString());
     model.addAttribute("allReportDetail", reportService.all(provinceReportDTO));
-
     return "report/all";
   }
 }

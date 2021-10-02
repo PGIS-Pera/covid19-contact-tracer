@@ -100,4 +100,15 @@ public class ReportServiceImpl implements ReportService {
     provinceReportDTO.setAttributeAndCounts(commonService.personsAccordingToType(persons));
     return provinceReportDTO;
   }
+
+  public ProvinceReportDTO allCurrent() {
+    ProvinceReportDTO provinceReportDTO = new ProvinceReportDTO();
+    List< Turn > turns = turnService.findAll()
+        .stream().distinct().collect(Collectors.toList());
+
+    List< Person > persons = new ArrayList<>();
+    turns.forEach(x -> persons.add(personService.findById(x.getPerson().getId())));
+    provinceReportDTO.setAttributeAndCounts(commonService.personsAccordingToType(persons));
+    return provinceReportDTO;
+  }
 }

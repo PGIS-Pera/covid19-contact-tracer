@@ -15,4 +15,6 @@ public interface ReportService {
   ProvinceReportDTO province(ProvinceReportDTO provinceReportDTO);
 
   ProvinceReportDTO all(ProvinceReportDTO provinceReportDTO);
+
+  ProvinceReportDTO allCurrent();
 }
