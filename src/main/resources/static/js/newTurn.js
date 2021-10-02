@@ -162,6 +162,7 @@ $("#addTable").bind('click', function () {
 });
 
 function tableRowAdd() {
+    submitButton();
     let html = ``;
     let i = 0;
     personLocationInteractTimes.forEach((x) => {
@@ -220,6 +221,7 @@ function removeRow(obj) {
     personLocationInteractTimes = personLocationInteractTimeArray;
 
     tableRowAdd();
+    submitButton();
 }
 
 //new location history
@@ -230,6 +232,7 @@ $(document).ready(function () {
         $("#gramaNiladhariId").val('')
         return false;
     });
+    submitButton();
 });
 
 function submitForm() {
@@ -264,5 +267,12 @@ function twoLocationInteractCheck(obj, obj2) {
     return !(p && q && r && s && t);
 }
 
-
-
+function submitButton() {
+    let table = document.getElementById("myTable");
+    let tableTrLength = table.rows.length;
+    if (tableTrLength) {
+        $("#formSubmit").addClass("disabled");
+    } else {
+        $("#formSubmit").removeClass("disabled");
+    }
+}
