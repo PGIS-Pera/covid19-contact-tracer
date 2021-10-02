@@ -85,7 +85,7 @@ public class DsOfficeController {
     return "redirect:/dsOffice";
   }
 
-  @GetMapping( "/delete/{id}" )
+  @GetMapping( "/remove/{id}" )
   public String delete(@PathVariable Integer id, Model model) {
     dsOfficeService.delete(id);
     return "redirect:/dsOffice";

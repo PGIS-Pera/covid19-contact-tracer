@@ -134,7 +134,7 @@ public class TurnController {
     return "redirect:/turn";
   }
 
-  @GetMapping( "/delete/{id}" )
+  @GetMapping( "/remove/{id}" )
   public String delete(@PathVariable Integer id) {
     turnService.delete(id);
     return "redirect:/turn";

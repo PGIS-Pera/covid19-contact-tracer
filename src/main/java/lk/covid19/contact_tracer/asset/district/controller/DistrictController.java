@@ -84,7 +84,7 @@ public class DistrictController {
     return "redirect:/district";
   }
 
-  @GetMapping( "/delete/{id}" )
+  @GetMapping( "/remove/{id}" )
   public String delete(@PathVariable Integer id, Model model) {
     districtService.delete(id);
     return "redirect:/district";
