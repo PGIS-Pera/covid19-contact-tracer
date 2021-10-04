@@ -30,6 +30,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,6 +67,7 @@ public class PersonController {
     modelAndView.addObject("searchUrl", MvcUriComponentsBuilder
         .fromMethodName(PersonController.class, "search", new Person())
         .toUriString());
+    modelAndView.addObject("byId", Comparator.comparing(Person::getId));
     return modelAndView;
   }
 
