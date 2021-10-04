@@ -53,7 +53,7 @@ public class NewTurnAspects {
     Person person = personService.findLastPatient();
     List< News > newses = newsService.findByGramaNiladhari(person.getGramaNiladhari());
     String locationListUrl = MvcUriComponentsBuilder
-        .fromMethodName(PersonLocationInteractTimeController.class, "interactLocationSearchPage")
+        .fromMethodName(PersonLocationInteractTimeController.class, "interactLocationSearchPage", "")
         .toUriString();
     newses.forEach(x -> {
       String mobile = "+94" + x.getMobile().substring(1, 9);

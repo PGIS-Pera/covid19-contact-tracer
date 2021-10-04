@@ -154,7 +154,10 @@ $("#nic").keyup(function () {
             type: 'GET',
             url: $('#patientNic').val() + nic,
             success: function (resp) {
-                popUpDataSet(resp);
+                console.log(resp.id);
+                if (resp.id) {
+                    popUpDataSet(resp);
+                }
             },
             error: function (err) {
                 console.log(err);

@@ -90,7 +90,11 @@ public class PersonServiceImpl implements PersonService {
 
   @Cacheable
   public Person findByNic(String nic) {
-    return personDao.findByNic(nic);
+    Person person = personDao.findByNic(nic);
+    if ( person == null ) {
+      person = new Person();
+    }
+    return person;
   }
 
   @Cacheable

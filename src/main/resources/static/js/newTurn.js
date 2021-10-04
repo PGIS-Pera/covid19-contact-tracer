@@ -269,10 +269,11 @@ function twoLocationInteractCheck(obj, obj2) {
 
 function submitButton() {
     let table = document.getElementById("myTable");
-    let tableTrLength = table.rows.length;
-    if (tableTrLength) {
-        $("#formSubmit").addClass("disabled");
+    let tableTrLength = table.rows;
+    console.log("lenghth " + tableTrLength.length)
+    if (tableTrLength.length === 1) {
+        $("#formSubmit").hide();
     } else {
-        $("#formSubmit").removeClass("disabled");
+        $("#formSubmit").show();
     }
 }
