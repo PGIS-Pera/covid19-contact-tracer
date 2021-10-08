@@ -110,7 +110,7 @@ public class TurnController {
     model.addAttribute("personDetail", person);
     model.addAttribute("turnDetail", turn);
     model.addAttribute("personLocationInteractTimes", turn.getPersonLocationInteractTimes());
-    model.addAttribute("stopActive", StopActive.values());
+    model.addAttribute("stopActives", StopActive.values());
     model.addAttribute("gramaNiladhariSearchUrl", MvcUriComponentsBuilder
         .fromMethodName(GramaNiladhariController.class, "searchOne", "")
         .toUriString());

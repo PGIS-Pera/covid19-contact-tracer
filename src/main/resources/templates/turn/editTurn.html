@@ -35,7 +35,7 @@
              aria-expanded="true"
              aria-controls="section1ContentId" >
             <div class="text-center container-fluid" >
-              Person Details
+              Person Detail
             </div >
           </a >
         </h5 >
@@ -43,7 +43,117 @@
       <div id="section1ContentId" class="collapse in" role="tabpanel" aria-labelledby="section1HeaderId" >
         <div class="card-body" >
           <div class="container-fluid" >
-            <div data-th-replace="~{person/person-detail :: personDetail}" ></div >
+            <div class="form-row" >
+              <!--Left Side-->
+              <div class="col-md-6 col-sm-6 " >
+                <!--code-->
+                <div class="form-row text-md-right text-sm-left" >
+                  <div class="col-md-4" >
+                    <label class="control-label" for="code" >Code:</label >
+                  </div >
+                  <div class="col-md-8" >
+                    <p class="form-control" data-th-text="${personDetail.code}" id="code" ></p >
+                  </div >
+                </div >
+                <!--Nic-->
+                <div class="form-row text-md-right text-sm-left" >
+                  <div class="col-md-4" >
+                    <label class="control-label" for="nic" >NIC No :</label >
+                  </div >
+                  <div class="col-md-8" >
+                    <p class="form-control" data-th-text="${personDetail.nic}" id="nic" ></p >
+                  </div >
+                </div >
+                <!--Name-->
+                <div class="form-row text-md-right text-sm-left" >
+                  <div class="col-md-4" >
+                    <label class="control-label" for="name" >Name :</label >
+                  </div >
+                  <div class="col-md-8" >
+                    <p class="form-control" data-th-text="${personDetail.name}" id="name" ></p >
+                  </div >
+                </div >
+                <!--Gender-->
+                <div class="form-row text-md-right text-sm-left" >
+                  <div class="col-md-4" >
+                    <label class="control-label" for="gender" >Gender :</label >
+                  </div >
+                  <div class="col-md-8" >
+                    <p class="form-control" data-th-text="${personDetail.gender.gender}" id="gender" ></p >
+                  </div >
+                </div >
+                <!--Age-->
+                <div class="form-row text-md-right text-sm-left" >
+                  <div class="col-md-4" >
+                    <label class="control-label" for="age" >Age :</label >
+                  </div >
+                  <div class="col-md-8" >
+                    <p class="form-control" data-th-text="${personDetail.age}" id="age" ></p >
+                  </div >
+                </div >
+              </div >
+              <!--Right Side-->
+              <div class="col-md-6 col-sm-6 " >
+                <!--Person Status-->
+                <div class="form-row text-md-right text-sm-left" >
+                  <div class="col-md-4" >
+                    <label class="control-label" for="liveDead" >Person Status :</label >
+                  </div >
+                  <div class="col-md-8" >
+                    <p class="form-control" data-th-text="${personDetail.personStatus.personStatus}"
+                       id="liveDead" ></p >
+                  </div >
+                </div >
+                <!--Gramaniladhari Division Name-->
+                <div class="form-row text-md-right text-sm-left" >
+                  <div class="col-md-4" >
+                    <label class="control-label" for="gramaNiladhariVal" >Gramaniladhari Division Name :</label >
+                  </div >
+                  <div class="col-md-8" >
+                    <p class="form-control" data-th-text="${personDetail.gramaNiladhari.name}"
+                       id="gramaNiladhariVal" ></p >
+                  </div >
+                </div >
+                <!--Address-->
+                <div class="form-row text-md-right text-sm-left" >
+                  <div class="col-md-4" >
+                    <label class="control-label" for="address" >Address :</label >
+                  </div >
+                  <div class="col-md-8" >
+                    <p class="form-control" data-th-utext="${personDetail.address}" id="address" ></p >
+                  </div >
+                </div >
+                <!--Mobile Number One-->
+                <div class="form-row text-md-right text-sm-left" >
+                  <div class="col-md-4" >
+                    <label class="control-label" for="mobileOne" >Mobile :</label >
+                  </div >
+                  <div class="col-md-8" >
+                    <p class="form-control" data-th-text="${personDetail.mobile}" id="mobileOne" ></p >
+                  </div >
+                </div >
+                <!--created at-->
+                <div class="form-row text-md-right text-sm-left" >
+                  <div class="col-md-4" >
+                    <label class="control-label" for="createdAt" >Created At :</label >
+                  </div >
+                  <div class="col-md-8" >
+                    <p class="form-control"
+                       data-th-text="${#temporals.format(personDetail.createdAt, 'dd-MM-yyyy HH:mm')}"
+                       id="createdAt" ></p >
+                  </div >
+                </div >
+                <!--Created by-->
+                <div class="form-row text-md-right text-sm-left" >
+                  <div class="col-md-4" >
+                    <label class="control-label" for="createdBy" >Created By :</label >
+                  </div >
+                  <div class="col-md-8" >
+                    <p class="form-control" data-th-text="${personDetail.createdBy}" id="createdBy" ></p >
+                  </div >
+                </div >
+              </div >
+            </div >
           </div >
         </div >
       </div >
@@ -175,26 +285,41 @@
           <!--todo 28/09/2021 pending need to complete turn edit -->
           <tr data-th-each="personLocationInteractTime, index : ${personLocationInteractTimes}" >
             <td >
-              <input type="text" name="personLocationInteractTimes[${i}].stopActive" value="ACTIVE" hidden required >
-              <input id="pi${i}" type="text" name="personLocationInteractTimes[${i}].person.id" value="${obj.person.id}"
+              <input id="li${i}" type="text"
+                     data-th-value="${personLocationInteractTime.locationInteract.id}"
+                     data-th-name="${'personLocationInteractTimes[__${index.index}__].locationInteract.id'}"
                      hidden required >
-              <input id="li${i}" type="text" name="personLocationInteractTimes[${i}].locationInteract.id"
-                     value="${obj.locationInteract.id}" hidden required >
-              <input id="ln${i}" type="text" name="personLocationInteractTimes[${i}].locationInteract.name"
-                     value="${obj.locationInteract.name}" readonly class="form-control" >
+              <input id="ln${i}" type="text"
+                     data-th-value="${personLocationInteractTime.locationInteract.name}"
+                     data-th-name="${'personLocationInteractTimes[__${index.index}__].locationInteract.name'}"
+                     readonly class="form-control" >
             </td >
             <td >
-              <input id="aa${i}" type="datetime-local" name="personLocationInteractTimes[${i}].arrivalAt"
-                     value="${obj.arrivalAt}" readonly class="form-control" required >
+              <input id="aa${i}" type="datetime-local"
+                     data-th-value="${personLocationInteractTime.arrivalAt}"
+                     data-th-name="${'personLocationInteractTimes[__${index.index}__].arrivalAt'}"
+                     readonly class="form-control" required >
             </td >
             <td >
-              <input id="la${i}" type="datetime-local" name="personLocationInteractTimes[${i}].leaveAt"
-                     value="${obj.leaveAt}" readonly class="form-control" required >
+              <input id="la${i}" type="datetime-local"
+                     data-th-value="${personLocationInteractTime.leaveAt}"
+                     data-th-name="${'personLocationInteractTimes[__${index.index}__].leaveAt'}"
+                     readonly class="form-control" required >
             </td >
             <td >
-              <button id="bi${i}" class="btn btn-danger btn-sm" type="button" onclick="removeRow(this)" >
-                <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp; Remove
-              </button >
+              <div class="custom-control custom-checkbox custom-control-inline "
+                   data-th-each="stopActive,index_one : ${stopActives}" >
+                <input class="custom-control-input "
+                       data-th-checked="${stopActive==personLocationInteractTime.stopActive}"
+                       data-th-id="${index.index+index_one.index+'-'}+${stopActive}"
+                       data-th-name="${'personLocationInteractTimes[__${index.index}__].stopActive'}"
+                       data-th-value="${stopActive}" required
+                       type="radio" />
+                <label class="custom-control-label"
+                       data-th-for="${index.index+index_one.index+'-'}+${stopActive}"
+                       data-th-text="${stopActive.stopActive}" > radio
+                </label >
+              </div >
             </td >
           </tr >
           </tbody >
