@@ -106,9 +106,9 @@ public class PersonLocationInteractTimeServiceImpl implements PersonLocationInte
   }
 
   public List< LocationInteractTimeReport > findByArrivalAtBetween(LocalDate identifiedDate) {
-    LocalDateTime from = dateTimeAgeService.dateTimeToLocalDateStartInDay(identifiedDate);
-    return personLocationInteractTimeDao.findByArrivalAtBetween(from, LocalDateTime.now());
+    return personLocationInteractTimeDao.findByArrivalAtBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay(identifiedDate), LocalDateTime.now());
   }
+
 
 }
 

@@ -65,10 +65,6 @@ public class Person extends AuditEntity {
   @ToString.Exclude
   private List< Turn > turns;
 
-  @OneToMany( mappedBy = "person", cascade = {CascadeType.MERGE, CascadeType.PERSIST} )
-  @ToString.Exclude
-  private List< PersonLocationInteractTime > personLocationInteractTimes;
-
   @Transient
   private String age;
 

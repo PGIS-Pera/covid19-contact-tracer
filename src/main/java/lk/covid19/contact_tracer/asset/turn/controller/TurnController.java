@@ -109,8 +109,7 @@ public class TurnController {
     person.setAge(dateTimeAgeService.getDateDifference(person.getDateOfBirth(), LocalDate.now()));
     model.addAttribute("personDetail", person);
     model.addAttribute("turnDetail", turn);
-    model.addAttribute("personLocationInteractTimes",
-                       personLocationInteractTimeService.findByArrivalAtBetween(turn.getIdentifiedDate()));
+    model.addAttribute("personLocationInteractTimes", turn.getPersonLocationInteractTimes());
     model.addAttribute("stopActive", StopActive.values());
     model.addAttribute("gramaNiladhariSearchUrl", MvcUriComponentsBuilder
         .fromMethodName(GramaNiladhariController.class, "searchOne", "")

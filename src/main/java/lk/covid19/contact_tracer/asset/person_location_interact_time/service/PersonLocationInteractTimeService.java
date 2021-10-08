@@ -27,4 +27,5 @@ public interface PersonLocationInteractTimeService {
   List< LocationInteractTimeReport > searchWithDateTime(TwoDateGramaNiladhari twoDateGramaNiladhari);
 
   List< LocationInteractTimeReport > findByArrivalAtBetween(LocalDate identifiedDate);
+
 }

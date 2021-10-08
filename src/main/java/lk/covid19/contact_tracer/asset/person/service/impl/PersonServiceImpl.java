@@ -2,6 +2,7 @@ package lk.covid19.contact_tracer.asset.person.service.impl;
 
 
 import lk.covid19.contact_tracer.asset.grama_niladhari.entity.GramaNiladhari;
+import lk.covid19.contact_tracer.asset.person_location_interact_time.entity.PersonLocationInteractTime;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.service.PersonLocationInteractTimeService;
 import lk.covid19.contact_tracer.asset.turn.entity.Turn;
 import lk.covid19.contact_tracer.asset.turn.service.TurnService;
@@ -19,6 +20,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -116,8 +118,15 @@ public class PersonServiceImpl implements PersonService {
     Person personDb = personDao.getById(person.getId());
     personDb.setPersonStatus(PersonStatus.INFECTED);
     personDao.save(personDb);
-    person.getTurns().forEach(turnService::persist);
-    personLocationInteractTimeService.persistAll(person.getPersonLocationInteractTimes());
+    List< PersonLocationInteractTime > personLocationInteractTimes = new ArrayList<>();
+    person.getTurns().forEach(x -> {
+      x.setPerson(personDb);
+      x.getPersonLocationInteractTimes().forEach(y -> {
+        y.setTurn(x);
+        personLocationInteractTimes.add(y);
+      });
+    });
+    personLocationInteractTimeService.persistAll(personLocationInteractTimes.stream().distinct().collect(Collectors.toList()));
   }
 
   @Cacheable
