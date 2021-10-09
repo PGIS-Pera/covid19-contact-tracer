@@ -174,16 +174,13 @@ function popUpDataSet(resp) {
             dangerMode: true,
             closeOnClickOutside: false,
             buttons: {
-                cancel: {
-                    text: "Cancel",
-                    value: "cancel",
-                },
+                cancel: "Cancel",
                 catch: {
                     text: "Edit Person Detail",
                     value: "edit",
                 },
                 defeat: {
-                    text: "New Attempt",
+                    text: "New Turn",
                     value: "new_attempt"
                 },
             },
@@ -211,8 +208,8 @@ function popUpDataSet(resp) {
                     });
                     self.location = location.protocol + "//" + location.host + "/person/edit/" + resp.id;
                     break;
-                case "cancel":
-                    $("#nic").val('');
+                default:
+                    $("#nic").val('').css('background-color', '#ffffff');
                     break;
             }
         });
