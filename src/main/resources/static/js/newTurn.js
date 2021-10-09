@@ -26,7 +26,7 @@ function gramaniladhari(val) {
             type: "GET",
             url: $("#gramaNiladhariSearchUrl").val() + val.value,
             success: function (data) {
-                let html_first_part = `<ul class="list-group list-group-flush justify-content-center">`;
+                let html_first_part = `<ul class="list-group list-group-flush justify-content-center" style="width: max-content">`;
                 let html_middle_part = ``;
                 for (let i = 0; i < data.length; i++) {
                     html_middle_part += `<li onClick="selectGramaNiladhari(${data[i].id})" class="list-group-item font-weight-bold p">${data[i].name} - ${data[i].number}</li >`;
@@ -56,7 +56,7 @@ let interaction = [];
 $("#locationInteract").keyup(function () {
     let type_value = $(this).val();
 
-    let html_first_part = `<ul class="list-group list-group-flush justify-content-center">`;
+    let html_first_part = `<ul class="list-group list-group-flush justify-content-center" style="width: max-content">`;
     let html_middle_part = ``;
 
     if (type_value.length > 3) {
@@ -176,16 +176,16 @@ function tableRowAdd() {
 function tableRowHtml(obj, i) {
     return `<tr >
                   <td >
-                    <input  type="text" name="personLocationInteractTimes[${i}].stopActive" value="ACTIVE" hidden required>
-                    <input id="pi${i}" type="text" name="personLocationInteractTimes[${i}].person.id" value="${obj.person.id}" hidden required>
-                    <input id="li${i}" type="text" name="personLocationInteractTimes[${i}].locationInteract.id" value="${obj.locationInteract.id}" hidden required>
-                    <input id="ln${i}" type="text" name="personLocationInteractTimes[${i}].locationInteract.name" value="${obj.locationInteract.name}" readonly class="form-control">
+                    <input  type="text" name="turns[0].personLocationInteractTimes[${i}].stopActive" value="ACTIVE" hidden required>
+                    <input id="pi${i}" type="text" name="turns[0].personLocationInteractTimes[${i}].person.id" value="${obj.person.id}" hidden required>
+                    <input id="li${i}" type="text" name="turns[0].personLocationInteractTimes[${i}].locationInteract.id" value="${obj.locationInteract.id}" hidden required>
+                    <input id="ln${i}" type="text" name="turns[0].personLocationInteractTimes[${i}].locationInteract.name" value="${obj.locationInteract.name}" readonly class="form-control">
                   </td >
                   <td >
-                    <input id="aa${i}" type="datetime-local" name="personLocationInteractTimes[${i}].arrivalAt" value="${obj.arrivalAt}" readonly class="form-control" required>
+                    <input id="aa${i}" type="datetime-local" name="turns[0].personLocationInteractTimes[${i}].arrivalAt" value="${obj.arrivalAt}" readonly class="form-control" required>
                   </td >
                   <td >
-                    <input id="la${i}" type="datetime-local" name="personLocationInteractTimes[${i}].leaveAt" value="${obj.leaveAt}" readonly class="form-control" required>
+                    <input id="la${i}" type="datetime-local" name="turns[0].personLocationInteractTimes[${i}].leaveAt" value="${obj.leaveAt}" readonly class="form-control" required>
                   </td >
                   <td >
                     <button id="bi${i}" class="btn btn-danger btn-sm" type="button" onclick="removeRow(this)">

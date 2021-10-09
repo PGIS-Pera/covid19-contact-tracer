@@ -23,7 +23,7 @@ function gramaniladhari(val) {
             type: "GET",
             url: $("#gramaNiladhariSearchUrl").val() + val.value,
             success: function (data) {
-                let html_first_part = `<ul class="list-group list-group-flush justify-content-center">`;
+                let html_first_part = `<ul class="list-group list-group-flush justify-content-center" style="width: max-content">`;
                 let html_middle_part = ``;
                 for (let i = 0; i < data.length; i++) {
                     html_middle_part += `<li id="${filedId}-${data[i].id}" onClick="selectGramaNiladhari(this)" class="list-group-item font-weight-bold p">${data[i].name} - ${data[i].number}</li >`;

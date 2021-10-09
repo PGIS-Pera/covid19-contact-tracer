@@ -26,7 +26,7 @@ function gramaniladhari(val) {
             type: "GET",
             url: $("#gramaNiladhariSearchUrl").val() + val.value,
             success: function (data) {
-                let html_first_part = `<ul class="list-group list-group-flush justify-content-center">`;
+                let html_first_part = `<ul class="list-group list-group-flush justify-content-center" style="width: max-content">`;
                 let html_middle_part = ``;
                 for (let i = 0; i < data.length; i++) {
                     html_middle_part += `<li onClick="selectGramaNiladhari(${data[i].id})" class="list-group-item font-weight-bold p">${data[i].name} - ${data[i].number}</li >`;
@@ -56,7 +56,7 @@ let interaction = [];
 $("#locationInteract").keyup(function () {
     let type_value = $(this).val();
 
-    let html_first_part = `<ul class="list-group list-group-flush justify-content-center">`;
+    let html_first_part = `<ul class="list-group list-group-flush justify-content-center container-fluid" style="width: max-content">`;
     let html_middle_part = ``;
 
     if (type_value.length > 3) {
@@ -67,7 +67,7 @@ $("#locationInteract").keyup(function () {
             success: function (data) {
                 for (let i = 0; i < data.length; i++) {
                     html_middle_part += `
-                    <li onClick="selectInteraction(${data[i].id})" class="list-group-item font-weight-bold p">
+                    <li onClick="selectInteraction(${data[i].id})" class="list-group-item font-weight-bold p ">
                     Place Name : ${data[i].name}
                     - Gramaniladhari Division Name & Number : ${data[i].gramaNiladhari.name} - ${data[i].gramaNiladhari.number}
                     </li >`;
@@ -134,8 +134,7 @@ $("#addTable").bind('click', function () {
                 }
             }
             if (!check) {
-                personLocationInteractTimes.push(personLocationInteractTime)
-                tableRowAdd();
+                tableRowAdd(personLocationInteractTime);
             } else {
                 swal({
                     title: "Oh oh !",
@@ -161,15 +160,13 @@ $("#addTable").bind('click', function () {
 
 });
 
-function tableRowAdd() {
-    let html = ``;
-    let i = 0;
-    personLocationInteractTimes.forEach((x) => {
-        html += tableRowHtml(x, i);
-        i++;
-    })
-    $("#myTable tbody ").html(html);
-    $("#totalPlace").html(personLocationInteractTimes.length);
+function tableRowAdd(personLocationInteractTime) {
+    let row_length = $("#interactLocationTable tbody > tr").length;
+    console.log('row length')
+    console.log(row_length)
+    let html = tableRowHtml(personLocationInteractTime, row_length);
+    $("#interactLocationTable tbody ").append(html);
+    interactionLocationLength();
 }
 
 function tableRowHtml(obj, i) {
@@ -195,35 +192,14 @@ function tableRowHtml(obj, i) {
 }
 
 function removeRow(obj) {
-    let removeFiledId = obj.getAttribute('id').slice(2);
-
-    let person_id = $(`#pi${removeFiledId}`).val();
-    let interaction_id = $(`#li${removeFiledId}`).val();
-    let interaction_name = $(`#ln${removeFiledId}`).val();
-    let arrival_at = $(`#aa${removeFiledId}`).val();
-    let leave_at = $(`#la${removeFiledId}`).val();
-
-    let personLocationInteractTime = {
-        person: {id: person_id},
-        locationInteract: {id: interaction_id, name: interaction_name},
-        arrivalAt: arrival_at,
-        leaveAt: leave_at
-    }
-
-    let personLocationInteractTimeArray = [];
-    personLocationInteractTimes.forEach((x) => {
-        let value = twoLocationInteractCheck(x, personLocationInteractTime);
-        if (!value) {
-            personLocationInteractTimeArray.push(x)
-        }
-    })
-    personLocationInteractTimes = personLocationInteractTimeArray;
-
-    tableRowAdd();
+    let removeFiledId = obj.parentNode.parentNode.rowIndex;
+    console.log(removeFiledId)
+    document.getElementById("interactLocationTable").deleteRow(removeFiledId);
 }
 
 //new location history
 $(document).ready(function () {
+    interactionLocationLength();
     $("#contactForm").submit(function () {
         submitForm();
         $("#locationInteractNew").val('')
@@ -264,5 +240,10 @@ function twoLocationInteractCheck(obj, obj2) {
     return !(p && q && r && s && t);
 }
 
+function interactionLocationLength() {
+    let row_length = $("#interactLocationTable tbody tr").length;
 
+    console.log(row_length)
+    $("#totalPlace").html(row_length);
+}
 

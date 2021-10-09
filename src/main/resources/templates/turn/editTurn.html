@@ -213,7 +213,7 @@
               <input type="text" id="locationInteract" class="form-control"
                      placeholder="Please enter interact location name" >
               <input type="text" id="locationInteractOne" readonly class="form-control" disabled value="" >
-              <div id="locationInteract-box" ></div >
+              <div id="locationInteract-box" style="z-index: 1000" ></div >
               <span class="form-text text-muted bg-warring" > Please type more than 3 character</span >
               <input name="locationInteract.id" id="locationInteractId" value="" hidden type="number" >
             </div >
@@ -226,7 +226,7 @@
               <label class="control-label" data-th-for="${'locationInteract'}" > Add Location :</label >
             </div >
             <div class="col text-center" >
-              <button type="button" class="btn btn-info btn-group" data-toggle="modal" data-target="#modelId" >
+              <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modelId" >
                 <i class="fas fa-notes-medical" ></i > &nbsp;&nbsp; New
               </button >
             </div >
@@ -261,7 +261,7 @@
       </div >
       <div class="row mt-2" >
         <div class="container text-right" >
-          <button class="btn btn-primary btn-sm" type="button" id="addTable" >Add to Table &nbsp;<i
+          <button class="btn btn-primary btn" type="button" id="addTable" >Add to Table &nbsp;<i
                 class="fas fa-table" ></i ></button >
         </div >
       </div >
@@ -269,9 +269,10 @@
     <!--Interact Location History-->
     <div class="form-row" >
       <div class="container-fluid" >
-        <table class="table table-striped table-inverse table-hover" >
+        <table class="table table-striped table-inverse table-hover" id="interactLocationTable" >
           <caption style="caption-side:top;" class="font-weight-bold text-center h4" >
-            Locations Interact With Person
+            Locations Interact With Person &nbsp;&nbsp;&nbsp; <br /><span class="font-weight-bold text-left h6" >Total location count which person interact : </span >
+            <span id="totalPlace" class="font-weight-bold text-center h6" ></span >
           </caption >
           <thead class="thead-inverse" >
           <tr >
@@ -282,7 +283,6 @@
           </tr >
           </thead >
           <tbody >
-          <!--todo 28/09/2021 pending need to complete turn edit -->
           <tr data-th-each="personLocationInteractTime, index : ${personLocationInteractTimes}" >
             <td >
               <input id="li${i}" type="text"
