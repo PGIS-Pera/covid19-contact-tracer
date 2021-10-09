@@ -1,6 +1,7 @@
 package lk.covid19.contact_tracer.asset.turn.service.impl;
 
 import lk.covid19.contact_tracer.asset.person.service.PersonService;
+import lk.covid19.contact_tracer.asset.person_location_interact_time.entity.PersonLocationInteractTime;
 import lk.covid19.contact_tracer.asset.turn.dao.TurnDao;
 import lk.covid19.contact_tracer.asset.turn.entity.Turn;
 import lk.covid19.contact_tracer.asset.turn.service.TurnService;
@@ -42,6 +43,14 @@ public class TurnServiceImpl implements TurnService {
   @Caching( evict = {@CacheEvict( value = "turn", allEntries = true )},
       put = {@CachePut( value = "turn", key = "#turn.id" )} )
   public Turn persist(Turn turn) {
+    if ( !turn.getPersonLocationInteractTimes().isEmpty() ) {
+      List< PersonLocationInteractTime > personLocationInteractTimes = new ArrayList<>();
+      turn.getPersonLocationInteractTimes().forEach(x -> {
+        x.setTurn(turn);
+        personLocationInteractTimes.add(x);
+      });
+      turn.setPersonLocationInteractTimes(personLocationInteractTimes);
+    }
     return turnDao.save(turn);
   }
 

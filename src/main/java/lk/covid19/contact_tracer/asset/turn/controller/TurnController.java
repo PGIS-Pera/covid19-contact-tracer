@@ -47,7 +47,6 @@ public class TurnController {
   private final TurnService turnService;
   private final PersonService personService;
   private final DateTimeAgeService dateTimeAgeService;
-  private final PersonLocationInteractTimeService personLocationInteractTimeService;
 
   private String commonThing(Model model, Turn turnObject) {
     model.addAttribute("addStatus", false);
@@ -124,12 +123,11 @@ public class TurnController {
   }
 
   @PostMapping( value = {"/save", "/update"} )
-  public String persist(@Valid @ModelAttribute Turn turn, BindingResult bindingResult,
-                        RedirectAttributes redirectAttributes, Model model) {
+  public String persist(@Valid @ModelAttribute Turn turn, BindingResult bindingResult, Model model) {
     if ( bindingResult.hasErrors() ) {
       return commonThing(model, turn);
     }
-    redirectAttributes.addFlashAttribute("turnDetail", turnService.persist(turn));
+    turnService.persist(turn);
     return "redirect:/turn";
   }
 
