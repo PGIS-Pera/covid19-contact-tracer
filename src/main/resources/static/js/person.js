@@ -154,7 +154,6 @@ $("#nic").keyup(function () {
             type: 'GET',
             url: $('#patientNic').val() + nic,
             success: function (resp) {
-                console.log(resp.id);
                 if (resp.id) {
                     popUpDataSet(resp);
                 }
@@ -175,7 +174,10 @@ function popUpDataSet(resp) {
             dangerMode: true,
             closeOnClickOutside: false,
             buttons: {
-                cancel: "Cancel",
+                cancel: {
+                    text: "Cancel",
+                    value: "cancel",
+                },
                 catch: {
                     text: "Edit Person Detail",
                     value: "edit",
@@ -198,7 +200,6 @@ function popUpDataSet(resp) {
                     });
                     self.location = location.protocol + "//" + location.host + "/person/turn/" + resp.id;
                     break;
-
                 case "edit":
                     swal({
                         title: "Gotcha!",
@@ -209,6 +210,9 @@ function popUpDataSet(resp) {
                         timer: 3000,
                     });
                     self.location = location.protocol + "//" + location.host + "/person/edit/" + resp.id;
+                    break;
+                case "cancel":
+                    $("#nic").val('');
                     break;
             }
         });
