@@ -3,6 +3,7 @@ package lk.covid19.contact_tracer.asset.location_interact.service.impl;
 
 import lk.covid19.contact_tracer.asset.grama_niladhari.dao.GramaNiladhariDao;
 import lk.covid19.contact_tracer.asset.grama_niladhari.entity.GramaNiladhari;
+import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
 import lk.covid19.contact_tracer.asset.location_interact.dao.LocationInteractDao;
 import lk.covid19.contact_tracer.asset.location_interact.entity.LocationInteract;
 import lk.covid19.contact_tracer.asset.location_interact.service.LocationInteractService;
@@ -21,10 +22,10 @@ import java.util.List;
 @Service
 @CacheConfig( cacheNames = "locationInteract" )
 @RequiredArgsConstructor
-public class LocationInteractImpl implements LocationInteractService {
+public class LocationInteractServiceImpl implements LocationInteractService {
   private final LocationInteractDao locationInteractDao;
-  private final GramaNiladhariDao gramaNiladhariDao;
   private final CommonService commonService;
+  private final GramaNiladhariService gramaNiladhariService;
 
   @Cacheable
   public List< LocationInteract > findAll() {
@@ -66,7 +67,7 @@ public class LocationInteractImpl implements LocationInteractService {
 
   @Cacheable
   public LocationInteract findByGramaNiladhariAndName(LocationInteract locationInteract) {
-    return locationInteractDao.findByNameAndGramaNiladhari(locationInteract.getName(),
+    return locationInteractDao.findByNameAndGramaNiladhari(commonService.stringCapitalize(locationInteract.getName()),
                                                            locationInteract.getGramaNiladhari());
   }
 

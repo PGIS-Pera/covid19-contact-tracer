@@ -202,8 +202,6 @@ $(document).ready(function () {
     interactionLocationLength();
     $("#contactForm").submit(function () {
         submitForm();
-        $("#locationInteractNew").val('')
-        $("#gramaNiladhariId").val('')
         return false;
     });
 });
@@ -214,6 +212,7 @@ function submitForm() {
         url: $("#locationInteractSaveUrl").val().split("&")[0] + $("#locationInteractNew").val() + "&id=" + $("#gramaNiladhariId").val(),
         cache: false,
         success: function (response) {
+            gramaNiladhariValueClear();
             $("#locationInteractOne").attr('value', response.name);
             $("#locationInteract").attr('value', response.name);
             $("#locationInteractId").attr('value', response.id);
@@ -247,3 +246,10 @@ function interactionLocationLength() {
     $("#totalPlace").html(row_length);
 }
 
+function gramaNiladhariValueClear() {
+    gramaNiladhari = [];
+    $("#locationInteractNew").val('')
+    $("#gramaNiladhari").val('ghjj')
+    $("#gramaNiladhariId").val('')
+    $("#gramaNiladhariOne").val('')
+}

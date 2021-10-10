@@ -26,15 +26,19 @@ function gramaniladhari(val) {
             type: "GET",
             url: $("#gramaNiladhariSearchUrl").val() + val.value,
             success: function (data) {
+                gramaNiladhari = data;
                 let html_first_part = `<ul class="list-group list-group-flush justify-content-center" style="width: max-content">`;
                 let html_middle_part = ``;
                 for (let i = 0; i < data.length; i++) {
-                    html_middle_part += `<li onClick="selectGramaNiladhari(${data[i].id})" class="list-group-item font-weight-bold p">${data[i].name} - ${data[i].number}</li >`;
+                    html_middle_part += `<li onClick="selectGramaNiladhari(${data[i].id})" class="list-group-item font-weight-bold p">
+                                        Gramaniladhari Division : ${data[i].name} - ${data[i].number} -
+                                        Ds Office : ${data[i].dsOffice.name} -
+                                        District : ${data[i].dsOffice.district.name}  
+                                        </li >`;
                 }
                 // $("#gramaNiladhari-box");
                 $("#gramaNiladhari-box").show().html(html_first_part + html_middle_part);
                 $("#gramaNiladhari").css("background", "#FFF");
-                gramaNiladhari = data;
             }
         });
     }
@@ -45,10 +49,12 @@ function selectGramaNiladhari(val) {
     $("#gramaNiladhari-box").hide();
     gramaNiladhari.forEach((x) => {
         if (x.id === parseInt(val)) {
+            console.log("here oyt")
             $("#gramaNiladhariOne").val(`${x.name} - ${x.number}`);
-            $("#gramaNiladhariId").attr('value', x.id);
+            $("#gramaNiladhariId").val(x.id);
         }
     })
+    gramaNiladhari = [];
 }
 
 // AJAX call for autocomplete interaction
@@ -127,7 +133,6 @@ $("#addTable").bind('click', function () {
             if (personLocationInteractTimes.length > 0) {
                 for (let item of personLocationInteractTimes) {
                     if (!twoLocationInteractCheck(item, personLocationInteractTime)) {
-                        console.log('come here too')
                         check = true;
                         break;
                     }
@@ -224,39 +229,35 @@ function removeRow(obj) {
     submitButton();
 }
 
-//new location history
-$(document).ready(function () {
-    $("#contactForm").submit(function () {
-        submitForm();
-        $("#locationInteractNew").val('')
-        $("#gramaNiladhariId").val('')
-        return false;
-    });
-    submitButton();
-});
-
-function submitForm() {
-    $.ajax({
-        type: "POST",
-        url: $("#locationInteractSaveUrl").val().split("&")[0] + $("#locationInteractNew").val() + "&id=" + $("#gramaNiladhariId").val(),
-        cache: false,
-        success: function (response) {
-            $("#locationInteractOne").attr('value', response.name);
-            $("#locationInteract").attr('value', response.name);
-            $("#locationInteractId").attr('value', response.id);
-            // $("#modelId").hide();
-            let button = document.getElementById("closeModel");
-            button.click();
-        },
-        error: function () {
-            swal({
-                title: "Please check your entered values",
-                text: "Check \n Gramaniladhari Division \n Location Name \n should not be empty.",
-                icon: "warning",
-            });
-        }
-    });
-}
+$("#saveModel").click(function () {
+    let gramaniladhari_id = document.getElementById("gramaNiladhariId").value;
+    console.log(gramaniladhari_id)
+    if (gramaniladhari_id) {
+        $.ajax({
+            type: "POST",
+            url: $("#locationInteractSaveUrl").val().split("&")[0] + $("#locationInteractNew").val() + "&id=" + gramaniladhari_id,
+            cache: false,
+            success: function (response) {
+                gramaNiladhariValueClear();
+                $("#locationInteractNew").attr('value', '');
+                $("#locationInteractOne").attr('value', response.name);
+                $("#locationInteract").attr('value', response.name);
+                $("#locationInteractId").attr('value', response.id);
+                let button = document.getElementById("closeModel");
+                button.click();
+            },
+            error: function (e) {
+                console.log(e)
+            }
+        });
+    } else {
+        swal({
+            title: "Please check your entered values",
+            text: "Check \n Gramaniladhari Division \n Location Name \n should not be empty.",
+            icon: "warning",
+        });
+    }
+})
 
 function twoLocationInteractCheck(obj, obj2) {
     let p = obj.person.id === obj2.person.id
@@ -270,10 +271,20 @@ function twoLocationInteractCheck(obj, obj2) {
 function submitButton() {
     let table = document.getElementById("myTable");
     let tableTrLength = table.rows;
-    console.log("lenghth " + tableTrLength.length)
     if (tableTrLength.length === 1) {
         $("#formSubmit").hide();
     } else {
         $("#formSubmit").show();
     }
 }
+
+function gramaNiladhariValueClear() {
+    $("#locationInteractNew").val('');
+    $("#gramaNiladhari").val('');
+    $("#gramaNiladhariId").val('');
+    $("#gramaNiladhariOne").val('');
+}
+
+$(document).ready(function () {
+    submitButton();
+})

@@ -68,7 +68,7 @@ public class LocationInteractController {
     modelAndView.addObject("pageSizes", PAGE_SIZES);
     modelAndView.addObject("pager", pager);
     modelAndView.addObject("searchUrl", MvcUriComponentsBuilder
-        .fromMethodName(LocationInteractController.class, "search", new LocationInteract())
+        .fromMethodName(LocationInteractController.class, "search", "")
         .toUriString());
     return modelAndView;
   }
@@ -100,7 +100,7 @@ public class LocationInteractController {
   }
 
   @GetMapping( "/remove/{id}" )
-  public String delete(@PathVariable Integer id, Model model) {
+  public String delete(@PathVariable Integer id) {
     locationInteractService.delete(id);
     return "redirect:/locationInteract";
   }

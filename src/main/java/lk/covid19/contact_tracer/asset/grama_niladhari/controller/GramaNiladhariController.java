@@ -120,38 +120,34 @@ public class GramaNiladhariController {
     List< GramaNiladhari > gramaNiladharis = gramaNiladhariService.search(gramaNiladhari);
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(gramaNiladharis);
 
-    SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name", "number", "dsOffice");
-
-    SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name");
-
-    FilterProvider filter = new SimpleFilterProvider()
-        .addFilter("GramaNiladhari", simpleBeanPropertyFilterOne)
-        .addFilter("DsOffice", simpleBeanPropertyFilterTwo);
-    mappingJacksonValue.setFilters(filter);
-
-    return mappingJacksonValue;
+    return commonSearch(mappingJacksonValue);
   }
 
   @GetMapping( value = "/searchOne" )
   @ResponseBody
   public MappingJacksonValue searchOne(@RequestParam( "name" ) String name) {
-
     GramaNiladhari gramaNiladhari = GramaNiladhari.builder().name(name).build();
     List< GramaNiladhari > gramaNiladharis = gramaNiladhariService.search(gramaNiladhari);
 
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(gramaNiladharis);
 
-    SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name", "number");
-
-    FilterProvider filter = new SimpleFilterProvider()
-        .addFilter("GramaNiladhari", simpleBeanPropertyFilterOne);
-
-    mappingJacksonValue.setFilters(filter);
-
-    return mappingJacksonValue;
+    return commonSearch(mappingJacksonValue);
   }
 
+  public MappingJacksonValue commonSearch(MappingJacksonValue mappingJacksonValue) {
+    SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
+        .filterOutAllExcept("id", "name", "number", "dsOffice");
+    SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
+        .filterOutAllExcept("id", "name", "district");
+    SimpleBeanPropertyFilter simpleBeanPropertyFilterThree = SimpleBeanPropertyFilter
+        .filterOutAllExcept("id", "name");
+
+    FilterProvider filter = new SimpleFilterProvider()
+        .addFilter("GramaNiladhari", simpleBeanPropertyFilterOne)
+        .addFilter("DsOffice", simpleBeanPropertyFilterTwo)
+        .addFilter("District", simpleBeanPropertyFilterThree);
+
+    mappingJacksonValue.setFilters(filter);
+    return mappingJacksonValue;
+  }
 }
