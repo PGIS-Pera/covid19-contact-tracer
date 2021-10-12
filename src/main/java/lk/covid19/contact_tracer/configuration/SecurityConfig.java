@@ -82,6 +82,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 authorizeRequests
                     .antMatchers(ALL_PERMIT_URL).permitAll()
                     .antMatchers("/actuator/**").hasAnyRole("ADMIN")
+                    .antMatchers("/district/**").hasAnyRole("ADMIN")
+                    .antMatchers("/dsOffice/**").hasAnyRole("ADMIN")
+                    .antMatchers("/gramaNiladhari/**").hasAnyRole("ADMIN")
+                    .antMatchers("/user/**").hasAnyRole("ADMIN")
+                    .antMatchers("/userDetails/**").hasAnyRole("ADMIN")
+                    .antMatchers("/locationInteract/**").hasAnyRole("PHI")
+                    .antMatchers("/person/**").hasAnyRole("PHI")
+                    .antMatchers("/turn/**").hasAnyRole("PHI")
+                    .antMatchers("/report/**").hasAnyRole("ADMIN", "PHI")
                     .anyRequest()
                     .authenticated())
         // Login form

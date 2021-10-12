@@ -99,45 +99,48 @@
                         <h5 class="modal-title" >Change Person Status </h5 >
                       </div >
                       <div class="modal-body" >
-                        <form action="/turn/personStatusChange" method="POST" >
-                          <input type="hidden" name="id" data-th-value="${turn.id}" >
-                          <!--Person Status-->
-                          <div class="form-row text-md-right text-sm-left" >
-                            <div class="col-md-4" >
-                              <label class="control-label" >Person Status :</label >
-                            </div >
-                            <div class="col-md-8" >
-                              <div class="custom-control custom-checkbox custom-control-inline "
-                                   data-th-each="personState,index : ${personStatuses}" >
-                                <input class="custom-control-input" data-th-checked="${personState== turn.personStatus}"
-                                       data-th-id="${index.index}+${personState}"
-                                       data-th-name="${'personStatus'}"
-                                       data-th-value="${personState}" required
-                                       type="radio" />
-                                <label class="custom-control-label"
-                                       data-th-for="${index.index}+${personState}"
-                                       data-th-text="${personState.personStatus}" >
-                                </label >
+                        <div class="container" >
+                          <form action="/turn/personStatusChange" method="POST" >
+                            <input type="hidden" name="id" data-th-value="${turn.id}" >
+                            <!--Person Status-->
+                            <div class="form-row text-md-right text-sm-left" >
+                              <div class="col-md-4" >
+                                <label class="control-label" >Person Status :</label >
+                              </div >
+                              <div class="col-md-8" >
+                                <div class="custom-control custom-checkbox custom-control-inline "
+                                     data-th-each="personState,index : ${personStatuses}" >
+                                  <input class="custom-control-input"
+                                         data-th-checked="${personState== turn.personStatus}"
+                                         data-th-id="${index.index}+${personState}"
+                                         data-th-name="${'personStatus'}"
+                                         data-th-value="${personState}" required
+                                         type="radio" />
+                                  <label class="custom-control-label"
+                                         data-th-for="${index.index}+${personState}"
+                                         data-th-text="${personState.personStatus}" >
+                                  </label >
+                                </div >
                               </div >
                             </div >
-                          </div >
-                          <!-- button area-->
-                          <div class="form-group col-md-12 col-sm-12 text-center flex-column mt-3" >
-                            <!--model close -->
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal" ><i
-                                  class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Close
-                            </button >
-                            <!--Save Button-->
-                            <button class="btn btn-success ml-md-5" type="submit" >
-                              <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;
-                              <span data-th-text="${'Save'}" ></span >
-                            </button >
-                            <!--Cancel Button-->
-                            <button class="btn btn-warning ml-md-5" type="reset" >
-                              <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
-                            </button >
-                          </div >
-                        </form >
+                            <!-- button area-->
+                            <div class="form-group col-md-12 col-sm-12 text-center flex-column mt-3" >
+                              <!--model close -->
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal" ><i
+                                    class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Close
+                              </button >
+                              <!--Save Button-->
+                              <button class="btn btn-success ml-md-5" type="submit" >
+                                <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;
+                                <span data-th-text="${'Save'}" ></span >
+                              </button >
+                              <!--Cancel Button-->
+                              <button class="btn btn-warning ml-md-5" type="reset" >
+                                <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
+                              </button >
+                            </div >
+                          </form >
+                        </div >
                       </div >
                     </div >
                   </div >

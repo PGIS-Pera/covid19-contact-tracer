@@ -8,64 +8,64 @@
 <link rel="stylesheet" data-th-href="@{/css/mainWindow.css}" >
 <div data-th-replace="~{fragments/navBar :: navBarFragment}" ></div >
 <div class="container-fluid mb-3" >
-    <div class="row align-center " >
-      <!--data-sec-authorize="hasAnyAuthority('ROLE_GUARD', 'ROLE_CHANDLER')"-->
-      <!--Add Person-->
-      <div class="col-xl-4 col-sm-6 col-12 mb-1" >
-        <div class="card" >
-          <div class="card-content" >
-            <div class="card-body" >
-              <div class="media d-flex" >
-                <div class="align-self-center" >
-                  <i class="icon-speech warning font-large-2 float-left" ></i >
-                </div >
-                <div class="media-body" >
-                  <a class="h3" href="/person/add" ><i class="fa fa-user-plus" aria-hidden="true" ></i >&nbsp;&nbsp;Add
-                                                                                                        Person</a >
-                </div >
+  <div class="row align-center " >
+    <!--data-sec-authorize="hasAnyAuthority('ROLE_GUARD', 'ROLE_CHANDLER')"-->
+    <!--Add Person-->
+    <div data-sec-authorize="hasAnyAuthority('ROLE_PHI')" class="col-xl-4 col-sm-6 col-12 mb-1" >
+      <div class="card" >
+        <div class="card-content" >
+          <div class="card-body" >
+            <div class="media d-flex" >
+              <div class="align-self-center" >
+                <i class="icon-speech warning font-large-2 float-left" ></i >
               </div >
-            </div >
-          </div >
-        </div >
-      </div >
-      <!--add Turn-->
-      <div class="col-xl-4 col-sm-6 col-12 mb-1" >
-        <div class="card" >
-          <div class="card-content" >
-            <div class="card-body" >
-              <div class="media d-flex" >
-                <div class="align-self-center" >
-                  <i class="icon-speech warning font-large-2 float-left" ></i >
-                </div >
-                <div class="media-body" >
-                  <a class="h3" href="/person" ><i class="fas fa-file-medical" ></i >&nbsp;&nbsp;New Record</a >
-                </div >
-              </div >
-            </div >
-          </div >
-        </div >
-      </div >
-      <!--Edit Turn-->
-      <div class="col-xl-4 col-sm-6 col-12 mb-1" >
-        <div class="card" >
-          <div class="card-content" >
-            <div class="card-body" >
-              <div class="media d-flex" >
-                <div class="align-self-center" >
-                  <i class="icon-speech warning font-large-2 float-left" ></i >
-                </div >
-                <div class="media-body" >
-                  <a class="h3" href="/turn" ><i class="fas fa-edit" ></i > &nbsp;&nbsp; Edit Turn</a >
-                </div >
+              <div class="media-body" >
+                <a class="h3" href="/person/add" ><i class="fa fa-user-plus" aria-hidden="true" ></i >&nbsp;&nbsp;Add
+                                                                                                      Person</a >
               </div >
             </div >
           </div >
         </div >
       </div >
     </div >
+    <!--add Turn-->
+    <div data-sec-authorize="hasAnyAuthority('ROLE_PHI')" class="col-xl-4 col-sm-6 col-12 mb-1" >
+      <div class="card" >
+        <div class="card-content" >
+          <div class="card-body" >
+            <div class="media d-flex" >
+              <div class="align-self-center" >
+                <i class="icon-speech warning font-large-2 float-left" ></i >
+              </div >
+              <div class="media-body" >
+                <a class="h3" href="/person" ><i class="fas fa-file-medical" ></i >&nbsp;&nbsp;New Record</a >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+    <!--Edit Turn-->
+    <div data-sec-authorize="hasAnyAuthority('ROLE_PHI')" class="col-xl-4 col-sm-6 col-12 mb-1" >
+      <div class="card" >
+        <div class="card-content" >
+          <div class="card-body" >
+            <div class="media d-flex" >
+              <div class="align-self-center" >
+                <i class="icon-speech warning font-large-2 float-left" ></i >
+              </div >
+              <div class="media-body" >
+                <a class="h3" href="/turn" ><i class="fas fa-edit" ></i > &nbsp;&nbsp; Edit Turn</a >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+  </div >
 </div >
 <div class="container-fluid mb-3" >
-  <div class="row mt-3">
+  <div class="row mt-3" >
     <div class="container" >
       <div class="row mt-3" data-th-if="${not #lists.isEmpty(allReportDetail.attributeAndCounts)}" >
         <div class="container-fluid" >
