@@ -106,7 +106,7 @@ $("#searchInput").keyup(function () {
                       <th > ${i + 1}</th >
                       <th > ${data[i].name}</th >
                       <th > ${data[i].number}</th >
-                      <th > </th >
+                      <th > ${data[i].dsOffice.name}</th >
                       <th >
                           <a class="btn btn-success btn-sm" href="${'/gramaNiladhari/' + data[i].id}" >
                             <i class="fa fa-folder-open" ></i >&nbsp;View
