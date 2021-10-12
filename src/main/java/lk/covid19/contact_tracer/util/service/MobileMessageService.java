@@ -3,6 +3,7 @@ package lk.covid19.contact_tracer.util.service;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 
@@ -10,14 +11,20 @@ import org.springframework.stereotype.Service;
 public class MobileMessageService {
 
   // Find your Account Sid and Token at twilio.com/user/account
-  public static final String ACCOUNT_SID = "ACbb4e6d5d3af74f779d629c8f8f5e8862";
-  public static final String AUTH_TOKEN = "fbb94f881a36e1a66228de2ad7a57efd";
+  @Value( "${twilio.ACCOUNT_SID}" )
+  private String ACCOUNT_SID;
+
+  @Value( "${twilio.AUTH_TOKEN}" )
+  private String AUTH_TOKEN;
+
+  @Value( "${twilio.PHONE_NUMBER}" )
+  private String MOBILE_NUMBER;
 
 
   public void sendSMS(String number, String messageBody) throws Exception {
     Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
     Message message = Message
-        .creator(new PhoneNumber(number), new PhoneNumber("+14159917342"),
+        .creator(new PhoneNumber(number), new PhoneNumber(MOBILE_NUMBER),
                  messageBody)
         .create();
 

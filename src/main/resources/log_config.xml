@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
-    <contextName>covid19_data</contextName>
+    <contextName>covid-tracer</contextName>
 
     <!-- Define log file input location -->
     <property name="log_dir" value="/soft/apache-tomcat-8.5.30-ems/logs"/>
