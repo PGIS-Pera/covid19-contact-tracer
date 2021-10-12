@@ -31,7 +31,7 @@ public class Turn extends AuditEntity {
   @Enumerated( EnumType.STRING )
   private PersonStatus personStatus;
 
-  @ManyToOne
+  @ManyToOne( cascade = CascadeType.MERGE )
   @JoinColumn( name = "person_id", nullable = false, foreignKey = @ForeignKey( name = "fk_turn_vs_person" ) )
   private Person person;
 

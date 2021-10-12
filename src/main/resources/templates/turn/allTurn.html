@@ -24,35 +24,36 @@
   </div >
 </div >
 
-<div class="container-fluid" >
-  <div class="row text-center" >
-    <a href="/turn" data-th-class="${personStatus==null?'disabled':''}" >
-      <button type="button" class="btn btn-success" >All</button >
-    </a >
-    <a href="/turn/GENERAL" data-th-class="${personStatus=='GENERAL'?'disabled':''}" >
-      <button type="button" class="btn btn-primary" >General</button >
-    </a >
-    <a href="/turn/SUSPECT" data-th-class="${personStatus=='SUSPECT'?'disabled':''}" >
-      <button type="button" class="btn btn-secondary" >Suspect</button >
-    </a >
-    <a href="/turn/SELF_QUARANTINE" data-th-class="${personStatus=='SELF_QUARANTINE'?'disabled':''}" >
-      <button type="button" class="btn btn-success" >Self Quarantine</button >
-    </a >
-    <a href="/turn/QUARANTINE" data-th-class="${personStatus=='QUARANTINE'?'disabled':''}" >
-      <button type="button" class="btn btn-info" >Quarantine</button >
-    </a >
-    <a href="/turn/AFTER_QUARANTINE" data-th-class="${personStatus=='AFTER_QUARANTINE'?'disabled':''}" >
-      <button type="button" class="btn btn-warning" >After Quarantine</button >
-    </a >
-    <a href="/turn/INFECTED" data-th-class="${personStatus=='INFECTED'?'disabled':''}" >
-      <button type="button" class="btn btn-danger" >Infected</button >
-    </a >
-    <a href="/turn/RECOVER" data-th-class="${personStatus=='RECOVER'?'disabled':''}" >
-      <button type="button" class="btn btn-dark" >Recover</button >
-    </a >
-    <a href="/turn/DEAD" data-th-class="${personStatus=='DEAD'?'disabled':''}" >
-      <button type="button" class="btn btn-light" >Dead</button >
-    </a >
+<div class="container-fluid mt-2 mb-2" >
+  <div class="row " >
+    <div class="col text-center" >
+      <a href="/turn" data-th-class="${personStatus==null?'disabled':''}" >
+        <button type="button" class="btn btn-success ml-2" >All</button >
+      </a >
+      <a href="/turn/ps/GENERAL" data-th-class="${personStatus=='GENERAL'?'disabled':''}" >
+        <button type="button" class="btn btn-primary ml-2" >General</button >
+      </a >
+      <a href="/turn/ps/SUSPECT" data-th-class="${personStatus=='SUSPECT'?'disabled':''}" >
+        <button type="button" class="btn btn-secondary ml-2" >Suspect</button >
+      </a >
+      <a href="/turn/ps/SELF_QUARANTINE" data-th-class="${personStatus=='SELF_QUARANTINE'?'disabled':''}" >
+        <button type="button" class="btn btn-success ml-2" >Self Quarantine</button >
+      </a >
+      <a href="/turn/ps/QUARANTINE" data-th-class="${personStatus=='QUARANTINE'?'disabled':''}" >
+        <button type="button" class="btn btn-info ml-2" >Quarantine</button >
+      </a >
+      <a href="/turn/ps/AFTER_QUARANTINE" data-th-class="${personStatus=='AFTER_QUARANTINE'?'disabled':''}" >
+        <button type="button" class="btn btn-warning ml-2" >After Quarantine</button >
+      </a >
+      <a href="/turn/ps/INFECTED" data-th-class="${personStatus=='INFECTED'?'disabled':''}" >
+        <button type="button" class="btn btn-danger ml-2" >Infected</button >
+      </a >
+      <a href="/turn/ps/RECOVER" data-th-class="${personStatus=='RECOVER'?'disabled':''}" >
+        <button type="button" class="btn btn-dark ml-2" >Recover</button >
+      </a >
+      <a href="/turn/ps/DEAD" data-th-class="${personStatus=='DEAD'?'disabled':''}" >
+        <button type="button" class="btn btn-light ml-2" >Dead</button >
+      </a ></div >
   </div >
 </div >
 
@@ -60,7 +61,7 @@
   <div class="col" >
     <!--if not empty list-->
     <div class="container-fluid" data-th-if="${not #lists.isEmpty(turns)}" >
-      <div class="row" data-th-if="${ turns.getTotalElements() != 0}" >
+      <div class="row" >
         <div class="container-fluid" >
           <table class="table table-hover table-striped table-responsive-sm  mt-1" id="myTable" >
             <tr >
@@ -71,18 +72,76 @@
               <th >Current Status</th >
               <th >View</th >
             </tr >
-            <tbody id="myTableBody" >
+            <tbody >
             <tr data-th-each="turn, index : ${turns}" >
               <td data-th-text="${index.count}" ></td >
               <td data-th-text="${turn.person.code}" ></td >
               <td data-th-text="${turn.person.name}" ></td >
-              <td data-th-text="${turn.personStatus}" ></td >
               <td data-th-text="${{turn.identifiedDate}}" ></td >
+              <td data-th-text="${turn.personStatus.personStatus}" ></td >
               <td >
                 <a class="btn btn-success btn-sm" data-th-href="${'/turn/' + turn.id}" ><i
                       class="fa fa-folder-open" ></i >&nbsp;View</a >
                 <a class="btn btn-primary btn-sm" data-th-href="${'/turn/edit/' + turn.id}" ><i
                       class="fa fa-edit" ></i >&nbsp;Edit</a >
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                        data-th-attr='data-target=${"#modelId"+turn.id}' >
+                  Change Turn Status
+                </button >
+                <!-- Modal -->
+                <div class="modal fade" data-th-id="${'modelId'+turn.id}" tabindex="-1" role="dialog"
+                     aria-labelledby="modelTitleId"
+                     aria-hidden="true" data-backdrop="static" data-keyboard="false" >
+                  <div class="modal-dialog" role="document" >
+                    <div class="modal-content" >
+                      <div class="modal-header" >
+                        <h5 class="modal-title" >Change Person Status </h5 >
+                      </div >
+                      <div class="modal-body" >
+                        <form action="/turn/personStatusChange" method="POST" >
+                          <input type="hidden" name="id" data-th-value="${turn.id}" >
+                          <!--Person Status-->
+                          <div class="form-row text-md-right text-sm-left" >
+                            <div class="col-md-4" >
+                              <label class="control-label" >Person Status :</label >
+                            </div >
+                            <div class="col-md-8" >
+                              <div class="custom-control custom-checkbox custom-control-inline "
+                                   data-th-each="personState,index : ${personStatuses}" >
+                                <input class="custom-control-input" data-th-checked="${personState== turn.personStatus}"
+                                       data-th-id="${index.index}+${personState}"
+                                       data-th-name="${'personStatus'}"
+                                       data-th-value="${personState}" required
+                                       type="radio" />
+                                <label class="custom-control-label"
+                                       data-th-for="${index.index}+${personState}"
+                                       data-th-text="${personState.personStatus}" >
+                                </label >
+                              </div >
+                            </div >
+                          </div >
+                          <!-- button area-->
+                          <div class="form-group col-md-12 col-sm-12 text-center flex-column mt-3" >
+                            <!--model close -->
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" ><i
+                                  class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Close
+                            </button >
+                            <!--Save Button-->
+                            <button class="btn btn-success ml-md-5" type="submit" >
+                              <i class="fa fa-save " style="font-size: 20px" ></i >&nbsp;&nbsp;
+                              <span data-th-text="${'Save'}" ></span >
+                            </button >
+                            <!--Cancel Button-->
+                            <button class="btn btn-warning ml-md-5" type="reset" >
+                              <i class="far fa-times-circle" style="font-size: 20px" ></i >&nbsp;&nbsp;Cancel
+                            </button >
+                          </div >
+                        </form >
+                      </div >
+                    </div >
+                  </div >
+                </div >
               </td >
             </tr >
             </tbody >
@@ -114,5 +173,6 @@
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
 <!-- data table -->
 <script src="/js/pagination.js" ></script >
+
 </body >
 </html >

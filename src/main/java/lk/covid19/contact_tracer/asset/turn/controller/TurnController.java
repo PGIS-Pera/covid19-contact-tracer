@@ -83,17 +83,32 @@ public class TurnController {
     modelAndView.addObject("searchUrl", MvcUriComponentsBuilder
         .fromMethodName(TurnController.class, "search", new Turn())
         .toUriString());
+    modelAndView.addObject("personStatuses", PersonStatus.values());
+    modelAndView.addObject("personStatus", null);
     return modelAndView;
   }
 
-  @GetMapping( "/{personStatus}" )
+  @GetMapping( "/ps/{personStatus}" )
   public String showTurnsPageByPersonStatus(@PathVariable( "personStatus" ) PersonStatus personStatus, Model model) {
     model.addAttribute("turns", turnService.findByPersonStatus(personStatus));
     model.addAttribute("personStatus", personStatus);
     model.addAttribute("searchUrl", MvcUriComponentsBuilder
         .fromMethodName(TurnController.class, "search", new Turn())
         .toUriString());
+    model.addAttribute("personStatuses", PersonStatus.values());
     return "turn/allTurn";
+  }
+
+  @PostMapping( "/personStatusChange" )
+  public String personStatusChange(@RequestParam( "id" ) Integer id,
+                                   @RequestParam( "personStatus" ) PersonStatus personStatus) {
+    Turn turn = turnService.findById(id);
+    Person person = personService.findById(turn.getPerson().getId());
+    person.setPersonStatus(personStatus);
+    turn.setPerson(person);
+    turn.setPersonStatus(personStatus);
+    turnService.persist(turn);
+    return "redirect:/turn";
   }
 
 

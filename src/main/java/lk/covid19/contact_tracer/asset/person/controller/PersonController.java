@@ -116,7 +116,6 @@ public class PersonController {
 
   @PostMapping( value = {"/save", "/update"} )
   public String addPerson(@Valid @ModelAttribute Person person, BindingResult result, Model model) {
-
     if ( result.hasErrors() ) {
       model.addAttribute("addStatus", true);
       model.addAttribute("person", person);
