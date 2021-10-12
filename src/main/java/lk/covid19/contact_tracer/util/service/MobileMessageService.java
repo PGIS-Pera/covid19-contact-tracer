@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MobileMessageService {
+
   // Find your Account Sid and Token at twilio.com/user/account
   public static final String ACCOUNT_SID = "ACbb4e6d5d3af74f779d629c8f8f5e8862";
   public static final String AUTH_TOKEN = "fbb94f881a36e1a66228de2ad7a57efd";
