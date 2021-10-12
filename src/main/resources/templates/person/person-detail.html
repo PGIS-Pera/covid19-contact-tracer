@@ -169,21 +169,22 @@
   </div >
   <!--location interact places and times-->
   <div class="form-group offset-md-3 col-md-6 col-sm-12 text-center flex-column "
-       data-th-if="${not #lists.isEmpty(personDetail.personLocationInteractTimes)}" >
-    <div class="container-fluid" >
-      <table class="table table-striped table-inverse " id="myTable" >
-        <thead class="thead-inverse" >
-        <tr >
-          <th >Index</th >
-          <th >Location Name</th >
-          <th >Gramaniladari Division</th >
-          <th >Arrival At</th >
-          <th >Departure At</th >
-          <th >Record Status</th >
+       data-th-if="${not #lists.isEmpty(personDetail.turns)}" >
+    <div data-th-each="turn, index : ${personDetail.turns}" >
+      <div class="container-fluid" >
+        <table class="table table-striped table-inverse " id="myTable" >
+          <thead class="thead-inverse" >
+          <tr >
+            <th >Index</th >
+            <th >Location Name</th >
+            <th >Gramaniladari Division</th >
+            <th >Arrival At</th >
+            <th >Departure At</th >
+            <th >Record Status</th >
         </tr >
         </thead >
         <tbody >
-        <tr data-th-each="personLocationInteractTime, index : ${personDetail.personLocationInteractTimes}" >
+        <tr data-th-each="personLocationInteractTime, index : ${turn.personLocationInteractTimes}" >
           <td data-th-text="${index.count}" ></td >
           <td data-th-text="${personLocationInteractTime.locationInteract.name}" ></td >
           <td data-th-text="${personLocationInteractTime.locationInteract.gramaNiladhari.name}" ></td >
@@ -192,7 +193,8 @@
           <td data-th-text="${personLocationInteractTime.stopActive.stopActive}" ></td >
         </tr >
         </tbody >
-      </table >
+        </table >
+      </div >
     </div >
   </div >
   <!--Button-->

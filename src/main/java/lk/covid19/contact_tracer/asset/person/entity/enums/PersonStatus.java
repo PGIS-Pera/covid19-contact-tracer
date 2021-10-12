@@ -12,8 +12,8 @@ public enum PersonStatus {
   QUARANTINE("Quarantine"),
   AFTER_QUARANTINE("After Quarantine"),
   INFECTED("Infected"),
-  DEAD("Dead"),
-  RECOVER("Recover");
+  RECOVER("Recover"),
+  DEAD("Dead");
 
   private final String personStatus;
 }
