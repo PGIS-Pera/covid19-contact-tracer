@@ -113,7 +113,7 @@ public class PersonServiceImpl implements PersonService {
     return new ArrayList<>(person);
   }
 
-  @Cacheable
+
   public void saveAndTurn(Person person) {
     Person personDb = personDao.getById(person.getId());
     personDb.setPersonStatus(PersonStatus.INFECTED);
@@ -121,6 +121,7 @@ public class PersonServiceImpl implements PersonService {
     List< PersonLocationInteractTime > personLocationInteractTimes = new ArrayList<>();
     person.getTurns().forEach(x -> {
       x.setPerson(personDb);
+      x.setPersonStatus(PersonStatus.INFECTED);
       x.getPersonLocationInteractTimes().forEach(y -> {
         y.setTurn(x);
         personLocationInteractTimes.add(y);

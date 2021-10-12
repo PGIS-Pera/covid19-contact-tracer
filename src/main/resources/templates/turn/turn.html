@@ -25,7 +25,35 @@
     </div >
   </div >
 </div >
-<!--todo edit has error to resolved-->
+
+<div class="container-fluid" >
+  <div class="row text-center" >
+    <a href="/turn/GENERAL" ><
+      <button type="button" class="btn btn-primary" >General</button >
+    </a >
+    <a href="/turn/SUSPECT" ><
+      <button type="button" class="btn btn-secondary" >Suspect</button >
+    </a >
+    <a href="/turn/SELF_QUARANTINE" ><
+      <button type="button" class="btn btn-success" >Self Quarantine</button >
+    </a >
+    <a href="/turn/QUARANTINE" ><
+      <button type="button" class="btn btn-info" >Quarantine</button >
+    </a >
+    <a href="/turn/AFTER_QUARANTINE" ><
+      <button type="button" class="btn btn-warning" >After Quarantine</button >
+    </a >
+    <a href="/turn/INFECTED" ><
+      <button type="button" class="btn btn-danger" >Infected</button >
+    </a >
+    <a href="/turn/RECOVER" ><
+      <button type="button" class="btn btn-dark" >Recover</button >
+    </a >
+    <a href="/turn/DEAD" ><
+      <button type="button" class="btn btn-light" >Dead</button >
+    </a >
+  </div >
+</div >
 <!--data table-->
 <div class="container-fluid " >
   <div class="col-sm-12 flex-column " >
@@ -74,6 +102,7 @@
                 <th >Person Code</th >
                 <th >Person Name</th >
                 <th >Identified Date</th >
+                <th >Current Status</th >
                 <th >View</th >
               </tr >
               <tbody id="myTableBody" >
@@ -81,6 +110,7 @@
                 <td data-th-text="${index.count}" ></td >
                 <td data-th-text="${turn.person.code}" ></td >
                 <td data-th-text="${turn.person.name}" ></td >
+                <td data-th-text="${turn.personStatus}" ></td >
                 <td data-th-text="${{turn.identifiedDate}}" ></td >
                 <td >
                   <a class="btn btn-success btn-sm" data-th-href="${'/turn/' + turn.id}" ><i
@@ -88,13 +118,6 @@
                   <a class="btn btn-primary btn-sm" id="agOfficeEdit"
                      data-th-href="${'/turn/edit/' + turn.id}" ><i
                         class="fa fa-edit" ></i >&nbsp;Edit</a >
-
-                  <!-- <a class="btn btn-danger btn-sm" id="agOfficeRemove"
-                      data-th-href="${'/turn/remove/' + turn.id}"
-                      data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
-                      data-th-onclick="if(!(confirm('Are you want to delete this turn division ?'))) return false"
-                   ><i aria-hidden="true" class="fa fa-trash" ></i >
-                     Delete</a >-->
                 </td >
               </tr >
               </tbody >

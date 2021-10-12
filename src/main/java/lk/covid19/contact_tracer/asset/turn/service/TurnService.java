@@ -1,5 +1,6 @@
 package lk.covid19.contact_tracer.asset.turn.service;
 
+import lk.covid19.contact_tracer.asset.person.entity.enums.PersonStatus;
 import lk.covid19.contact_tracer.asset.turn.entity.Turn;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
 import org.springframework.data.domain.Page;
@@ -29,4 +30,6 @@ public interface TurnService {
 
 
   List< Turn > findByPerson(Person person);
+
+  List< Turn > findByPersonStatus(PersonStatus personStatus);
 }

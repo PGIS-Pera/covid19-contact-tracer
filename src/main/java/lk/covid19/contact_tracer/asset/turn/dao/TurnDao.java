@@ -1,5 +1,6 @@
 package lk.covid19.contact_tracer.asset.turn.dao;
 
+import lk.covid19.contact_tracer.asset.person.entity.enums.PersonStatus;
 import lk.covid19.contact_tracer.asset.turn.entity.Turn;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
 import org.springframework.data.domain.Page;
@@ -16,4 +17,6 @@ public interface TurnDao extends JpaRepository< Turn, Integer > {
   List< Turn > findByIdentifiedDateIsBetween(LocalDate from, LocalDate to);
 
   List< Turn > findByPerson(Person person);
+
+  List< Turn > findByPersonStatus(PersonStatus personStatus);
 }

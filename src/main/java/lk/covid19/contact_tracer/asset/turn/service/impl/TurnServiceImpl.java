@@ -1,5 +1,6 @@
 package lk.covid19.contact_tracer.asset.turn.service.impl;
 
+import lk.covid19.contact_tracer.asset.person.entity.enums.PersonStatus;
 import lk.covid19.contact_tracer.asset.person.service.PersonService;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.entity.PersonLocationInteractTime;
 import lk.covid19.contact_tracer.asset.turn.dao.TurnDao;
@@ -94,5 +95,11 @@ public class TurnServiceImpl implements TurnService {
 
     return turns.stream().distinct().collect(Collectors.toList());
   }
+
+  @Cacheable
+  public List< Turn > findByPersonStatus(PersonStatus personStatus) {
+    return turnDao.findByPersonStatus(personStatus);
+  }
+
 
 }

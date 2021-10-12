@@ -61,7 +61,7 @@ public class Person extends AuditEntity {
   @ToString.Exclude
   private GramaNiladhari gramaNiladhari;
 
-  @OneToMany( mappedBy = "person", cascade = {CascadeType.MERGE, CascadeType.PERSIST} )
+  @OneToMany( mappedBy = "person", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER )
   @ToString.Exclude
   private List< Turn > turns;
 

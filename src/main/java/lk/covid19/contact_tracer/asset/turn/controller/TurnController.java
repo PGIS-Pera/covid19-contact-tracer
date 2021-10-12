@@ -12,6 +12,7 @@ import lk.covid19.contact_tracer.asset.ds_office.controller.DsOfficeController;
 import lk.covid19.contact_tracer.asset.grama_niladhari.controller.GramaNiladhariController;
 import lk.covid19.contact_tracer.asset.location_interact.controller.LocationInteractController;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
+import lk.covid19.contact_tracer.asset.person.entity.enums.PersonStatus;
 import lk.covid19.contact_tracer.asset.person.service.PersonService;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.service.PersonLocationInteractTimeService;
 import lk.covid19.contact_tracer.asset.turn.entity.Turn;
@@ -65,8 +66,8 @@ public class TurnController {
   }
 
   @GetMapping
-  public ModelAndView showPersonsPage(@RequestParam( "pageSize" ) Optional< Integer > pageSize,
-                                      @RequestParam( "page" ) Optional< Integer > page) {
+  public ModelAndView showTurnsPage(@RequestParam( "pageSize" ) Optional< Integer > pageSize,
+                                    @RequestParam( "page" ) Optional< Integer > page) {
     //todo-> normally we thorough to get data within 14 days
     ModelAndView modelAndView = new ModelAndView("turn/turn");
     int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);
@@ -84,6 +85,17 @@ public class TurnController {
         .toUriString());
     return modelAndView;
   }
+
+  @GetMapping( "/{personStatus}" )
+  public String showTurnsPageByPersonStatus(@PathVariable( "personStatus" ) PersonStatus personStatus, Model model) {
+    model.addAttribute("turns", turnService.findByPersonStatus(personStatus));
+    model.addAttribute("personStatus", personStatus);
+    model.addAttribute("searchUrl", MvcUriComponentsBuilder
+        .fromMethodName(TurnController.class, "search", new Turn())
+        .toUriString());
+    return "turn/allTurn";
+  }
+
 
   @GetMapping( "/add" )
   public String form(Model model) {

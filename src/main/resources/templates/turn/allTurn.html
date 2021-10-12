@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<div class="container-fluid" >
+  <div class="row text-center" >
+    <div class="col" >
+      <a class="btn btn-success" data-th-href="${'/person'}" >
+        <i class="far fa-user" ></i > &nbsp; Go to Person</a >
+    </div >
+    <div class="col" >
+      <span class="font-weight-bold h2" >                    Turns according to person status  </span >
+    </div >
+    <div class="col" >
+      <a class="btn btn-primary" data-th-href="${'/home'}" id="searchShow" tabindex="2" >
+        <i class="fas fa-home" style="font-size: 20px" ></i >&nbsp;&nbsp;Home
+      </a >
+    </div >
+  </div >
+</div >
+
+<div class="container-fluid" >
+  <div class="row text-center" >
+    <a href="/turn" data-th-class="${personStatus==null?'disabled':''}" >
+      <button type="button" class="btn btn-success" >All</button >
+    </a >
+    <a href="/turn/GENERAL" data-th-class="${personStatus=='GENERAL'?'disabled':''}" >
+      <button type="button" class="btn btn-primary" >General</button >
+    </a >
+    <a href="/turn/SUSPECT" data-th-class="${personStatus=='SUSPECT'?'disabled':''}" >
+      <button type="button" class="btn btn-secondary" >Suspect</button >
+    </a >
+    <a href="/turn/SELF_QUARANTINE" data-th-class="${personStatus=='SELF_QUARANTINE'?'disabled':''}" >
+      <button type="button" class="btn btn-success" >Self Quarantine</button >
+    </a >
+    <a href="/turn/QUARANTINE" data-th-class="${personStatus=='QUARANTINE'?'disabled':''}" >
+      <button type="button" class="btn btn-info" >Quarantine</button >
+    </a >
+    <a href="/turn/AFTER_QUARANTINE" data-th-class="${personStatus=='AFTER_QUARANTINE'?'disabled':''}" >
+      <button type="button" class="btn btn-warning" >After Quarantine</button >
+    </a >
+    <a href="/turn/INFECTED" data-th-class="${personStatus=='INFECTED'?'disabled':''}" >
+      <button type="button" class="btn btn-danger" >Infected</button >
+    </a >
+    <a href="/turn/RECOVER" data-th-class="${personStatus=='RECOVER'?'disabled':''}" >
+      <button type="button" class="btn btn-dark" >Recover</button >
+    </a >
+    <a href="/turn/DEAD" data-th-class="${personStatus=='DEAD'?'disabled':''}" >
+      <button type="button" class="btn btn-light" >Dead</button >
+    </a >
+  </div >
+</div >
+
+<div class="container-fluid text-center" >
+  <div class="col" >
+    <!--if not empty list-->
+    <div class="container-fluid" data-th-if="${not #lists.isEmpty(turns)}" >
+      <div class="row" data-th-if="${ turns.getTotalElements() != 0}" >
+        <div class="container-fluid" >
+          <table class="table table-hover table-striped table-responsive-sm  mt-1" id="myTable" >
+            <tr >
+              <th >Index</th >
+              <th >Person Code</th >
+              <th >Person Name</th >
+              <th >Identified Date</th >
+              <th >Current Status</th >
+              <th >View</th >
+            </tr >
+            <tbody id="myTableBody" >
+            <tr data-th-each="turn, index : ${turns}" >
+              <td data-th-text="${index.count}" ></td >
+              <td data-th-text="${turn.person.code}" ></td >
+              <td data-th-text="${turn.person.name}" ></td >
+              <td data-th-text="${turn.personStatus}" ></td >
+              <td data-th-text="${{turn.identifiedDate}}" ></td >
+              <td >
+                <a class="btn btn-success btn-sm" data-th-href="${'/turn/' + turn.id}" ><i
+                      class="fa fa-folder-open" ></i >&nbsp;View</a >
+                <a class="btn btn-primary btn-sm" data-th-href="${'/turn/edit/' + turn.id}" ><i
+                      class="fa fa-edit" ></i >&nbsp;Edit</a >
+              </td >
+            </tr >
+            </tbody >
+          </table >
+        </div >
+      </div >
+    </div >
+    <!--if empty list-->
+    <div class="row" data-th-if="${ #lists.isEmpty(turns)}" >
+      <div class="col-sm-12" >
+        <div class="alert alert-warning alert-dismissible fade show"
+             role="alert" >
+          <button aria-label="Close" class="close" data-dismiss="alert"
+                  type="button" >
+            <span aria-hidden="true" >&times;</span >
+          </button >
+          <h3 class="text-center text-danger" >
+            <strong >There is no turn upto know.
+            </strong >
+          </h3 >
+        </div >
+      </div >
+    </div >
+  </div >
+</div >
+<!--footer fragment-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<!-- data table -->
+<script src="/js/pagination.js" ></script >
+</body >
+</html >
