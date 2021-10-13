@@ -29,7 +29,7 @@ public class ApplicationCreateController {
   @GetMapping( "/select/user" )
   public String saveUser(Model model) {
     //roles list start
-    String[] roles = {"ADMIN", "HEALTH", "POLICE", "ARMY", "NAVY", "PRESIDENT", "COVID_CENTER"};
+    String[] roles = {"ADMIN", "PHI", "POLICE", "ARMY", "AIR_FORCE", "NAVY", "PRESIDENT", "COVID_CENTER"};
     for ( String s : roles ) {
       Role role = new Role();
       role.setRoleName(s);
