@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -90,9 +91,10 @@ public class UserController {
   //Bellow method support to do back end function save, delete, update, search
 
   @PostMapping( value = {"/add", "/update"} )
-  public String addUser(@Valid @ModelAttribute User user, BindingResult result, Model model) {
+  public String addUser(@Valid @ModelAttribute User user, BindingResult result, Model model,
+                        HttpServletRequest request) {
 
-    if ( userService.findUserByEmployee(user.getUserDetails()) != null ) {
+    if ( userService.findUserByEmployee(user.getUserDetails()) != null && !request.getRequestURI().equals("/user/update") ) {
       ObjectError error = new ObjectError("userDetails", "This user already defined as a user");
       result.addError(error);
     }
@@ -103,7 +105,6 @@ public class UserController {
     }
     if ( user.getId() != null ) {
       User dbUser = userService.findById(user.getId());
-      //todo need to change
       dbUser.setEnabled(true);
       dbUser.setPassword(user.getPassword());
       dbUser.setUserDetails(user.getUserDetails());

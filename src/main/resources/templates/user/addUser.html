@@ -93,7 +93,7 @@
 <!--User add from-->
 <div class="container-fluid" data-th-if="${employeeDetailShow==true}" >
   <form data-th-action="${addStatus==true?'/user/add':'/user/update'}" data-th-object="${user}"
-        method="POST" >
+        method="POST" id="userForm" >
     <input data-th-field="*{id}" type="hidden" readonly data-th-if="${addStatus==false}" />
     <div class="row" >
       <!--Left Side-->
@@ -127,22 +127,23 @@
           <label class="control-label col-md-4" for="username" >User Name :</label >
           <div class="col-md-8" >
             <input class="form-control" data-th-field="*{username}" id="username"
-                   placeholder="Enter User Name Here" required type="text"
+                   placeholder="Enter User Name Here" required type="text" minlength="4"
                    data-th-readonly="${addStatus==false}" />
           </div >
         </div >
         <!--Active or not-->
         <div class="form-row" data-th-if="${addStatus==false}" >
+          <input type="hidden" data-th-value="${user.enabled}" id="enable" >
           <label class="control-label col-md-4" for="username" >Active or Disable :</label >
           <div class="col-md-8" >
             <div class="custom-control custom-checkbox custom-control-inline " >
               <input id="true" class="custom-control-input" data-th-name="${'enabled'}" value="true" type="radio"
-                     data-th-selected="${user.enabled == true}" required />
+                     required />
               <label for="true" class="custom-control-label" > Enable </label >
             </div >
             <div class="custom-control custom-checkbox custom-control-inline " >
               <input id="false" class="custom-control-input " data-th-name="${'enabled'}" value="false" type="radio"
-                     data-th-selected="${user.enabled == false}" />
+                     required />
               <label for="false" class="custom-control-label" > Disable </label >
             </div >
           </div >
@@ -152,7 +153,7 @@
           <label class="control-label col-md-4" for="password" >Password :</label >
           <div class="col-md-8" >
             <input class="form-control pwd" id="password" data-th-field="*{password}"
-                   placeholder="Enter Password Here" required type="password" min="6"
+                   placeholder="Enter Password Here" required type="password" minlength="6"
             />
             <div class="text-right" >
               <span id="result" ></span >
@@ -175,7 +176,7 @@
 
       <!--Button-->
       <div class="form-group col-md-12 col-sm-12 text-center flex-column" >
-        <button class="btn btn-success" type="submit" >
+        <button class="btn btn-success" type="submit" id="btnSubmit" >
           <i class="fa fa-save" style="font-size: 20px" ></i >&nbsp; &nbsp;
           <span data-th-text="${addStatus==true?'Save': 'Update'}" >                        </span >
         </button >
@@ -198,8 +199,47 @@
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <!--script include-->
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
-
 <script >
+    $(document).ready(function () {
+
+        let enable = $("#enable").val();
+        console.log(enable)
+        if (enable) {
+            if (enable === 'true') {
+                $("#true").attr("checked", "checked");
+            } else {
+                $("#false").attr("checked", "checked");
+            }
+        }
+
+        checkFormData();
+
+    });
+    $("input[name=roles]").bind("click", function () {
+        checkFormData();
+    });
+
+    function checkFormData() {
+        if (!$('input[name=roles]:checked').length > 0) {
+            $("#btnSubmit").hide();
+            return false;
+
+        } else {
+            $("#btnSubmit").show();
+            return true;
+        }
+    }
+
+    $("#btnSubmit").bind('click', function () {
+        if (!checkFormData()) {
+            swal({
+                title: "At least one role should be selected",
+                text: "Please select role or roles.",
+                icon: "warning",
+            });
+        }
+    })
+
     $(".alert").alert();
 </script >
 </body >

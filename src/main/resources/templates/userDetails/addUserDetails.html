@@ -33,7 +33,6 @@
   <form data-th-action="${addStatus==true?'/userDetails/save':'/userDetails/update'}"
         data-th-object="${userDetails}" enctype="multipart/form-data" method="POST" >
     <input data-th-field="*{id}" readonly type="hidden" />
-    <input data-th-field="*{liveDead}" readonly type="hidden" />
     <div class="row" >
       <!--Left Side-->
       <div class="col-md-6" >
