@@ -6,8 +6,8 @@
 </head >
 <body >
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
-<div class="container-fluid" >
-  <div class="row text-center" >
+<div class="container" >
+  <div class="row " >
     <div class="col" >
       <a class="btn btn-info" data-th-href="${'/home'}" >
         Back To Home
@@ -21,7 +21,7 @@
       </h4 >
     </div >
     <div class="col" >
-      <a class="btn btn-primary" data-th-href="${'/userDetails'}" >
+      <a class="btn btn-primary" data-th-href="${'/userDetails'}" data-sec-authorize="hasAnyAuthority('ROLE_ADMIN')" >
         <i class="fa fa-list" ></i >&nbsp; View User Details
       </a >
     </div >
@@ -33,7 +33,7 @@
     <!--Left Side-->
     <div class="form-group col-md-6 col-sm-6 text-left flex-column" >
       <!--number-->
-      <div class="form-row text-right" >
+      <div class="form-row " >
         <div class="col-md-4" >
           <label class="control-label" for="number" >User Number :</label >
         </div >
@@ -42,7 +42,7 @@
         </div >
       </div >
       <!--Tittle -->
-      <div class="form-row text-right" >
+      <div class="form-row " >
         <div class="col-md-4" >
           <label class="control-label" for="title" >Title :</label >
         </div >
@@ -51,7 +51,7 @@
         </div >
       </div >
       <!--Name-->
-      <div class="form-row text-right" >
+      <div class="form-row " >
         <div class="col-md-4" >
           <label class="control-label" for="name" >Name :</label >
         </div >
@@ -60,7 +60,7 @@
         </div >
       </div >
       <!--Calling Name-->
-      <div class="form-row text-right" >
+      <div class="form-row " >
         <div class="col-md-4" >
           <label class="control-label" for="callingName" >Calling Name :</label >
         </div >
@@ -69,7 +69,7 @@
         </div >
       </div >
       <!--Nic-->
-      <div class="form-row text-right" >
+      <div class="form-row " >
         <div class="col-md-4" >
           <label class="control-label" for="nic" >NIC No :</label >
         </div >
@@ -78,7 +78,7 @@
         </div >
       </div >
       <!--Gender-->
-      <div class="form-row text-right" >
+      <div class="form-row " >
         <div class="col-md-4" >
           <label class="control-label" for="gender" >Gender :</label >
         </div >
@@ -87,7 +87,7 @@
         </div >
       </div >
       <!--Date of birth-->
-      <div class="form-row text-right" >
+      <div class="form-row " >
         <div class="col-md-4" >
           <label class="control-label" for="dateOfBirth" >Birth date :</label >
         </div >
@@ -96,22 +96,22 @@
         </div >
       </div >
       <!--Image-->
-      <div class="form-row text-right" >
+      <div class="form-row " >
         <div class="col-md-4" >
           <label class="control-label" >Image :</label >
         </div >
         <div class="col-md-4" >
           <!--photo details-->
-          <img alt="" class="text-right" data-th-src="${file != null ? file.url :''}"
+          <img alt="" class="" data-th-src="${file != null ? file.url :''}"
                id="image" src=""
                style="height: 100px; width: 100%;" />
         </div >
       </div >
     </div >
     <!--Right Side-->
-    <div class="form-group col-md-6 col-sm-6 text-right flex-column" >
+    <div class="form-group col-md-6 col-sm-6  flex-column" >
       <!--Address-->
-      <div class="form-row text-right" >
+      <div class="form-row " >
         <div class="col-md-4" >
           <label class="control-label" for="address" >Address :</label >
         </div >
@@ -120,7 +120,7 @@
         </div >
       </div >
       <!--Mobile Number One-->
-      <div class="form-row text-right" >
+      <div class="form-row " >
         <div class="col-md-4" >
           <label class="control-label" for="mobileOne" >Mobile One No :</label >
         </div >
@@ -129,7 +129,7 @@
         </div >
       </div >
       <!--Mobile Number Two-->
-      <div class="form-row text-right" >
+      <div class="form-row " >
         <div class="col-md-4" >
           <label class="control-label" for="mobileTwo" >Mobile Two No :</label >
         </div >
@@ -138,7 +138,7 @@
         </div >
       </div >
       <!--Land Number-->
-      <div class="form-row text-right" >
+      <div class="form-row " >
         <div class="col-md-4" >
           <label class="control-label" for="land" >Land No :</label >
         </div >
@@ -147,7 +147,7 @@
         </div >
       </div >
       <!--Email-->
-      <div class="form-row text-right" >
+      <div class="form-row " >
         <div class="col-md-4" >
           <label class="control-label" for="email" >Email :</label >
         </div >
@@ -156,7 +156,7 @@
         </div >
       </div >
       <!--Office email-->
-      <div class="form-row text-right" >
+      <div class="form-row " >
         <div class="col-md-4" >
           <label class="control-label" for="officeEmail" >Office Email :</label >
         </div >
@@ -165,7 +165,7 @@
         </div >
       </div >
       <!--Created by and created at-->
-      <div class="form-row text-right" >
+      <div class="form-row " >
         <div class="col-md-4" >
           <label class="control-label" for="createdBy" >Created By :</label >
         </div >
@@ -173,7 +173,7 @@
           <p data-th-text="${userDetail.createdBy}" id="createdBy" ></p >
         </div >
       </div >
-      <div class="form-row text-right" >
+      <div class="form-row " >
         <div class="col-md-4" >
           <label class="control-label" for="createdAt" >Created At :</label >
         </div >
@@ -183,7 +183,8 @@
       </div >
     </div >
     <!--Button-->
-    <div class="form-group col-md-12 col-sm-12 text-center flex-column " >
+    <div class="form-group col-md-12 col-sm-12 text-center flex-column "
+         data-sec-authorize="hasAnyAuthority('ROLE_ADMIN')" >
       <!--Back Button-->
       <a class="btn btn-dark" data-th-href="${'/userDetails'}" tabindex="10" >
         <i class="fas fa-arrow-circle-left" style="font-size: 20px" ></i >&nbsp;&nbsp;Back

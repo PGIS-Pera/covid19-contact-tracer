@@ -68,7 +68,6 @@ public class TurnController {
   @GetMapping
   public ModelAndView showTurnsPage(@RequestParam( "pageSize" ) Optional< Integer > pageSize,
                                     @RequestParam( "page" ) Optional< Integer > page) {
-    //todo-> normally we thorough to get data within 14 days
     ModelAndView modelAndView = new ModelAndView("turn/turn");
     int evalPageSize = pageSize.orElse(INITIAL_PAGE_SIZE);
     int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
