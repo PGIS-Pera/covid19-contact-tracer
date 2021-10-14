@@ -18,25 +18,24 @@ import java.util.List;
 
 
 @Service
-@CacheConfig( cacheNames = "news" )
+//@CacheConfig( cacheNames = "news" )
 @RequiredArgsConstructor
 public class NewsServiceImpl implements NewsService {
   private final NewsDao newsDao;
   private final GramaNiladhariService gramaNiladhariService;
   private final CommonService commonService;
 
-  @Cacheable
+  //@Cacheable
   public List< News > findAll() {
     return newsDao.findAll();
   }
 
-  @Cacheable
+  //@Cacheable
   public News findById(Integer id) {
     return newsDao.getById(id);
   }
 
-  @Caching( evict = {@CacheEvict( value = "news", allEntries = true )},
-      put = {@CachePut( value = "news", key = "#p0" )} )
+  //@Caching( evict = {//@CacheEvict( value = "news", allEntries = true )}, put = {@CachePut( value = "news", key = "#p0" )} )
   public News persist(News news) {
     News newsDb = newsDao.findByMobile(news.getMobile());
     GramaNiladhari gramaNiladhari = gramaNiladhariService.findById(news.getGramaNiladhari().getId());
@@ -55,13 +54,13 @@ public class NewsServiceImpl implements NewsService {
     return newsDao.save(news);
   }
 
-  @CacheEvict( allEntries = true )
+  //@CacheEvict( allEntries = true )
   public boolean delete(Integer id) {
     newsDao.deleteById(id);
     return false;
   }
 
-  @Cacheable
+  //@Cacheable
   public List< News > search(News news) {
     ExampleMatcher matcher = ExampleMatcher
         .matching()
@@ -72,12 +71,12 @@ public class NewsServiceImpl implements NewsService {
   }
 
 
-  @Cacheable
+  //@Cacheable
   public List< News > findByGramaNiladhari(GramaNiladhari gramaNiladhari) {
     return newsDao.findByGramaNiladhari(gramaNiladhari);
   }
 
-  @CacheEvict( allEntries = true )
+  //@CacheEvict( allEntries = true )
   public void unsubscribe(String mobile) {
     News news = newsDao.findByMobile(mobile);
     newsDao.deleteById(news.getId());

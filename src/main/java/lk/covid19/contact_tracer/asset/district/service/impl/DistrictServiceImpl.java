@@ -15,36 +15,35 @@ import java.util.List;
 
 
 @Service
-@CacheConfig( cacheNames = "district" )
+//@CacheConfig( cacheNames = "district" )
 @RequiredArgsConstructor
 public class DistrictServiceImpl implements DistrictService {
   private final DistrictDao districtDao;
   private final CommonService commonService;
 
-  @Cacheable
+  //@Cacheable
   public List< District > findAll() {
     return districtDao.findAll();
   }
 
-  @Cacheable
+  //@Cacheable
   public District findById(Integer id) {
     return districtDao.getById(id);
   }
 
-  @Caching( evict = {@CacheEvict( value = "district", allEntries = true )},
-      put = {@CachePut( value = "district", key = "#district.id" )} )
+  //@Caching( evict = {//@CacheEvict( value = "district", allEntries = true )},      put = {@CachePut( value = "district", key = "#district.id" )} )
   public District persist(District district) {
     district.setName(commonService.stringCapitalize(district.getName()));
     return districtDao.save(district);
   }
 
-  @CacheEvict( allEntries = true )
+  //@CacheEvict( allEntries = true )
   public boolean delete(Integer id) {
     districtDao.deleteById(id);
     return false;
   }
 
-  @Cacheable
+  //@Cacheable
   public List< District > search(District district) {
     ExampleMatcher matcher = ExampleMatcher
         .matching()
@@ -55,14 +54,13 @@ public class DistrictServiceImpl implements DistrictService {
   }
 
 
-  @Cacheable
+  //@Cacheable
   public List< District > findByProvince(Province province) {
     return districtDao.findByProvince(province);
   }
 
 
   public District findByName(String name) {
-    System.out.println(name + "distirct");
     return districtDao.findByName(name);
   }
 }

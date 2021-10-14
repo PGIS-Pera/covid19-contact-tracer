@@ -14,35 +14,34 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@CacheConfig( cacheNames = "dsOffice" )
+//@CacheConfig( cacheNames = "dsOffice" )
 @RequiredArgsConstructor
 public class DsOfficeServiceImpl implements DsOfficeService {
   private final DsOfficeDao dsOfficeDao;
 
 
-  @Cacheable
+  //@Cacheable
   public List< DsOffice > findAll() {
     return dsOfficeDao.findAll();
   }
 
-  @Cacheable
+  //@Cacheable
   public DsOffice findById(Integer id) {
     return dsOfficeDao.getById(id);
   }
 
-  @Caching( evict = {@CacheEvict( value = "dsOffice", allEntries = true )},
-      put = {@CachePut( value = "dsOffice", key = "#dsOffice.id" )} )
+  //@Caching( evict = {//@CacheEvict( value = "dsOffice", allEntries = true )},      put = {@CachePut( value = "dsOffice", key = "#dsOffice.id" )} )
   public DsOffice persist(DsOffice dsOffice) {
     return dsOfficeDao.save(dsOffice);
   }
 
-  @CacheEvict( allEntries = true )
+  //@CacheEvict( allEntries = true )
   public boolean delete(Integer id) {
     dsOfficeDao.deleteById(id);
     return false;
   }
 
-  @Cacheable
+  //@Cacheable
   public List< DsOffice > search(DsOffice dsOffice) {
     ExampleMatcher matcher = ExampleMatcher
         .matching()

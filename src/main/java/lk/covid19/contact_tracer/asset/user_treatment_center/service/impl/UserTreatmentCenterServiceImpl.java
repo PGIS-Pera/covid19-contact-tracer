@@ -13,35 +13,34 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@CacheConfig( cacheNames = "turnHistory" )
+//@CacheConfig( cacheNames = "turnHistory" )
 @RequiredArgsConstructor
 public class UserTreatmentCenterServiceImpl implements UserTreatmentCenterService {
   private final UserTreatmentCenterDao userTreatmentCenterDao;
 
 
-  @Cacheable
+  //@Cacheable
   public List< TurnHistory > findAll() {
     return userTreatmentCenterDao.findAll();
   }
 
-  @Cacheable
+  //@Cacheable
   public TurnHistory findById(Integer id) {
     return userTreatmentCenterDao.getById(id);
   }
 
-  @Caching( evict = {@CacheEvict( value = "turnHistory", allEntries = true )},
-      put = {@CachePut( value = "turnHistory", key = "#turnHistory.id" )} )
+  //@Caching( evict = {//@CacheEvict( value = "turnHistory", allEntries = true )},      put = {@CachePut( value = "turnHistory", key = "#turnHistory.id" )} )
   public TurnHistory persist(TurnHistory turnHistory) {
     return userTreatmentCenterDao.save(turnHistory);
   }
 
-  @CacheEvict( allEntries = true )
+  //@CacheEvict( allEntries = true )
   public boolean delete(Integer id) {
     userTreatmentCenterDao.deleteById(id);
     return false;
   }
 
-  @Cacheable
+  //@Cacheable
   public List< TurnHistory > search(TurnHistory turnHistory) {
     ExampleMatcher matcher = ExampleMatcher
         .matching()

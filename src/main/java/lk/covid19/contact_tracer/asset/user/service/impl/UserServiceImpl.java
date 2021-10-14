@@ -15,25 +15,24 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@CacheConfig( cacheNames = {"user"} )
+//@CacheConfig( cacheNames = {"user"} )
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
   private final UserDao userDao;
   private final PasswordEncoder passwordEncoder;
 
-  @Cacheable
+  //@Cacheable
   public List< User > findAll() {
     return userDao.findAll();
   }
 
-  @Cacheable
+  //@Cacheable
   @Transactional
   public User findById(Integer id) {
     return userDao.getById(id);
   }
 
-  @Caching( evict = {@CacheEvict( value = "user", allEntries = true )},
-      put = {@CachePut( value = "user", key = "#user.id" )} )
+  //@Caching( evict = {//@CacheEvict( value = "user", allEntries = true )},      put = {@CachePut( value = "user", key = "#user.id" )} )
   @Transactional
   public User persist(User user) {
     user.setUsername(user.getUsername().toLowerCase());
@@ -45,7 +44,7 @@ public class UserServiceImpl implements UserService {
     return userDao.save(user);
   }
 
-  @Cacheable
+  //@Cacheable
   public boolean delete(Integer id) {
     User user = userDao.getById(id);
     user.setEnabled(false);
@@ -53,7 +52,7 @@ public class UserServiceImpl implements UserService {
     return false;
   }
 
-  @Cacheable
+  //@Cacheable
   public List< User > search(User user) {
     ExampleMatcher matcher =
         ExampleMatcher.matching().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
@@ -61,23 +60,23 @@ public class UserServiceImpl implements UserService {
     return userDao.findAll(userExample);
   }
 
-  @Cacheable
+  //@Cacheable
   public Integer findByUserIdByUserName(String userName) {
     return userDao.findUserIdByUserName(userName);
   }
 
-  @Cacheable
+  //@Cacheable
   @Transactional( readOnly = true )
   public User findByUserName(String name) {
     return userDao.findByUsername(name);
   }
 
-  @Cacheable
+  //@Cacheable
   public User findUserByEmployee(UserDetails userDetails) {
     return userDao.findByUserDetails(userDetails);
   }
 
-  @Cacheable
+  //@Cacheable
   public boolean findByEmployee(UserDetails userDetails) {
     return userDao.findByUserDetails(userDetails) == null;
   }

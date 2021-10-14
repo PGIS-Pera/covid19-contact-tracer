@@ -15,34 +15,33 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@CacheConfig( cacheNames = "treatmentCenter" )
+//@CacheConfig( cacheNames = "treatmentCenter" )
 @RequiredArgsConstructor
 public class TreatmentCenterServiceImpl implements TreatmentCenterService {
   private final TreatmentCenterDao treatmentCenterDao;
 
-  @Cacheable
+  //@Cacheable
   public List< TreatmentCenter > findAll() {
     return treatmentCenterDao.findAll();
   }
 
-  @Cacheable
+  //@Cacheable
   public TreatmentCenter findById(Integer id) {
     return treatmentCenterDao.getById(id);
   }
 
-  @Caching( evict = {@CacheEvict( value = "quarantineCenter", allEntries = true )},
-      put = {@CachePut( value = "quarantineCenter", key = "#treatmentCenter.id" )} )
+  //@Caching( evict = {//@CacheEvict( value = "quarantineCenter", allEntries = true )},      put = {@CachePut( value = "quarantineCenter", key = "#treatmentCenter.id" )} )
   public TreatmentCenter persist(TreatmentCenter treatmentCenter) {
     return treatmentCenterDao.save(treatmentCenter);
   }
 
-  @CacheEvict( allEntries = true )
+  //@CacheEvict( allEntries = true )
   public boolean delete(Integer id) {
     treatmentCenterDao.deleteById(id);
     return false;
   }
 
-  @Cacheable
+  //@Cacheable
   public List< TreatmentCenter > search(TreatmentCenter treatmentCenter) {
     ExampleMatcher matcher = ExampleMatcher
         .matching()
@@ -52,7 +51,7 @@ public class TreatmentCenterServiceImpl implements TreatmentCenterService {
     return treatmentCenterDao.findAll(policeStationExample);
   }
 
-  @Cacheable
+  //@Cacheable
   public Page< TreatmentCenter > findAllPageable(Pageable pageable) {
     return treatmentCenterDao.findAll(pageable);
   }
