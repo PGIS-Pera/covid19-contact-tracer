@@ -213,12 +213,9 @@ function submitForm() {
         cache: false,
         success: function (response) {
             gramaNiladhariValueClear();
-            $("#locationInteractOne").attr('value', response.name);
-            $("#locationInteract").attr('value', response.name);
-            $("#locationInteractId").attr('value', response.id);
-            // $("#modelId").hide();
             let button = document.getElementById("closeModel");
             button.click();
+            locationInteractResponseSet(response);
         },
         error: function () {
             swal({
@@ -228,6 +225,13 @@ function submitForm() {
             });
         }
     });
+}
+
+function locationInteractResponseSet(response) {
+    $("#locationInteractNew").attr('value', '');
+    $("#locationInteractOne").attr('value', response.name);
+    $("#locationInteract").attr('value', response.name);
+    $("#locationInteractId").attr('value', response.id);
 }
 
 function twoLocationInteractCheck(obj, obj2) {
