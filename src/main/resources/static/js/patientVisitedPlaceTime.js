@@ -32,6 +32,9 @@ function gramaniladhari(val) {
                 $(`#${filedId}-box`).show().html(html_first_part + html_middle_part);
                 $(`#${filedId}`).css("background", "#FFF");
                 gramaNiladhari = data;
+            },
+            error: function (e) {
+                console.log(e)
             }
         });
     } else {

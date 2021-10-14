@@ -43,7 +43,6 @@ public class CustomLogoutSuccessHandler extends
 
 
         request.getSession().invalidate();
-        System.out.println("User Successfully Logout");
         //you can add more codes here when the user successfully logs out,
         //such as updating the database for last active.
 

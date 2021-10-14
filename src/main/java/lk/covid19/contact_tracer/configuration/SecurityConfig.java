@@ -25,7 +25,8 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final String[] ALL_PERMIT_URL = {"/favicon", "/img/**", "/css/**", "/js/**", "/webjars/**",
-      "/login", "/select/**", "/", "/index", "/register/**", "/forgottenPassword", "/patientVisitedPlaceTime/**"};
+      "/login", "/select/**", "/", "/index", "/register/**", "/forgottenPassword", "/patientVisitedPlaceTime/**",
+      "/news/**"};
 
   @Bean
   public UserDetailsServiceImpl userDetailsService() {
@@ -84,13 +85,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/actuator/**").hasAnyRole("ADMIN")
                     .antMatchers("/district/**").hasAnyRole("ADMIN")
                     .antMatchers("/dsOffice/**").hasAnyRole("ADMIN")
-                    .antMatchers("/gramaNiladhari/**").hasAnyRole("ADMIN")
+                    .antMatchers("/gramaNiladhari/add").hasAnyRole("ADMIN")
+                    .antMatchers("/gramaNiladhari").hasAnyRole("ADMIN")
                     .antMatchers("/user/**").hasAnyRole("ADMIN")
                     .antMatchers("/userDetails/**").hasAnyRole("ADMIN")
                     .antMatchers("/locationInteract/**").hasAnyRole("PHI")
                     .antMatchers("/person/**").hasAnyRole("PHI")
                     .antMatchers("/turn/**").hasAnyRole("PHI")
                     .antMatchers("/report/**").hasAnyRole("ADMIN", "PHI")
+                    .antMatchers("/gramaNiladhari/search", "/gramaNiladhari/searchOne", "/patientVisitedPlaceTime" +
+                        "/getPlaces").permitAll()
                     .anyRequest()
                     .authenticated())
         // Login form

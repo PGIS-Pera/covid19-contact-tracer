@@ -18,7 +18,6 @@ public class NewsController {
 
   @PostMapping( value = "/subscribe", produces = "application/json" )
   public ResponseEntity< Object > subscribe(@Valid @RequestBody News news) {
-    System.out.println(news.toString());
     newsService.persist(news);
     return new ResponseEntity<>(HttpStatus.OK);
   }

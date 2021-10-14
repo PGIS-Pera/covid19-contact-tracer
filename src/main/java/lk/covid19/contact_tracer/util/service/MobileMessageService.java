@@ -28,6 +28,5 @@ public class MobileMessageService {
                  messageBody)
         .create();
 
-    System.out.println("Message " + message.getSid());
   }
 }

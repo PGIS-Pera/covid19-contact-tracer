@@ -167,7 +167,6 @@ public class TurnController {
   @PostMapping( value = "/search" )
   @ResponseBody
   public MappingJacksonValue search(Person person) {
-    System.out.println(person.toString());
     List< Turn > turns = turnService.findByPerson(person);
 
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(turns);

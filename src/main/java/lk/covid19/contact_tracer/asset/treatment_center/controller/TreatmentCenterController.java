@@ -118,7 +118,6 @@ public class TreatmentCenterController {
   @PostMapping( value = "/search" )
   @ResponseBody
   public MappingJacksonValue search(TreatmentCenter treatmentCenter) {
-    System.out.println(treatmentCenter.toString());
     List< TreatmentCenter > treatmentCenters = treatmentCenterService.search(treatmentCenter);
     MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(treatmentCenters);
 
