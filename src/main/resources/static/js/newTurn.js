@@ -239,12 +239,9 @@ $("#saveModel").click(function () {
             cache: false,
             success: function (response) {
                 gramaNiladhariValueClear();
-                $("#locationInteractNew").attr('value', '');
-                $("#locationInteractOne").attr('value', response.name);
-                $("#locationInteract").attr('value', response.name);
-                $("#locationInteractId").attr('value', response.id);
                 let button = document.getElementById("closeModel");
                 button.click();
+                locationInteractResponseSet(response);
             },
             error: function (e) {
                 console.log(e)
@@ -258,6 +255,13 @@ $("#saveModel").click(function () {
         });
     }
 })
+
+function locationInteractResponseSet(response) {
+    $("#locationInteractNew").attr('value', '');
+    $("#locationInteractOne").attr('value', response.name);
+    $("#locationInteract").attr('value', response.name);
+    $("#locationInteractId").attr('value', response.id);
+}
 
 function twoLocationInteractCheck(obj, obj2) {
     let p = obj.person.id === obj2.person.id
