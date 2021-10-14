@@ -56,7 +56,7 @@ public class NewTurnAspects {
         .fromMethodName(PersonLocationInteractTimeController.class, "interactLocationSearchPage", "")
         .toUriString();
     newses.forEach(x -> {
-      String mobile = "+94" + x.getMobile().substring(1, 9);
+      String mobile = "+94" + x.getMobile().substring(1, 10);
       try {
         String unsubscribeUrl = MvcUriComponentsBuilder
             .fromMethodName(NewsController.class, "unSubscribe", x.getMobile())
