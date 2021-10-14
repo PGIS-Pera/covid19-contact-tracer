@@ -128,10 +128,11 @@
                     Change Turn Status
                   </button >
                   <!-- Modal -->
-                  <div class="modal fade" data-th-id="${'modelId'+turn.id}" tabindex="-1" role="dialog"
+                  <div class="modal fade bd-example-modal-xl" data-th-id="${'modelId'+turn.id}" tabindex="-1"
+                       role="dialog"
                        aria-labelledby="modelTitleId"
                        aria-hidden="true" data-backdrop="static" data-keyboard="false" >
-                    <div class="modal-dialog" role="document" >
+                    <div class="modal-dialog modal-xl" role="document" >
                       <div class="modal-content" >
                         <div class="modal-header" >
                           <h5 class="modal-title" >Change Person Status </h5 >
@@ -142,10 +143,7 @@
                               <input type="hidden" name="id" data-th-value="${turn.id}" >
                               <!--Person Status-->
                               <div class="form-row text-md-right text-sm-left" >
-                                <div class="col-md-4" >
-                                  <label class="control-label" >Person Status :</label >
-                                </div >
-                                <div class="col-md-8" >
+                                <div class="col" >
                                   <div class="custom-control custom-checkbox custom-control-inline "
                                        data-th-each="personState,index : ${personStatuses}" >
                                     <input class="custom-control-input"

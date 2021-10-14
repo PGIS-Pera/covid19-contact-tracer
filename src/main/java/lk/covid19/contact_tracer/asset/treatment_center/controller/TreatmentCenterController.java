@@ -154,6 +154,5 @@ public class TreatmentCenterController {
 
     return mappingJacksonValue;
   }
-  //todo : according to gramaniladari division vs person count[ according to person type]
 
 }

@@ -20,5 +20,4 @@ public interface TreatmentCenterService {
    List< TreatmentCenter > search(TreatmentCenter treatmentCenter);
 
    Page< TreatmentCenter > findAllPageable(Pageable pageable);
-//todo total count according to person status
 }

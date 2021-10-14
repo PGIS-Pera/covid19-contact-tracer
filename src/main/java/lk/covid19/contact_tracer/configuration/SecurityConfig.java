@@ -86,7 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/district/**").hasAnyRole("ADMIN")
                     .antMatchers("/dsOffice/**").hasAnyRole("ADMIN")
                     .antMatchers("/gramaNiladhari/add").hasAnyRole("ADMIN")
-                    .antMatchers("/gramaNiladhari").hasAnyRole("ADMIN")
+                    .antMatchers("/gramaNiladhari").hasAnyRole("ADMIN", "PHI")
                     .antMatchers("/user/**").hasAnyRole("ADMIN")
                     .antMatchers("/userDetails/**").hasAnyRole("ADMIN")
                     .antMatchers("/locationInteract/**").hasAnyRole("PHI")

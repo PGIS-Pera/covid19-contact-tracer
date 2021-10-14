@@ -237,8 +237,8 @@ $("#saveModel").click(function () {
             type: "POST",
             url: $("#locationInteractSaveUrl").val().split("&")[0] + $("#locationInteractNew").val() + "&id=" + gramaniladhari_id,
             cache: false,
-            success: function (response) {
-                gramaNiladhariValueClear();
+            success: function (resp) {
+                let response = resp;
                 let button = document.getElementById("closeModel");
                 button.click();
                 locationInteractResponseSet(response);
@@ -257,10 +257,12 @@ $("#saveModel").click(function () {
 })
 
 function locationInteractResponseSet(response) {
-    $("#locationInteractNew").attr('value', '');
+    $("#locationInteractNew").attr('value', response.name);
     $("#locationInteractOne").attr('value', response.name);
     $("#locationInteract").attr('value', response.name);
     $("#locationInteractId").attr('value', response.id);
+
+    gramaNiladhariValueClear();
 }
 
 function twoLocationInteractCheck(obj, obj2) {

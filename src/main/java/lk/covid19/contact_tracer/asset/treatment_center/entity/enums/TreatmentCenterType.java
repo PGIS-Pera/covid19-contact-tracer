@@ -10,7 +10,7 @@ public enum TreatmentCenterType {
   ARMY("SL Army"),
   GOV_HOSPITAL("Government Hospital");
 
-  //todo all QuarantineCenter type should be needed to add here
+  // all QuarantineCenter type should be needed to add here-> future development
 
   private final String treatmentCenterType;
 
