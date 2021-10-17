@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TurnService {
@@ -28,8 +29,9 @@ public interface TurnService {
 
   Page< Turn > findAllPageable(Pageable pageable);
 
-
   List< Turn > findByPerson(Person person);
 
   List< Turn > findByPersonStatus(PersonStatus personStatus);
+
+  List< Turn > findByCreatedAtIsBetween(LocalDateTime form, LocalDateTime to);
 }

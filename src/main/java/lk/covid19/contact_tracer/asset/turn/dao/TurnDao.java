@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -19,4 +20,6 @@ public interface TurnDao extends JpaRepository< Turn, Integer > {
   List< Turn > findByPerson(Person person);
 
   List< Turn > findByPersonStatus(PersonStatus personStatus);
+
+  List< Turn > findByCreatedAtIsBetween(LocalDateTime form, LocalDateTime to);
 }

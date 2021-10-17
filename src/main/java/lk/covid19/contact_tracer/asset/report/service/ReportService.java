@@ -1,9 +1,8 @@
 package lk.covid19.contact_tracer.asset.report.service;
 
-import lk.covid19.contact_tracer.asset.report.model.DistrictReportDTO;
-import lk.covid19.contact_tracer.asset.report.model.DsOfficeReportDTO;
-import lk.covid19.contact_tracer.asset.report.model.GramaniladariReportDTO;
-import lk.covid19.contact_tracer.asset.report.model.ProvinceReportDTO;
+import lk.covid19.contact_tracer.asset.report.model.*;
+
+import java.util.List;
 
 public interface ReportService {
   GramaniladariReportDTO gramaniladhari(GramaniladariReportDTO gramaniladariReportDTO);
@@ -17,4 +16,6 @@ public interface ReportService {
   ProvinceReportDTO all(ProvinceReportDTO provinceReportDTO);
 
   ProvinceReportDTO allCurrent();
+
+  List< UserVsReportDTO > userVsReport();
 }

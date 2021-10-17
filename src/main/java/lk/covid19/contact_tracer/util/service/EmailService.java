@@ -1,29 +1,29 @@
 package lk.covid19.contact_tracer.util.service;
 
 
+import lk.covid19.contact_tracer.asset.common_asset.model.Mail;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.env.Environment;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-import java.util.Properties;
+
+import org.thymeleaf.context.Context;
 
 @Service
 @RequiredArgsConstructor
 public class EmailService {
   private final JavaMailSender javaMailSender;
-  // to access application properties entered details
-  private final Environment environment;
+  private final SpringTemplateEngine templateEngine;
 
   public void sendEmail(String receiverEmail, String subject, String message) throws
       MailException {
@@ -32,7 +32,7 @@ public class EmailService {
 
     try {
       mailMessage.setTo(receiverEmail);
-      mailMessage.setFrom("-(Excise Department - Sri Lanka - (not reply))");
+      mailMessage.setFrom("-(Contact Tracer - Sri Lanka - (not reply))");
       mailMessage.setSubject(subject);
       mailMessage.setText(message);
 
@@ -42,80 +42,37 @@ public class EmailService {
     }
   }
 
-  public boolean sendMailWithImage(String receiverEmail, String subject, String fileName) {
-    //final String username = "excellenthealthsolution@gmail.com";
-    final String username = environment.getProperty("spring.mail.username");
-    //final String password = "dinesh2018";
-    final String password = environment.getProperty("spring.mail.password");
+  public void sendEmail(Mail mail) throws MessagingException, IOException {
+    MimeMessage message = javaMailSender.createMimeMessage();
+    MimeMessageHelper helper = new MimeMessageHelper(message,
+                                                     MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+                                                     StandardCharsets.UTF_8.name());
 
-    // Assuming you are sending email through gmail
-    String host = environment.getProperty("spring.mail.host");
-    //String host = "smtp.gmail.com";
-    String port = environment.getProperty("spring.mail.port");
-    //String port = "587";
+    // helper.addAttachment("template-cover.png", new ClassPathResource("email/img/email.PNG"));
 
-    Properties props = new Properties();
-    props.put("mail.smtp.auth", "true");
-    props.put("mail.smtp.starttls.enable", "true");
-    props.put("mail.smtp.host", host);
-    props.put("mail.smtp.port", port);
 
-    // Get the Session object.
-    Session session = Session.getInstance(props,
-                                          new Authenticator() {
-                                            protected PasswordAuthentication getPasswordAuthentication() {
-                                              return new PasswordAuthentication(username, password);
-                                            }
-                                          });
-    try {
-      // Create a default MimeMessage object.
-      Message message = new MimeMessage(session);
+    Context context = new Context(LocaleContextHolder.getLocale());
+    context.setVariables(mail.getProps());
 
-      // Set From: header field of the header.
-      message.setFrom(new InternetAddress(username));
+    String html = templateEngine.process("email/newsletter-template", context);
 
-      // Set To: header field of the header.
-      message.setRecipients(Message.RecipientType.TO,
-                            InternetAddress.parse(receiverEmail));
+    helper.setTo(mail.getMailTo());
+    helper.setText(html, true);
+    helper.setSubject(mail.getSubject());
+    helper.setFrom(mail.getFrom());
 
-      // Set Subject: header field
-      message.setSubject(subject);
-
-      // Create the message part
-      BodyPart messageBodyPart = new MimeBodyPart();
-
-      // Now set the actual message
-      messageBodyPart.setText("Please find the attachment");
-
-      // Create a multipart message
-      Multipart multipart = new MimeMultipart();
-
-      // Set text message part
-      multipart.addBodyPart(messageBodyPart);
-
-      // Part two is attachment
-      messageBodyPart = new MimeBodyPart();
-      // set file path to include email
-      String filename = fileName;
-      DataSource source = new FileDataSource(filename);
-      messageBodyPart.setDataHandler(new DataHandler(source));
-      messageBodyPart.setFileName(filename);
-      multipart.addBodyPart(messageBodyPart);
-
-      // Send the complete message parts
-      message.setContent(multipart);
-
-      // Send message
-      Transport.send(message);
-
-      System.out.println("Sent message successfully....");
-      return true;
-    } catch ( MessagingException e ) {
-      throw new RuntimeException(e);
-
-    }
-
+    javaMailSender.send(message);
   }
-
-
+/*
+  Mail mail = new Mail();
+        mail.setFrom("yourmailid@email.com");//replace with your desired email
+        mail.setMailTo("tomail@email.com");//replace with your desired email
+        mail.setSubject("Email with Spring boot and thymeleaf template!");
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("name", "Developer!");
+        model.put("location", "United States");
+        model.put("sign", "Java Developer");
+        mail.setProps(model);
+        emailService.sendEmail(mail);
+* */
 }
