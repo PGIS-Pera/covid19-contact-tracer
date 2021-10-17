@@ -70,7 +70,7 @@ public class ConformationTokenController {
       conformationToken.setCreateDate(LocalDateTime.now());
       conformationToken.setEndDate(LocalDateTime.now().plusDays(1));
       String url = request.getRequestURL().toString();
-      emailService.sendEmail(email, "Email Verification (Police Recruitment Division) - Not reply",
+      emailService.sendEmail(email, "Email Verification (Covid19 Prevention Center) - Not reply",
                              "Please click below link to active your account \n\t".concat(url + "/" + newOrOld +
                                                                                               "/token/" + conformationTokenService.createToken(conformationToken).getToken()).concat("\n  this link is valid only one day. "));
       model.addAttribute("newOrOld", newOrOld);

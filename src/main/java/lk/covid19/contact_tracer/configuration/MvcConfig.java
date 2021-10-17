@@ -29,7 +29,6 @@ import java.util.TimeZone;
 @EnableWebMvc
 @EnableCaching
 public class MvcConfig implements WebMvcConfigurer {
-
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
     registry.addViewController("/login")
@@ -49,15 +48,6 @@ public class MvcConfig implements WebMvcConfigurer {
     registry.addResourceHandler("/webjars/**")
         .addResourceLocations("/webjars/");
 
-  }
-
-  //Bean configuration
-  @Bean
-  public InternalResourceViewResolver viewResolver() {
-    InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-    resolver.setPrefix("/resources/templates/");
-    resolver.setSuffix(".html");
-    return resolver;
   }
 
   //time zone set to
