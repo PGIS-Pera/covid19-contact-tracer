@@ -75,7 +75,6 @@ $("#selectParameter").change(function () {
 
 $("#searchInput").keyup(function () {
     let url = $("#searchUrl").val();
-    console.log(url)
     let select_parameter_value = $("#selectParameter").val();
     let enter_value = $(this).val();
     let gramaNiladhari = {};
@@ -96,7 +95,6 @@ $("#searchInput").keyup(function () {
         if (select_parameter_value === "number") {
             gramaNiladhari.number = enter_value;
         }
-        console.log(gramaNiladhari)
         $.post(url, gramaNiladhari,
             function (data, status) {
                 $("#tableShow").text('');
