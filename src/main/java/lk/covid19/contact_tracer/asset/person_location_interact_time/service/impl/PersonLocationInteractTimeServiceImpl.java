@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 
 @Service
-//@CacheConfig( cacheNames = "personLocationInteractTime" )
+@CacheConfig( cacheNames = "personLocationInteractTime" )
 @RequiredArgsConstructor
 public class PersonLocationInteractTimeServiceImpl implements PersonLocationInteractTimeService {
   private final PersonLocationInteractTimeDao personLocationInteractTimeDao;
@@ -32,35 +32,37 @@ public class PersonLocationInteractTimeServiceImpl implements PersonLocationInte
   private final GramaNiladhariService gramaNiladhariService;
   private final DateTimeAgeService dateTimeAgeService;
 
-  //@Cacheable
+  @Cacheable
   public List< PersonLocationInteractTime > findAll() {
     return personLocationInteractTimeDao.findAll();
   }
 
-  //@Cacheable
+  @Cacheable
   public PersonLocationInteractTime findById(Integer id) {
     return personLocationInteractTimeDao.getById(id);
   }
 
-  //@Caching( evict = {//@CacheEvict( value = "personLocationInteractTime", allEntries = true )},      put = {@CachePut( value = "personLocationInteractTime", key = "#personLocationInteractTime.id" )} )
+  @Caching( evict = {@CacheEvict( value = "personLocationInteractTime", allEntries = true )}, put =
+      {@CachePut( value = "personLocationInteractTime", key = "#personLocationInteractTime.id" )} )
   public PersonLocationInteractTime persist(PersonLocationInteractTime personLocationInteractTime) {
     // personLocationInteractTime.setName(commonService.stringCapitalize(personLocationInteractTime.getName()));
     return personLocationInteractTimeDao.save(personLocationInteractTime);
   }
 
-  //@Caching( evict = {//@CacheEvict( value = "personLocationInteractTime", allEntries = true )},      put = {@CachePut( value = "personLocationInteractTime", key = "'#personLocationInteractTime.id'" )} )
+  @Caching( evict = {@CacheEvict( value = "personLocationInteractTime", allEntries = true )}, put =
+      {@CachePut( value = "personLocationInteractTime", key = "'#personLocationInteractTime.id'" )} )
   public List< PersonLocationInteractTime > persistAll(List< PersonLocationInteractTime > personLocationInteractTimes) {
     // personLocationInteractTime.setName(commonService.stringCapitalize(personLocationInteractTime.getName()));
     return personLocationInteractTimeDao.saveAll(personLocationInteractTimes);
   }
 
-  //@CacheEvict( allEntries = true )
+  @CacheEvict( allEntries = true )
   public boolean delete(Integer id) {
     personLocationInteractTimeDao.deleteById(id);
     return false;
   }
 
-  //@Cacheable
+  @Cacheable
   public List< PersonLocationInteractTime > search(PersonLocationInteractTime personLocationInteractTime) {
     ExampleMatcher matcher = ExampleMatcher
         .matching()
@@ -70,7 +72,7 @@ public class PersonLocationInteractTimeServiceImpl implements PersonLocationInte
     return personLocationInteractTimeDao.findAll(districtExample);
   }
 
-  //@Cacheable
+  @Cacheable
   public List< LocationInteractTimeReport > searchWithDateTime(TwoDateGramaNiladhari twoDateGramaNiladhari) {
     GramaNiladhari gramaNiladhari = gramaNiladhariService.findById(twoDateGramaNiladhari.getGramaNiladhari().getId());
     List< LocationInteract > locationInteracts = locationInteractService.findByGramaNiladhari(gramaNiladhari);

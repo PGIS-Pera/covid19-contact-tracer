@@ -24,6 +24,7 @@ import org.thymeleaf.context.Context;
 public class EmailService {
   private final JavaMailSender javaMailSender;
   private final SpringTemplateEngine templateEngine;
+  private final String FORM = "-(Contact Tracer - Sri Lanka - (not reply))";
 
   public void sendEmail(String receiverEmail, String subject, String message) throws
       MailException {
@@ -32,7 +33,7 @@ public class EmailService {
 
     try {
       mailMessage.setTo(receiverEmail);
-      mailMessage.setFrom("-(Contact Tracer - Sri Lanka - (not reply))");
+      mailMessage.setFrom(FORM);
       mailMessage.setSubject(subject);
       mailMessage.setText(message);
 
@@ -63,16 +64,5 @@ public class EmailService {
 
     javaMailSender.send(message);
   }
-/*
-  Mail mail = new Mail();
-        mail.setFrom("yourmailid@email.com");//replace with your desired email
-        mail.setMailTo("tomail@email.com");//replace with your desired email
-        mail.setSubject("Email with Spring boot and thymeleaf template!");
-        Map<String, Object> model = new HashMap<String, Object>();
-        model.put("name", "Developer!");
-        model.put("location", "United States");
-        model.put("sign", "Java Developer");
-        mail.setProps(model);
-        emailService.sendEmail(mail);
-* */
+
 }

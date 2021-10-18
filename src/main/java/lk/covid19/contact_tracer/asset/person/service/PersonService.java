@@ -32,7 +32,7 @@ public interface PersonService {
 
   List< Person > findByTurnIdentifiedDateRange(LocalDate startDate, LocalDate endDate);
 
-  void saveAndTurn(Person person);
+  Person saveAndTurn(Person person);
 
   List< Person > findByGramaNiladhari(GramaNiladhari gramaNiladhari);
 }

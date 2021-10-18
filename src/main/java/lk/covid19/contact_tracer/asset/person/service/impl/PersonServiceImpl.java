@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-//@CacheConfig( cacheNames = "person" )
+@CacheConfig( cacheNames = "person" )
 public class PersonServiceImpl implements PersonService {
 
   private final PersonDao personDao;
@@ -32,22 +32,23 @@ public class PersonServiceImpl implements PersonService {
   private final TurnService turnService;
   private final PersonLocationInteractTimeService personLocationInteractTimeService;
 
-  //@Cacheable
+  @Cacheable
   public Page< Person > findAllPageable(Pageable pageable) {
     return personDao.findAll(pageable);
   }
 
-  //@Cacheable
+  @Cacheable
   public List< Person > findAll() {
     return personDao.findAll(Sort.by(Sort.Direction.DESC, "id"));
   }
 
-  //@Cacheable
+  @Cacheable
   public Person findById(Integer id) {
     return personDao.getById(id);
   }
 
-  //@Caching( evict = {//@CacheEvict( value = "person", allEntries = true )},      put = {@CachePut( value = "person", key = "#person.id" )} )
+  @Caching( evict = {@CacheEvict( value = "person", allEntries = true )}, put = {@CachePut( value = "person", key =
+      "#person.id" )} )
   public Person persist(Person person) {
     if ( person.getId() == null ) {
       personPersist(person);
@@ -58,7 +59,8 @@ public class PersonServiceImpl implements PersonService {
     return personDao.save(person);
   }
 
-  //@Caching( evict = {//@CacheEvict( value = "person", allEntries = true )},      put = {@CachePut( value = "person", key = "'#person.id'" )} )
+  @Caching( evict = {@CacheEvict( value = "person", allEntries = true )}, put = {@CachePut( value = "person", key =
+      "'#person.id'" )} )
   public List< Person > persistList(List< Person > person) {
     return personDao.saveAll(person);
   }
@@ -78,7 +80,7 @@ public class PersonServiceImpl implements PersonService {
     return false;
   }
 
-  //@Cacheable
+  @Cacheable
   public List< Person > search(Person person) {
     ExampleMatcher matcher = ExampleMatcher
         .matching()
@@ -88,7 +90,7 @@ public class PersonServiceImpl implements PersonService {
     return personDao.findAll(personExample);
   }
 
-  //@Cacheable
+  @Cacheable
   public Person findByNic(String nic) {
     Person person = personDao.findByNic(nic);
     if ( person == null ) {
@@ -97,12 +99,12 @@ public class PersonServiceImpl implements PersonService {
     return person;
   }
 
-  //@Cacheable
+  @Cacheable
   public Person findLastPatient() {
     return personDao.findFirstByOrderByIdDesc();
   }
 
-  //@Cacheable
+  @Cacheable
   public List< Person > findByTurnIdentifiedDateRange(LocalDate startDate, LocalDate endDate) {
     HashSet< Person > person = new HashSet<>();
     for ( Turn turn : turnService.findByIdentifiedDateIsBetween(startDate, endDate) ) {
@@ -111,11 +113,13 @@ public class PersonServiceImpl implements PersonService {
     return new ArrayList<>(person);
   }
 
-
-  public void saveAndTurn(Person person) {
+  @Caching( evict = {@CacheEvict( value = "person", allEntries = true )}, put = {@CachePut( value = "person", key =
+      "'#person.id'" )} )
+  public Person saveAndTurn(Person person) {
     Person personDb = personDao.getById(person.getId());
     personDb.setPersonStatus(PersonStatus.INFECTED);
     personDao.save(personDb);
+
     List< PersonLocationInteractTime > personLocationInteractTimes = new ArrayList<>();
     person.getTurns().forEach(x -> {
       x.setPerson(personDb);
@@ -125,10 +129,12 @@ public class PersonServiceImpl implements PersonService {
         personLocationInteractTimes.add(y);
       });
     });
+
     personLocationInteractTimeService.persistAll(personLocationInteractTimes.stream().distinct().collect(Collectors.toList()));
+    return personDb;
   }
 
-  //@Cacheable
+  @Cacheable
   public List< Person > findByGramaNiladhari(GramaNiladhari gramaNiladhari) {
     return personDao.findByGramaNiladhari(gramaNiladhari);
   }

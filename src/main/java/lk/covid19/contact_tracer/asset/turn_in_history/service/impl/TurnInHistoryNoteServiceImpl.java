@@ -14,34 +14,35 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-//@CacheConfig( cacheNames = "turnInHistoryNote" )
+@CacheConfig( cacheNames = "turnInHistoryNote" )
 @RequiredArgsConstructor
 public class TurnInHistoryNoteServiceImpl implements TurnInHistoryNoteService {
   private final TurnInHistoryNoteDao turnInHistoryNoteDao;
 
 
-  //@Cacheable
+  @Cacheable
   public List< TurnInHistoryNote > findAll() {
     return turnInHistoryNoteDao.findAll();
   }
 
-  //@Cacheable
+  @Cacheable
   public TurnInHistoryNote findById(Integer id) {
     return turnInHistoryNoteDao.getById(id);
   }
 
-  //@Caching( evict = {//@CacheEvict( value = "turnInHistoryNote", allEntries = true )},      put = {@CachePut( value = "turnInHistoryNote", key = "#turnInHistoryNote.id" )} )
+  @Caching( evict = {@CacheEvict( value = "turnInHistoryNote", allEntries = true )}, put = {@CachePut( value =
+      "turnInHistoryNote", key = "#turnInHistoryNote.id" )} )
   public TurnInHistoryNote persist(TurnInHistoryNote turnInHistoryNote) {
     return turnInHistoryNoteDao.save(turnInHistoryNote);
   }
 
-  //@CacheEvict( allEntries = true )
+  @CacheEvict( allEntries = true )
   public boolean delete(Integer id) {
     turnInHistoryNoteDao.deleteById(id);
     return false;
   }
 
-  //@Cacheable
+  @Cacheable
   public List< TurnInHistoryNote > search(TurnInHistoryNote turnInHistoryNote) {
     ExampleMatcher matcher = ExampleMatcher
         .matching()

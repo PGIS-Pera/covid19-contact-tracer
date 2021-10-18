@@ -20,36 +20,37 @@ import java.util.List;
 
 
 @Service
-//@CacheConfig( cacheNames = "locationInteract" )
+@CacheConfig( cacheNames = "locationInteract" )
 @RequiredArgsConstructor
 public class LocationInteractServiceImpl implements LocationInteractService {
   private final LocationInteractDao locationInteractDao;
   private final CommonService commonService;
   private final GramaNiladhariService gramaNiladhariService;
 
-  //@Cacheable
+  @Cacheable
   public List< LocationInteract > findAll() {
     return locationInteractDao.findAll();
   }
 
-  //@Cacheable
+  @Cacheable
   public LocationInteract findById(Integer id) {
     return locationInteractDao.getById(id);
   }
 
-  //@Caching( evict = {//@CacheEvict( value = "locationInteract", allEntries = true )},      put = {@CachePut( value = "locationInteract", key = "#locationInteract.id" )} )
+  @Caching( evict = {@CacheEvict( value = "locationInteract", allEntries = true )}, put = {@CachePut( value =
+      "locationInteract", key = "#locationInteract.id" )} )
   public LocationInteract persist(LocationInteract locationInteract) {
     locationInteract.setName(commonService.stringCapitalize(locationInteract.getName()));
     return locationInteractDao.save(locationInteract);
   }
 
-  //@CacheEvict( allEntries = true )
+  @CacheEvict( allEntries = true )
   public boolean delete(Integer id) {
     locationInteractDao.deleteById(id);
     return false;
   }
 
-  //@Cacheable
+  @Cacheable
   public List< LocationInteract > search(LocationInteract locationInteract) {
     ExampleMatcher matcher = ExampleMatcher
         .matching()
@@ -59,12 +60,12 @@ public class LocationInteractServiceImpl implements LocationInteractService {
     return locationInteractDao.findAll(locationInteractExample);
   }
 
-  //@Cacheable
+  @Cacheable
   public Page< LocationInteract > findAllPageable(Pageable pageable) {
     return locationInteractDao.findAll(pageable);
   }
 
-  //@Cacheable
+  @Cacheable
   public LocationInteract findByGramaNiladhariAndName(LocationInteract locationInteract) {
     return locationInteractDao.findByNameAndGramaNiladhari(commonService.stringCapitalize(locationInteract.getName()),
                                                            locationInteract.getGramaNiladhari());

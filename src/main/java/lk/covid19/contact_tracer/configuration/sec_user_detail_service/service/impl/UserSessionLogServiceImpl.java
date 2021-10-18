@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-//@CacheConfig( cacheNames = {"userSessionLog"} )
+@CacheConfig( cacheNames = {"userSessionLog"} )
 public class UserSessionLogServiceImpl implements UserSessionLogService {
   private final UserSessionLogDao userSessionLogDao;
 
@@ -22,18 +22,19 @@ public class UserSessionLogServiceImpl implements UserSessionLogService {
   }
 
 
-  //@Cacheable
+  @Cacheable
   public List< UserSessionLog > findAll() {
     return userSessionLogDao.findAll();
   }
 
-  //@Cacheable
+  @Cacheable
   public UserSessionLog findById(Integer id) {
     return userSessionLogDao.getById(id);
   }
 
 
-  //@Caching( evict = {//@CacheEvict( value = "userSessionLog", allEntries = true )},      put = {@CachePut( value = "userSessionLog", key = "#userSessionLog.id" )} )
+  @Caching( evict = {@CacheEvict( value = "userSessionLog", allEntries = true )}, put = {@CachePut( value =
+      "userSessionLog", key = "#userSessionLog.id" )} )
   public UserSessionLog persist(UserSessionLog userSessionLog) {
     return userSessionLogDao.save(userSessionLog);
   }
@@ -54,7 +55,7 @@ public class UserSessionLogServiceImpl implements UserSessionLogService {
     return null;
   }
 
-  //@Cacheable
+  @Cacheable
   public UserSessionLog findByUserAndUserSessionLogStatus(User user, UserSessionLogStatus userSessionLogStatus) {
     return userSessionLogDao.findByUserAndUserSessionLogStatus(user, userSessionLogStatus);
   }

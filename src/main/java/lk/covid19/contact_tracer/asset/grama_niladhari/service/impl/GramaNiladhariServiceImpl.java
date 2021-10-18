@@ -15,33 +15,34 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-//@CacheConfig( cacheNames = "gramaNiladhari" )
+@CacheConfig( cacheNames = "gramaNiladhari" )
 @RequiredArgsConstructor
 public class GramaNiladhariServiceImpl implements GramaNiladhariService {
   private final GramaNiladhariDao gramaNiladhariDao;
 
-  //@Cacheable
+  @Cacheable
   public List< GramaNiladhari > findAll() {
     return gramaNiladhariDao.findAll();
   }
 
-  //@Cacheable
+  @Cacheable
   public GramaNiladhari findById(Integer id) {
     return gramaNiladhariDao.getById(id);
   }
 
-  //@Caching( evict = {//@CacheEvict( value = "gramaNiladhari", allEntries = true )},      put = {@CachePut( value = "gramaNiladhari", key = "#gramaNiladhari.id" )} )
+  @Caching( evict = {@CacheEvict( value = "gramaNiladhari", allEntries = true )}, put = {@CachePut( value =
+      "gramaNiladhari", key = "#gramaNiladhari.id" )} )
   public GramaNiladhari persist(GramaNiladhari gramaNiladhari) {
     return gramaNiladhariDao.save(gramaNiladhari);
   }
 
-  //@CacheEvict( allEntries = true )
+  @CacheEvict( allEntries = true )
   public boolean delete(Integer id) {
     gramaNiladhariDao.deleteById(id);
     return false;
   }
 
-  //@Cacheable
+  @Cacheable
   public List< GramaNiladhari > search(GramaNiladhari gramaNiladhari) {
     ExampleMatcher matcher = ExampleMatcher
         .matching()
@@ -51,7 +52,7 @@ public class GramaNiladhariServiceImpl implements GramaNiladhariService {
     return gramaNiladhariDao.findAll(gramaNiladhariExample);
   }
 
-  //@Cacheable
+  @Cacheable
   public Page< GramaNiladhari > findAllPageable(Pageable pageable) {
     return gramaNiladhariDao.findAll(pageable);
   }

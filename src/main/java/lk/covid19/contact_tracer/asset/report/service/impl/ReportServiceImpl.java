@@ -4,21 +4,22 @@ import lk.covid19.contact_tracer.asset.common_asset.model.AttributeAndCount;
 import lk.covid19.contact_tracer.asset.district.service.DistrictService;
 import lk.covid19.contact_tracer.asset.ds_office.service.DsOfficeService;
 import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
-import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.person.entity.enums.PersonStatus;
 import lk.covid19.contact_tracer.asset.person.service.PersonService;
-import lk.covid19.contact_tracer.asset.report.model.DistrictReportDTO;
-import lk.covid19.contact_tracer.asset.report.model.DsOfficeReportDTO;
-import lk.covid19.contact_tracer.asset.report.model.GramaniladariReportDTO;
-import lk.covid19.contact_tracer.asset.report.model.ProvinceReportDTO;
+import lk.covid19.contact_tracer.asset.report.model.*;
 import lk.covid19.contact_tracer.asset.report.service.ReportService;
 import lk.covid19.contact_tracer.asset.turn.entity.Turn;
 import lk.covid19.contact_tracer.asset.turn.service.TurnService;
-import lk.covid19.contact_tracer.util.service.CommonService;
+import lk.covid19.contact_tracer.asset.user.service.UserService;
+import lk.covid19.contact_tracer.asset.user_details.entity.UserDetails;
+import lk.covid19.contact_tracer.asset.user_details.service.UsersDetailsService;
+import lk.covid19.contact_tracer.util.service.DateTimeAgeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,9 @@ public class ReportServiceImpl implements ReportService {
   private final GramaNiladhariService gramaNiladhariService;
   private final DistrictService districtService;
   private final DsOfficeService dsOfficeService;
+  private final UsersDetailsService usersDetailsService;
+  private final UserService userService;
+  private final DateTimeAgeService dateTimeAgeService;
 
   public GramaniladariReportDTO gramaniladhari(GramaniladariReportDTO gramaniladariReportDTO) {
     List< Turn > turns = turnService.findByIdentifiedDateIsBetween(gramaniladariReportDTO.getTurnStartAt(),
@@ -101,6 +105,43 @@ public class ReportServiceImpl implements ReportService {
     return provinceReportDTO;
   }
 
+  public List< UserVsReportDTO > userVsReport() {
+    LocalDate reportDay = LocalDate.now().minusDays(1);
+    /*
+    List< Turn > turns = turnService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateEndInDay(reportDay),
+                                                              dateTimeAgeService.dateTimeToLocalDateStartInDay
+                                                              (reportDay));
+                                                              */
+    /*todo remove this before deploy*/
+    List< Turn > turns = turnService.findAll();
+
+    List< UserVsReportDTO > userVsReportDTOS = new ArrayList<>();
+
+    HashSet< String > usernames = new HashSet<>();
+    turns.forEach(x -> usernames.add(x.getCreatedBy()));
+
+    usernames.forEach((x) -> {
+      UserVsReportDTO usernameVsTurnDTO = new UserVsReportDTO();
+      List< Turn > turnUser = turns.stream().filter(y -> y.getCreatedBy().equals(x)).collect(Collectors.toList());
+
+      Integer id = userService.findByUserName(x).getUserDetails().getId();
+      UserDetails userDetails = usersDetailsService.findById(id);
+      String email = userDetails.getEmail();
+      String name = userDetails.getTitle().getTitle() + " " + userDetails.getName();
+
+      usernameVsTurnDTO.setName(name);
+      usernameVsTurnDTO.setEmail(email);
+      usernameVsTurnDTO.setLocalDate(reportDay);
+      usernameVsTurnDTO.setAttributeAndCounts(turnsAccordingToPersonStatus(turnUser));
+
+      userVsReportDTOS.add(usernameVsTurnDTO);
+
+    });
+
+
+    return userVsReportDTOS;
+  }
+
   public List< AttributeAndCount > turnsAccordingToPersonStatus(List< Turn > turns) {
     List< AttributeAndCount > attributeAndCounts = new ArrayList<>();
     for ( PersonStatus personStatus : PersonStatus.values() ) {
@@ -109,7 +150,6 @@ public class ReportServiceImpl implements ReportService {
       AttributeAndCount attributeAndCount = AttributeAndCount.builder().count(count).name(name).build();
       attributeAndCounts.add(attributeAndCount);
     }
-
     return attributeAndCounts;
   }
 

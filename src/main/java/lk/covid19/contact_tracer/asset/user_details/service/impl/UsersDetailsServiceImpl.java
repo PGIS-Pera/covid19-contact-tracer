@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-//@CacheConfig( cacheNames = "userDetails" )
+@CacheConfig( cacheNames = "userDetails" )
 @RequiredArgsConstructor
 public class UsersDetailsServiceImpl implements UsersDetailsService {
 
@@ -27,7 +27,7 @@ public class UsersDetailsServiceImpl implements UsersDetailsService {
   private final CommonService commonService;
   private final UserDetailsFilesService userDetailsFilesService;
 
-  //@Cacheable
+  @Cacheable
   public List< UserDetails > findAll() {
     List< UserDetails > userDetailsList = new ArrayList<>();
     for ( UserDetails userDetails : userDetailsDao.findAll(Sort.by(Sort.Direction.DESC, "id"))
@@ -41,12 +41,13 @@ public class UsersDetailsServiceImpl implements UsersDetailsService {
     return userDetailsList;
   }
 
-  //@Cacheable
+  @Cacheable
   public UserDetails findById(Integer id) {
     return userDetailsDao.getById(id);
   }
 
-  //@Caching( evict = {//@CacheEvict( value = "userDetails", allEntries = true )},      put = {@CachePut( value = "userDetails", key = "#userDetails.id" )} )
+  @Caching( evict = {@CacheEvict( value = "userDetails", allEntries = true )}, put = {@CachePut( value = "userDetails"
+      , key = "#userDetails.id" )} )
   public UserDetails persist(UserDetails userDetails) {
     if ( userDetails.getId() == null ) {
       if ( userDetailsDao.findFirstByOrderByIdDesc() != null ) {
@@ -74,7 +75,7 @@ public class UsersDetailsServiceImpl implements UsersDetailsService {
     return userDetailsDao.save(userDetails);
   }
 
-  //@CacheEvict( allEntries = true )
+  @CacheEvict( allEntries = true )
   public boolean delete(Integer id) {
     UserDetails userDetails = userDetailsDao.getById(id);
     userDetails.setStopActive(StopActive.STOP);
@@ -82,7 +83,7 @@ public class UsersDetailsServiceImpl implements UsersDetailsService {
     return false;
   }
 
-  //@Cacheable
+  @Cacheable
   public List< UserDetails > search(UserDetails userDetails) {
     ExampleMatcher matcher = ExampleMatcher
         .matching()
@@ -92,7 +93,7 @@ public class UsersDetailsServiceImpl implements UsersDetailsService {
     return userDetailsDao.findAll(employeeExample);
   }
 
-  //@Cacheable
+  @Cacheable
   public UserDetails findByNic(String nic) {
     return userDetailsDao.findByNic(nic);
   }

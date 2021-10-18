@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import java.util.List;
 
 @Service
-//@CacheConfig( cacheNames = "employeeFiles" )
+@CacheConfig( cacheNames = "employeeFiles" )
 @RequiredArgsConstructor
 public class UserDetailsFilesServiceImpl implements UserDetailsFilesService {
   private final UserDetailsFilesDao userDetailsFilesDao;
@@ -52,7 +52,7 @@ public class UserDetailsFilesServiceImpl implements UserDetailsFilesService {
     return userDetailsFilesDao.findByUserDetails(userDetails);
   }
 
-  //@Cacheable
+  @Cacheable
   public FileInfo userDetailsFileDownloadLinks(UserDetails userDetails) {
     UserDetailsFiles userDetailsFiles = userDetailsFilesDao.findByUserDetails(userDetails);
     if ( userDetailsFiles != null ) {

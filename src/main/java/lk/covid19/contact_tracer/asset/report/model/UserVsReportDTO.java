@@ -1,10 +1,7 @@
 package lk.covid19.contact_tracer.asset.report.model;
 
 import lk.covid19.contact_tracer.asset.common_asset.model.AttributeAndCount;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,6 +10,7 @@ import java.util.List;
 @Builder( toBuilder = true )
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class UserVsReportDTO {
   private String name;
   private String email;

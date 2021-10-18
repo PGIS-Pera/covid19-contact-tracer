@@ -12,35 +12,36 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-//@CacheConfig( cacheNames = {"role"} )
+@CacheConfig( cacheNames = {"role"} )
 @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
   private final RoleDao roleDao;
 
-  //@Cacheable
+  @Cacheable
   public List< Role > findAll() {
     return roleDao.findAll();
   }
 
-  //@Cacheable
+  @Cacheable
   public Role findById(Integer id) {
     return roleDao.getById(id);
   }
 
 
-  //@Caching( evict = {//@CacheEvict( value = "role", allEntries = true )},      put = {@CachePut( value = "role", key = "#role.id" )} )
+  @Caching( evict = {@CacheEvict( value = "role", allEntries = true )}, put = {@CachePut( value = "role", key =
+      "#role.id" )} )
   public Role persist(Role role) {
     role.setRoleName(role.getRoleName().toUpperCase());
     return roleDao.save(role);
   }
 
-  //@CacheEvict( allEntries = true )
+  @CacheEvict( allEntries = true )
   public boolean delete(Integer id) {
     roleDao.deleteById(id);
     return true;
   }
 
-  //@Cacheable
+  @Cacheable
   public List< Role > search(Role role) {
     ExampleMatcher matcher = ExampleMatcher
         .matching()
@@ -50,7 +51,7 @@ public class RoleServiceImpl implements RoleService {
     return roleDao.findAll(roleExample);
   }
 
-  //@Cacheable
+  @Cacheable
   public Role findByRoleName(String roleName) {
     return roleDao.findByRoleName(roleName);
   }

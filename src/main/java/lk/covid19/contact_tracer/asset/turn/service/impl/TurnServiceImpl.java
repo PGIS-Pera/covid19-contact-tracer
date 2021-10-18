@@ -16,12 +16,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-//@CacheConfig( cacheNames = "turn" )
+@CacheConfig( cacheNames = "turn" )
 public class TurnServiceImpl implements TurnService {
   private final TurnDao turnDao;
   private final PersonService personService;
@@ -31,17 +32,18 @@ public class TurnServiceImpl implements TurnService {
     this.personService = personService;
   }
 
-  //@Cacheable
+  @Cacheable
   public List< Turn > findAll() {
     return turnDao.findAll();
   }
 
-  //@Cacheable
+  @Cacheable
   public Turn findById(Integer id) {
     return turnDao.getById(id);
   }
 
-  //@Caching( evict = {//@CacheEvict( value = "turn", allEntries = true )},      put = {@CachePut( value = "turn", key = "#turn.id" )} )
+  @Caching( evict = {@CacheEvict( value = "turn", allEntries = true )}, put = {@CachePut( value = "turn", key =
+      "#turn.id" )} )
   public Turn persist(Turn turn) {
     if ( !turn.getPersonLocationInteractTimes().isEmpty() ) {
       List< PersonLocationInteractTime > personLocationInteractTimes = new ArrayList<>();
@@ -54,13 +56,13 @@ public class TurnServiceImpl implements TurnService {
     return turnDao.save(turn);
   }
 
-  //@CacheEvict( allEntries = true )
+  @CacheEvict( allEntries = true )
   public boolean delete(Integer id) {
     turnDao.deleteById(id);
     return false;
   }
 
-  //@Cacheable
+  @Cacheable
   public List< Turn > search(Turn turn) {
     ExampleMatcher matcher = ExampleMatcher
         .matching()
@@ -70,22 +72,22 @@ public class TurnServiceImpl implements TurnService {
     return turnDao.findAll(turnExample);
   }
 
-  //@Cacheable
+  @Cacheable
   public Turn findByPatientAndIdentifiedDate(Person person, LocalDate identifiedDate) {
     return turnDao.findByPersonAndIdentifiedDate(person, identifiedDate);
   }
 
-  //@Cacheable
+  @Cacheable
   public List< Turn > findByIdentifiedDateIsBetween(LocalDate startDate, LocalDate endDate) {
     return turnDao.findByIdentifiedDateIsBetween(startDate, endDate);
   }
 
-  //@Cacheable
+  @Cacheable
   public Page< Turn > findAllPageable(Pageable pageable) {
     return turnDao.findAll(pageable);
   }
 
-  //@Cacheable
+  @Cacheable
   public List< Turn > findByPerson(Person person) {
     List< Person > result = personService.search(person);
 
@@ -95,9 +97,13 @@ public class TurnServiceImpl implements TurnService {
     return turns.stream().distinct().collect(Collectors.toList());
   }
 
-  //@Cacheable
+  @Cacheable
   public List< Turn > findByPersonStatus(PersonStatus personStatus) {
     return turnDao.findByPersonStatus(personStatus);
+  }
+
+  public List< Turn > findByCreatedAtIsBetween(LocalDateTime form, LocalDateTime to) {
+    return turnDao.findByCreatedAtIsBetween(form, to);
   }
 
 
