@@ -16,16 +16,14 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.io.InputStream;
 import java.util.HashSet;
 
 @Aspect
@@ -43,12 +41,15 @@ public class AppCreateAspects {
   @After( "execution(* lk.covid19.contact_tracer.asset.common_asset.controller.ApplicationCreateController.district(." +
       ".))" )
   public void createRowSData() {
-    Resource resource = resourceLoader.getResource("classpath:excel_files/district.xlsx");
+    ClassLoader cl1 = this.getClass().getClassLoader();
+    // Resource resource = resourceLoader.getResource("classpath:excel_files/district.xlsx");
+
     HashSet< District > savedDistrict = new HashSet<>();
     HashSet< DsOffice > savedDsOffice = new HashSet<>();
 
     try {
-      FileInputStream inputStream = new FileInputStream(resource.getFile());
+      // FileInputStream inputStream = new FileInputStream(resource.getFile());
+      FileInputStream inputStream = (FileInputStream) cl1.getResourceAsStream("classpath:excel_files/district.xlsx");
       Workbook workbook = new XSSFWorkbook(inputStream);
       Sheet sheet = workbook.getSheetAt(0);
       for ( int i = 0; i < sheet.getLastRowNum(); i++ ) {
@@ -66,10 +67,11 @@ public class AppCreateAspects {
       System.err.println(e.getMessage());
     }
 
-    Resource resource_grma = resourceLoader.getResource("classpath:excel_files/grama_niladhari.xlsx");
-
+    // Resource resource_grma = resourceLoader.getResource("classpath:excel_files/grama_niladhari.xlsx");
+    ClassLoader cl = this.getClass().getClassLoader();
     try {
-      FileInputStream inputStream_grama = new FileInputStream(resource_grma.getFile());
+      InputStream inputStream_grama = cl.getResourceAsStream("classpath:excel_files/grama_niladhari.xlsx");
+      assert inputStream_grama != null;
       Workbook workbook_grama = new XSSFWorkbook(inputStream_grama);
 
       Sheet sheet_grama = workbook_grama.getSheetAt(0);

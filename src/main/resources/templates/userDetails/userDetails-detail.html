@@ -24,6 +24,10 @@
       <a class="btn btn-primary" data-th-href="${'/userDetails'}" data-sec-authorize="hasAnyAuthority('ROLE_ADMIN')" >
         <i class="fa fa-list" ></i >&nbsp; View User Details
       </a >
+      &nbsp;
+      <a data-th-href="${'/userDetails/edit/' + userDetail.id}"
+         class="btn btn-success btn-sm" ><i class="fa fa-edit"
+                                            style="font-size: 15px" ></i >&nbsp;Edit</a >
     </div >
   </div >
 </div >
