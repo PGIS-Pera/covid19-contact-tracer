@@ -53,9 +53,9 @@ public class EmailService {
 
 
     Context context = new Context(LocaleContextHolder.getLocale());
-    context.setVariables(mail.getProps());
 
     String html = templateEngine.process("email/newsletter-template", context);
+    context.setVariables(mail.getProps());
 
     helper.setTo(mail.getMailTo());
     helper.setText(html, true);

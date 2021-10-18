@@ -100,7 +100,6 @@ function subscribeForm() {
         url: $("#subscribeUrl").val(),
         data: JSON.stringify(news),
         success: function (response) {
-            console.log(response)
             saveModel();
         },
         error: function (e) {
@@ -118,6 +117,10 @@ function subscribeForm() {
 }
 
 function saveModel() {
+    $("#gramaNiladhari1Id").val('')
+    $("#gramaNiladhari1").val('')
+    $("#mobile").val('')
+    backgroundColourChangeNothingToChange("#mobile")
     let button = document.getElementById("closeModel");
     button.click();
     swal({

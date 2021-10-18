@@ -59,7 +59,7 @@ public class EmailSendController {
 
         Map< String, Object > model = new HashMap<>();
         model.put("name", x.getName());
-        model.put("userVsReportDetail", x.getAttributeAndCounts());
+        //model.put("userVsReportDetail", x.getAttributeAndCounts());
         model.put("location", "Manage By PGIS \n UOP");
         model.put("sign", "Contract Tracer App");
         mail.setProps(model);

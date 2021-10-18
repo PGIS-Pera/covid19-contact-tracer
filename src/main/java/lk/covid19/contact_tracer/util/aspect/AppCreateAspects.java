@@ -40,7 +40,6 @@ public class AppCreateAspects {
       ".))" )
   public void createRowSData() {
     ClassLoader cl1 = this.getClass().getClassLoader();
-    // Resource resource = resourceLoader.getResource("classpath:excel_files/district.xlsx");
 
     HashSet< District > savedDistrict = new HashSet<>();
     HashSet< DsOffice > savedDsOffice = new HashSet<>();
@@ -67,7 +66,6 @@ public class AppCreateAspects {
       System.err.println(e.getMessage());
     }
 
-    // Resource resource_grma = resourceLoader.getResource("classpath:excel_files/grama_niladhari.xlsx");
     ClassLoader cl = this.getClass().getClassLoader();
     try {
       InputStream inputStream_grama = cl.getResourceAsStream("classpath:excel_files/grama_niladhari.xlsx");
