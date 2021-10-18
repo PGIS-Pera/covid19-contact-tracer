@@ -45,6 +45,8 @@ let html_first_part = `<table class="table table-hover table-striped" id="myTabl
                   <th >Name</th >
                   <th >Number</th >
                   <th >Ds Office</th >
+                  <th >District</th >
+                  <th >Province</th >
                   <th >Modify</th >
                 </tr >
                 </thead >
@@ -107,6 +109,8 @@ $("#searchInput").keyup(function () {
                       <th > ${data[i].name}</th >
                       <th > ${data[i].number}</th >
                       <th > ${data[i].dsOffice.name}</th >
+                      <th > ${data[i].dsOffice.district.name}</th >
+                      <th > ${data[i].dsOffice.district.province.province}</th >
                       <th >
                           <a class="btn btn-success btn-sm" href="${'/gramaNiladhari/' + data[i].id}" >
                             <i class="fa fa-folder-open" ></i >&nbsp;View
