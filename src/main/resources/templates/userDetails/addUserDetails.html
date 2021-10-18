@@ -93,9 +93,14 @@
             <label class="control-label" for="nic" >NIC No :</label >
           </div >
           <div class="col-md-8" >
-            <input class="form-control" data-th-field="*{nic}" id="nic" maxlength="12" minlength="10"
+            <input data-sec-authorize="hasAnyAuthority('ROLE_ADMIN')" class="form-control" data-th-field="*{nic}"
+                   id="nic" maxlength="12" minlength="10"
                    required
                    tabindex="6" type="text" />
+            <input data-sec-authorize="!hasAnyAuthority('ROLE_ADMIN')" class="form-control" data-th-field="*{nic}"
+                   id="nic" maxlength="12" minlength="10"
+                   required
+                   tabindex="6" type="text" readonly />
             <span class="error" data-th-errors="*{nic}" data-th-if="${#fields.hasErrors('nic')}"
                   id="nicError" >Error NIC Number</span >
           </div >
