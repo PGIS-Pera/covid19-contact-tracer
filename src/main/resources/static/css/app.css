@@ -136,6 +136,10 @@ input:focus:invalid {
     background-size: 165px;
 }
 
+a {
+    color: hsl(111deg 100% 50%);
+}
+
 /*sweet alert css changes*/
 /*
 .swal-button {
