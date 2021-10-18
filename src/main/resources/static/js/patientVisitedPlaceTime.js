@@ -27,9 +27,10 @@ function gramaniladhari(val) {
                 let html_middle_part = ``;
                 for (let i = 0; i < data.length; i++) {
                     html_middle_part += `<li id="${filedId}-${data[i].id}" onClick="selectGramaNiladhari(this)" class="list-group-item font-weight-bold p">
-${data[i].name} - ${data[i].number} -  
-${data[i].dsOffice.name} - ${data[i].dsOffice.district.name} - ${data[i].dsOffice.district.province.province}
-
+  Name : ${data[i].name} 
+- No : ${data[i].number} 
+- Ds Office : ${data[i].dsOffice.name} 
+- District : ${data[i].dsOffice.district.name}
 </li >`;
                 }
                 // $("#gramaNiladhari-box");
