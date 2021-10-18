@@ -125,7 +125,19 @@ input:focus:invalid {
     background-color: #4faef5;
 }
 
+/*bootstrap model background*/
+.modal-backdrop {
+    opacity: 0.7 !important;
+}
+
+/*loading background*/
+.loading-background {
+    background: url("/img/LoaderIcon.gif") no-repeat 95% 50% lightgreen;
+    background-size: 165px;
+}
+
 /*sweet alert css changes*/
+/*
 .swal-button {
     display: inline-block;
     font-weight: 400;
@@ -139,28 +151,29 @@ input:focus:invalid {
     border-radius: .25rem;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
+*/
 
-.swal-button--confirm {
+/*.swal-button--confirm {
     color: #fff;
     background-color: #28a745;
     border-color: #28a745;
-}
+}*/
 
-.swal-button--cancel {
+/*.swal-button--cancel {
     color: #212529;
     background-color: #ffc107;
     border-color: #ffc107;
-}
+}*/
 
-.swal-button--defeat {
+/*.swal-button--defeat {
     color: #fff;
     background-color: #28a745;
     border-color: #28a745;
-}
+}*/
 
-.swal-overlay {
+/*.swal-overlay {
     background-color: rgba(43, 102, 165, 0.68);
-}
+}*/
 
 /*.swal-modal {
     background: rgb(184, 225, 252);
@@ -171,14 +184,14 @@ input:focus:invalid {
     border: 3px solid white;
 }*/
 
-.swal-title {
+/*.swal-title {
     background-color: rgb(245, 248, 250);
     font-size: 16px;
     box-shadow: 2px 1px 1px rgba(0, 0, 0, 0.21);
     margin: 1px 1px 28px;
-}
+}*/
 
-.swal-text {
+/*.swal-text {
     background-color: rgb(245, 248, 250);
     padding: 17px;
     border: 1px solid #F0E1A1;
@@ -186,26 +199,16 @@ input:focus:invalid {
     margin: 22px;
     text-align: center;
     color: #61534e;
-}
+}*/
 
-.swal-footer {
+/*.swal-footer {
     background-color: rgb(245, 248, 250);
     margin-top: 32px;
     border-top: 1px solid #E9EEF1;
     overflow: hidden;
-}
+}*/
 
+/*
 .swal-background {
     background-color: rgb(245, 248, 250);
-}
-
-/*bootstrap model background*/
-.modal-backdrop {
-    opacity: 0.7 !important;
-}
-
-/*loading background*/
-.loading-background {
-    background: url("/img/LoaderIcon.gif") no-repeat 95% 50% lightgreen;
-    background-size: 165px;
-}
+}*/

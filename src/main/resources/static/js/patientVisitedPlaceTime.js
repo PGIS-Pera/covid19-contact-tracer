@@ -78,10 +78,13 @@ $(document).ready(function () {
 
 function subscribeForm() {
     let mobile = $("#mobile").val();
+    let gramaniladhari_id = $("#gramaNiladhari1Id").val();
     let gramaNiladhari = {
-        "id": $("#gramaNiladhari1Id").val(),
+        "id": gramaniladhari_id,
     };
-
+    if (!gramaniladhari_id) {
+        window.location.reload();
+    }
     if (!mobileRegex.test(mobile)) {
         swal({
             title: "Please check your entered values",
