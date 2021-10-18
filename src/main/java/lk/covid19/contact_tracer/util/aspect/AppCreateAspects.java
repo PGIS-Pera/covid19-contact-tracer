@@ -18,10 +18,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
@@ -49,7 +47,8 @@ public class AppCreateAspects {
 
     try {
       // FileInputStream inputStream = new FileInputStream(resource.getFile());
-      FileInputStream inputStream = (FileInputStream) cl1.getResourceAsStream("classpath:excel_files/district.xlsx");
+      InputStream inputStream = cl1.getResourceAsStream("classpath:excel_files/district.xlsx");
+      assert inputStream != null;
       Workbook workbook = new XSSFWorkbook(inputStream);
       Sheet sheet = workbook.getSheetAt(0);
       for ( int i = 0; i < sheet.getLastRowNum(); i++ ) {
