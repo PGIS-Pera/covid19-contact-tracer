@@ -134,13 +134,13 @@ public class GramaNiladhariController {
     return commonSearch(mappingJacksonValue);
   }
 
-  public MappingJacksonValue commonSearch(MappingJacksonValue mappingJacksonValue) {
+  private MappingJacksonValue commonSearch(MappingJacksonValue mappingJacksonValue) {
     SimpleBeanPropertyFilter simpleBeanPropertyFilterOne = SimpleBeanPropertyFilter
         .filterOutAllExcept("id", "name", "number", "dsOffice");
     SimpleBeanPropertyFilter simpleBeanPropertyFilterTwo = SimpleBeanPropertyFilter
         .filterOutAllExcept("id", "name", "district");
     SimpleBeanPropertyFilter simpleBeanPropertyFilterThree = SimpleBeanPropertyFilter
-        .filterOutAllExcept("id", "name");
+        .filterOutAllExcept("id", "name", "province");
 
     FilterProvider filter = new SimpleFilterProvider()
         .addFilter("GramaNiladhari", simpleBeanPropertyFilterOne)
