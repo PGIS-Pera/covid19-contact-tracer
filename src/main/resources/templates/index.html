@@ -11,76 +11,82 @@
 <link rel="stylesheet" href="./css/index_style.css" >
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
 <!-- partial:index.partial.html -->
-<div class="wrapper" >
+<div class="container-fluid" >
   <!-- Page Header -->
-  <header >
+  <div class="row" >
+    <header >
 
-    <!-- This div is  intentionally blank. It creates the transparent black overlay over the video which you can modify in the CSS -->
-    <div class="overlay" ></div >
+      <!-- This div is  intentionally blank. It creates the transparent black overlay over the video which you can modify in the CSS -->
+      <div class="overlay" ></div >
 
-    <!-- The HTML5 video element that will create the background video on the header -->
-    <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" >
-      <!--<source src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4" type="video/mp4"> -->
-      <source
-            src="https://media.istockphoto.com/videos/red-coronavirus-xray-cancer-illness-ncov-virus-close-up-defocus-red-video-id1207750416"
-            type="video/mp4" >
-      <!--<source src="https://media.istockphoto.com/videos/dispersed-corona-viruses-with-blue-liquid-background-video-id1217834492" type="video/mp4">-->
+      <!-- The HTML5 video element that will create the background video on the header -->
+      <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" >
+        <!--<source src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4" type="video/mp4"> -->
+        <source
+              src="https://media.istockphoto.com/videos/red-coronavirus-xray-cancer-illness-ncov-virus-close-up-defocus-red-video-id1207750416"
+              type="video/mp4" >
+        <!--<source src="https://media.istockphoto.com/videos/dispersed-corona-viruses-with-blue-liquid-background-video-id1217834492" type="video/mp4">-->
 
-    </video >
+      </video >
 
-    <!-- The header content -->
-    <div class="container h-100" >
-      <div class="d-flex h-100 text-center align-items-center" >
-        <div class="w-100 text-white" >
-          <h1 class="display-3" >Covid19 Contact Tracer</h1 >
-          <p class="lead mb-0" >Standing Together</p >
+      <!-- The header content -->
+      <div class="container h-100" >
+        <div class="d-flex h-100 text-center align-items-center" >
+          <div class="w-100 text-white" >
+            <h1 class="display-3" >Covid19 Contact Tracer</h1 >
+            <p class="lead mb-0" >Standing Together</p >
+          </div >
         </div >
       </div >
-    </div >
-  </header >
+    </header >
+  </div >
   <!-- End of Page Header -->
-
-  <!-- JSON Request -->
-  <div class="mypanel" ></div >
-  <div id="date" ></div >
-
-  <!-- End of JSON request -->
-  <div class="wrapper" >
-
-    <div class="pie-charts" >
-      <div class="pieID--localstat pie-chart--wrapper" >
-        <h2 >Local Statistics</h2 >
-        <div class="pie-chart" >
-          <div class="pie-chart__pie" ></div >
-          <ul class="pie-chart__legend" >
-            <li ><em >Total Recovered</em ><span id="totRecov" >642</span ></li >
-            <li ><em >Total Deaths</em ><span id="totDeth" >358</span ></li >
-            <li ><em >Active Cases</em ><span id="totActiv" >642</span ></li >
-            <li ><em >Total Cases</em ><span id="totCases" >358</span ></li >
-          </ul >
+  <div class="row" >
+    <div class="container-fluid" >
+      <!-- JSON Request -->
+      <div class="row" >
+        <div class="text-center col" >
+          <p id="date" ></p >
         </div >
       </div >
-      <div class="pieID--dailystat pie-chart--wrapper" >
-        <h2 >Daily Local Statistics</h2 >
-        <div class="pie-chart" >
-          <div class="pie-chart__pie" ></div >
-          <ul class="pie-chart__legend" >
-            <li ><em >New Cases</em ><span id="dailyNew" >768</span ></li >
-            <li ><em >Recovered</em ><span id="DailyRecov" >232</span ></li >
-            <li ><em >Deaths</em ><span id="dailyDeth" >768</span ></li >
-          </ul >
-        </div >
-      </div >
-      <div class="pieID--globalstat pie-chart--wrapper" >
-        <h2 >Global Statistics</h2 >
-        <div class="pie-chart" >
-          <div class="pie-chart__pie" ></div >
-          <ul class="pie-chart__legend" >
-            <li ><em >Global Recovered</em ><span id="glbRecovered" >486</span ></li >
-            <li ><em >Global Deaths</em ><span id="glbDeth" >156</span ></li >
-            <li ><em >Global Active Cases</em ><span id="glbActive" >215</span ></li >
-            <li ><em >Global Total Cases</em ><span id="glbTotal" >143</span ></li >
-          </ul >
+      <!-- End of JSON request -->
+      <div class="row" >
+        <div class="pie-charts container-fluid" >
+          <div class="pieID--localstat pie-chart--wrapper" >
+            <h2 >Local Statistics</h2 >
+            <div class="pie-chart" >
+              <div class="pie-chart__pie" ></div >
+              <ul class="pie-chart__legend" >
+                <li ><em >Total Recovered</em ><span id="totRecov" >642</span ></li >
+                <li ><em >Total Deaths</em ><span id="totDeth" >358</span ></li >
+                <li ><em >Active Cases</em ><span id="totActiv" >642</span ></li >
+                <li ><em >Total Cases</em ><span id="totCases" >358</span ></li >
+              </ul >
+            </div >
+          </div >
+          <div class="pieID--dailystat pie-chart--wrapper" >
+            <h2 >Daily Local Statistics</h2 >
+            <div class="pie-chart" >
+              <div class="pie-chart__pie" ></div >
+              <ul class="pie-chart__legend" >
+                <li ><em >New Cases</em ><span id="dailyNew" >768</span ></li >
+                <li ><em >Recovered</em ><span id="DailyRecov" >232</span ></li >
+                <li ><em >Deaths</em ><span id="dailyDeth" >768</span ></li >
+              </ul >
+            </div >
+          </div >
+          <div class="pieID--globalstat pie-chart--wrapper" >
+            <h2 >Global Statistics</h2 >
+            <div class="pie-chart" >
+              <div class="pie-chart__pie" ></div >
+              <ul class="pie-chart__legend" >
+                <li ><em >Global Recovered</em ><span id="glbRecovered" >486</span ></li >
+                <li ><em >Global Deaths</em ><span id="glbDeth" >156</span ></li >
+                <li ><em >Global Active Cases</em ><span id="glbActive" >215</span ></li >
+                <li ><em >Global Total Cases</em ><span id="glbTotal" >143</span ></li >
+              </ul >
+            </div >
+          </div >
         </div >
       </div >
     </div >
