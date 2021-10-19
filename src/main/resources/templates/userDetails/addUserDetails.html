@@ -22,7 +22,7 @@
       </h4 >
     </div >
     <div class="col text-center" >
-      <a data-th-href="${'/userDetails'}" class="btn btn-primary" >
+      <a data-sec-authorize="hasAnyAuthority('ROLE_ADMIN')" data-th-href="${'/userDetails'}" class="btn btn-primary" >
         View User Details
       </a >
     </div >
