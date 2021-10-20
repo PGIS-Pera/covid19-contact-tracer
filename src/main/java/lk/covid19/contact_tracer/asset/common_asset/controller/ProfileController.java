@@ -2,6 +2,7 @@ package lk.covid19.contact_tracer.asset.common_asset.controller;
 
 
 import lk.covid19.contact_tracer.asset.common_asset.model.PasswordChange;
+import lk.covid19.contact_tracer.asset.report.service.ReportService;
 import lk.covid19.contact_tracer.asset.user.entity.User;
 import lk.covid19.contact_tracer.asset.user.service.UserService;
 import lk.covid19.contact_tracer.asset.user_details.entity.UserDetails;
@@ -26,13 +27,16 @@ public class ProfileController {
   private final UserService userService;
   private final PasswordEncoder passwordEncoder;
   private final UserDetailsFilesService userDetailsFilesService;
+  private final ReportService reportService;
 
 
   @GetMapping( value = "/profile" )
   public String userProfile(Model model, Principal principal) {
-    UserDetails userDetails = userService.findByUserName(principal.getName()).getUserDetails();
+    String userName = principal.getName();
+    UserDetails userDetails = userService.findByUserName(userName).getUserDetails();
     model.addAttribute("userDetail", userDetails);
     model.addAttribute("file", userDetailsFilesService.userDetailsFileDownloadLinks(userDetails));
+    model.addAttribute("userDetailsReport", reportService.userVsReport(userName));
     return "userDetails/userDetails-detail";
   }
 

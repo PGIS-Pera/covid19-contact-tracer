@@ -34,4 +34,8 @@ public interface TurnService {
   List< Turn > findByPersonStatus(PersonStatus personStatus);
 
   List< Turn > findByCreatedAtIsBetween(LocalDateTime form, LocalDateTime to);
+
+  List< Turn > findByCreatedAtIsBetweenAndCreatedBy(LocalDateTime form, LocalDateTime to, String username);
+
+  List< Turn > findByCreatedBy(String username);
 }

@@ -18,4 +18,6 @@ public interface ReportService {
   ProvinceReportDTO allCurrent();
 
   List< UserVsReportDTO > userVsReport();
+
+  List< UserVsReportDTO > userVsReport(String username);
 }

@@ -107,14 +107,14 @@ public class ReportServiceImpl implements ReportService {
 
   public List< UserVsReportDTO > userVsReport() {
     LocalDate reportDay = LocalDate.now().minusDays(1);
-    /*
     List< Turn > turns = turnService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateEndInDay(reportDay),
                                                               dateTimeAgeService.dateTimeToLocalDateStartInDay
-                                                              (reportDay));
-                                                              */
-    /*todo remove this before deploy*/
-    List< Turn > turns = turnService.findAll();
+                                                                  (reportDay));
 
+    return getUserVsReportDTOS(reportDay, turns);
+  }
+
+  private List< UserVsReportDTO > getUserVsReportDTOS(LocalDate reportDay, List< Turn > turns) {
     List< UserVsReportDTO > userVsReportDTOS = new ArrayList<>();
 
     HashSet< String > usernames = new HashSet<>();
@@ -137,9 +137,14 @@ public class ReportServiceImpl implements ReportService {
       userVsReportDTOS.add(usernameVsTurnDTO);
 
     });
-
-
     return userVsReportDTOS;
+  }
+
+  public List< UserVsReportDTO > userVsReport(String username) {
+    List< Turn > turns =
+        turnService.findByCreatedBy(username);
+
+    return getUserVsReportDTOS(null, turns);
   }
 
   public List< AttributeAndCount > turnsAccordingToPersonStatus(List< Turn > turns) {

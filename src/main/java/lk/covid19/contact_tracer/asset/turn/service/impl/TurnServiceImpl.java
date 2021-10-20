@@ -106,5 +106,17 @@ public class TurnServiceImpl implements TurnService {
     return turnDao.findByCreatedAtIsBetween(form, to);
   }
 
+  @Cacheable
+  public List< Turn > findByCreatedAtIsBetweenAndCreatedBy(LocalDateTime form,
+                                                           LocalDateTime to,
+                                                           String username) {
+    return turnDao.findByCreatedAtIsBetweenAndCreatedBy(form, to, username);
+  }
+
+  @Cacheable
+  public List< Turn > findByCreatedBy(String username) {
+    return turnDao.findByCreatedBy(username);
+  }
+
 
 }
