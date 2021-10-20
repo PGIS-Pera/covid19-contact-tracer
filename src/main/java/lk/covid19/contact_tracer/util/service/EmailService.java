@@ -23,7 +23,6 @@ import org.thymeleaf.context.Context;
 @RequiredArgsConstructor
 public class EmailService {
   private final JavaMailSender javaMailSender;
-  private final SpringTemplateEngine templateEngine;
 
   public void sendEmail(String receiverEmail, String subject, String message) throws
       MailException {
