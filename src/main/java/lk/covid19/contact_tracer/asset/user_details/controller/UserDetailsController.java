@@ -3,6 +3,9 @@ package lk.covid19.contact_tracer.asset.user_details.controller;
 
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.Gender;
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.Title;
+import lk.covid19.contact_tracer.asset.report.service.ReportService;
+import lk.covid19.contact_tracer.asset.user.entity.User;
+import lk.covid19.contact_tracer.asset.user.service.UserService;
 import lk.covid19.contact_tracer.asset.user_details.entity.UserDetails;
 import lk.covid19.contact_tracer.asset.user_details_files.entity.UserDetailsFiles;
 import lk.covid19.contact_tracer.asset.user_details_files.service.UserDetailsFilesService;
@@ -26,6 +29,8 @@ import java.util.UUID;
 public class UserDetailsController {
   private final UsersDetailsService usersDetailsService;
   private final UserDetailsFilesService userDetailsFilesService;
+  private final ReportService reportService;
+  private final UserService userService;
 
   // Common things for an userDetails add and update
   private String commonThings(Model model) {
@@ -58,6 +63,13 @@ public class UserDetailsController {
     UserDetails userDetails = usersDetailsService.findById(id);
     model.addAttribute("userDetail", userDetails);
     model.addAttribute("file", userDetailsFilesService.userDetailsFileDownloadLinks(userDetails));
+    User user = userService.findById(userDetails.getUser().getId());
+    if ( user != null ) {
+      model.addAttribute("userDetailsReport", reportService.userVsReport(user.getName()));
+    } else {
+      model.addAttribute("userDetailsReport", null);
+    }
+
     return "userDetails/userDetails-detail";
   }
 
