@@ -24,7 +24,6 @@ import org.thymeleaf.context.Context;
 public class EmailService {
   private final JavaMailSender javaMailSender;
   private final SpringTemplateEngine templateEngine;
-  private final String FORM = "-(Contact Tracer - Sri Lanka - (not reply))";
 
   public void sendEmail(String receiverEmail, String subject, String message) throws
       MailException {
@@ -33,7 +32,7 @@ public class EmailService {
 
     try {
       mailMessage.setTo(receiverEmail);
-      mailMessage.setFrom(FORM);
+      mailMessage.setFrom("-(Contact Tracer - Sri Lanka - (not reply))");
       mailMessage.setSubject(subject);
       mailMessage.setText(message);
 
@@ -49,20 +48,13 @@ public class EmailService {
                                                      MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
                                                      StandardCharsets.UTF_8.name());
 
-    // helper.addAttachment("template-cover.png", new ClassPathResource("email/img/email.PNG"));
-
-
-    Context context = new Context(LocaleContextHolder.getLocale());
-
-    String html = templateEngine.process("email/newsletter-template", context);
-    context.setVariables(mail.getProps());
-
     helper.setTo(mail.getMailTo());
-    helper.setText(html, true);
+    helper.setText(mail.getHtmlContent(), true);
     helper.setSubject(mail.getSubject());
     helper.setFrom(mail.getFrom());
 
     javaMailSender.send(message);
   }
+
 
 }
