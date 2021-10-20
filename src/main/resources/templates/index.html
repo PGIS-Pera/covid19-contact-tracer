@@ -9,7 +9,21 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" >
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' >
 <link rel="stylesheet" href="./css/index_style.css" >
-<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+<div data-th-fragment="navBarFragment" >
+  <nav class="navbar navbar-expand-md mb-2 bg-secondary" >
+    <div class="container" >
+      <a class="nav-link " href="/" data-sec-authorize="!isAuthenticated()" >Home</a >
+      <a class="nav-link " href="/mainWindow" data-sec-authorize="isAuthenticated()" >Home </a >
+      <a class="nav-link " href="/patientVisitedPlaceTime" >Recent Identified Places </a >
+      <a href="/login" data-sec-authorize="!isAuthenticated()" class="nav-link" ><i class="fas fa-sign-in-alt" ></i >&nbsp;&nbsp;Login</a >
+      <a href="/logout" data-sec-authorize="isAuthenticated()" class="nav-link " > <i class="fas fa-sign-out-alt" ></i >&nbsp;&nbsp;
+                                                                                                                        Log
+                                                                                                                        out</a >
+    </div >
+  </nav >
+</div >
+
+
 <!-- partial:index.partial.html -->
 <div class="container-fluid" >
   <!-- Page Header -->

@@ -65,7 +65,7 @@ public class UserDetailsController {
     model.addAttribute("file", userDetailsFilesService.userDetailsFileDownloadLinks(userDetails));
     User user = userService.findById(userDetails.getUser().getId());
     if ( user != null ) {
-      model.addAttribute("userDetailsReport", reportService.userVsReport(user.getName()));
+      model.addAttribute("userDetailsReport", reportService.userVsReport(user.getUsername()));
     } else {
       model.addAttribute("userDetailsReport", null);
     }
