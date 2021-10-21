@@ -3,12 +3,12 @@
 <body >
 <div data-th-fragment="navBarFragment" >
   <nav class="navbar navbar-expand-md mb-2 bg-secondary" >
-    <button class="navbar-toggler custom-toggler" data-sec-authorize="isAuthenticated()" type="button"
+    <button class="navbar-toggler custom-toggler" type="button"
             data-toggle="collapse" data-target="#collapsibleNavId"
             aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation" >
       <span class="navbar-toggler-icon my-toggler" ></span >
     </button >
-    <div class="collapse navbar-collapse" data-sec-authorize="isAuthenticated()" id="collapsibleNavId" >
+    <div class="collapse navbar-collapse" id="collapsibleNavId" >
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0" >
         <li class="nav-item active ml-2" data-sec-authorize="!isAuthenticated()" >
           <a class="nav-link " href="/" >Home <span
@@ -114,7 +114,6 @@
         </li >
       </ul >
     </div >
-
   </nav >
 </div >
 </body >

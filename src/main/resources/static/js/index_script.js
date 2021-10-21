@@ -1,3 +1,5 @@
+document.getElementById("currentYear").innerHTML = new Date().getFullYear();
+
 $.getJSON('https://www.hpb.health.gov.lk/api/get-current-statistical', function (data) {
 
     var now_date = (data.data.update_date_time);
@@ -18,7 +20,6 @@ $.getJSON('https://www.hpb.health.gov.lk/api/get-current-statistical', function 
     document.getElementById("glbTotal").innerHTML = (data.data.global_total_cases);
 
 });
-
 
 function sliceSize(dataNum, dataTotal) {
     return (dataNum / dataTotal) * 360;

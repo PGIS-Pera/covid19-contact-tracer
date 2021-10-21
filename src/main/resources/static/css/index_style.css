@@ -3,6 +3,7 @@ body {
     background: #EEE;
     text-align: center;
 }
+
 body * {
     font-weight: 300;
     margin: 0;
@@ -20,16 +21,19 @@ body * {
         transform: rotate(0deg) translate3d(0, 0, 0);
     }
 }
+
 .pie-chart {
     font-family: "Open Sans", Arial;
 }
+
 .pie-chart--wrapper {
     width: 340px;
     margin: 30px auto;
     text-align: center;
+    background-color: hsl(34deg 78% 91%);
     transform: perspective(750px) translate3d(0px, 0px, -250px) rotateX(27deg) scale(0.9, 0.9);
     border-radius: 20px;
-    border: 5px solid #e6e6e6;
+    border: 5px solid #bdb5b5;
     box-shadow: 0 70px 40px -20px rgba(0, 0, 0, 0.2);
     transition: 0.4s ease-in-out transform;
 
@@ -42,6 +46,8 @@ body * {
 .pie-chart__pie, .pie-chart__legend {
     display: inline-block;
     vertical-align: top;
+    border-radius: 20px;
+    box-shadow: 0 70px 40px -20px rgba(0, 0, 0, 0.2);
 }
 
 .pie-chart__pie {
@@ -50,6 +56,7 @@ body * {
     width: 200px;
     margin: 10px auto 35px;
 }
+
 .pie-chart__pie::before {
     content: "";
     display: block;
@@ -62,6 +69,7 @@ body * {
     top: 50px;
     left: 50px;
 }
+
 .pie-chart__pie::after {
     content: "";
     display: block;
@@ -81,6 +89,7 @@ body * {
     -webkit-animation: bake-pie 1s;
     animation: bake-pie 1s;
 }
+
 .slice span {
     display: block;
     position: absolute;
@@ -95,25 +104,28 @@ body * {
 
 .pie-chart__legend {
     display: block;
+    color: white;
     list-style-type: none;
-    padding: 0;
     margin: 0 auto;
-    background: #FFF;
-    padding: 0.75em 0.75em 0.05em;
+    background: #726d6d;
+    padding: 0.75em 0.85em 0.05em;
     font-size: 13px;
     box-shadow: 1px 1px 0 #DDD, 2px 2px 0 #BBB;
     text-align: left;
     width: 65%;
 }
+
 .pie-chart__legend li {
     height: 1.25em;
     margin-bottom: 0.7em;
     padding-left: 0.5em;
     border-left: 1.25em solid black;
 }
+
 .pie-chart__legend em {
     font-style: normal;
 }
+
 .pie-chart__legend span {
     float: right;
 }
@@ -122,6 +134,7 @@ body * {
     display: flex;
     flex-direction: row;
 }
+
 @media (max-width: 500px) {
     .pie-charts {
         flex-direction: column;
@@ -149,13 +162,14 @@ h2 {
     text-align: left;
 }
 
-#date .date {
+.date {
     margin-top: 20px;
     font-size: 2em;
     color: black;
     font-weight: bold;
     font-style: "Arial";
 }
+
 /* Page Banner */
 
 header {
@@ -196,4 +210,22 @@ header .overlay {
     background-color: black;
     opacity: 0.5;
     z-index: 1;
+}
+
+.ppt-content {
+    transform: perspective(750px) translate3d(0px, 0px, -250px) rotateX(27deg) scale(0.9, 0.9);
+    border-radius: 20px;
+    border: 5px solid #e6e6e6;
+    box-shadow: 0 70px 40px -20px rgba(0, 0, 0, 0.2);
+    transition: 0.4s ease-in-out transform;
+    background-color: hsl(34deg 78% 91%);
+}
+
+.ppt-content:hover {
+    transform: translate3d(0px, 0px, -250px);
+}
+
+.text-dark > a {
+    text-decoration: none;
+    color: black;
 }
