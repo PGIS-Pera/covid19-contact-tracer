@@ -34,4 +34,4 @@ jobs:
           app-name: 'app-contact-tracer'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4BB648CA61424EE1AA2A7AD5164453AD }}
-          package: '*.jar'
+          package: ' ${{ github.workspace }}/target/*.jar'
