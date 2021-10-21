@@ -30,7 +30,7 @@ jobs:
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
-          name: java-app
+          name: contact_tracer
           path: '${{ github.workspace }}/target/*.jar'
 
   deploy:
@@ -44,7 +44,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
-          name: java-app
+          name: contact_tracer
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
