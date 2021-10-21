@@ -149,7 +149,7 @@ h2 {
     text-align: left;
 }
 
-#date {
+#date .date {
     margin-top: 20px;
     font-size: 2em;
     color: black;
