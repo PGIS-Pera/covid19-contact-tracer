@@ -1,4 +1,10 @@
 $(document).ready(function () {
+    if (window.location.protocol.indexOf('https') === 0) {
+        let el = document.createElement('meta')
+        el.setAttribute('http-equiv', 'Content-Security-Policy')
+        el.setAttribute('content', 'upgrade-insecure-requests')
+        document.head.append(el)
+    }
     // set current year to the footer
     document.getElementById("currentYear").innerHTML = new Date().getFullYear();
 
