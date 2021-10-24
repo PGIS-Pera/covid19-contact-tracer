@@ -10,7 +10,7 @@
   <div class="row text-center" >
     <div class="col" >
       <a class="btn btn-info" data-th-href="${'/home'}" >
-        Back To Home
+        <i class="fa fa-home" style="font-size: 20px" ></i > &nbsp; Home
       </a >
     </div >
     <div class="col" >
@@ -45,24 +45,78 @@
     </div >
   </div >
   <!--summary report-->
-  <div class="col-6 offset-md-3" >
-    <div class="container-fluid" >
-      <table class="table table-striped table-inverse table-responsive" >
-        <thead class="thead-inverse" >
-        <tr >
-          <th >Index</th >
-          <th >Status Name</th >
-          <th >Patient Count</th >
-        </tr >
-        </thead >
-        <tbody >
-        <tr data-th-each="attributeAndCount, index : ${attributeAndCounts}" >
-          <td data-th-text="${index.count}" ></td >
-          <td data-th-text="${attributeAndCount.name}" ></td >
-          <td data-th-text="${attributeAndCount.count}" ></td >
-        </tr >
-        </tbody >
-      </table >
+  <div class="container-fluid mb-3" >
+    <div class="row mt-3" >
+      <div class="container" >
+        <div class="row mt-3" data-th-if="${!#lists.isEmpty(attributeAndCounts)}" >
+          <div class="container-fluid" >
+            <div class="row" >
+              <!--summary report-->
+              <div class="col-md-6 col-sm-12" >
+                <div id="accordianId" role="tablist" aria-multiselectable="true" >
+                  <div class="card" >
+                    <div class="card-header" role="tab" id="section1HeaderId" >
+                      <h5 class="mb-0" >
+                        <a data-toggle="collapse" data-parent="#accordianId" href="#section1ContentId"
+                           aria-expanded="true"
+                           aria-controls="section1ContentId" class="container-fluid accordion-toggle" >
+                          Summary Report
+                        </a >
+                      </h5 >
+                    </div >
+                    <div id="section1ContentId" class="collapse in" role="tabpanel" aria-labelledby="section1HeaderId" >
+                      <div class="card-body" >
+                        <div class="row" >
+                          <table class="table table-striped table-inverse" id="summaryReport" >
+                            <thead class="thead-inverse" >
+                            <tr >
+                              <th >Index</th >
+                              <th >Status Name</th >
+                              <th >Record Count</th >
+                            </tr >
+                            </thead >
+                            <tbody >
+                            <tr data-th-each="attributeAndCount, index : ${attributeAndCounts}" >
+                              <td data-th-text="${index.count}" ></td >
+                              <td data-th-text="${attributeAndCount.name}" ></td >
+                              <td data-th-text="${attributeAndCount.count}" ></td >
+                            </tr >
+                            </tbody >
+                          </table >
+                        </div >
+                      </div >
+                    </div >
+                  </div >
+                </div >
+              </div >
+              <!--graphical representation-->
+              <div class="col-md-6 col-sm-12 " >
+                <div id="accordianId1" role="tablist" aria-multiselectable="true" >
+                  <div class="card" >
+                    <div class="card-header" role="tab" id="section1HeaderId1" >
+                      <h5 class="mb-0" >
+                        <a data-toggle="collapse" data-parent="#accordianId" href="#section1ContentId1"
+                           aria-expanded="true"
+                           aria-controls="section1ContentId1" class="container-fluid accordion-toggle" >
+                          Graphical Representation
+                        </a >
+                      </h5 >
+                    </div >
+                    <div id="section1ContentId1" class="collapse in" role="tabpanel"
+                         aria-labelledby="section1HeaderId1" >
+                      <div class="card-body" >
+                        <div class="row" >
+                          <canvas id="myChart" class="container-fluid col-sm-8" ></canvas >
+                        </div >
+                      </div >
+                    </div >
+                  </div >
+                </div >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
     </div >
   </div >
   <!--Button-->
@@ -77,5 +131,7 @@
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <!--script include-->
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<script data-th-if="${! #lists.isEmpty(attributeAndCounts)}" type="text/javascript"
+        src="/js/summaryReport.js" ></script >
 </body >
 </html >

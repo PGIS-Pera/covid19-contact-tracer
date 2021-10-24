@@ -42,10 +42,6 @@ let options = {
 };
 
 $(document).ready(function () {
-    $('#province').select2({
-        placeholder: 'Select ds office'
-    })
-
     showTableData();
     // Chart declaration:
     let myBarChart = new Chart(ctx, {

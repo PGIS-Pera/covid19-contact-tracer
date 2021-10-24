@@ -51,13 +51,14 @@
             <a class="btn btn-primary btn-sm" data-th-href="${'/district/edit/' + district.id}"
                id="districtEdit" ><i
                   class="fa fa-edit" ></i >&nbsp;Edit</a >
-            <a class="btn btn-danger btn-sm" data-th-href="${'/district/remove/' + district.id}"
-               data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
-               data-th-onclick="if(!(confirm('Are you want to delete this civilStatus ?'))) return false"
-               id="districtRemove"
-            ><i
-                  aria-hidden="true" class="fa fa-trash" ></i >
-              Delete</a >
+
+            <!-- <a class="btn btn-danger btn-sm" data-th-href="${'/district/remove/' + district.id}"
+                data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+                data-th-onclick="if(!(confirm('Are you want to delete this civilStatus ?'))) return false"
+                id="districtRemove"
+             ><i
+                   aria-hidden="true" class="fa fa-trash" ></i >
+               Delete</a >-->
 
           </th >
         </tr >
