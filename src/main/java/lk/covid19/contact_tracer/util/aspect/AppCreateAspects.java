@@ -58,10 +58,9 @@ public class AppCreateAspects {
           district.setProvince(Province.valueOf(String.valueOf(row.getCell(1).getRichStringCellValue())));
           district.setName(commonService.stringCapitalize(String.valueOf(row.getCell(2).getRichStringCellValue())));
           savedDistrict.add(districtService.persist(district));
-          Thread.sleep(100);
         }
       }
-    } catch ( IOException | InterruptedException e ) {
+    } catch ( IOException e ) {
       e.printStackTrace();
       System.err.println(e.getMessage());
     }
@@ -120,10 +119,9 @@ public class AppCreateAspects {
               .number(gramaniladhari_number)
               .build();
           gramaNiladhariService.persist(gramaNiladhari);
-          Thread.sleep(100);
         }
       }
-    } catch ( IOException | InterruptedException e ) {
+    } catch ( IOException e ) {
       e.printStackTrace();
       System.err.println(e.getMessage());
     }
