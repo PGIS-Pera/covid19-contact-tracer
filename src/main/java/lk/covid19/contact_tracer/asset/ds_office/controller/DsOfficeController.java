@@ -64,7 +64,7 @@ public class DsOfficeController {
     DsOffice dsOffice = dsOfficeService.findById(id);
     model.addAttribute("dsOfficeDetail", dsOffice);
     List< Person > persons = new ArrayList<>();
-    dsOffice.getGramaNiladharis().forEach(x -> persons.addAll(gramaNiladhariService.findById(x.getId()).getPersons()));
+    dsOffice.getGramaNiladharis().forEach((x) -> persons.addAll(gramaNiladhariService.findById(x.getId()).getPersons()));
     model.addAttribute("attributeAndCounts", commonService.personsAccordingToType(persons));
     return "dsOffice/dsOffice-detail";
   }

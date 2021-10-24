@@ -18,7 +18,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder( toBuilder = true )
 @JsonFilter( "GramaNiladhari" )
-@ToString
 public class GramaNiladhari {
   @Id
   @GeneratedValue( strategy = GenerationType.IDENTITY )
@@ -31,17 +30,12 @@ public class GramaNiladhari {
   @ManyToOne
   @JoinColumn( name = "ds_office_id", nullable = false, foreignKey = @ForeignKey( name =
       "fk_grama_niladhari_vs_ds_office" ) )
-  @ToString.Exclude
   private DsOffice dsOffice;
 
   @OneToMany( mappedBy = "gramaNiladhari" )
-  @ToString.Exclude
-  @JsonIgnore
   private List< Person > persons;
 
   @OneToMany( mappedBy = "gramaNiladhari" )
-  @ToString.Exclude
-  @JsonIgnore
   private List< LocationInteract > locationInteracts;
 
 }

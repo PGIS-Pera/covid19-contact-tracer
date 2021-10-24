@@ -3,7 +3,7 @@ $('#province').bind("change", function () {
 });
 
 let optionFieldAdd = (value) => {
-    let url = "[[${districtURL}]]" + value;
+    let url = $("#districtURL").val() + value;
     let html = "";
     $.get(url, function (data) {
         data.forEach((item) => {

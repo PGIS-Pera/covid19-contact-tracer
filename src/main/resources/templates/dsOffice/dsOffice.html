@@ -36,7 +36,7 @@
       <th >Index</th >
       <th >Name</th >
       <th >Phone No</th >
-      <th >AgOffice</th >
+      <th >District</th >
       <th >Modify</th >
     </tr >
     </thead >
@@ -53,12 +53,12 @@
         <a class="btn btn-primary btn-sm" id="agOfficeEdit"
            data-th-href="${'/dsOffice/edit/' + dsOffice.id}" ><i
               class="fa fa-edit" ></i >&nbsp;Edit</a >
-        <a class="btn btn-danger btn-sm" id="agOfficeRemove"
-           data-th-href="${'/dsOffice/remove/' + dsOffice.id}"
-           data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
-           data-th-onclick="if(!(confirm('Are you want to delete this civilStatus ?'))) return false"
-        ><i aria-hidden="true" class="fa fa-trash" ></i >
-          Delete</a >
+        <!--   <a class="btn btn-danger btn-sm" id="agOfficeRemove"
+              data-th-href="${'/dsOffice/remove/' + dsOffice.id}"
+              data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+              data-th-onclick="if(!(confirm('Are you want to delete this Ds Office ?'))) return false"
+           ><i aria-hidden="true" class="fa fa-trash" ></i >
+             Delete</a >-->
       </th >
     </tr >
     </tbody >
