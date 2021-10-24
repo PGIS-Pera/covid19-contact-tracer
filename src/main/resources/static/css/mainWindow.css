@@ -14,8 +14,14 @@
     box-shadow: 4px 5px 25px 10px rgba(18, 248, 248, 0.27);
 }
 
+.card:hover ~ .card > a {
+    color: #fff;
+    transition: color 1000ms linear;
+}
+
 .card > a {
     text-decoration: none;
     font-weight: bold;
     font-style: italic;
 }
+
