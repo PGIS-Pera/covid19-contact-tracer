@@ -13,6 +13,7 @@ import lk.covid19.contact_tracer.asset.turn.service.TurnService;
 import lk.covid19.contact_tracer.asset.user.service.UserService;
 import lk.covid19.contact_tracer.asset.user_details.entity.UserDetails;
 import lk.covid19.contact_tracer.asset.user_details.service.UsersDetailsService;
+import lk.covid19.contact_tracer.util.service.CommonService;
 import lk.covid19.contact_tracer.util.service.DateTimeAgeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,12 +29,12 @@ import java.util.stream.Collectors;
 public class ReportServiceImpl implements ReportService {
 
   private final TurnService turnService;
-  private final PersonService personService;
   private final GramaNiladhariService gramaNiladhariService;
   private final DistrictService districtService;
   private final DsOfficeService dsOfficeService;
   private final UsersDetailsService usersDetailsService;
   private final UserService userService;
+  private final CommonService commonService;
   private final DateTimeAgeService dateTimeAgeService;
 
   public GramaniladariReportDTO gramaniladhari(GramaniladariReportDTO gramaniladariReportDTO) {
@@ -44,7 +45,7 @@ public class ReportServiceImpl implements ReportService {
             .equals(gramaniladariReportDTO.getGramaNiladhari().getId()))
         .collect(Collectors.toList());
 
-    gramaniladariReportDTO.setAttributeAndCounts(turnsAccordingToPersonStatus(turns));
+    gramaniladariReportDTO.setAttributeAndCounts(commonService.turnsAccordingToPersonStatus(turns));
     gramaniladariReportDTO.setGramaNiladhari(gramaNiladhariService.findById(gramaniladariReportDTO.getGramaNiladhari().getId()));
 
     return gramaniladariReportDTO;
@@ -58,7 +59,7 @@ public class ReportServiceImpl implements ReportService {
                )
         .collect(Collectors.toList());
 
-    dsOfficeReportDTO.setAttributeAndCounts(turnsAccordingToPersonStatus(turns));
+    dsOfficeReportDTO.setAttributeAndCounts(commonService.turnsAccordingToPersonStatus(turns));
     dsOfficeReportDTO.setDsOffice(dsOfficeService.findById(dsOfficeReportDTO.getDsOffice().getId()));
 
     return dsOfficeReportDTO;
@@ -71,7 +72,7 @@ public class ReportServiceImpl implements ReportService {
         .filter(x -> x.getPerson().getGramaNiladhari().getDsOffice().getDistrict().equals(districtReportDTO.getDistrict()))
         .collect(Collectors.toList());
 
-    districtReportDTO.setAttributeAndCounts(turnsAccordingToPersonStatus(turns));
+    districtReportDTO.setAttributeAndCounts(commonService.turnsAccordingToPersonStatus(turns));
     districtReportDTO.setDistrict(districtService.findById(districtReportDTO.getDistrict().getId()));
     return districtReportDTO;
   }
@@ -83,7 +84,7 @@ public class ReportServiceImpl implements ReportService {
         .filter(x -> x.getPerson().getGramaNiladhari().getDsOffice().getDistrict().getProvince().equals(provinceReportDTO.getProvince()))
         .collect(Collectors.toList());
 
-    provinceReportDTO.setAttributeAndCounts(turnsAccordingToPersonStatus(turns));
+    provinceReportDTO.setAttributeAndCounts(commonService.turnsAccordingToPersonStatus(turns));
     return provinceReportDTO;
   }
 
@@ -92,7 +93,7 @@ public class ReportServiceImpl implements ReportService {
                                                                    provinceReportDTO.getTurnEndAt())
         .stream().distinct().collect(Collectors.toList());
 
-    provinceReportDTO.setAttributeAndCounts(turnsAccordingToPersonStatus(turns));
+    provinceReportDTO.setAttributeAndCounts(commonService.turnsAccordingToPersonStatus(turns));
     return provinceReportDTO;
   }
 
@@ -101,7 +102,7 @@ public class ReportServiceImpl implements ReportService {
     List< Turn > turns = turnService.findAll()
         .stream().distinct().collect(Collectors.toList());
 
-    provinceReportDTO.setAttributeAndCounts(turnsAccordingToPersonStatus(turns));
+    provinceReportDTO.setAttributeAndCounts(commonService.turnsAccordingToPersonStatus(turns));
     return provinceReportDTO;
   }
 
@@ -132,7 +133,7 @@ public class ReportServiceImpl implements ReportService {
       usernameVsTurnDTO.setName(name);
       usernameVsTurnDTO.setEmail(email);
       usernameVsTurnDTO.setLocalDate(reportDay);
-      usernameVsTurnDTO.setAttributeAndCounts(turnsAccordingToPersonStatus(turnUser));
+      usernameVsTurnDTO.setAttributeAndCounts(commonService.turnsAccordingToPersonStatus(turnUser));
 
       userVsReportDTOS.add(usernameVsTurnDTO);
 
@@ -147,15 +148,5 @@ public class ReportServiceImpl implements ReportService {
     return getUserVsReportDTOS(null, turns);
   }
 
-  public List< AttributeAndCount > turnsAccordingToPersonStatus(List< Turn > turns) {
-    List< AttributeAndCount > attributeAndCounts = new ArrayList<>();
-    for ( PersonStatus personStatus : PersonStatus.values() ) {
-      int count = (int) turns.stream().filter(x -> x.getPersonStatus().equals(personStatus)).count();
-      String name = personStatus.getPersonStatus();
-      AttributeAndCount attributeAndCount = AttributeAndCount.builder().count(count).name(name).build();
-      attributeAndCounts.add(attributeAndCount);
-    }
-    return attributeAndCounts;
-  }
 
 }

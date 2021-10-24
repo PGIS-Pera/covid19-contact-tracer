@@ -37,6 +37,16 @@ spring:
     password: pera-pgis-20
     username: covid_user@covid19-db-sever
     url: jdbc:mysql://covid19-db-sever.mysql.database.azure.com:3306/covid19data?useSSL=true&requireSSL=false
+    cachePrepStmts: true
+    prepStmtCacheSize: 250
+    prepStmtCacheSqlLimit: 2048
+    useServerPrepStmts: true
+    useLocalSessionState: true
+    rewriteBatchedStatements: true
+    cacheResultSetMetadata: true
+    cacheServerConfiguration: true
+    elideSetAutoCommits: true
+    maintainTimeStats: false
   jackson:
     serialization:
       fail-on-empty-beans: 'false'
@@ -56,3 +66,9 @@ server:
   servlet:
     session:
       timeout: 20m
+
+hikari:
+  minimum-idle: 3
+  maximum-pool-size: 5
+  max-lifetime: 600000
+  connection-test-query: SELECT 1

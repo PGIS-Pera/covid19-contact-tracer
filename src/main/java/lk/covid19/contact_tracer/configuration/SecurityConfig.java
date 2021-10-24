@@ -130,10 +130,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .migrateSession()
                     .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                     .invalidSessionUrl("/login")
-                    .maximumSessions(1)
+                    .maximumSessions(5)
                     .expiredUrl("/login")
                     .sessionRegistry(sessionRegistry()))
         //Cross site disable
+        .cors()
+        .and()
         .csrf(AbstractHttpConfigurer::disable)
         .exceptionHandling()
         .and()

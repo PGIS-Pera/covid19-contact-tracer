@@ -4,6 +4,7 @@ package lk.covid19.contact_tracer.util.service;
 import lk.covid19.contact_tracer.asset.common_asset.model.AttributeAndCount;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.person.entity.enums.PersonStatus;
+import lk.covid19.contact_tracer.asset.turn.entity.Turn;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -75,7 +76,17 @@ public class CommonService {
       AttributeAndCount attributeAndCount = AttributeAndCount.builder().count(count).name(name).build();
       attributeAndCounts.add(attributeAndCount);
     }
+    return attributeAndCounts;
+  }
 
+  public List< AttributeAndCount > turnsAccordingToPersonStatus(List< Turn > turns) {
+    List< AttributeAndCount > attributeAndCounts = new ArrayList<>();
+    for ( PersonStatus personStatus : PersonStatus.values() ) {
+      int count = (int) turns.stream().filter(x -> x.getPersonStatus().equals(personStatus)).count();
+      String name = personStatus.getPersonStatus();
+      AttributeAndCount attributeAndCount = AttributeAndCount.builder().count(count).name(name).build();
+      attributeAndCounts.add(attributeAndCount);
+    }
     return attributeAndCounts;
   }
 }

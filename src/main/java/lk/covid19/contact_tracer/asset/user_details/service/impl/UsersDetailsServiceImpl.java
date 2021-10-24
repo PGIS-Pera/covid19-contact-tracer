@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -65,6 +66,11 @@ public class UsersDetailsServiceImpl implements UsersDetailsService {
         userDetails.setNumber("LKCU" + commonService.numberAutoGen(previousCode).toString());
       }
     }
+
+    if ( !commonService.isValidEmail(userDetails.getOfficeEmail()) ) {
+      userDetails.setOfficeEmail(null);
+    }
+
     userDetails.setMobileOne(userDetails.getMobileOne() != null ?
                                  commonService.phoneNumberLengthValidator(userDetails.getMobileOne()) : null);
     userDetails.setMobileTwo(userDetails.getMobileTwo() != null ?
