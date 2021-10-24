@@ -25,3 +25,20 @@
     font-style: italic;
 }
 
+#accordianId1 > .card {
+    background-color: transparent;
+}
+
+#accordianId > .card {
+    background-color: transparent;
+}
+
+#accordianId1 > .card-header {
+    background-color: black;
+    transition: background-color 1000ms linear;
+}
+
+#accordianId > .card-header {
+    background-color: black;
+    transition: background-color 1000ms linear;
+}
