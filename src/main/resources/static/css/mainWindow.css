@@ -33,12 +33,12 @@
     background-color: transparent;
 }
 
-#accordianId1 > .card-header {
+.card-header:hover {
     background-color: black;
     transition: background-color 1000ms linear;
 }
 
-#accordianId > .card-header {
+.card-header:hover {
     background-color: black;
     transition: background-color 1000ms linear;
 }

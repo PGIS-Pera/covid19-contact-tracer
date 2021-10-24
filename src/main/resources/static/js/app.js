@@ -5,6 +5,11 @@ $(document).ready(function () {
         el.setAttribute('content', 'upgrade-insecure-requests')
         document.head.append(el)
     }
+
+    $(".accordion-toggle").mouseover(function () {
+        $(".accordion-toggle").trigger("click");
+    });
+
     // set current year to the footer
     document.getElementById("currentYear").innerHTML = new Date().getFullYear();
 
