@@ -49,7 +49,7 @@ spring:
     maintainTimeStats: false
   jackson:
     serialization:
-      fail-on-empty-beans: 'false'
+      fail-on-empty-beans: false
 
 info:
   app:
@@ -58,9 +58,9 @@ info:
     description: PGIS - UOP
 
 twilio:
-  PHONE_NUMBER: '+12184025616'
-  ACCOUNT_SID: ACb06aa4fbc924c253c831fab488bd1ac9
-  AUTH_TOKEN: 610e356f95a6e2e530f4054e20bf99d5
+  PHONE_NUMBER: "+12184025616"
+  ACCOUNT_SID: "ACb06aa4fbc924c253c831fab488bd1ac9"
+  AUTH_TOKEN: "610e356f95a6e2e530f4054e20bf99d5"
 
 server:
   servlet:
