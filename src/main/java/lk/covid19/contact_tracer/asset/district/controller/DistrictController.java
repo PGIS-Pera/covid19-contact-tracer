@@ -57,7 +57,9 @@ public class DistrictController {
     District district = districtService.findById(id);
     model.addAttribute("districtDetail", district);
     List< Person > persons = new ArrayList<>();
-    district.getDsOffices().forEach(x -> dsOfficeService.findById(x.getId()).getGramaNiladharis().forEach(y -> persons.addAll(gramaNiladhariService.findById(y.getId()).getPersons())));
+    district.getDsOffices().forEach(
+        x -> dsOfficeService.findById(x.getId()).getGramaNiladharis()
+            .forEach(y -> persons.addAll(gramaNiladhariService.findById(y.getId()).getPersons())));
     model.addAttribute("attributeAndCounts", commonService.personsAccordingToType(persons));
     return "district/district-detail";
   }
