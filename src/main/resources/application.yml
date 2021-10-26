@@ -19,6 +19,7 @@ spring:
     password: psEJ5Zl11rE5
   main:
     allow-bean-definition-overriding: 'true'
+    lazy-initialization: true
   jpa:
     hibernate:
       ddl-auto: update
@@ -50,8 +51,6 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 
 info:
   app:

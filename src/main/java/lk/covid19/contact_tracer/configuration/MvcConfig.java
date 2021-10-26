@@ -3,7 +3,9 @@ package lk.covid19.contact_tracer.configuration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
@@ -19,7 +21,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -66,7 +67,6 @@ public class MvcConfig implements WebMvcConfigurer {
   public KeyGenerator multiplyKeyGenerator() {
     return (Object target, Method method, Object... params) -> method.getName() + "_" + Arrays.toString(params);
   }
-
 
   //Manage all errors
   @ControllerAdvice
