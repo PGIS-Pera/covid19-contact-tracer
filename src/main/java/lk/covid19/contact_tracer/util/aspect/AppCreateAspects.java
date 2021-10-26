@@ -48,7 +48,7 @@ public class AppCreateAspects {
     HashSet< GramaNiladhari > gramaNiladhariHashSet = new HashSet<>();
 
     try {
-      /*Resource resource = resourceLoader.getResource("classpath:excel_files/district.xlsx");
+  /*    Resource resource = resourceLoader.getResource("classpath:excel_files/district.xlsx");
        FileInputStream inputStream = new FileInputStream(resource.getFile());*/
       InputStream inputStream = cl.getResourceAsStream("classpath:excel_files/district.xlsx");
       assert inputStream != null;
@@ -125,7 +125,6 @@ public class AppCreateAspects {
               .number(gramaniladhari_number)
               .build();
           gramaNiladhariHashSet.add(gramaNiladhari);
-          // gramaNiladhariHashSet.add(gramaNiladhari);
         }
       }
       gramaNiladhariService.persistAll(gramaNiladhariHashSet);
@@ -134,6 +133,7 @@ public class AppCreateAspects {
       System.err.println(e.getMessage());
     }
 
+    System.out.println(gramaNiladhariHashSet.size());
     System.out.println(LocalDateTime.now() + " end");
   }
 
