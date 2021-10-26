@@ -22,6 +22,7 @@ import org.springframework.core.io.ResourceLoader;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 
 @Aspect
@@ -39,16 +40,20 @@ public class AppCreateAspects {
   @After( "execution(* lk.covid19.contact_tracer.asset.common_asset.controller.ApplicationCreateController.district(." +
       ".))" )
   public void createRowSData() {
-    ClassLoader cl1 = this.getClass().getClassLoader();
+    System.out.println(LocalDateTime.now() + " start");
+    ClassLoader cl = this.getClass().getClassLoader();
 
-    HashSet< District > savedDistrict = new HashSet<>();
-    HashSet< DsOffice > savedDsOffice = new HashSet<>();
+    HashSet< District > districtHashSet = new HashSet<>();
+    HashSet< DsOffice > dsOfficeHashSet = new HashSet<>();
+    HashSet< GramaNiladhari > gramaNiladhariHashSet = new HashSet<>();
 
     try {
-      // FileInputStream inputStream = new FileInputStream(resource.getFile());
-      InputStream inputStream = cl1.getResourceAsStream("classpath:excel_files/district.xlsx");
+      /*Resource resource = resourceLoader.getResource("classpath:excel_files/district.xlsx");
+       FileInputStream inputStream = new FileInputStream(resource.getFile());*/
+      InputStream inputStream = cl.getResourceAsStream("classpath:excel_files/district.xlsx");
       assert inputStream != null;
       Workbook workbook = new XSSFWorkbook(inputStream);
+
       Sheet sheet = workbook.getSheetAt(0);
       for ( int i = 0; i < sheet.getLastRowNum(); i++ ) {
         Row row = sheet.getRow(i);
@@ -57,7 +62,7 @@ public class AppCreateAspects {
           district.setId(((int) row.getCell(0).getNumericCellValue()));
           district.setProvince(Province.valueOf(String.valueOf(row.getCell(1).getRichStringCellValue())));
           district.setName(commonService.stringCapitalize(String.valueOf(row.getCell(2).getRichStringCellValue())));
-          savedDistrict.add(districtService.persist(district));
+          districtHashSet.add(districtService.persist(district));
         }
       }
     } catch ( IOException e ) {
@@ -65,14 +70,15 @@ public class AppCreateAspects {
       System.err.println(e.getMessage());
     }
 
-    ClassLoader cl = this.getClass().getClassLoader();
+
     try {
+     /* Resource resource = resourceLoader.getResource("classpath:excel_files/grama_niladhari.xlsx");
+      FileInputStream inputStream_grama = new FileInputStream(resource.getFile());*/
       InputStream inputStream_grama = cl.getResourceAsStream("classpath:excel_files/grama_niladhari.xlsx");
       assert inputStream_grama != null;
       Workbook workbook_grama = new XSSFWorkbook(inputStream_grama);
 
       Sheet sheet_grama = workbook_grama.getSheetAt(0);
-
       for ( int i = 0; i < sheet_grama.getLastRowNum(); i++ ) {
         DsOffice dsOfficeDb = null;
         District district = null;
@@ -89,14 +95,14 @@ public class AppCreateAspects {
               String.valueOf(((int) row.getCell(4).getNumericCellValue())) :
               String.valueOf(row.getCell(4).getStringCellValue());
 
-          for ( District districtSaved : savedDistrict ) {
+          for ( District districtSaved : districtHashSet ) {
             if ( districtSaved.getName().equals(districts_name) ) {
               district = districtSaved;
               break;
             }
           }
 
-          for ( DsOffice dsOfficeSaved : savedDsOffice ) {
+          for ( DsOffice dsOfficeSaved : dsOfficeHashSet ) {
             if ( dsOfficeSaved.getName().equals(ds_name) ) {
               dsOfficeDb = dsOfficeSaved;
               break;
@@ -109,7 +115,7 @@ public class AppCreateAspects {
                 .name(ds_name)
                 .build();
             dsOfficeDb = dsOfficeService.persist(dsOffice);
-            savedDsOffice.add(dsOfficeDb);
+            dsOfficeHashSet.add(dsOfficeDb);
           }
 
           GramaNiladhari gramaNiladhari = GramaNiladhari.builder()
@@ -118,13 +124,17 @@ public class AppCreateAspects {
               .name(gramaniladhari_name)
               .number(gramaniladhari_number)
               .build();
-          gramaNiladhariService.persist(gramaNiladhari);
+          gramaNiladhariHashSet.add(gramaNiladhari);
+          // gramaNiladhariHashSet.add(gramaNiladhari);
         }
       }
+      gramaNiladhariService.persistAll(gramaNiladhariHashSet);
     } catch ( IOException e ) {
       e.printStackTrace();
       System.err.println(e.getMessage());
     }
+
+    System.out.println(LocalDateTime.now() + " end");
   }
 
 }

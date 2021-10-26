@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -34,6 +35,12 @@ public class GramaNiladhariServiceImpl implements GramaNiladhariService {
       "gramaNiladhari", key = "#gramaNiladhari.id" )} )
   public GramaNiladhari persist(GramaNiladhari gramaNiladhari) {
     return gramaNiladhariDao.save(gramaNiladhari);
+  }
+
+  @Caching( evict = {@CacheEvict( value = "gramaNiladhari", allEntries = true )}, put = {@CachePut( value =
+      "gramaNiladhari", key = "'#gramaNiladhari.id'" )} )
+  public List< GramaNiladhari > persistAll(HashSet< GramaNiladhari > gramaNiladhariHashSet) {
+    return gramaNiladhariDao.saveAll(gramaNiladhariHashSet);
   }
 
   @CacheEvict( allEntries = true )
