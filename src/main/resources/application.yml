@@ -47,10 +47,11 @@ spring:
     cacheServerConfiguration: true
     elideSetAutoCommits: true
     maintainTimeStats: false
-    driver-class-name: com.mysql.jdbc.Driver
   jackson:
     serialization:
       fail-on-empty-beans: false
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 
 info:
   app:
