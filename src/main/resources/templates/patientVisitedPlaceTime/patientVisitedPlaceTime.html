@@ -16,9 +16,10 @@
       <span class="font-weight-bold h2" > Recent Locations where patient was found </span >
     </div >
     <div class="col-5" >
-      <a class="btn btn-primary" data-th-href="${'/home'}" id="searchShow" tabindex="2" >
-        <i class="fas fa-home" style="font-size: 20px" ></i >&nbsp;&nbsp;Home
-      </a >
+      <a class="nav-link " href="/mainWindow" data-sec-authorize="isAuthenticated()" >Home <span
+            class="sr-only" >(current)</span ></a >
+      <a class="nav-link " href="/" data-sec-authorize="!isAuthenticated()" >Home <span
+            class="sr-only" >(current)</span ></a >
     </div >
   </div >
 </div >
@@ -86,7 +87,7 @@
     <div class="col-md-6 col-sm-6 " >
       <div class="form-row text-md-right text-sm-left p-5" >
         <div class="col-md-5 text-left" >
-          <a class="btn btn-success btn-group text-white" type="button" id="searchBtn">
+          <a class="btn btn-success btn-group text-white" type="button" id="searchBtn" >
             <i class="fa fa-search" ></i > &nbsp; Search </a >
         </div >
         <div class="col-md-7 text-right" >
