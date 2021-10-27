@@ -161,6 +161,10 @@ a:hover, button:hover {
     transition-property: color, background-color, font-style;
 }
 
+.card {
+    border: none;
+}
+
 #section1HeaderId, #section1HeaderId1 {
     background: linear-gradient(to right, gold, darkorange);
     color: white;
