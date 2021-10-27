@@ -149,12 +149,16 @@ input:focus:invalid {
 }
 
 a {
-    color: hsl(111deg 100% 50%);
+    color: hsl(0deg 0% 100%);
 }
 
-a:hover {
-    color: hsl(0deg 0% 100%);
-    transition: color 1000ms linear;
+a:hover, button:hover {
+    color: hsl(19deg 100% 13%);
+    background-color: hsl(0deg 0% 100%);
+    border-radius: 15px;
+    font-style: italic;
+    transition: all 1000ms linear;
+    transition-property: color, background-color, font-style;
 }
 
 /*sweet alert css changes*/

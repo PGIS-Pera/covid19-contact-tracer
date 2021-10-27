@@ -16,7 +16,7 @@ spring:
     default-encoding: UTF-8
     host: smtp.gmail.com
     test-connection: 'false'
-    password: psEJ5Zl11rE5
+    password: $KzV7C7A@KC%wZQBeQ!R^2$BPEedcX
   main:
     allow-bean-definition-overriding: 'true'
     lazy-initialization: true
@@ -48,6 +48,11 @@ spring:
     cacheServerConfiguration: true
     elideSetAutoCommits: true
     maintainTimeStats: false
+    hikari:
+      minimum-idle: 3
+      maximum-pool-size: 5
+      max-lifetime: 600000
+      connection-test-query: SELECT 1
   jackson:
     serialization:
       fail-on-empty-beans: false
@@ -68,8 +73,16 @@ server:
     session:
       timeout: 20m
 
-hikari:
-  minimum-idle: 3
-  maximum-pool-size: 5
-  max-lifetime: 600000
-  connection-test-query: SELECT 1
+
+
+logging:
+  level:
+    org:
+      hibernate: ERROR
+      springframework:
+        web: DEBUG
+    root: WARN
+  pattern:
+    file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
+    console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
+  file: app.log

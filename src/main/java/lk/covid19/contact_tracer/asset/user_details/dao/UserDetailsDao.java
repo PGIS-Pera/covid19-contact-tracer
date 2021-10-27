@@ -10,4 +10,6 @@ public interface UserDetailsDao extends JpaRepository< UserDetails, Integer > {
   UserDetails findFirstByOrderByIdDesc();
 
   UserDetails findByNic(String nic);
+
+  UserDetails findByEmail(String email);
 }

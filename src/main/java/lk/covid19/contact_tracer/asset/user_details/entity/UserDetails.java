@@ -33,7 +33,7 @@ public class UserDetails extends AuditEntity {
   @Column( nullable = false )
   private String number;
 
-  @Size( min = 5, message = "At least 5 characters should be included calling name" )
+  @Size( min = 3, message = "At least 3 characters should be included calling name" )
   private String callingName;
 
   @Size( max = 12, min = 10, message = "NIC number is contained numbers between 9 and X/V or 12 " )

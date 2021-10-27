@@ -46,11 +46,10 @@ public class UserServiceImpl implements UserService {
   }
 
   @Cacheable
-  public boolean delete(Integer id) {
+  public User delete(Integer id) {
     User user = userDao.getById(id);
     user.setEnabled(false);
-    userDao.save(user);
-    return false;
+    return userDao.save(user);
   }
 
   @Cacheable

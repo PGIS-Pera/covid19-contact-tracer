@@ -5,23 +5,31 @@
   <title >Thymeleaf Springboot </title >
 </head >
 <body >
+
+<!--Custom CSS-->
+<link data-th-href="@{/css/successMessage.css}" media="all" rel="stylesheet" type="text/css" />
 <div class="container-fluid" >
-  <div class="row" >
-    <div class="col-md-4 bg-transparent offset-md-4" >
-      <div class="alert alert-success" role="alert" >
-        <h3 class="font-italic font-weight-bolder" data-th-text="${successMessage}" ></h3 >
-        <button class="btn btn-primary btn-lg mt-2" data-th-href="${'/home'}" >
-          Login
-          <i class="fas fa-sign-in-alt" aria-hidden="true" ></i >
-        </button >
-      </div >
+  <div class="card" data-tilt data-tilt-scale="0.95" data-tilt-startY="40" >
+    <div class="welcome" >
+      Congratulation !
     </div >
+    <div class="year" >
+      <h3 class="font-italic font-weight-bolder" data-th-text="${successMessage}" ></h3 >
+    </div >
+    <a data-th-href="${'/login'}" >
+      <button class="btn btn-primary btn-lg mt-2" >
+        Login
+        <i class="fas fa-sign-in-alt" aria-hidden="true" ></i >
+      </button >
+    </a >
   </div >
 </div >
 <!--footer include-->
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <!--script include-->
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<!-- partial -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js' ></script >
 
 </body >
 </html >

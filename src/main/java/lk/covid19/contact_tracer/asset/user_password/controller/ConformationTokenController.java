@@ -4,6 +4,7 @@ package lk.covid19.contact_tracer.asset.user_password.controller;
 import lk.covid19.contact_tracer.asset.role.service.RoleService;
 import lk.covid19.contact_tracer.asset.user.entity.User;
 import lk.covid19.contact_tracer.asset.user.service.UserService;
+import lk.covid19.contact_tracer.asset.user_details.service.UsersDetailsService;
 import lk.covid19.contact_tracer.asset.user_password.entity.ConformationToken;
 import lk.covid19.contact_tracer.asset.user_password.service.ConformationTokenService;
 import lk.covid19.contact_tracer.util.service.CommonService;
@@ -29,6 +30,7 @@ public class ConformationTokenController {
   private final RoleService roleService;
   private final CommonService commonService;
   private final DateTimeAgeService dateTimeAgeService;
+  private final UsersDetailsService usersDetailsService;
 
 
   @GetMapping( value = "/forgottenPassword" )
@@ -46,7 +48,7 @@ public class ConformationTokenController {
       return "user/register";
     }
     //check if there is any user on system
-    User user = userService.findByUserName(email);
+    User user = userService.findByUserName(usersDetailsService.findByEmail(email).getUser().getUsername());
     //before create the token need to check there is user on current email
     // if not create token else send forgotten password form to fill
     if ( user != null && newOrOld == null ) {

@@ -2,6 +2,7 @@ package lk.covid19.contact_tracer.asset.user_details.service;
 
 import lk.covid19.contact_tracer.asset.user_details.entity.UserDetails;
 
+
 import java.util.List;
 
 public interface UsersDetailsService {
@@ -19,4 +20,5 @@ public interface UsersDetailsService {
 
   UserDetails findLastUserDetails();
 
+  UserDetails findByEmail(String email);
 }

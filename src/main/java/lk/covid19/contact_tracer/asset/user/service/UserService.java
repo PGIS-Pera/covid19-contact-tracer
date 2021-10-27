@@ -13,7 +13,7 @@ public interface UserService {
 
   User persist(User user);
 
-  boolean delete(Integer id);
+  User delete(Integer id);
 
   List< User > search(User user);
 

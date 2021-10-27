@@ -14,9 +14,10 @@
       </legend >
       <div class="form-label-group" >
         <input id="email" class="form-control" type="email" name="email"
-               data-th-placeholder="${newOrOld=='new'?'Type your Email Here':'Registered username '}"
+               data-th-placeholder="${newOrOld=='new'?'Type your Email Here':'Enter your email '}"
                required >
-        <label for="email" >User name </label >
+        <label for="email" data-th-text="${newOrOld=='new'?'Type your Email Here':'Enter your email '}" >User
+                                                                                                         name </label >
       </div >
 
       <div class="row container" data-th-if="${message!=null}" >

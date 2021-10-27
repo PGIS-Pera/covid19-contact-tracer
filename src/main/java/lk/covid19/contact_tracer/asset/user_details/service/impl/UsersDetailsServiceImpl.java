@@ -107,4 +107,8 @@ public class UsersDetailsServiceImpl implements UsersDetailsService {
   public UserDetails findLastUserDetails() {
     return userDetailsDao.findFirstByOrderByIdDesc();
   }
+
+  public UserDetails findByEmail(String email) {
+    return userDetailsDao.findByEmail(email);
+  }
 }

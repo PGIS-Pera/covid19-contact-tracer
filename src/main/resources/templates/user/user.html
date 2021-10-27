@@ -50,12 +50,12 @@
             <a class="btn btn-primary btn-sm" id="userEdit"
                data-th-href="${'/user/edit/' + user.id}" ><i
                   class="fa fa-edit" ></i >&nbsp;Edit</a >
-            <a class="btn btn-danger btn-sm" id="userRemove"
+            <a class="btn btn-warning btn-sm" id="userRemove"
                data-th-href="${'/user/remove/' + user.id}"
                data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
             ><i
                   aria-hidden="true" class="fa fa-trash" ></i >
-              Delete</a >
+              Disable</a >
           </th >
         </tr >
         </tbody >

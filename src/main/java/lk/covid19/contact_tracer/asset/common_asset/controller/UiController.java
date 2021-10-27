@@ -46,13 +46,9 @@ public class UiController {
     return "login/login";
   }
 
-  @GetMapping( value = {"/unicodeTamil"} )
+  @GetMapping( value = {"/test"} )
   public String getUnicodeTamil() {
-    return "fragments/unicodeTamil";
+    return "user/successMessage";
   }
 
-  @GetMapping( value = {"/unicodeSinhala"} )
-  public String getUnicodeSinhala() {
-    return "fragments/unicodeSinhala";
-  }
 }
