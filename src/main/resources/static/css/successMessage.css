@@ -1,0 +1,115 @@
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Sacramento&display=swap");
+
+::-webkit-scrollbar-button {
+    display: none;
+}
+
+::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    cursor: pointer;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    width: calc(2px * 2);
+    border: 2px solid rgba(26, 26, 26, 0);
+}
+
+::-webkit-scrollbar-track-piece {
+    background: transparent;
+    width: calc(2px / 2);
+    border: 2px solid rgba(26, 26, 26, 0);
+}
+
+body {
+    scrollbar-face-color: rgba(255, 255, 255, 0.15);
+    scrollbar-track-color: transparent;
+}
+
+div {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    font-size: 5vmin;
+}
+
+body {
+    display: grid;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: "Sacramento", cursive;
+    color: #fff;
+    background: #333;
+    background-image: radial-gradient(ellipse at bottom left, #00a3cb 40%, rgba(0, 163, 203, 0) 40%), radial-gradient(ellipse at top right, #00a3cb 30%, rgba(0, 163, 203, 0) 30%), linear-gradient(to right, #625793 0%, #625793 33%, #d55d64 33%, #d55d64 66%, #e49129 66%);
+    background-size: 50% 100%;
+}
+
+body .message {
+    position: absolute;
+    right: 0.5vw;
+    top: 1vw;
+    max-width: 60vw;
+    font-size: 12px;
+    font-family: "Open Sans", sans-serif;
+}
+
+body .message a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid #444;
+}
+
+body .message a:hover {
+    border-width: 3px;
+}
+
+body .card {
+    margin: auto;
+    padding: 2em;
+    border-radius: 1em;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+    background: rgba(255, 255, 255, 0.2);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    transform: perspective(500px);
+    transform-style: preserve-3d;
+}
+
+body .card .welcome {
+    font-family: "Sacramento", cursive;
+    transform: translateZ(20px);
+}
+
+body .card .year {
+    font-family: "Great Vibes", cursive;
+    font-size: 2.5em;
+}
+
+body .card .year span {
+    display: block;
+    transform: translateZ(40px);
+}
+
+body .card .year span:nth-child(2) {
+    padding-left: 1em;
+    transform: translateZ(60px);
+}
+
+body .card .year span:nth-child(3) {
+    padding-left: 2em;
+    transform: translateZ(80px);
+}
