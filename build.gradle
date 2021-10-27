@@ -4,8 +4,8 @@ plugins {
 	id 'java'
 }
 
-group = 'lk.ccontact_tracer'
-version = '0.0.1'
+group = 'lk.contact_tracer'
+version = '1.0.1'
 sourceCompatibility = '11'
 
 configurations {

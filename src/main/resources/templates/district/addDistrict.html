@@ -42,6 +42,7 @@
           Province </label >
 
         <select class="form-control col-md-9" data-th-field="*{province}" >
+          <option value="" disabled selected >Please select</option >
           <option data-th-each="province : ${provinces}"
                   data-th-text="${province.province}"
                   data-th-value="${province}" ></option >

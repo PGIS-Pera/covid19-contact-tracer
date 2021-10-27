@@ -40,3 +40,6 @@ out/
 
 #Personal details removed
 !**/src/main/resources/application.yml
+
+#log files removed
+*.log

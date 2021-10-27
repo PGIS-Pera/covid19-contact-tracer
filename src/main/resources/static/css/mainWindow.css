@@ -1,5 +1,5 @@
 .card {
-    border-radius: 5px 0 5px 0;
+    border: none;
     background-color: hsl(0deg 87% 12%);
     text-align: center;
     transition: all .8s linear;
@@ -42,46 +42,4 @@
 .card-header:hover {
     background-color: black;
     transition: background-color 1000ms linear;
-}
-
-#accordianId1 > .card, #accordianId1 > .card {
-    background: linear-gradient(to right, gold, darkorange);
-    color: white;
-    --width: 250px;
-    --height: calc(var(--width) / 3);
-    width: var(--width);
-    height: var(--height);
-    text-align: center;
-    line-height: var(--height);
-    font-size: calc(var(--height) / 2.5);
-    font-family: sans-serif;
-    letter-spacing: 0.2em;
-    border: 1px solid darkgoldenrod;
-    border-radius: 2em;
-    transform: perspective(500px) rotateY(-15deg);
-    text-shadow: 6px 3px 2px rgba(0, 0, 0, 0.2);
-    box-shadow: 2px 0 0 5px rgba(0, 0, 0, 0.2);
-    transition: 0.5s;
-    position: relative;
-    overflow: hidden;
-}
-
-#accordianId1 > .card:hover, #accordianId > .card:hover {
-    transform: perspective(500px) rotateY(15deg);
-    text-shadow: -6px 3px 2px rgba(0, 0, 0, 0.2);
-    box-shadow: -2px 0 0 5px rgba(0, 0, 0, 0.2);
-}
-
-#accordianId1 > .card::before, #accordianId > .card::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to right, transparent, white, transparent);
-    left: -100%;
-    transition: 0.5s;
-}
-
-#accordianId1 > .card:hover::before, #accordianId > .card:hover::before {
-    left: 100%;
 }
