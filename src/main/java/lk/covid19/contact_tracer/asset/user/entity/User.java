@@ -38,7 +38,7 @@ public class User extends AuditEntity {
   @Column( nullable = false )
   private boolean enabled;
 
-  @OneToOne( cascade = CascadeType.ALL )
+  @OneToOne( cascade = CascadeType.ALL, fetch = FetchType.EAGER )
   @JoinColumn( name = "user_details_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey( name =
       "fk_user_vs_user_details" ) )
   private UserDetails userDetails;

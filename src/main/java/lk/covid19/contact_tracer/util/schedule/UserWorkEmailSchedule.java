@@ -7,17 +7,21 @@ import lk.covid19.contact_tracer.asset.report.model.UserVsReportDTO;
 import lk.covid19.contact_tracer.asset.report.service.ReportService;
 import lk.covid19.contact_tracer.util.service.EmailService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-@Configuration
-@EnableScheduling
+@Component
 @RequiredArgsConstructor
 public class UserWorkEmailSchedule {
   private final ReportService reportService;
@@ -26,25 +30,24 @@ public class UserWorkEmailSchedule {
   private final String FORM = "-(Covid19 Contact Tracer - Sri Lanka - (not reply))";
   private final String SUBJECT = " Day Report and Summary Regarding LK";
 
-  @Scheduled( cron = "0 0 0 * * *" )
-  void fourthSchedule() {
+  @Scheduled( cron = "0 0 0 * * *", zone = "Asia/Colombo" )
+  public void userWorkEmailSchedule() {
     List< UserVsReportDTO > userVsReportDTOS = reportService.userVsReport();
+    if ( userVsReportDTOS.size() > 0 ) {
+      userVsReportDTOS.forEach((x) -> {
+        try {
+          Mail mail = new Mail();
+          mail.setFrom(FORM);
+          mail.setMailTo(x.getEmail());
+          mail.setSubject(x.getLocalDate().toString() + SUBJECT);
+          mail.setHtmlContent(makeHtml(x.getName(), x.getAttributeAndCounts()));
 
-    userVsReportDTOS.forEach((x) -> {
-
-      try {
-        Mail mail = new Mail();
-        mail.setFrom(FORM);
-        mail.setMailTo(x.getEmail());//replace with your desired email
-        mail.setSubject(x.getLocalDate().toString() + SUBJECT);
-        mail.setHtmlContent(makeHtml(x.getName(), x.getAttributeAndCounts()));
-
-
-        emailService.sendEmail(mail);
-      } catch ( MessagingException | IOException e ) {
-        e.printStackTrace();
-      }
-    });
+          emailService.sendEmail(mail);
+        } catch ( MessagingException | IOException e ) {
+          e.printStackTrace();
+        }
+      });
+    }
   }
 
   private String makeHtml(String name, List< AttributeAndCount > attributeAndCounts) {

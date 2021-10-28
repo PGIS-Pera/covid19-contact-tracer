@@ -32,7 +32,6 @@ public class ReportServiceImpl implements ReportService {
   private final GramaNiladhariService gramaNiladhariService;
   private final DistrictService districtService;
   private final DsOfficeService dsOfficeService;
-  private final UsersDetailsService usersDetailsService;
   private final UserService userService;
   private final CommonService commonService;
   private final DateTimeAgeService dateTimeAgeService;
@@ -108,9 +107,8 @@ public class ReportServiceImpl implements ReportService {
 
   public List< UserVsReportDTO > userVsReport() {
     LocalDate reportDay = LocalDate.now().minusDays(1);
-    List< Turn > turns = turnService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateEndInDay(reportDay),
-                                                              dateTimeAgeService.dateTimeToLocalDateStartInDay
-                                                                  (reportDay));
+    List< Turn > turns = turnService.findByCreatedAtIsBetween(dateTimeAgeService.dateTimeToLocalDateStartInDay
+        (reportDay), dateTimeAgeService.dateTimeToLocalDateEndInDay(reportDay));
 
     return getUserVsReportDTOS(reportDay, turns);
   }
@@ -126,7 +124,8 @@ public class ReportServiceImpl implements ReportService {
       List< Turn > turnUser = turns.stream().filter(y -> y.getCreatedBy().equals(x)).collect(Collectors.toList());
 
       Integer id = userService.findByUserName(x).getUserDetails().getId();
-      UserDetails userDetails = usersDetailsService.findById(id);
+
+      UserDetails userDetails = userService.findByUserName(x).getUserDetails();
       String email = userDetails.getEmail();
       String name = userDetails.getTitle().getTitle() + " " + userDetails.getName();
 
