@@ -48,7 +48,13 @@ public class ConformationTokenController {
       return "user/register";
     }
     //check if there is any user on system
-    User user = userService.findByUserName(usersDetailsService.findByEmail(email).getUser().getUsername());
+    UserDetails userDetails = usersDetailsService.findByEmail(email);
+    if ( userDetails == null ) {
+      model.addAttribute("message", "Do not try to mess up with me. you are not an user in our system please contact " +
+          "admin.");
+      return "user/register";
+    }
+    User user = userService.findByUserName(userDetails.getUser().getUsername());
     //before create the token need to check there is user on current email
     // if not create token else send forgotten password form to fill
     if ( user != null && newOrOld == null ) {
