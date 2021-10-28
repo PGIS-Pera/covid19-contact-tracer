@@ -4,6 +4,7 @@ package lk.covid19.contact_tracer.asset.user_password.controller;
 import lk.covid19.contact_tracer.asset.role.service.RoleService;
 import lk.covid19.contact_tracer.asset.user.entity.User;
 import lk.covid19.contact_tracer.asset.user.service.UserService;
+import lk.covid19.contact_tracer.asset.user_details.entity.UserDetails;
 import lk.covid19.contact_tracer.asset.user_details.service.UsersDetailsService;
 import lk.covid19.contact_tracer.asset.user_password.entity.ConformationToken;
 import lk.covid19.contact_tracer.asset.user_password.service.ConformationTokenService;
