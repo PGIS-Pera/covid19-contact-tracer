@@ -14,6 +14,8 @@ import lk.covid19.contact_tracer.asset.location_interact.entity.LocationInteract
 import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.person.entity.enums.PersonStatus;
 import lk.covid19.contact_tracer.asset.person.service.PersonService;
+import lk.covid19.contact_tracer.asset.turn.entity.Turn;
+import lk.covid19.contact_tracer.asset.turn.service.TurnService;
 import lk.covid19.contact_tracer.util.service.CommonService;
 import lk.covid19.contact_tracer.util.service.DateTimeAgeService;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +51,7 @@ public class PersonController {
   private final CommonService commonService;
   private final GramaNiladhariService gramaNiladhariService;
   private final DateTimeAgeService dateTimeAgeService;
+  private final TurnService turnService;
 
   @GetMapping
   public ModelAndView showPersonsPage(@RequestParam( "pageSize" ) Optional< Integer > pageSize,
@@ -141,6 +144,31 @@ public class PersonController {
   @GetMapping( "/turn/{id}" )
   public String addNewTurn(@PathVariable Integer id, Model model) {
     Person person = personService.findById(id);
+
+    List< Turn > turns = turnService.findByPerson(person);
+
+    boolean validOrNot = true;
+
+    for ( Turn turn : turns ) {
+      PersonStatus personStatus = turn.getPersonStatus();
+      if ( personStatus.equals(PersonStatus.GENERAL) ) {
+        validOrNot = false;
+        break;
+      }
+      if ( personStatus.equals(PersonStatus.RECOVER) ) {
+        validOrNot = false;
+        break;
+      }
+    }
+
+    if ( validOrNot ) {
+      model.addAttribute("message", "This person already has a turn therefore no need to add another turn please find" +
+          " this person turn and edit.");
+      model.addAttribute("personName", person.getName());
+      model.addAttribute("personRegNumber", person.getCode());
+      return "turn/alreadyTurnMessage";
+    }
+
     person.setAge(dateTimeAgeService.getDateDifference(person.getDateOfBirth(), LocalDate.now()));
     model.addAttribute("personDetail", person);
     model.addAttribute("gramaNiladhariSearchUrl", MvcUriComponentsBuilder

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head data-th-replace="~{fragments/header :: headerFragment}" >
+  <meta charset="UTF-8" >
+  <title >Thymeleaf Springboot </title >
+</head >
+<body >
+<!--Custom CSS-->
+<link data-th-href="@{/css/successMessage.css}" media="all" rel="stylesheet" type="text/css" />
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+
+<div class="container-fluid" >
+  <div class="row text-center" >
+    <div class="col" >
+      <span class="font-weight-bold h2" >                    Message </span >
+    </div >
+    <div class="col" >
+      <a class="btn btn-primary" data-th-href="${'/home'}" tabindex="2" >
+        <i class="fas fa-home" style="font-size: 20px" ></i >&nbsp;&nbsp;Home
+      </a >
+    </div >
+  </div >
+</div >
+
+<div class="container-fluid" >
+  <div class="card" data-tilt data-tilt-scale="0.95" data-tilt-startY="40" >
+    <div class="welcome" >
+      All ready turn on system !
+      <br >
+      <i class="fas fa-exclamation-triangle" ></i >
+    </div >
+    <div class="year" >
+      <h3 class="font-italic font-weight-bolder" data-th-text="${message}" ></h3 >
+      <br >
+      <p > Person Register Number :
+        <span data-th-text="${personRegNumber}" ></span >
+        <br >
+           Name :
+        <span data-th-text="${personName}" ></span >
+      </p >
+    </div >
+    <a data-th-href="${'/turn'}" >
+      <button class="btn btn-primary btn-sm mt-2 mr-0" >
+        Turns
+        <i class="fas fa-sign-in-alt" aria-hidden="true" ></i >
+      </button >
+    </a >
+  </div >
+</div >
+
+<!--footer fragment-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
+<!--script include-->
+<div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<!-- partial -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js' ></script >
+</body >
+</html >
