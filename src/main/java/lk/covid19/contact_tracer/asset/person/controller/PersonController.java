@@ -145,31 +145,6 @@ public class PersonController {
   public String addNewTurn(@PathVariable Integer id, Model model) {
     Person person = personService.findById(id);
 
-    List< Turn > turns = turnService.findByPerson(person);
-
-    boolean validOrNot = true;
-
-    for ( Turn turn : turns ) {
-      PersonStatus personStatus = turn.getPersonStatus();
-      if ( personStatus.equals(PersonStatus.GENERAL) ) {
-        validOrNot = false;
-        break;
-      }
-      if ( personStatus.equals(PersonStatus.RECOVER) ) {
-        validOrNot = false;
-        break;
-      }
-    }
-
-    if ( validOrNot ) {
-      model.addAttribute("message", "This person already has a turn or we lost him/her, therefore no need to add " +
-          "another turn please find" +
-          " this person turn and edit.");
-      model.addAttribute("personName", person.getName());
-      model.addAttribute("personRegNumber", person.getCode());
-      return "turn/alreadyTurnMessage";
-    }
-
     person.setAge(dateTimeAgeService.getDateDifference(person.getDateOfBirth(), LocalDate.now()));
     model.addAttribute("personDetail", person);
     model.addAttribute("gramaNiladhariSearchUrl", MvcUriComponentsBuilder
