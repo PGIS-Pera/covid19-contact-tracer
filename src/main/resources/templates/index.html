@@ -98,59 +98,295 @@
     </div >
   </div >
 </div >
-<div class="container-fluid" >
-  <!--  purpose of this report-->
-  <div class="row mt-3" >
-    <div class="col-12 text-center" >
-      <p class="h3 text-capitalize" >Why we create this</p >
-    </div >
-    <div class="col-md-6 p-2 ppt-content" >
-      <div class="col-12 text-center" >
-        <p class="h5 text-capitalize" >Heading one</p >
+
+<!--site content -->
+<div class="container ppt-background" >
+  <!--Introduction-->
+  <div class="row " >
+    <div class="container-fluid" >
+      <div class="col-md-12  p-2 ppt-content" >
+        <div class="col-12 text-center" >
+          <p class="h5 text-capitalize" >Introduction of the system</p >
+        </div >
+        <div class="row" >
+          <div class="col justify-content-between" >
+            <p >Covid 19 has become a global pandemic since late 2019. Matter of fact Sri Lanka became a severe victim
+                of
+                the pandemic due to aggressively spreading different variants. Prevention is the only option remaining
+                for
+                Sri Lankans as the country exceeds all the healthcare thresholds by now. Currently the main challenge
+                faced
+                by both the healthcare officials and the citizens is to trace the positive patients and convey the
+                locations
+                they visited in the last two weeks with other potential contacts.
+            </p >
+            <p >
+              According to the World Health Organization (WHO), contact tracing is the process of identifying all people
+              that a COVID-19 patient has come in contact with in the last two weeks [<a
+                  href="https://www.who.int/news-room/feature-stories/detail/tracking-covid-19-contact-tracing-in-the-digital-age"
+                  target="_blank" >1</a >]. It has been an impossible task for
+              an infected person to remember all the locations he/she visited in the last two weeks, which leads to a
+              complex contact tracing process. As a result of that, an infected patient may spread the virus in the
+              community.
+            </p >
+            <p >
+              Furthermore, accessing or tracing personal records of a citizen is prevented and covered under the
+              legislation
+              of each county and protected by privacy policies of the same. Therefore, no authority can force a person
+              to
+              reveal his/her travelling history without a proper legal procedure. It has completely become the
+              accountability of every citizen of a community to be self-aware about individuals' health and safety while
+              taking the responsibility to prevent spreading the deadly virus in the society.
+            </p >
+            <p >
+              The main intention behind the proposed “Covid19 Contact Tracer” is to assist people to keep track of their
+              own
+              routing history and help healthcare officials to manage the positive cases and notify their close-contacts
+              more effectively, efficiently and reliably.
+            </p >
+            <figure >
+              <img data-th-src="@{img/propose system.png}"
+                   alt="propose system" >
+              <figcaption >propose system diagram</figcaption >
+            </figure >
+          </div >
+        </div >
       </div >
-      <p >
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-        Consequuntur dicta eaque eos excepturi iure nemo neque ratione
-        sit ullam veritatis!
-      </p >
     </div >
-    <div class="col-md-6 p-2 ppt-content" >
-      <div class="col-12 text-center" >
-        <p class="h5 text-capitalize" >Heading one</p >
+  </div >
+  <!--  products perspective-->
+  <div class="row " >
+    <div class="container-fluid" >
+      <div class="col-md-12  p-2 ppt-content" >
+        <div class="col-12 text-center" >
+          <p class="h5 text-capitalize" >Product Perspective</p >
+        </div >
+        <div class="row" >
+          <div class="col justify-content-between" >
+            <p >“Covid19+ve Contact Aware App” is a web-based application to help authorities to manage positive covid19
+                cases up to the level of Grama Niladhari (GN) division, with an optional mobile application for general
+                users to look back their steps in past days and to be notified about the potentially risk places they
+                visited in the last week with respect to their present locations (GN divisions).
+            </p >
+            <p >
+              System maintains a database where the necessary details of a patient (covid19 positive patient) are
+              recorded and updated for two weeks from the day reported until he/she gets a negative test result. Just
+              after an authorized officer (e.g. Public Health Inspector) registers and updates a record of a patient, a
+              summary of the places, where the patient visited within the last 5 days, is generated.
+            </p >
+            <p >
+              A recognized user-level hierarchy is employed in the system to filter records and generate the reports
+              when requested. For instance, descriptive details to the overview cases in each GN to MOH or District to
+              Provincial level can be produced to assist the decision makers to make rational decisions.
+            </p >
+            <p >
+              The system is capable of producing textural and/or graphical outputs that can be used to make decisions in
+              GN or district level isolation or lockdown (area fusing), imposing inter-provincial travel restrictions,
+              and other important criteria defined and implemented by the director general of health, Sri Lanka [<a
+                  href="https://www.epid.gov.lk/web/" target="_blank" >2</a >]. The
+              system architecture consists of two main components namely web application and mobile application. Each
+              component is equipped with several modules and associated services.
+            </p >
+          </div >
+        </div >
       </div >
-      <p >
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea
-        eaque nemo quas reiciendis, sequi velit veniam veritatis? Hic,
-        labore, voluptatibus?
-      </p >
+    </div >
+  </div >
+  <!--  Feasibility Study-->
+  <div class="row " >
+    <div class="container-fluid" >
+      <div class="col-md-12  p-2 ppt-content" >
+        <div class="col-12 text-center" >
+          <p class="h5 text-capitalize" >Feasibility Study</p >
+        </div >
+        <div class="row" >
+          <div class="col justify-content-between" >
+            <p >The main concern of the proposed application was to ensure user acceptance, since such systems are
+                directly influencing an individual’s privacy. According to the usability statistics and analysis reports
+                from the countries which are using contact-tracing apps, most of the users are reluctant or refuse to
+                use apps because they believe that those apps are threatening their privacy and data. “Covid 19 Contact
+                Tracer” highly values the privacy and data protection of a user therefore, sensitive data such as
+                location history and date, time and duration of a stay at a place of a user is recorded anonymously.
+                That is, the user identity is completely discarded.
+            </p >
+            <p >
+              When considering the technical feasibility, the available technologies confirm that the application
+              development process can be initiated with state-of-the-art techniques and tools. Github (github.com) was
+              selected as the project/task management tool whereas Slack (slck.com) is the business communication
+              platform throughout the application development lifecycle.
+
+            </p >
+            <p >
+              “Covid 19 Contact Tracer'' application development team is a voluntary non-profit group of developers and
+              designers affiliated with the Postgraduate Institute of Science, University of Peradeniya, Sri Lanka. The
+              primary intention of the team is to contribute to the community to suppress the deadly virus and its
+              drastic spread. Therefore, the economic feasibility of the initial stages of the life cycle has not been a
+              constraint, i.e. the economic feasibility of the application is confirmed.
+            </p >
+          </div >
+        </div >
+      </div >
+    </div >
+  </div >
+  <!--  Requirement Gathering-->
+  <div class="row " >
+    <div class="container-fluid" >
+      <div class="col-md-12  p-2 ppt-content" >
+        <div class="col-12 text-center" >
+          <p class="h5 text-capitalize" >Requirement Gathering</p >
+        </div >
+        <div class="row" >
+          <div class="col justify-content-between" >
+            <p >Requirements are mainly identified based on the existing applications, client’s specifications and
+                monitoring the operations in real world business processes. There were regular one-on-one interviews
+                with the client to collect necessary information to define the requirements while a pre-arranged
+                stakeholder meeting was held to define the business process in the context of contact tracing, treatment
+                and isolation or quarantine. In the business analysis process, public health inspectors (PHI) and
+                doctors of MOH participated.
+
+            </p >
+            <p >
+              Basically, the underlying business logic was defined based on the existing contact tracing applications
+              introduced by most of the developed countries such as New Zealand , Australia and Norway . Moreover,
+              COVID-19 related information sources from the ministry of health, Sri Lanka , Epidemiology Unit, Ministry
+              of Health, Sri Lanka, and National COVID19 Surveillance System of Sri Lanka, Ministry of Health, Sri Lanka
+              were regularly referred and strictly followed when defining requirements and procedures.
+
+            </p >
+            <p >
+              Additionally, brainstorming and reverse-engineering techniques were also used to identify possible
+              solutions to problems, and clarify details of opportunities. User stories were created based on the
+              requirements gathered from different means.
+            </p >
+          </div >
+        </div >
+      </div >
+    </div >
+  </div >
+  <!--  Requirement Specification-->
+  <div class="row " >
+    <div class="container-fluid" >
+      <div class="col-md-12  p-2 ppt-content" >
+        <div class="col-12 text-center" >
+          <p class="h5 text-capitalize" >Requirement Specification</p >
+        </div >
+        <div class="row" >
+          <div class="col justify-content-between" >
+            <p >Once the requirements are gathered based on the aforementioned techniques and various sources including
+                the client’s definitions in natural language, a list of primary and mandatory requirements for a
+                Covid-19 contact tracing application are technically specified as below.
+            </p >
+            <div class="row" >
+              <div class="col-12 text-center" >
+                <p class="h5 text-capitalize" >Functional Requirements</p >
+              </div >
+              <div class="col justify-content-between" >
+                <p >The initial version of the application supports three user levels with different privileges,
+                    administrator, PHI and general user. Each has a different set of unique functionalities as well as
+                    common functions. In addition to the main roles in the current version, there is a provision for
+                    additional user types as well.
+                </p >
+                <p >
+                  The administrator should be able to do the following functions:
+                </p >
+                <ul class="" >
+                  <li class="" >Add user</li >
+                  <li class="" >Add role</li >
+                  <li class="" >Assign user role</li >
+                  <li class="" >Add GN</li >
+                  <li class="" >Add DS</li >
+                  <li class="" >Add district</li >
+                  <li class="" >Add location</li >
+                  <li class="" >View places</li >
+                  <li class="" >Manage GN</li >
+                  <li class="" >Manage DS</li >
+                  <li class="" >Manage district</li >
+                  <li class="" >Generate reports</li >
+                  <li class="" >Login</li >
+                  <li class="" >Change password</li >
+                  <li class="" >Edit profile</li >
+                  <li class="" >Logout</li >
+                </ul >
+                <p >
+                  The PHI should be able to perform the following tasks:
+                </p >
+                <ul class="" >
+                  <li class="" >Add person</li >
+                  <li class="" >Add location</li >
+                  <li class="" >Manage GN</li >
+                  <li class="" >Generate reports</li >
+                  <li class="" >Login</li >
+                  <li class="" >Change password</li >
+                  <li class="" >Edit profile</li >
+                  <li class="" >Logout</li >
+                  <li class="" >Manage location</li >
+                  <li class="" >Edit infected turn</li >
+                  <li class="" >Infected turn management</li >
+                </ul >
+                <p >
+                  The general user is the one who visits the application without authentication. He has the access to
+                  the following function:
+                </p >
+                <ul class="" >
+                  <li class="" >View recent places
+                  </li >
+                </ul >
+                <p >
+                  In addition to the primary user levels, some of the above functional requirements are dependent on
+                  external systems/services namely Mobile app, Map API and Google location. They are associated with the
+                  following functions:
+                </p >
+                <ul class="" >
+                  <li class="" >Add location</li >
+                  <li class="" >View recent places</li >
+                  <li class="" >Login</li >
+                </ul >
+              </div >
+            </div >
+          </div >
+        </div >
+      </div >
+    </div >
+  </div >
+  <!--  Non-Functional Requirements-->
+  <div class="row " >
+    <div class="container-fluid" >
+      <div class="col-md-12  p-2 ppt-content" >
+        <div class="col-12 text-center" >
+          <p class="h5 text-capitalize" >Non-Functional Requirements</p >
+        </div >
+        <div class="row" >
+          <div class="col justify-content-between" >
+            <p >There is an important and increased interest in non-functional requirements of applications used for
+                contact tracing of infected patients in the context of COVID-19 epidemic. Those non-functional
+                requirements mainly include the security of application users (or public safety), privacy impacts, and
+                data protection. Primarily, the concept of "Contact Tracing” application possibly involves a number of
+                risks due to the contact and health data collected and stored in a database.
+            </p >
+            <p >
+              With privacy as one of the main concerns, the proposed system ensures user privacy by anonymization of an
+              individual's details. Especially the location history of a person (possibly a patient) is recorded without
+              disclosing the identity. Therefore, no identification is visible to the other users.
+            </p >
+            <p >
+              Information integrity plays a significant role in the success of the “contact tracing” concept. Though the
+              accuracy, reliability, and consistency of information are vital, only minimal data or metadata required
+              for the application is stored upon the user's consent.
+            </p >
+            <p >
+              As a non-functional requirement, the evolution quality of the application is achieved by introducing the
+              extensibility, scalability and maintainability. That is by the completion of the first phase of
+              development, a provision to scale and extend the application scope is adopted.
+            </p >
+          </div >
+        </div >
+      </div >
     </div >
   </div >
 </div >
-<div class="container-fluid" >
-  <div class="div-sample" >
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam asperiores assumenda aut ducimus error ex id
-    inventore, iste labore laborum magnam molestias natus nihil odio possimus provident quae quaerat quibusdam quis quo
-    recusandae saepe, sint soluta tempora veniam, vero voluptatibus.
-  </div >
-</div >
 
-<footer class="page-footer" >
-  <div class="footer-copyright" >
-    <div class="container-fluid text-center text-info" >
-      <p >
-        <strong >
-          <i >
-            <a href="http://www.pgis.pdn.ac.lk" target="_blank" class="text-dark" >
-              &copy;<span class="mr-1 ml-1" id="currentYear" ></span > Postgraduate Institute Science University of
-              Peradeniya -
-              Sri Lanka </a >
-          </i >
-        </strong >
-      </p >
-    </div >
-  </div >
-</footer >
-
+<!--footer include-->
+<div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <script src='https://code.jquery.com/jquery-2.2.4.min.js' ></script >
 <script src='https://codepen.io/MaciejCaputa/pen/EmMooZ.js' ></script >
 <script src="./js/index_script.js" ></script >

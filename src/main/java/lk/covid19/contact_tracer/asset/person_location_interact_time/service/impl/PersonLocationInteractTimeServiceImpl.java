@@ -10,6 +10,7 @@ import lk.covid19.contact_tracer.asset.location_interact.service.LocationInterac
 import lk.covid19.contact_tracer.asset.person_location_interact_time.dao.PersonLocationInteractTimeDao;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.entity.PersonLocationInteractTime;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.service.PersonLocationInteractTimeService;
+import lk.covid19.contact_tracer.asset.turn.service.TurnService;
 import lk.covid19.contact_tracer.util.service.DateTimeAgeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.*;

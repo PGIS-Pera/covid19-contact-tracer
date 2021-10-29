@@ -125,11 +125,10 @@ public class PersonServiceImpl implements PersonService {
       x.setPerson(personDb);
       x.setPersonStatus(PersonStatus.INFECTED);
       x.getPersonLocationInteractTimes().forEach(y -> {
-        y.setTurn(x);
+        y.setTurn(turnService.persist(x));
         personLocationInteractTimes.add(y);
       });
     });
-
     personLocationInteractTimeService.persistAll(personLocationInteractTimes.stream().distinct().collect(Collectors.toList()));
     return personDb;
   }

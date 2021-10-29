@@ -262,3 +262,11 @@ header .overlay {
 .div-sample:hover::before {
     transform: rotateX(0);
 }
+
+ul {
+    list-style: square;
+}
+
+.ppt-background {
+    background-color: hsl(238deg 100% 6%);
+}

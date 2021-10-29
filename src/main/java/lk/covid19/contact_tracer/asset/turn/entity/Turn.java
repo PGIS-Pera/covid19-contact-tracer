@@ -36,7 +36,6 @@ public class Turn extends AuditEntity {
   private Person person;
 
   @OneToMany( mappedBy = "turn", cascade = {CascadeType.MERGE, CascadeType.PERSIST} )
-  @ToString.Exclude
   private List< PersonLocationInteractTime > personLocationInteractTimes;
 
   @OneToMany( mappedBy = "turn" )
