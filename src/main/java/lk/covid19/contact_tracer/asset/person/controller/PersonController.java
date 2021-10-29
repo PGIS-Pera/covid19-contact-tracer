@@ -162,7 +162,8 @@ public class PersonController {
     }
 
     if ( validOrNot ) {
-      model.addAttribute("message", "This person already has a turn therefore no need to add another turn please find" +
+      model.addAttribute("message", "This person already has a turn or we lost him/her, therefore no need to add " +
+          "another turn please find" +
           " this person turn and edit.");
       model.addAttribute("personName", person.getName());
       model.addAttribute("personRegNumber", person.getCode());
