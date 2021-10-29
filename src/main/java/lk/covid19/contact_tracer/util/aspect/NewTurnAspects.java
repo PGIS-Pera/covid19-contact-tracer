@@ -86,7 +86,6 @@ public class NewTurnAspects {
       newsServiceHashSet.addAll(newsService.findByGramaNiladhari(gramaNiladhari));
     }
 
-
     String locationListUrl = MvcUriComponentsBuilder
         .fromMethodName(PersonLocationInteractTimeController.class, "interactLocationSearchPage", "")
         .toUriString();

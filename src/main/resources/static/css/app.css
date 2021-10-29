@@ -152,6 +152,11 @@ a {
     color: hsl(0deg 0% 100%);
 }
 
+a > div {
+    background-color: black;
+    border: 1px solid seashell;
+}
+
 a:hover, button:hover {
     color: hsl(19deg 100% 13%);
     background-color: hsl(0deg 0% 100%);
