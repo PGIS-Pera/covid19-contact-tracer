@@ -123,8 +123,6 @@ public class ReportServiceImpl implements ReportService {
       UserVsReportDTO usernameVsTurnDTO = new UserVsReportDTO();
       List< Turn > turnUser = turns.stream().filter(y -> y.getCreatedBy().equals(x)).collect(Collectors.toList());
 
-      Integer id = userService.findByUserName(x).getUserDetails().getId();
-
       UserDetails userDetails = userService.findByUserName(x).getUserDetails();
       String email = userDetails.getEmail();
       String name = userDetails.getTitle().getTitle() + " " + userDetails.getName();
