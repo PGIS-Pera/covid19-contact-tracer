@@ -3,6 +3,7 @@ package lk.covid19.contact_tracer.asset.turn.service.impl;
 import lk.covid19.contact_tracer.asset.person.entity.enums.PersonStatus;
 import lk.covid19.contact_tracer.asset.person.service.PersonService;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.entity.PersonLocationInteractTime;
+import lk.covid19.contact_tracer.asset.person_location_interact_time.service.PersonLocationInteractTimeService;
 import lk.covid19.contact_tracer.asset.turn.dao.TurnDao;
 import lk.covid19.contact_tracer.asset.turn.entity.Turn;
 import lk.covid19.contact_tracer.asset.turn.service.TurnService;
@@ -26,10 +27,13 @@ import java.util.stream.Collectors;
 public class TurnServiceImpl implements TurnService {
   private final TurnDao turnDao;
   private final PersonService personService;
+  private final PersonLocationInteractTimeService personLocationInteractTimeService;
 
-  public TurnServiceImpl(TurnDao turnDao, @Lazy PersonService personService) {
+  public TurnServiceImpl(TurnDao turnDao, @Lazy PersonService personService,
+                         PersonLocationInteractTimeService personLocationInteractTimeService) {
     this.turnDao = turnDao;
     this.personService = personService;
+    this.personLocationInteractTimeService = personLocationInteractTimeService;
   }
 
   @Cacheable
@@ -45,15 +49,33 @@ public class TurnServiceImpl implements TurnService {
   @Caching( evict = {@CacheEvict( value = "turn", allEntries = true )}, put = {@CachePut( value = "turn", key =
       "#turn.id" )} )
   public Turn persist(Turn turn) {
-    if ( !turn.getPersonLocationInteractTimes().isEmpty() ) {
-      List< PersonLocationInteractTime > personLocationInteractTimes = new ArrayList<>();
-      turn.getPersonLocationInteractTimes().forEach(x -> {
-        x.setTurn(turn);
-        personLocationInteractTimes.add(x);
-      });
-      turn.setPersonLocationInteractTimes(personLocationInteractTimes);
+
+    if ( turn.getId() != null ) {
+      final Turn dbTurn = turnDao.getById(turn.getId());
+      if ( !turn.getPersonLocationInteractTimes().isEmpty() ) {
+        turn.getPersonLocationInteractTimes().forEach(x -> {
+          if ( x.getId() == null ) {
+            x.setTurn(dbTurn);
+            personLocationInteractTimeService.persist(x);
+          } else {
+            PersonLocationInteractTime personLocationInteractTime =
+                personLocationInteractTimeService.findById(x.getId());
+            if ( !personLocationInteractTime.getStopActive().equals(x.getStopActive()) ) {
+              personLocationInteractTimeService.persist(x);
+            }
+          }
+
+        });
+      }
+      if ( dbTurn.getIdentifiedDate().equals(turn.getIdentifiedDate()) ) {
+        turn = dbTurn;
+      } else {
+        turn = turnDao.save(dbTurn);
+      }
+    } else {
+      turn = turnDao.save(turn);
     }
-    return turnDao.save(turn);
+    return turn;
   }
 
   @CacheEvict( allEntries = true )

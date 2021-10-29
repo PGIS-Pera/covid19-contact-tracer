@@ -73,15 +73,15 @@ server:
     session:
       timeout: 20m
 
-logging:
-  level:
-    org:
-      hibernate: ERROR
-      springframework:
-        web: DEBUG
-    root: WARN
-  pattern:
-    file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
-    console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
-  file:
-    name: contact_tracer.log
+#logging:
+#  level:
+#    org:
+#      hibernate: ERROR
+#      springframework:
+#        web: DEBUG
+#    root: WARN
+#  pattern:
+#    file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
+#    console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
+#  file:
+#    name: contact_tracer.log

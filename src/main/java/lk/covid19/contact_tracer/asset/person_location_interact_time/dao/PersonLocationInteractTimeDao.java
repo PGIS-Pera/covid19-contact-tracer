@@ -20,4 +20,6 @@ public interface PersonLocationInteractTimeDao extends JpaRepository< PersonLoca
                                                                                                              LocalDateTime leaveAt1, StopActive active);
 
   List< LocationInteractTimeReport > findByArrivalAtBetween(LocalDateTime from, LocalDateTime now);
+
+  PersonLocationInteractTime findFirstByOrderByIdDesc();
 }

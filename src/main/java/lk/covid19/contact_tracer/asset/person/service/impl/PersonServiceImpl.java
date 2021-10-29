@@ -11,7 +11,6 @@ import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.person.entity.enums.PersonStatus;
 import lk.covid19.contact_tracer.asset.person.service.PersonService;
 import lk.covid19.contact_tracer.util.service.CommonService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 @CacheConfig( cacheNames = "person" )
 public class PersonServiceImpl implements PersonService {
 
@@ -31,6 +29,14 @@ public class PersonServiceImpl implements PersonService {
   private final CommonService commonService;
   private final TurnService turnService;
   private final PersonLocationInteractTimeService personLocationInteractTimeService;
+
+  public PersonServiceImpl(PersonDao personDao, CommonService commonService, TurnService turnService,
+                           PersonLocationInteractTimeService personLocationInteractTimeService) {
+    this.personDao = personDao;
+    this.commonService = commonService;
+    this.turnService = turnService;
+    this.personLocationInteractTimeService = personLocationInteractTimeService;
+  }
 
   @Cacheable
   public Page< Person > findAllPageable(Pageable pageable) {

@@ -29,7 +29,7 @@ public class PersonLocationInteractTime extends AuditEntity {
   @DateTimeFormat( pattern = "yyyy-MM-dd'T'HH:mm" )
   private LocalDateTime leaveAt;
 
-  @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+  @ManyToOne
   @JoinColumn( name = "turn_id", nullable = false, foreignKey = @ForeignKey( name =
       "fk_person_location_interact_time_vs_turn" ) )
   @ToString.Exclude

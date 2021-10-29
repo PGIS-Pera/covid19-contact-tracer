@@ -34,6 +34,11 @@ public class PersonLocationInteractTimeServiceImpl implements PersonLocationInte
   private final DateTimeAgeService dateTimeAgeService;
 
   @Cacheable
+  public PersonLocationInteractTime findLastOne() {
+    return personLocationInteractTimeDao.findFirstByOrderByIdDesc();
+  }
+
+  @Cacheable
   public List< PersonLocationInteractTime > findAll() {
     return personLocationInteractTimeDao.findAll();
   }

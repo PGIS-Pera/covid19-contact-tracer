@@ -12,6 +12,8 @@ import java.util.Map;
 
 public interface PersonLocationInteractTimeService {
 
+  PersonLocationInteractTime findLastOne();
+
   List< PersonLocationInteractTime > findAll();
 
   PersonLocationInteractTime findById(Integer id);

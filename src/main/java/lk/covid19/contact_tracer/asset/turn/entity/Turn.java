@@ -35,7 +35,7 @@ public class Turn extends AuditEntity {
   @JoinColumn( name = "person_id", nullable = false, foreignKey = @ForeignKey( name = "fk_turn_vs_person" ) )
   private Person person;
 
-  @OneToMany( mappedBy = "turn", cascade = {CascadeType.MERGE, CascadeType.PERSIST} )
+  @OneToMany( mappedBy = "turn", cascade = {CascadeType.PERSIST, CascadeType.REFRESH} )
   private List< PersonLocationInteractTime > personLocationInteractTimes;
 
   @OneToMany( mappedBy = "turn" )
