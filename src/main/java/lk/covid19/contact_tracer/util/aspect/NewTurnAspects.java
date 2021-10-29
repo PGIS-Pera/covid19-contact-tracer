@@ -8,12 +8,17 @@ import lk.covid19.contact_tracer.asset.ds_office.entity.DsOffice;
 import lk.covid19.contact_tracer.asset.ds_office.service.DsOfficeService;
 import lk.covid19.contact_tracer.asset.grama_niladhari.entity.GramaNiladhari;
 import lk.covid19.contact_tracer.asset.grama_niladhari.service.GramaNiladhariService;
+import lk.covid19.contact_tracer.asset.location_interact.entity.LocationInteract;
+import lk.covid19.contact_tracer.asset.location_interact.service.LocationInteractService;
 import lk.covid19.contact_tracer.asset.news_subscription.controller.NewsController;
 import lk.covid19.contact_tracer.asset.news_subscription.entity.News;
 import lk.covid19.contact_tracer.asset.news_subscription.service.NewsService;
 import lk.covid19.contact_tracer.asset.person.entity.Person;
 import lk.covid19.contact_tracer.asset.person.service.PersonService;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.controller.PersonLocationInteractTimeController;
+import lk.covid19.contact_tracer.asset.person_location_interact_time.entity.PersonLocationInteractTime;
+import lk.covid19.contact_tracer.asset.turn.entity.Turn;
+import lk.covid19.contact_tracer.asset.turn.service.TurnService;
 import lk.covid19.contact_tracer.util.service.CommonService;
 import lk.covid19.contact_tracer.util.service.MobileMessageService;
 import lombok.AllArgsConstructor;
@@ -44,31 +49,37 @@ public class NewTurnAspects {
 
   private final MobileMessageService mobileMessageService;
   private final NewsService newsService;
-  private final PersonService personService;
+  private final TurnService turnService;
+  private final LocationInteractService locationInteractService;
 
 
   @After( value =
       "execution(* lk.covid19.contact_tracer.asset.person.service.PersonService.saveAndTurn(..))" )
   public void before() {
-    Person person = personService.findLastPatient();
-    List< News > newses = newsService.findByGramaNiladhari(person.getGramaNiladhari());
-    String locationListUrl = MvcUriComponentsBuilder
-        .fromMethodName(PersonLocationInteractTimeController.class, "interactLocationSearchPage", "")
-        .toUriString();
-    newses.forEach(x -> {
-      String mobile = "+94" + x.getMobile().substring(1, 10);
-      try {
-        String unsubscribeUrl = MvcUriComponentsBuilder
-            .fromMethodName(NewsController.class, "unSubscribe", x.getMobile())
-            .toUriString();
-        String message = "Please check new updated location list \n" + locationListUrl + "\n if you want to " +
-            "unsubscribe click here " + unsubscribeUrl;
+    Turn turn = turnService.findLastTurn();
+    for ( PersonLocationInteractTime personLocationInteractTime : turn.getPersonLocationInteractTimes() ) {
+      LocationInteract locationInteract =
+          locationInteractService.findById(personLocationInteractTime.getLocationInteract().getId());
+      List< News > newses = newsService.findByGramaNiladhari(locationInteract.getGramaNiladhari());
+      String locationListUrl = MvcUriComponentsBuilder
+          .fromMethodName(PersonLocationInteractTimeController.class, "interactLocationSearchPage", "")
+          .toUriString();
+      newses.forEach(x -> {
+        String mobile = "+94" + x.getMobile().substring(1, 10);
+        try {
+          String unsubscribeUrl = MvcUriComponentsBuilder
+              .fromMethodName(NewsController.class, "unSubscribe", x.getMobile())
+              .toUriString();
+          String message = "Please check new updated location list \n" + locationListUrl + "\n if you want to " +
+              "unsubscribe click here " + unsubscribeUrl;
 
-        mobileMessageService.sendSMS(mobile, message);
-      } catch ( Exception e ) {
-        e.printStackTrace();
-      }
-    });
+          mobileMessageService.sendSMS(mobile, message);
+        } catch ( Exception e ) {
+          e.printStackTrace();
+        }
+      });
+    }
+
 
   }
 }

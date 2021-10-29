@@ -118,5 +118,10 @@ public class TurnServiceImpl implements TurnService {
     return turnDao.findByCreatedBy(username);
   }
 
+  public Turn findLastTurn() {
+    return turnDao.findFirstByOrderByIdDesc();
+    ;
+  }
+
 
 }

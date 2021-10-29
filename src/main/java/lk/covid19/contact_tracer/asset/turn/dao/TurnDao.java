@@ -26,4 +26,6 @@ public interface TurnDao extends JpaRepository< Turn, Integer > {
   List< Turn > findByCreatedAtIsBetweenAndCreatedBy(LocalDateTime form, LocalDateTime to, String username);
 
   List< Turn > findByCreatedBy(String username);
+
+  Turn findFirstByOrderByIdDesc();
 }

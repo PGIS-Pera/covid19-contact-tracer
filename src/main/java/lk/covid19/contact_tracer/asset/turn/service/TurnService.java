@@ -38,4 +38,6 @@ public interface TurnService {
   List< Turn > findByCreatedAtIsBetweenAndCreatedBy(LocalDateTime form, LocalDateTime to, String username);
 
   List< Turn > findByCreatedBy(String username);
+
+  Turn findLastTurn();
 }
