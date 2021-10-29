@@ -197,7 +197,8 @@ function resultShow(response) {
         let data_show_table = ``;
         for (let i = 0; i < response.length; i++) {
             let table_first = `
-    <div class="card">
+    <div class="card" style=" background-color: hsl(160deg 100% 75%);
+        margin-top: 8px;">
       <div class="card-header">
         <a class="card-link" data-toggle="collapse" href="#collapseOne${response[i].locationInteract.id}">
          <div class="container text-center"> 
