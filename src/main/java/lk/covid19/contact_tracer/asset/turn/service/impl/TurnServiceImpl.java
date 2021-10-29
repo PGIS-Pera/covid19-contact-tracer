@@ -118,9 +118,9 @@ public class TurnServiceImpl implements TurnService {
     return turnDao.findByCreatedBy(username);
   }
 
+  @Cacheable
   public Turn findLastTurn() {
     return turnDao.findFirstByOrderByIdDesc();
-    ;
   }
 
 
