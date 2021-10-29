@@ -109,18 +109,21 @@
               <label class="control-label" >Person Status :</label >
             </div >
             <div class="col-md-8" >
-              <div class="custom-control custom-checkbox custom-control-inline "
-                   data-th-each="personState,index : ${personStatuses}" >
-                <input class="custom-control-input" data-th-checked="${personState== person.personStatus}"
-                       data-th-id="${index.index}+${personState}"
-                       data-th-name="${'personStatus'}"
-                       data-th-value="${personState}" required
-                       type="radio" />
-                <label class="custom-control-label"
-                       data-th-for="${index.index}+${personState}"
-                       data-th-text="${personState.personStatus}" >
-                </label >
-              </div >
+              <input class="form-control" data-th-value="${person.personStatus}"
+                     readonly
+                     type="text" />
+              <!-- <div class="custom-control custom-checkbox custom-control-inline "
+                    data-th-each="personState,index : ${personStatuses}" >
+                 <input class="custom-control-input" data-th-checked="${personState== person.personStatus}"
+                        data-th-id="${index.index}+${personState}"
+                        data-th-name="${'personStatus'}"
+                        data-th-value="${personState}" required
+                        type="radio" readonly />
+                 <label class="custom-control-label"
+                        data-th-for="${index.index}+${personState}"
+                        data-th-text="${personState.personStatus}" >
+                 </label >
+               </div >-->
             </div >
           </div >
           <!--workingPlaceAddress-->
