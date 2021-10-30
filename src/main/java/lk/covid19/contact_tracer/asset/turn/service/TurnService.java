@@ -40,4 +40,6 @@ public interface TurnService {
   List< Turn > findByCreatedBy(String username);
 
   Turn findLastTurn();
+
+  Turn persistPersonStatue(Turn turn);
 }

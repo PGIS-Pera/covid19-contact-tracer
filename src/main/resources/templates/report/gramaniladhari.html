@@ -6,6 +6,7 @@
 </head >
 <body >
 <nav data-th-replace="~{fragments/navBar :: navBarFragment}" ></nav >
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 <div class="container-fluid" >
   <div class="row text-center" >
@@ -97,7 +98,7 @@
           <div class="row" >
             <div id="accordianId" role="tablist" aria-multiselectable="true" class="col-12" >
               <div class="card" >
-                <div class="card-header" style="background-color: hsl(180deg 100% 50%);  padding: 5px;" role="tab"
+                <div class="card-header" style="background-color: hsl(180deg 100% 50%); " role="tab"
                      id="section1HeaderId" >
                   <a data-toggle="collapse" data-parent="#accordianId" href="#section1ContentId" aria-expanded="true"
                      aria-controls="section1ContentId" class="container-fluid" >
@@ -216,7 +217,9 @@
 <div data-th-replace="~{fragments/footer :: footerFragment}" ></div >
 <!--script include-->
 <div data-th-replace="~{fragments/script :: scriptFragment}" ></div >
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" ></script >
 <script type="text/javascript" src="/js/reportGramaniladhari.js" ></script >
+<script type="text/javascript" src="/js/summaryReport.js" ></script >
 
 </body >
 </html >

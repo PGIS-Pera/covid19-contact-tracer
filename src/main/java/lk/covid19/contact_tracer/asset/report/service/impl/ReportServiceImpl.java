@@ -54,8 +54,8 @@ public class ReportServiceImpl implements ReportService {
     List< Turn > turns = turnService.findByIdentifiedDateIsBetween(dsOfficeReportDTO.getTurnStartAt(),
                                                                    dsOfficeReportDTO.getTurnEndAt())
         .stream()
-        .filter(x -> x.getPerson().getGramaNiladhari().getDsOffice().getId().equals(dsOfficeReportDTO.getDsOffice().getId())
-               )
+        .filter(x -> x.getPerson().getGramaNiladhari().getDsOffice().getId()
+            .equals(dsOfficeReportDTO.getDsOffice().getId()))
         .collect(Collectors.toList());
 
     dsOfficeReportDTO.setAttributeAndCounts(commonService.turnsAccordingToPersonStatus(turns));
@@ -68,7 +68,8 @@ public class ReportServiceImpl implements ReportService {
     List< Turn > turns = turnService.findByIdentifiedDateIsBetween(districtReportDTO.getTurnStartAt(),
                                                                    districtReportDTO.getTurnEndAt())
         .stream()
-        .filter(x -> x.getPerson().getGramaNiladhari().getDsOffice().getDistrict().equals(districtReportDTO.getDistrict()))
+        .filter(x -> x.getPerson().getGramaNiladhari().getDsOffice().getDistrict()
+            .equals(districtReportDTO.getDistrict()))
         .collect(Collectors.toList());
 
     districtReportDTO.setAttributeAndCounts(commonService.turnsAccordingToPersonStatus(turns));
@@ -80,9 +81,9 @@ public class ReportServiceImpl implements ReportService {
     List< Turn > turns = turnService.findByIdentifiedDateIsBetween(provinceReportDTO.getTurnStartAt(),
                                                                    provinceReportDTO.getTurnEndAt())
         .stream()
-        .filter(x -> x.getPerson().getGramaNiladhari().getDsOffice().getDistrict().getProvince().equals(provinceReportDTO.getProvince()))
+        .filter(x -> x.getPerson().getGramaNiladhari().getDsOffice().getDistrict().getProvince()
+            .equals(provinceReportDTO.getProvince()))
         .collect(Collectors.toList());
-
     provinceReportDTO.setAttributeAndCounts(commonService.turnsAccordingToPersonStatus(turns));
     return provinceReportDTO;
   }
@@ -91,7 +92,6 @@ public class ReportServiceImpl implements ReportService {
     List< Turn > turns = turnService.findByIdentifiedDateIsBetween(provinceReportDTO.getTurnStartAt(),
                                                                    provinceReportDTO.getTurnEndAt())
         .stream().distinct().collect(Collectors.toList());
-
     provinceReportDTO.setAttributeAndCounts(commonService.turnsAccordingToPersonStatus(turns));
     return provinceReportDTO;
   }

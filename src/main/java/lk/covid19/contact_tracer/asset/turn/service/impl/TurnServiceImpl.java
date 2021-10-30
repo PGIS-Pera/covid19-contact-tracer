@@ -66,13 +66,11 @@ public class TurnServiceImpl implements TurnService {
 
         });
       }
-      if ( dbTurn.getIdentifiedDate().equals(turn.getIdentifiedDate()) ) {
-        turn = dbTurn;
-      } else {
+      if ( !dbTurn.getIdentifiedDate().equals(turn.getIdentifiedDate()) ) {
+        dbTurn.setIdentifiedDate(turn.getIdentifiedDate());
         return turnDao.save(dbTurn);
       }
     }
-
     return turnDao.save(turn);
   }
 
@@ -141,6 +139,12 @@ public class TurnServiceImpl implements TurnService {
   @Cacheable
   public Turn findLastTurn() {
     return turnDao.findFirstByOrderByIdDesc();
+  }
+
+  @Caching( evict = {@CacheEvict( value = "turn", allEntries = true )}, put = {@CachePut( value = "turn", key =
+      "#turn.id" )} )
+  public Turn persistPersonStatue(Turn turn) {
+    return turnDao.save(turn);
   }
 
 

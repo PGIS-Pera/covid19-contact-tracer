@@ -102,11 +102,12 @@ public class TurnController {
   public String personStatusChange(@RequestParam( "id" ) Integer id,
                                    @RequestParam( "personStatus" ) PersonStatus personStatus) {
     Turn turn = turnService.findById(id);
+    turn.setPersonStatus(personStatus);
+    turnService.persistPersonStatue(turn);
+
     Person person = personService.findById(turn.getPerson().getId());
     person.setPersonStatus(personStatus);
-    turn.setPerson(person);
-    turn.setPersonStatus(personStatus);
-    turnService.persist(turn);
+    personService.persist(person);
     return "redirect:/turn";
   }
 

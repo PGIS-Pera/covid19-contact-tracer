@@ -126,7 +126,6 @@ public class PersonServiceImpl implements PersonService {
     personDb.setPersonStatus(PersonStatus.INFECTED);
     personDao.save(personDb);
 
-    //List< PersonLocationInteractTime > personLocationInteractTimes = new ArrayList<>();
     for ( Turn turn : person.getTurns() ) {
       Turn newTurn = new Turn();
       newTurn.setPerson(personDb);
