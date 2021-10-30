@@ -48,11 +48,6 @@ spring:
     cacheServerConfiguration: true
     elideSetAutoCommits: true
     maintainTimeStats: false
-    hikari:
-      minimum-idle: 3
-      maximum-pool-size: 15
-      max-lifetime: 240000
-      connection-test-query: SELECT 1
   jackson:
     serialization:
       fail-on-empty-beans: false
