@@ -21,20 +21,14 @@ jobs:
         with:
           java-version: '11'
 
-      - name: Change wrapper permissions
-        run: chmod +x ./gradlew
-
-      - name: Clean with Gradle
-        run: ./gradlew clean
-
-      - name: Build with Gradle
-        run: ./gradlew build
+      - name: Build with Maven
+        run: mvn clean install
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: java-app
-          path: '${{ github.workspace }}/build/libs/*.jar'
+          path: '${{ github.workspace }}/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
@@ -55,5 +49,5 @@ jobs:
         with:
           app-name: 'covid19-contact-tracer-app'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0905E29E021C4A9E968582F97FD5276A }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FB3346D1C4724006BF855EC3AA8BD6B9 }}
           package: '*.jar'
