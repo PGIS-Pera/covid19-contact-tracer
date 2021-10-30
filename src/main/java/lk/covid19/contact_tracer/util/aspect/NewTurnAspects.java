@@ -58,52 +58,57 @@ public class NewTurnAspects {
 
 
   @After( value =
-      "execution(* lk.covid19.contact_tracer.asset.person.service.PersonService.saveAndTurn(..))" )
+      "execution(* lk.covid19.contact_tracer.asset.person.controller.PersonController.savePersonTurn(..))" )
   public void saveAndTurn() {
-    System.out.println("came here save and turn");
+    System.out.println("save and turn");
     messageSend();
   }
 
-  @After( value =
-      "execution(* lk.covid19.contact_tracer.asset.turn.service.TurnService.persist(..))" )
-  public void turn() {
-    System.out.println("came here turn");
-    messageSend();
-  }
+
 
   private void messageSend() {
     PersonLocationInteractTime personLocationInteractTime = personLocationInteractTimeService.findLastOne();
+    System.out.println(personLocationInteractTime.getId());
     HashSet< News > newsServiceHashSet = new HashSet<>();
     HashSet< LocationInteract > locationInteractHashSet = new HashSet<>();
 
     Turn turn = turnService.findById(personLocationInteractTime.getTurn().getId());
 
-    for ( PersonLocationInteractTime locationInteractTime : turn.getPersonLocationInteractTimes() ) {
-      locationInteractHashSet.add(locationInteractTime.getLocationInteract());
-    }
-    for ( LocationInteract locationInteract : locationInteractHashSet ) {
-      GramaNiladhari gramaNiladhari = locationInteractService.findById(locationInteract.getId()).getGramaNiladhari();
-      newsServiceHashSet.addAll(newsService.findByGramaNiladhari(gramaNiladhari));
-    }
-
-    String locationListUrl = MvcUriComponentsBuilder
-        .fromMethodName(PersonLocationInteractTimeController.class, "interactLocationSearchPage", "")
-        .toUriString();
-
-    newsServiceHashSet.forEach(x -> {
-      String mobile = "+94" + x.getMobile().substring(1, 10);
-      try {
-        String unsubscribeUrl = MvcUriComponentsBuilder
-            .fromMethodName(NewsController.class, "unSubscribe", x.getMobile())
-            .toUriString();
-        String message = "Please check new updated location list \n" + locationListUrl + "\n if you want to " +
-            "unsubscribe click here " + unsubscribeUrl;
-
-        mobileMessageService.sendSMS(mobile, message);
-        System.out.println("send message");
-      } catch ( Exception e ) {
-        e.printStackTrace();
+    if ( turn != null ) {
+      for ( PersonLocationInteractTime locationInteractTime : personLocationInteractTimeService.findByTurn(turn) ) {
+        locationInteractHashSet.add(locationInteractTime.getLocationInteract());
       }
-    });
+      for ( LocationInteract locationInteract : locationInteractHashSet ) {
+        GramaNiladhari gramaNiladhari = locationInteractService.findById(locationInteract.getId()).getGramaNiladhari();
+        newsServiceHashSet.addAll(newsService.findByGramaNiladhari(gramaNiladhari));
+      }
+
+      String locationListUrl = MvcUriComponentsBuilder
+          .fromMethodName(PersonLocationInteractTimeController.class, "interactLocationSearchPage", "")
+          .toUriString();
+
+      newsServiceHashSet.forEach(x -> {
+        String mobile = "+94" + x.getMobile().substring(1, 10);
+        try {
+          String unsubscribeUrl = MvcUriComponentsBuilder
+              .fromMethodName(NewsController.class, "unSubscribe", x.getMobile())
+              .toUriString();
+          String message = "Please check new updated location list \n" + locationListUrl + "\n if you want to " +
+              "unsubscribe click here " + unsubscribeUrl;
+
+          mobileMessageService.sendSMS(mobile, message);
+          System.out.println("send message");
+        } catch ( Exception e ) {
+          e.printStackTrace();
+        }
+      });
+    }
   }
+
+/*    @After( value =
+      "execution(* lk.covid19.contact_tracer.asset.turn.service.TurnService.persist(..))" )
+  public void turn() {
+    System.out.println("turn");
+    messageSend();
+  }*/
 }

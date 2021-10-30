@@ -49,7 +49,6 @@ public class TurnServiceImpl implements TurnService {
   @Caching( evict = {@CacheEvict( value = "turn", allEntries = true )}, put = {@CachePut( value = "turn", key =
       "#turn.id" )} )
   public Turn persist(Turn turn) {
-
     if ( turn.getId() != null ) {
       final Turn dbTurn = turnDao.getById(turn.getId());
       if ( !turn.getPersonLocationInteractTimes().isEmpty() ) {
@@ -70,12 +69,11 @@ public class TurnServiceImpl implements TurnService {
       if ( dbTurn.getIdentifiedDate().equals(turn.getIdentifiedDate()) ) {
         turn = dbTurn;
       } else {
-        turn = turnDao.save(dbTurn);
+        return turnDao.save(dbTurn);
       }
-    } else {
-      turn = turnDao.save(turn);
     }
-    return turn;
+
+    return turnDao.save(turn);
   }
 
   @CacheEvict( allEntries = true )

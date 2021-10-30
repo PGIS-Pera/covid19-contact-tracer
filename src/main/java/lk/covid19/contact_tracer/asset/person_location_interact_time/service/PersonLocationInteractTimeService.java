@@ -5,6 +5,7 @@ import lk.covid19.contact_tracer.asset.common_asset.model.LocationInteractTimeRe
 import lk.covid19.contact_tracer.asset.common_asset.model.TwoDateGramaNiladhari;
 import lk.covid19.contact_tracer.asset.location_interact.entity.LocationInteract;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.entity.PersonLocationInteractTime;
+import lk.covid19.contact_tracer.asset.turn.entity.Turn;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -30,4 +31,5 @@ public interface PersonLocationInteractTimeService {
 
   List< LocationInteractTimeReport > findByArrivalAtBetween(LocalDate identifiedDate);
 
+  List< PersonLocationInteractTime > findByTurn(Turn turn);
 }

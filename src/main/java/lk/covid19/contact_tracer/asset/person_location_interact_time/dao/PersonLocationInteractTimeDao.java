@@ -6,6 +6,7 @@ import lk.covid19.contact_tracer.asset.common_asset.model.LocationInteractTimeRe
 import lk.covid19.contact_tracer.asset.common_asset.model.enums.StopActive;
 import lk.covid19.contact_tracer.asset.location_interact.entity.LocationInteract;
 import lk.covid19.contact_tracer.asset.person_location_interact_time.entity.PersonLocationInteractTime;
+import lk.covid19.contact_tracer.asset.turn.entity.Turn;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -22,4 +23,6 @@ public interface PersonLocationInteractTimeDao extends JpaRepository< PersonLoca
   List< LocationInteractTimeReport > findByArrivalAtBetween(LocalDateTime from, LocalDateTime now);
 
   PersonLocationInteractTime findFirstByOrderByIdDesc();
+
+  List< PersonLocationInteractTime > findByTurn(Turn turn);
 }

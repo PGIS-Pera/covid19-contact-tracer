@@ -126,16 +126,20 @@ public class PersonServiceImpl implements PersonService {
     personDb.setPersonStatus(PersonStatus.INFECTED);
     personDao.save(personDb);
 
-    List< PersonLocationInteractTime > personLocationInteractTimes = new ArrayList<>();
-    person.getTurns().forEach(x -> {
-      x.setPerson(personDb);
-      x.setPersonStatus(PersonStatus.INFECTED);
-      x.getPersonLocationInteractTimes().forEach(y -> {
-        y.setTurn(turnService.persist(x));
-        personLocationInteractTimes.add(y);
-      });
-    });
-    personLocationInteractTimeService.persistAll(personLocationInteractTimes.stream().distinct().collect(Collectors.toList()));
+    //List< PersonLocationInteractTime > personLocationInteractTimes = new ArrayList<>();
+    for ( Turn turn : person.getTurns() ) {
+      Turn newTurn = new Turn();
+      newTurn.setPerson(personDb);
+      newTurn.setIdentifiedDate(turn.getIdentifiedDate());
+      newTurn.setPersonStatus(PersonStatus.INFECTED);
+      Turn saveTurn = turnService.persist(newTurn);
+      if ( saveTurn.getId() != null ) {
+        for ( PersonLocationInteractTime personLocationInteractTime : turn.getPersonLocationInteractTimes() ) {
+          personLocationInteractTime.setTurn(saveTurn);
+          personLocationInteractTimeService.persist(personLocationInteractTime);
+        }
+      }
+    }
     return personDb;
   }
 
