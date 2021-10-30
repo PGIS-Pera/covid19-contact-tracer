@@ -60,7 +60,7 @@ spring:
 info:
   app:
     name: Covid19 Contact Tracer
-    version: 1.0.0
+    version: 1.0.1
     description: PGIS - UOP
 
 twilio:
@@ -69,6 +69,7 @@ twilio:
   AUTH_TOKEN: "610e356f95a6e2e530f4054e20bf99d5"
 
 server:
+  port: 80
   servlet:
     session:
       timeout: 20m
