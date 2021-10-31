@@ -1,0 +1,88 @@
+spring:
+  mail:
+    properties:
+      mail:
+        smtp:
+          socketFactory:
+            port: '465'
+            class: javax.net.ssl.SSLSocketFactory
+            fallback: 'false'
+          starttls:
+            enable: 'true'
+          auth: 'true'
+      support:
+        email: xyz@gmail.com
+    username: lositha.production@gmail.com
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    test-connection: 'false'
+    password: $KzV7C7A@KC%wZQBeQ!R^2$BPEedcX
+  main:
+    allow-bean-definition-overriding: 'true'
+    lazy-initialization: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: 'true'
+  cache:
+    jcache:
+      config: classpath:ehcache3.xml
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  datasource:
+    password: pera-pgis-20
+    username: covid_user@covid19-db-sever
+    url: jdbc:mysql://covid19-db-sever.mysql.database.azure.com:3306/covid19data?useSSL=true&requireSSL=false
+    cachePrepStmts: true
+    prepStmtCacheSize: 250
+    prepStmtCacheSqlLimit: 2048
+    useServerPrepStmts: true
+    useLocalSessionState: true
+    rewriteBatchedStatements: true
+    cacheResultSetMetadata: true
+    cacheServerConfiguration: true
+    elideSetAutoCommits: true
+    maintainTimeStats: false
+    hikari:
+      minimum-idle: 3
+      maximum-pool-size: 15
+      max-lifetime: 240000
+      connection-test-query: SELECT 1
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+info:
+  app:
+    name: Covid19 Contact Tracer
+    version: 1.0.1
+    description: PGIS - UOP
+
+twilio:
+  PHONE_NUMBER: "+12184025616"
+  ACCOUNT_SID: "ACb06aa4fbc924c253c831fab488bd1ac9"
+  AUTH_TOKEN: "610e356f95a6e2e530f4054e20bf99d5"
+
+server:
+  port: 80
+  servlet:
+    session:
+      timeout: 20m
+
+logging:
+  level:
+    org:
+      hibernate: ERROR
+      springframework:
+        web: DEBUG
+    root: WARN
+  pattern:
+    file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
+    console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
+  file:
+    name: contact_tracer.log
